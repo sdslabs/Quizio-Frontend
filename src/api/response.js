@@ -1,58 +1,41 @@
-// TODO: convert to promises
-
 import axiosInstance from './axiosInstance'
 import requestInterceptor from './requestInterceptor'
 import responseInterceptor from './responseInterceptor'
-import config from '../config/config.js';
 
-export default class Response {
-    constructor({ id, userId, query }) {
-        this.id = id
-        this.userId = userId
-        this.query = query
-        if(!this.userId){
-            this.getURL = config.API.baseURL + 'responses/' + this.id + this.query
-        }
-        else{
-            this.getURL = config.API.baseURL + 'responses/' + this.id + '/user?username=' + this.userId
-            this.postURL = config.API.baseURL + 'responses/' + this.id + '/user?username=' + this.userId
-        }
-        this.URL = config.baseURL + this.id
-    }
 
-    fetchQuizResponse(){
-        return axiosInstance.get(this.getURL)
-        .then((res) => {
-            const error = res.data.error
-            if (error) throw error
-            return res
-        })
-        .catch((err) => {
-            return err
-        })
-    }
+export const fetchQuizResponse = (id, query) => {
+    return axiosInstance.get(`/responses/${id}/${query}`)
+    // .then((res) => {
+    //     const error = res.data.error
+    //     if (error) throw error
+    //     return res
+    // })
+    // .catch((err) => {
+    //     return err
+    // })
+}
 
-    fetchQuizResponseForUser(){
-        return axiosInstance.get(this.getURL)
-        .then(res => {
-            const body = res.data
-            const error = body.error
-            if (error) throw error
-            return body
-        }).catch(err => {
-            return err
-        })
-    }
 
-    updateMarks(update) {
-        return axiosInstance.post(this.postURL, { update })
-        .then(res => {
-            const body = res.data
-            const error = body.error
-            if (error) throw error
-            return body
-        }).catch(err => {
-            return err
-        })
-    }
+export const fetchQuizResponseForUser = (id, userId) => {
+    return axiosInstance.get(`/responses/${id}/user?username=${userId}`)
+    // .then(res => {
+    //     const body = res.data
+    //     const error = body.error
+    //     if (error) throw error
+    //     return body
+    // }).catch(err => {
+    //     return err
+    // })
+}
+
+export const updateMarks = (update) => {
+    return axiosInstance.post(`/responses/${id}/user?username=${userId}`, { update })
+    // .then(res => {
+    //     const body = res.data
+    //     const error = body.error
+    //     if (error) throw error
+    //     return body
+    // }).catch(err => {
+    //     return err
+    // })
 }

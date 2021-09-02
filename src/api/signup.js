@@ -6,7 +6,6 @@ import {fetchPublicQuizzes} from './quizzes'
 import config from '../config/config.js'
 
 const baseURL = config.API.baseURL + 'auth/'
-const postURL = baseURL + 'signup'
 
 
 axiosInstance.defaults.withCredentials = true // can remove line?
@@ -29,7 +28,7 @@ export const submit = (username, name, bio, org, num, enrl, course, codeforces, 
         github: 'https://github.com/' + github
     };
 
-    return axiosInstance.post(postURL, postData)
+    return axiosInstance.post(`/auth/signup`, postData)
         // .then(res => {
         //     const body = res.data
         //     if (body.success === false) {
@@ -51,13 +50,8 @@ export const checkAuthAtHome = () => {
 
 export const login = (loginStatus) => {
     axiosInstance.interceptors.response.eject(responseInterceptor);
-    if (loginStatus) {
-        loginURL = baseURL + 'logout/'
-    }
-    else {
-        loginURL = baseURL + 'signin'
-    }
-    return axiosInstance.get(loginURL)
+    
+    return axiosInstance.get(loginStatus ? `/auth/logout/` : `/auth/signin`)
         // .then(res => {
         //     const body = res.data
         //     if (body.success === false) throw body.error
