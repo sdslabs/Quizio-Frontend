@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom'
 import Authinterceptor from './interceptor';
 import cookie from 'react-cookies'
 
-require('./headerInterceptor');
-const config = require('../config/config.json')
+// require('./headerInterceptor');
+import config from '../config/config.js';
 
 const checkURL = config.API.baseURL
 

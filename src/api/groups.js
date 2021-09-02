@@ -1,16 +1,18 @@
-import axios from 'axios'
-const config = require('../config/config.json')
+import { axiosInstance, requestInterceptor } from './axiosInstance'
+import config from '../config/config'
+
+// const config = require('../config/config.json')
 
 const baseURL = config.API.baseURL + 'groups'
-require('./interceptor');
-require('./headerInterceptor');
+// require('./interceptor');
+// require('./headerInterceptor');
 
 export default class Groups {
     constructor(){
         this.id = 'id'
     }
     fetchGroups() {
-        return axios.get(baseURL + '?all=true', {json: true})
+        return axiosInstance.get(baseURL + '?all=true', {json: true})
         .then(res => {
             const body = res.data
             const error = body.error || null
@@ -23,7 +25,7 @@ export default class Groups {
     }
 
     fetchGroupsForUser() {
-        return axios.get( baseURL, {json: true})
+        return axiosInstance.get( baseURL, {json: true})
         .then((res) => {
             const body = res.data
             const error = body.error || null
@@ -41,7 +43,7 @@ export default class Groups {
             creator : creator,
             description : description
         }
-        return axios.post( baseURL + '?create=true', postdata)
+        return axiosInstance.post( baseURL + '?create=true', postdata)
         .then((res) => {
             const body = res.data
             const error = body.error || null
@@ -54,7 +56,7 @@ export default class Groups {
     }
     joinGroup(groupId , accessCode) {
         if(!accessCode)accessCode = ''
-        return axios.get(baseURL + '?join=' + groupId + '&code=' + accessCode, {json: true})
+        return axiosInstance.get(baseURL + '?join=' + groupId + '&code=' + accessCode, {json: true})
         .then(res => {
             const body = res.data
             const error = body.error || null
@@ -66,7 +68,7 @@ export default class Groups {
         })
     }
     leaveGroup(groupId){
-        return axios.get(baseURL + '?leave=' + groupId)
+        return axiosInstance.get(baseURL + '?leave=' + groupId)
         .then(res => {
             const body = res.data
             const error = body.error || null
@@ -78,7 +80,7 @@ export default class Groups {
         })
     }
     fetchGroupMembers(groupId){
-        return axios.get(baseURL + "/" +  groupId + "/members")
+        return axiosInstance.get(baseURL + "/" +  groupId + "/members")
         .then(res =>{
             let body = res.data
             const error = body.error || null
@@ -104,7 +106,7 @@ export default class Groups {
         if(update.addMembers){
             postdata['addMembers'] = [update.addMembers]
         }
-        return axios.post(baseURL + "/" + groupId , postdata)
+        return axiosInstance.post(baseURL + "/" + groupId , postdata)
         .then(res =>{
             let body = res.data
             const error = body.error || null

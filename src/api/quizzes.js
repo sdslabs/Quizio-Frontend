@@ -1,8 +1,7 @@
 import axios from 'axios'
-import store from '../store/configureStore'
-const config = require('../config/config.json')
-require('./interceptor');
-require('./headerInterceptor');
+import config from '../config/config.js';
+// require('./interceptor');
+// require('./headerInterceptor');
 
 export default class Quizzes {
     constructor({ id, code, groupId, checkOwnership, checkRegistration }) {

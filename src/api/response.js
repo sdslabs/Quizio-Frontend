@@ -1,7 +1,7 @@
 import axios from 'axios'
-const config = require('../config/config.json')
-require('./interceptor');
-require('./headerInterceptor');
+import config from '../config/config.js';
+// require('./interceptor');
+// require('./headerInterceptor');
 
 export default class Response {
     constructor({ id, userId, query }) {
