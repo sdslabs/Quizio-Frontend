@@ -1,4 +1,5 @@
 import axiosInstance from './axiosInstance'
+import cookie from 'cookie'
 
 // attach request interceptor
 const requestInterceptor = axiosInstance.interceptors.request.use((config) => {

@@ -1,5 +1,3 @@
-// TODO: convert to promises
-
 import axiosInstance from './axiosInstance'
 import requestInterceptor from './requestInterceptor'
 import responseInterceptor from './responseInterceptor'
@@ -62,7 +60,7 @@ export const fetchQuiz = (id, groupId) => {
     // })
 }
 
-export const fetchQuizForAdmin = () => {
+export const fetchQuizForAdmin = (id) => {
     return axiosInstance.get(`/quizzes/${id}/content=true`)
     // .then(res => {
     //     const body = res.data
