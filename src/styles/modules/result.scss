@@ -1,0 +1,120 @@
+@import '../partials/base';
+
+
+.resultsCard {
+    position: relative;
+    left: 3.22%;
+    width: 92.05%;
+    top: 15.665vh;
+    padding-right: 3.95%;
+    background-color: $primary-modal-background;
+    max-height: 67.19vh;
+    overflow: auto;
+}
+
+.result-header {
+    position: relative;
+    top: 10.735vh;
+}
+
+.arrow {
+    font-size: 40px;
+    color: #F69A3D;
+}
+
+.slider {
+    font-size: 30px;
+}
+
+.grayedBtn {
+    background-color: #EFEFEF !important;
+}
+
+.carousel {
+    position: relative;
+    top: 18vh;
+    overflow-y: hidden;
+    height: 40px;
+    justify-content: center;
+}
+
+.section-text {
+    position: relative;
+    height: 17px;
+    left: 2%;
+    top: 13.735vh;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+    color: #182C2A;
+}
+
+.section-header {
+    position: relative;
+    top: 16.735vh;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.section-toggle {
+    background-color: #F69A3D;
+    border-radius: 5px;
+    margin: 0 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.section-slider {
+    max-width: 90%;
+}
+
+.resultTable{
+    width: inherit;
+}
+
+.sortBy {
+    margin-right: 1%;
+    margin-left: 2%;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    color: #C4C4C4;
+}
+
+.quiz-header {
+    flex-direction: column;
+    position: relative;
+}
+
+.quizName {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-top: 5rem;
+    margin: 0 auto;
+    color: #192B2F;
+}
+
+.leaderBoard {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    margin: 2vh 0 0 0;
+    color: #182C2A;
+}
+
+.visibleBtn {
+    display: block;
+}
+
+.invisibleBtn {
+    display: none;
+}

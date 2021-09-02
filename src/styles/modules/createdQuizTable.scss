@@ -1,0 +1,63 @@
+@import '../partials/base';
+
+.container-quiz
+{
+    display : flex ;
+    flex-direction: row;
+    margin : 5%;
+    margin-top: 2.5%;
+
+}
+.info-tab
+{
+    width : 25%;
+    font-size : 1.2vw;
+}
+.link1:link,.link1:visited
+{
+    color :#ed5c40;
+}
+.title-container 
+{   font-size : 1.3vw;
+    display : flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.container-title
+{   
+    border-bottom: solid;
+    border-color : $quizio-yellow;
+    border-width:0.25vw;
+    padding-bottom: 1%;
+    font-family: Montserrat;
+    color: #192B2F;
+    font-weight: bold;
+    margin : 1.2vw;
+    margin-bottom: 0%;
+    margin-top : 0%
+
+}
+.link-quiz:link,.link-quiz:visited
+{
+    color :#000000;
+    text-decoration: none;
+}
+.link-quiz:hover{
+    color :#ed5c40;
+}
+.empty-quiz-placeholder{
+    padding-bottom: 1%;
+    font-family: Montserrat;
+    color: $btn-primary-color;
+    font-weight: bold;
+    margin : 5%;
+    margin-bottom: 0%;
+    margin-top : 0%
+}
+.empty-quiz-placeholder-container{
+    margin-top: 1.2vw;
+    font-size : 1.3vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

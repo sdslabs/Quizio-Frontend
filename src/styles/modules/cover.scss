@@ -1,0 +1,69 @@
+@import '../partials/base';
+
+.Heading {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: 5rem;
+    font-weight: bolder;
+    line-height: normal;
+    color: $quizio-yellow;
+    margin-top:12.7rem;
+    margin-left:1.85rem;
+}
+
+.subHeading {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: normal;
+    color: #172B2F;
+    margin-top:1rem;
+    margin-left:2rem;
+}
+
+.buttons{
+    margin-top:2rem;
+    display: flex;
+    margin-left:2rem;
+    height : 5%;    
+    width : 22%;
+}
+.submit-btn-cover{
+    background: $quizio-yellow;
+    line-height: normal;
+    color: #F9F9FA;
+    font: normal 600 1rem 'Open Sans';
+    height: 100%;
+    width: 100%;;
+}
+.button{
+    background: $quizio-yellow;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.0rem;
+    line-height: normal;
+    height:2rem;
+    color: #FDFDFD;  
+    justify-content:center; 
+    margin:2rem;
+    margin-right:0rem;
+    width : 100%;
+}
+
+.Content{
+    display:flex;
+    flex-direction:row;
+}
+
+.Container{
+    display:flex;
+    flex-direction:column;
+}
+
+.image{
+    vertical-align:center;
+    width:55%;
+    height:80%;
+}

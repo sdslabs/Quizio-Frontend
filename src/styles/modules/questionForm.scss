@@ -1,0 +1,12 @@
+@import '../partials/base';
+
+.form-container
+{
+    height : 100%;
+    display: flex;
+    flex-direction: column;
+}
+.long-text{
+    width: 100%;
+    height: 5%;
+}
