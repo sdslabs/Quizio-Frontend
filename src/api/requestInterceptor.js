@@ -1,7 +1,7 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from './axiosInstance'
 
 // attach request interceptor
-axiosInstance.interceptors.request.use((config) => {
+const requestInterceptor = axiosInstance.interceptors.request.use((config) => {
     const token = cookie.load('token');
     config.headers.Authorization = token;
     return config;
@@ -9,4 +9,4 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-export default axiosInstance;
+export default requestInterceptor;

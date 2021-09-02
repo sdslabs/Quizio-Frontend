@@ -1,7 +1,7 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from './axiosInstance'
 
 // attach response interceptor
-axiosInstance.interceptors.response.use((response) => {
+const responseInterceptor = axiosInstance.interceptors.response.use((response) => {
     // status code = 2xx
     const data = response.data
     if (data.authenticated === false || data.registered === false || data.oauth === true) {
@@ -14,5 +14,4 @@ axiosInstance.interceptors.response.use((response) => {
     return Promise.reject(error);
 });
 
-
-export default axiosInstance;
+export default responseInterceptor;

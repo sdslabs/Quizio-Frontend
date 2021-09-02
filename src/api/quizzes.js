@@ -1,7 +1,9 @@
-import axios from 'axios'
+// TODO: convert to promises
+
+import axiosInstance from './axiosInstance'
+import requestInterceptor from './requestInterceptor'
+import responseInterceptor from './responseInterceptor'
 import config from '../config/config.js';
-// require('./interceptor');
-// require('./headerInterceptor');
 
 export default class Quizzes {
     constructor({ id, code, groupId, checkOwnership, checkRegistration }) {

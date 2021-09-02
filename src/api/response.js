@@ -1,7 +1,9 @@
-import axios from 'axios'
+// TODO: convert to promises
+
+import axiosInstance from './axiosInstance'
+import requestInterceptor from './requestInterceptor'
+import responseInterceptor from './responseInterceptor'
 import config from '../config/config.js';
-// require('./interceptor');
-// require('./headerInterceptor');
 
 export default class Response {
     constructor({ id, userId, query }) {
@@ -19,7 +21,7 @@ export default class Response {
     }
 
     fetchQuizResponse(){
-        return axios.get(this.getURL)
+        return axiosInstance.get(this.getURL)
         .then((res) => {
             const error = res.data.error
             if (error) throw error
@@ -31,7 +33,7 @@ export default class Response {
     }
 
     fetchQuizResponseForUser(){
-        return axios.get(this.getURL)
+        return axiosInstance.get(this.getURL)
         .then(res => {
             const body = res.data
             const error = body.error
@@ -43,7 +45,7 @@ export default class Response {
     }
 
     updateMarks(update) {
-        return axios.post(this.postURL, { update })
+        return axiosInstance.post(this.postURL, { update })
         .then(res => {
             const body = res.data
             const error = body.error
