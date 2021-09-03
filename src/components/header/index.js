@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import '../../styles/modules/header.scss'
+import exitIcon from '../../styles/images/exit.svg'
 
 const Header = (props) => {
 
@@ -40,10 +41,9 @@ const Header = (props) => {
                     <img src={imageUrl} className="profile" onClick={redirectToProfile}></img>
                 </Col>
                 <Col xs={1}>
-                    {loggedIn && <button className="logbutton" onClick={props.handleLogOut}>Logout</button>}
-                    {givingQuiz && <button className="exitQuizButton" onClick={props.handleSubmitQuiz}>Submit Quiz</button>}
+                    {loggedIn && loggedIn && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
+                    {givingQuiz && <button className="exit" onClick={props.handleSubmitQuiz}>Submit Quiz <img src={exitIcon} /> </button>}
                 </Col>
-
             </Row>
         </Container>
     )
