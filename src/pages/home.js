@@ -90,12 +90,12 @@ const Home = (props) => {
                             <div className='flex table-container'>
                                 <TableHeading value='Ongoing Quizzes' />
                                 {this.state.ongoingQuizzes.length ?
-                                    <Table headRow='true' quizzes={this.state.ongoingQuizzes} past={false} /> :
+                                    <Table headRow='true' quizzes={ongoingQuizzes} past={false} /> :
                                     <NoQuizzes showImg={true} section='No Ongoing Quizzes' />
                                 }
                                 <TableHeading value='Upcoming Quizzes' />
                                 {this.state.upcomingQuizzes.length ?
-                                    <Table headRow='true' quizzes={this.state.upcomingQuizzes} past={false} /> :
+                                    <Table headRow='true' quizzes={upcomingQuizzes} past={false} /> :
                                     <NoQuizzes showImg={true} section='No Upcoming Quizzes' />
                                 }
                                 <TableHeading value='Past Quizzes' />

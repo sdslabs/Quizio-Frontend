@@ -10,13 +10,11 @@ import '../../styles/modules/popup.scss' //
 
 const Quiz = (props) => {
     let history = useHistory()
-    let sNo = props.sNo
-    let past = props.past
-    let quiz = props.quiz
-    let { title, description, startTime, endTime, duration } = props.quiz
+
+    let { startTime, endTime, duration } = props.quiz
 
     let userId = localStorage.getItem('username') // TODO: automatic
-    
+
     const [modalActive, setModalActive] = useState(false)
     const [registered, setRegistered] = useState(false)
     const [accessCode, setAccessCode] = useState('')
@@ -45,7 +43,7 @@ const Quiz = (props) => {
 
     const registerUser = () => {
 
-        registerForQuiz(quiz._id, userId, accessCode) // verify args once
+        registerForQuiz(props.quiz._id, userId, accessCode) // verify args once
             .then(res => {
                 if (res.data.success) {
                     setRegistered(true);
@@ -68,38 +66,40 @@ const Quiz = (props) => {
     }
 
     useEffect(() => {
-        let res = await isRegisteredForQuiz(quiz._id, userId)
-        setRegistered(res.data.registered)
+        isRegisteredForQuiz(props.quiz._id, userId)
+            .then((res) => {
+                setRegistered(res.data.registered)
+            })
     }, [])
 
-    
+
     return (
         <div className='table-row'>
-            <div className='text quiz-serial-no'>{sNo}</div>
-            {!this.state.registered &&
-                <div className='text quiz-name quiz-name-text'>{title}</div>
+            <div className='text quiz-serial-no'>{props.sNo}</div>
+            {!registered &&
+                <div className='text quiz-name quiz-name-text'>{props.quiz.title}</div>
             }
-            {this.state.registered &&
-                <div className='text quiz-name quiz-name-text'><a className='quiz-name-text' href={"/" + this.props.quiz._id}>{title}</a></div>
+            {registered &&
+                <div className='text quiz-name quiz-name-text'><a className='quiz-name-text' href={"/" + props.quiz._id}>{props.quiz.title}</a></div>
             }
-            <div className='text quiz-description'>{description}</div>
-            <div className='text quiz-startTime'>{startTime}</div>
-            <div className='text quiz-duration'>{duration}</div>
-            {!this.state.registered &&
-                (this.props.past ?
+            <div className='text quiz-description'>{props.quiz.description}</div>
+            <div className='text quiz-startTime'>{props.quiz.startTime}</div>
+            <div className='text quiz-duration'>{props.quiz.duration}</div>
+            {!registered &&
+                (props.past ?
                     <div className="text not-registered">you aren't registered</div> :
-                    <div className="text quiz-register"><Btn className='register-btn' type='rounded' html='Register' onClick={this.handleModalOpen} /></div>)
+                    <div className="text quiz-register"><Btn className='register-btn' type='rounded' html='Register' onClick={handleModalOpen} /></div>)
             }
-            {this.state.registered &&
+            {registered &&
                 <div className="text registered">you are registered</div>
             }
-            {this.state.modalActive &&
+            {modalActive &&
                 <Modal modalDialogue='modalDialogue-enterQuiz'>
-                    <Btn onClick={this.handleModalClose} className="btn-popup" html='.' />
+                    <Btn onClick={handleModalClose} className="btn-popup" html='.' />
                     <div className="quiz-code">
                         <span className="code-text">Enter the code for quiz here</span>
-                        <span><input type="text" id="code-input" name="quizCode" placeholder="Eg: A3412 // leave empty incase of no-code" onChange={this.handleAccessCode} /></span>
-                        <span><Btn className="enter-quiz" html="Enter quiz" onClick={this.registerUser} /></span>
+                        <span><input type="text" id="code-input" name="quizCode" placeholder="Eg: A3412 // leave empty incase of no-code" onChange={handleAccessCode} /></span>
+                        <span><Btn className="enter-quiz" html="Enter quiz" onClick={registerUser} /></span>
                     </div>
                 </Modal>
             }

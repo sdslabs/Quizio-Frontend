@@ -40,27 +40,9 @@ export const createGroup = (groupName, creator, description) => {
 
 export const joinGroup = (groupId, accessCode) => {
     return axiosInstance.get(`/groups?join=${groupId}&code=${accessCode ? accessCode : ''}`, { json: true })
-    // .then(res => {
-    //     const body = res.data
-    //     const error = body.error || null
-    //     if (error) throw error
-    //     else return body.join
-    // })
-    // .catch(error => {
-    //     console.log(error)
-    // })
 }
 export const leaveGroup = (groupId) => {
     return axiosInstance.get(`/groups?leave=${groupId}`)
-    // .then(res => {
-    //     const body = res.data
-    //     const error = body.error || null
-    //     if (error) throw error
-    //     else return body.leave
-    // })
-    // .catch(error => {
-    //     console.log(error)
-    // })
 }
 export const fetchGroupMembers = (groupId) => {
     return axiosInstance.get(`/groups/${groupId}/members`)
