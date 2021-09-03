@@ -1,7 +1,6 @@
 import axiosInstance from './axiosInstance'
 import requestInterceptor from './requestInterceptor'
 import responseInterceptor from './responseInterceptor'
-import config from '../config/config.js';
 
 export const fetchPublicQuizzes = () => {
     return axiosInstance.get(`/home`)

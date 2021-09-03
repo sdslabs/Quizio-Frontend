@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance'
 import requestInterceptor from './requestInterceptor';
 
-let username = localStorage.getItem('username'); // DOUBT
+let username = localStorage.getItem('username'); // better way?
 
 export const fetchUserData = () => {
     return axiosInstance.get(`/users/${username}?userGroups=true&userQuizzes=true&registeredQuizzes=true`)

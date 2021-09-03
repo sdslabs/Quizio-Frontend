@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+%font-base {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+
+// TODO: define sizes using design
+.fs-xxxxlarge {
+    @extend %font-base;
+
+    font-size: 3.5rem;
+}
+
+.fs-xxxlarge {
+    @extend %font-base;
+
+    font-size: 3.25rem;
+}
+
+.fs-xxlarge {
+    @extend %font-base;
+
+    font-size: 3rem;
+}
+
+.fs-xlarge {
+    @extend %font-base;
+
+    font-size: 2.75rem;
+}
+
+.fs-large {
+    @extend %font-base;
+
+    font-size: 2.5rem;
+}
+
+.fs-xxxxxxl {
+    @extend %font-base;
+
+    font-size: 2.25rem;
+}
+
+.fs-xxxxxl {
+    @extend %font-base;
+
+    font-size: 2rem;
+}
+
+.fs-xxxxl {
+    @extend %font-base;
+
+    font-size: 1.75rem;
+}
+
+.fs-xxxl {
+    @extend %font-base;
+
+    font-size: 1.5rem !important;
+}
+
+.fs-xxl {
+    @extend %font-base;
+
+    font-size: 1.25rem !important;
+}
+
+.fs-xl {
+    @extend %font-base;
+
+    font-size: 1.125rem;
+}
+
+.fs-l {
+    @extend %font-base;
+
+    font-size: 1rem;
+}
+
+.fs-m {
+    @extend %font-base;
+
+    font-size: 0.875rem !important;
+}
+
+.fs-s {
+    @extend %font-base;
+
+    font-size: 0.75rem;
+}
+
+.fs-xs {
+    @extend %font-base;
+
+    font-size: 0.625rem;
+}
+
+.fs-xxs {
+    @extend %font-base;
+
+    font-size: 0.5rem;
+}
+
+.fw-bold {
+    font-weight: 600 !important;
+}
+
+.fw-bolder {
+    font-weight: 800 !important;
+}
+
+.fw-light {
+    font-weight: 300 !important;
+}
+
+.fw-n {
+    font-weight: normal;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
+.line-height-110 {
+    line-height: 110%;
+}
+
+.white-space-no-wrap {
+    white-space: nowrap !important;
+}

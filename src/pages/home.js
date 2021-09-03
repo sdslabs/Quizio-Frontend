@@ -1,11 +1,13 @@
 // libs
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 
 // components
 import Header from '../components/header'
 
 // apis
-import SignupAPI from '../api/signup'
+import { logout } from '../api/auth'
+import SignupAPI from '../api/auth'
 import GroupsAPI from '../api/groups'
 
 
@@ -19,9 +21,22 @@ import '../styles/modules/home.scss'
 
 
 const Home = (props) => {
-    const [authenticated, setAuthenticated] = useState(false);
+    let history = useHistory()
 
-    return (<>Quizio Home!</>);
+    const [authenticated, setAuthenticated] = useState(false);
+    
+
+    const handleLogOut = () => {
+        console.log("log out clicked!")
+        logout()
+        history.push('/')
+    }
+
+    return (
+        <>
+            <Header loggedIn={1} handleLogOut={handleLogOut} />
+        </>
+    );
 }
 export default Home
 // class Home extends Component {
@@ -39,12 +54,12 @@ export default Home
 //         this.groupsAPI = new GroupsAPI()
 //     }
 
-//     login = () => {
-//         this.signup.login(true, (res) => {
-//         }, (error) => {
-//             console.log(error)
-//         })
-//     }
+    // login = () => {
+    //     this.signup.login(true, (res) => {
+    //     }, (error) => {
+    //         console.log(error)
+    //     })
+    // }
 
 //     componentDidMount() {
 //         this.signup.checkAuthAtHome().then((res) => {

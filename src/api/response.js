@@ -2,7 +2,6 @@ import axiosInstance from './axiosInstance'
 import requestInterceptor from './requestInterceptor'
 import responseInterceptor from './responseInterceptor'
 
-
 export const fetchQuizResponse = (id, query) => {
     return axiosInstance.get(`/responses/${id}/${query}`)
     // .then((res) => {

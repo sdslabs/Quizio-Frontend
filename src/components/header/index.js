@@ -1,57 +1,52 @@
-import React, { Component } from 'react'
-import Logo from './logo'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from "react-router-dom";
+import { Row, Col, Container } from 'react-bootstrap';
 import '../../styles/modules/header.scss'
-class Header extends Component {
-    submit = () => {
-        this.props.loginFunction()
+
+const Header = (props) => {
+
+    let history = useHistory()
+    const arena = props.arena // what is arena?
+    const loggedIn = props.loggedIn
+    const givingQuiz = props.givingQuiz
+    const imageUrl = props.imageUrl || 'https://upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg'
+    const [name, setName] = useState("");
+
+    useEffect(() => {
+        let name = localStorage.getItem('username')
+        setName(name)
+    }, [])
+
+
+    const redirectToHome = () => {
+        !arena && history.push("/")
     }
 
-    exitQuiz = () => {
-        this.props.exitQuizFunction()
+    const redirectToProfile = () => {
+        history.push("/users/profile")
     }
 
-    redirectProfile(){
-        window.location="/users/profile";
-    }
-    render() {
-        const {logo, bar, msg, icon } = this.props
-        let name= this.props.signinPage === true?  " " : localStorage.getItem('username').toString();
-        let initials = name.charAt(0).toUpperCase();
-        const loginStatus = this.props.loginStatus;
-        const exitQuizBtn = this.props.exitQuizBtn || false;
+    return (
+        <Container fluid>
+            <Row className="header">
+                <Col xs={1} className="logo text-center" onClick={redirectToHome}>Quizio</Col>
+                <Col xs={7} className="search-bar text-center">
+                    {loggedIn && <>...Search Bar here...</>}
+                </Col>
+                <Col xs={2} className="name text-center">
+                    {loggedIn && <>Welcome {name} !</>}
+                </Col>
+                <Col xs={1} className="d-flex align-items-center justify-content-center">
+                    <img src={imageUrl} className="profile" onClick={redirectToProfile}></img>
+                </Col>
+                <Col xs={1}>
+                    {loggedIn && <button className="logbutton" onClick={props.handleLogOut}>Logout</button>}
+                    {givingQuiz && <button className="exitQuizButton" onClick={props.handleSubmitQuiz}>Submit Quiz</button>}
+                </Col>
 
-        let button, exitBtn;
-        if(loginStatus === true){
-            button = <button className = "logbutton" onClick = {this.submit}>Logout</button>
-        }
-
-        if(exitQuizBtn) {
-            exitBtn = <button className = "exitQuizButton" onClick = {this.exitQuiz}>Submit Quiz</button>
-        }
-
-        return (
-          <div className="header flex">
-            {
-                logo ? <Logo arena={this.props.arena} className="header-logo" /> : ''
-            }
-            
-             {/* <div className="usernameStyle"> Welcome {name} !</div>  */}
-            <div className = 'left-header'>
-                    {
-                        !this.props.noProfile ?
-                        <div className = "profile-pic-header-container" onClick = {this.redirectProfile}>
-                            <div className = "profile-pic-header">{initials}</div>
-                        </div> :
-                        ''
-                    }
-                    {exitBtn}
-                
-                    {button}
-            </div>
-            </div>
-        )
-    }
+            </Row>
+        </Container>
+    )
 }
 
 export default Header
-//

@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { withCookies } from 'react-cookie';
 import axios from 'axios'
-
 // pages
 import Home from './pages/home'
 /*
@@ -18,9 +17,9 @@ import Users from './pages/users'
 import AdminPanel from './pages/admin';
 import createQuiz from './pages/createQuiz';
 */
-
 // styles
 import './styles/main.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // config
 import config from './config/config.js';

@@ -2,17 +2,13 @@ import axiosInstance from './axiosInstance'
 import cookie from 'react-cookies'
 import requestInterceptor from './requestInterceptor'
 import responseInterceptor from './responseInterceptor'
-import {fetchPublicQuizzes} from './quizzes'
+import { fetchPublicQuizzes } from './quizzes'
 import config from '../config/config.js'
-
-const baseURL = config.API.baseURL + 'auth/'
-
 
 axiosInstance.defaults.withCredentials = true // can remove line?
 
 let jwt = require('jsonwebtoken')
 const JWT_KEY = config.AUTH.jwt_key;
-let loginURL;
 
 export const submit = (username, name, bio, org, num, enrl, course, codeforces, codechef, github) => {
     let postData = {
@@ -29,18 +25,18 @@ export const submit = (username, name, bio, org, num, enrl, course, codeforces, 
     };
 
     return axiosInstance.post(`/auth/signup`, postData)
-        // .then(res => {
-        //     const body = res.data
-        //     if (body.success === false) {
-        //         return res.data.error
-        //     }
-        //     else {
-        //         window.location = "/signin";
-        //     }
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        // })
+    // .then(res => {
+    //     const body = res.data
+    //     if (body.success === false) {
+    //         return res.data.error
+    //     }
+    //     else {
+    //         window.location = "/signin";
+    //     }
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    // })
 }
 
 export const checkAuthAtHome = () => {
@@ -48,26 +44,35 @@ export const checkAuthAtHome = () => {
     return fetchPublicQuizzes();
 }
 
+export const logout = () => {
+    
+    cookie.remove('token')
+    localStorage.removeItem("username");
+    
+    axiosInstance.interceptors.response.eject(responseInterceptor);
+    return axiosInstance.get(`/auth/logout`)
+}
+
 export const login = (loginStatus) => {
     axiosInstance.interceptors.response.eject(responseInterceptor);
-    
-    return axiosInstance.get(loginStatus ? `/auth/logout/` : `/auth/signin`)
-        // .then(res => {
-        //     const body = res.data
-        //     if (body.success === false) throw body.error
-        //     else {
-        //         if (loginStatus === true) {
-        //             window.location = "/"
-        //             cookie.remove('token')
-        //             localStorage.removeItem("username");
 
-        //         }
-        //         return body;
-        //     }
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        // })
+    return axiosInstance.get(loginStatus ? `/auth/logout/` : `/auth/signin`)
+    // .then(res => {
+    //     const body = res.data
+    //     if (body.success === false) throw body.error
+    //     else {
+    //         if (loginStatus === true) {
+    //             window.location = "/"
+    //             cookie.remove('token')
+    //             localStorage.removeItem("username");
+
+    //         }
+    //         return body;
+    //     }
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    // })
 }
 
 export const giveUsername = () => {
