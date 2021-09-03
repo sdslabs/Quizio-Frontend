@@ -8,7 +8,7 @@ const Header = (props) => {
 
     let history = useHistory()
     const arena = props.arena // what is arena?
-    const loggedIn = props.loggedIn
+    const authenticated = props.authenticated
     const givingQuiz = props.givingQuiz
     const imageUrl = props.imageUrl || 'https://upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg'
     const [name, setName] = useState("");
@@ -32,16 +32,16 @@ const Header = (props) => {
             <Row className="header">
                 <Col xs={1} className="logo text-center" onClick={redirectToHome}>Quizio</Col>
                 <Col xs={7} className="search-bar text-center">
-                    {loggedIn && <>...Search Bar here...</>}
+                    {authenticated && <>...Search Bar here...</>}
                 </Col>
                 <Col xs={2} className="name text-center">
-                    {loggedIn && <>Welcome {name} !</>}
+                    {authenticated && <>Welcome {name} !</>}
                 </Col>
                 <Col xs={1} className="d-flex align-items-center justify-content-center">
                     <img src={imageUrl} className="profile" onClick={redirectToProfile}></img>
                 </Col>
                 <Col xs={1}>
-                    {loggedIn && loggedIn && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
+                    {authenticated && authenticated && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
                     {givingQuiz && <button className="exit" onClick={props.handleSubmitQuiz}>Submit Quiz <img src={exitIcon} /> </button>}
                 </Col>
             </Row>
