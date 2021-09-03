@@ -34,6 +34,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = baseURL;
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = baseURL;
 
+axios.defaults.headers.get['Access-Control-Allow-Origin'] = "http://localhost:3002/";
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = "http://localhost:3002/";
+
 class App extends Component {
   render() {
     return (

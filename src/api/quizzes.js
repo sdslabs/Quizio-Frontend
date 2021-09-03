@@ -4,21 +4,6 @@ import responseInterceptor from './responseInterceptor'
 
 export const fetchPublicQuizzes = () => {
     return axiosInstance.get(`/home`)
-    // .then(res => {
-    //     let body = res.data
-    //     if(body.error) throw body.error
-    //     if(body.quizData){
-    //         for(let i = 0; i<body.quizData.length; i++){
-    //             body.quizData[i].startTime = new Date(body.quizData[i].startTime)
-    //             body.quizData[i].endTime = new Date(body.quizData[i].endTime)
-    //             body.quizData[i].duration =  (body.quizData[i].endTime - body.quizData[i].startTime) / (1000 * 60)
-    //         }
-    //     }
-    //     return body
-    // })
-    // .catch(err => {
-    //     console.log(err)
-    // });
 }
 
 export const createQuiz = (quiz) => {
