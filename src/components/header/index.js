@@ -41,7 +41,7 @@ const Header = (props) => {
                     <img src={imageUrl} className="profile" onClick={redirectToProfile}></img>
                 </Col>
                 <Col xs={1}>
-                    {authenticated && authenticated && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
+                    {authenticated && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
                     {givingQuiz && <button className="exit" onClick={props.handleSubmitQuiz}>Submit Quiz <img src={exitIcon} /> </button>}
                 </Col>
             </Row>

@@ -70,12 +70,10 @@ const Home = (props) => {
         //change quizV2 so that it does not need the username parameter
         let username = localStorage.getItem('username')
         let groups = await fetchGroupsForUser(username)
-
-        setGroups(groups.data.groups)
+        groups.data.groups && setGroups(groups.data.groups)
     }
 
     const handleLogOut = () => {
-        console.log("log out clicked!")
         logout()
         history.push('/')
     }
@@ -89,22 +87,22 @@ const Home = (props) => {
                         <div className='flex space-evenly lower-res'>
                             <div className='flex table-container'>
                                 <TableHeading value='Ongoing Quizzes' />
-                                {this.state.ongoingQuizzes.length ?
+                                {ongoingQuizzes.length ?
                                     <Table headRow='true' quizzes={ongoingQuizzes} past={false} /> :
                                     <NoQuizzes showImg={true} section='No Ongoing Quizzes' />
                                 }
                                 <TableHeading value='Upcoming Quizzes' />
-                                {this.state.upcomingQuizzes.length ?
+                                {upcomingQuizzes.length ?
                                     <Table headRow='true' quizzes={upcomingQuizzes} past={false} /> :
                                     <NoQuizzes showImg={true} section='No Upcoming Quizzes' />
                                 }
                                 <TableHeading value='Past Quizzes' />
-                                {this.state.pastQuizzes.length ?
-                                    <Table headRow='true' quizzes={this.state.pastQuizzes} past={true} /> :
+                                {pastQuizzes.length ?
+                                    <Table headRow='true' quizzes={pastQuizzes} past={true} /> :
                                     <NoQuizzes showImg={true} section='No Past Quizzes' />
                                 }
                             </div>
-                            <GroupsCard home={true} groups={this.state.groups} />
+                            <GroupsCard home={true} groups={groups} />
                         </div>
                     </div>
                 </div>
@@ -114,39 +112,3 @@ const Home = (props) => {
     );
 }
 export default Home
-
-
-//     componentDidMount() {
-
-//             return (
-//                 <div>
-//                     <Header logo loginStatus={true} loginFunction={this.login} />
-//                     <div className='flex column space-around home-res'>
-//                         <div className='flex space-evenly lower-res'>
-//                             <div className='flex table-container'>
-//                                 <TableHeading value='Ongoing Quizzes' />
-//                                 {this.state.ongoingQuizzes.length ?
-//                                     <Table headRow='true' quizzes={this.state.ongoingQuizzes} past={false} /> :
-//                                     <NoQuizzes showImg={true} section='No Ongoing Quizzes' />
-//                                 }
-//                                 <TableHeading value='Upcoming Quizzes' />
-//                                 {this.state.upcomingQuizzes.length ?
-//                                     <Table headRow='true' quizzes={this.state.upcomingQuizzes} past={false} /> :
-//                                     <NoQuizzes showImg={true} section='No Upcoming Quizzes' />
-//                                 }
-//                                 <TableHeading value='Past Quizzes' />
-//                                 {this.state.pastQuizzes.length ?
-//                                     <Table headRow='true' quizzes={this.state.pastQuizzes} past={true} /> :
-//                                     <NoQuizzes showImg={true} section='No Past Quizzes' />
-//                                 }
-//                             </div>
-//                             <GroupsCard home={true} groups={this.state.groups} />
-//                         </div>
-//                     </div>
-//                 </div>
-//             )
-//         }
-//     }
-// }
-
-

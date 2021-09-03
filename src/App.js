@@ -5,14 +5,14 @@ import { withCookies } from 'react-cookie';
 import axios from 'axios'
 // pages
 import Home from './pages/home'
+import Signin from './pages/signin';
+import Signup from './pages/signup';
 /*
 import Groups from './pages/groups'
 import Arena from './pages/arena'
 import Members from './pages/members'
 import Results from './pages/results'
 import UserResults from './pages/userResult';
-import Signup from './pages/signup';
-import Signin from './pages/signin';
 import Users from './pages/users'
 import AdminPanel from './pages/admin';
 import createQuiz from './pages/createQuiz';
@@ -42,9 +42,9 @@ class App extends Component {
     return (
       <Switch>
         <Route exact path='/' component={Home} />
-        {/* <Route exact path='/groups' component={Groups} />
-        <Route exact path='/signup' component={Signup} />
         <Route exact path='/signin' component={Signin} />
+        <Route exact path='/signup' component={Signup} />
+        {/* <Route exact path='/groups' component={Groups} />
         <Route exact path='/admin/:quizId' component={AdminPanel} />
         <Route exact path='/createQuiz' component={createQuiz} />
 

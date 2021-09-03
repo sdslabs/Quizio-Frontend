@@ -26,11 +26,13 @@ const GroupsCard = (props) => {
                         <Btn className="submit-btn-create-quiz"
                             type="rounded"
                             html="Create Quiz"
-                            onClick={this.createQuiz}
+                            onClick={createQuiz}
                         />
                     </div>
-                    <div className='group-card-home-title-container'><div className='group-card-home-title'>Your Groups</div></div>
-                    {Array.isArray(groups[0]) && groups[0].length ?
+                    <div className='group-card-home-title-container'>
+                        <div className='group-card-home-title'>Your Groups</div>
+                    </div>
+                    {groups && groups.length ?
                         <HomeCard groups={groups} /> :
                         <NoQuizzes showImg={false} section='You Are Not In Any Groups' />
                     }
@@ -49,7 +51,7 @@ const GroupsCard = (props) => {
                                     status="Join group"
                                     key={index}
                                     className={className}
-                                    state={this.props.state}
+                                    state={props.state}
                                 />
                             )
                         })
