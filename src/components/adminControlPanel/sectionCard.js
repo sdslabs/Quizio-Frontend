@@ -2,66 +2,55 @@ import React, { Component } from 'react'
 import Btn from '../buttons/btn'
 import QuestionBtn from './questionBtn'
 
-export default class SectionCard extends Component {
-    sectionClicked = () => {
-        this.props.change('s', this.props.section.sno)
+const SectionCard = (props) => {
+
+    const sectionClicked = () => {
+        props.change('s', props.section.sno)
     }
 
-    createSection = () => {
-        this.props.create('s')
+    const createSection = () => {
+        props.create('s')
     }
 
-    render() {
-        // console.log(this.props, 'section')
-        if(this.props.action === 'create'){
-            return (
-                <div className="section-card ">
-                    <div className="section-title-container">
-                        <Btn className={"section-title"}
-                            html={"New Section"}
-                            onClick={this.createSection} 
-                        />
-                    </div>
-                </div>
-            )
-        }
-        else{
-            let sectionClassName = "section-title "
-            let type = "rounded"
-            if (this.props.section.active) {
-                sectionClassName += "section-active highlight-thin"
-                type = ""
-            }
-            return (
-                <div className="section-card ">
-                    <div className="section-title-container">
-                        <Btn className={sectionClassName}
-                            html={this.props.section.title || "No Title!"}
-                            onClick={this.sectionClicked}
-                            type={type}
-                        />
-                    </div>
-                    <div className="questions-card flex wrap">
-                        {
-                            this.props.section.questions.map((question, questionNo) => {
-                                return (
-                                    <QuestionBtn question={question} action='edit'
-                                        key={'edit' + question.qid}
-                                        change={this.props.change}
-                                    />
-                                )
-                            })
-                        }
-                        {/* doesn't need the key though :p */}
-                        <QuestionBtn action='create'
-                                key= {'createq' + this.props.section.sid}
-                                create={this.props.create}
-                                sno={this.props.section.sno}
-                                sid={this.props.section.sid}
-                        />
-                    </div>
-                </div>
-            )
-        }
-    }
+    return (props.action === 'create' ? (
+        <div className="section-card ">
+            <div className="section-title-container">
+                <Btn className={"section-title"}
+                    html={"New Section"}
+                    onClick={createSection}
+                />
+            </div>
+        </div>
+    ) : (
+        <div className="section-card ">
+            <div className="section-title-container">
+                <Btn className={props.section.active ? "section-title section-active highlight-thin" : "section-title"}
+                    html={props.section.title || "No Title!"}
+                    onClick={sectionClicked}
+                    type={props.section.active ? "" : "rounded"}
+                />
+            </div>
+            <div className="questions-card flex wrap">
+                {
+                    props.section.questions.map((question, questionNo) => {
+                        return (
+                            <QuestionBtn question={question} action='edit'
+                                key={'edit' + question.qid}
+                                change={props.change}
+                            />
+                        )
+                    })
+                }
+                {/* doesn't need the key though :p */}
+                <QuestionBtn action='create'
+                    key={'createq' + props.section.sid}
+                    create={props.create}
+                    sno={props.section.sno}
+                    sid={props.section.sid}
+                />
+            </div>
+        </div>
+    ))
 }
+
+export default SectionCard

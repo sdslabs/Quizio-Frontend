@@ -12,27 +12,42 @@ const Signin = () => {
     const [authenticated, setAuthenticated] = useState(false)
 
     useEffect(() => {
-        console.log("checking auth at home: ",)
-        checkAuthAtHome()
+        console.log("login: ",)
+
+        login()
             .then((res) => {
                 res = res.data
-                console.log("auth: ", !res.registered)
-                if (!res.registered) {
-                    console.log("not registered!")
-                    history.push("/signup")
-                }
-                login()
-                    .then((res) => {
-                        res = res.data
+                console.log(res)
 
-                        if (res.success) {
-                            localStorage.setItem('username', res.username);
-                            cookie.save('token', res.token, { path: '/' })
-                            setAuthenticated(true)
-                            history.push("/")
-                        }
-                    })
+                // if (res.success) {
+                //     localStorage.setItem('username', res.username);
+                //     cookie.save('token', res.token, { path: '/' })
+                //     setAuthenticated(true)
+                //     history.push("/")
+                // }
             })
+
+
+        // checkAuthAtHome()
+        //     .then((res) => {
+        //         res = res.data
+        //         console.log("auth: ", !res.registered)
+        //         // if (!res.registered) {
+        //         //     console.log("not registered!")
+        //         //     history.push("/signup")
+        //         // }
+        //         login()
+        //             .then((res) => {
+        //                 res = res.data
+
+        //                 if (res.success) {
+        //                     localStorage.setItem('username', res.username);
+        //                     cookie.save('token', res.token, { path: '/' })
+        //                     setAuthenticated(true)
+        //                     history.push("/")
+        //                 }
+        //             })
+        //     })
     }, [])
 
     return (

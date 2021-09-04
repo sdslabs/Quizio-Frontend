@@ -17,7 +17,7 @@ export const checkAuthAtHome = () => {
 }
 
 
-export const submit = (username, name, bio, org, num, enrl, course, codeforces, codechef, github) => {
+export const signup = (username, name, bio, org, num, enrl, course, codeforces, codechef, github) => {
     let postData = {
         username: username,
         name: name,
@@ -49,7 +49,7 @@ export const submit = (username, name, bio, org, num, enrl, course, codeforces, 
 /// login into quizio
 export const login = () => {
 
-    axiosInstance.interceptors.response.eject(responseInterceptor);
+    // axiosInstance.interceptors.response.eject(responseInterceptor);
     return axiosInstance.get(`/auth/signin`)
 }
 

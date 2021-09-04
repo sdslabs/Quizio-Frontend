@@ -1,9 +1,9 @@
 import React, { Component, useState } from 'react'
 import Header from '../components/header'
-import SignupAPI from '../api/signup'
 import SignupForm from '../components/signupform'
 import Modal from '../components/popup'
 import Btn from '../components/buttons/btn.js'
+import { signup } from '../api/auth'
 import '../styles/modules/signupForm.scss'
 
 const Signup = () => {
@@ -27,94 +27,72 @@ const Signup = () => {
 
 
     const handleChange = (event) => {
-        let userData = {...user};
+        let userData = { ...user };
         const prop = event.target.name;
         userData[prop] = event.target.value;
-
         setUser(userData)
     }
 
-    submit = (username, name, bio, org, num, enrl, course, codeforces, codechef, github) => {
+    const handleSignup = (username, name, bio, org, num, enrl, course, codeforces, codechef, github) => {
         let phoneno = /^\d{10}$/;
-        this.setState(
-            {
-                submitState: 1,
-            }
-        )
+
+        setSubmitState(1)
+
         if (!username || name === " ") {
-            this.setState(
-                {
-                    modalActive: true,
-                    req_error: "Username and First-Name are required fields", //Can be better .
-                }
-            )
+            setModalActive(true)
+            setModalMsg("Username and First-Name are required fields")
+
+        } else if (course === "") {
+            setModalActive(true)
+            setModalMsg("Course Name is a required field")
+
+        } else if (!num.match(phoneno)) {
+            setModalActive(true)
+            setModalMsg("Please enter a valid Contact Number")
+
+        } else {
+            signup(username, name, bio, org, num, enrl, course, codeforces, codechef, github)
+                .then((error) => {
+                    console.log(error)
+                    if (error.code === 11000) {
+                        setModalActive(true)
+                        setModalMsg("Username already taken. Please try with different username")
+
+                    } else {
+                        setModalActive(true)
+                        setModalMsg(error.details[0].message)
+                    }
+                })
         }
-        else if (course === "") {
-            this.setState(
-                {
-                    modalActive: true,
-                    req_error: "Course Name is a required field", //Can be better .
-                }
-            )
-        }
-        else if (!num.match(phoneno)) {
-            this.setState(
-                {
-                    modalActive: true,
-                    req_error: "Please enter a valid Contact Number",
-                }
-            )
-        }
-        else {
-            this.signup.submit(username, name, bio, org, num, enrl, course, codeforces, codechef, github).then((error) => {
-                console.log(error)
-                if (error.code === 11000) {
-                    this.setState({
-                        modalActive: true,
-                        req_error: "Username already taken. Please try with different username"
-                    })
-                } else {
-                    this.setState({
-                        modalActive: true,
-                        req_error: error.details[0].message
-                    })
-                }
+    }
+    const handleModalClose = () => {
+        setModalActive(false);
+    }
 
 
-            })
-        }
-    }
-    handleModalClose(){
-        this.setState({
-            modalActive: false,
-        }
-        )
-    }
-    render() {
-        return (
-            <div>
-                <Header logo signinPage={true} noProfile={true} />
-                <SignupForm onSubmit={this.submit} onChange={this.handleChange}
-                    username={this.state.userData.username}
-                    name={this.state.userData.fname + " " + this.state.userData.lname}
-                    bio={this.state.userData.bio}
-                    num={this.state.userData.num}
-                    org={this.state.userData.org}
-                    enrl={this.state.userData.enrl}
-                    course={this.state.userData.course}
-                    codeforces={this.state.userData.codeforces}
-                    codechef={this.state.userData.codechef}
-                    github={this.state.userData.github}
-                />
-                {this.state.modalActive &&
-                    <Modal>
-                        <Btn onClick={this.handleModalClose} className="btn-popup" html='.' />
-                        <div className="alert-signup-popup"> {this.state.req_error}</div>
-                    </Modal>
-                }
-            </div>
-        )
-    }
+    return (
+        <div>
+            <Header logo signinPage={true} noProfile={true} />
+            <SignupForm onSubmit={handleSignup} onChange={handleChange}
+                username={user.username}
+                name={user.fname + " " + user.lname}
+                bio={user.bio}
+                num={user.num}
+                org={user.org}
+                enrl={user.enrl}
+                course={user.course}
+                codeforces={user.codeforces}
+                codechef={user.codechef}
+                github={user.github}
+            />
+            {modalActive &&
+                <Modal>
+                    <Btn onClick={handleModalClose} className="btn-popup" html='.' />
+                    <div className="alert-signup-popup"> {modalMsg}</div>
+                </Modal>
+            }
+        </div>
+    )
 }
 
 export default Signup;

@@ -7,6 +7,7 @@ import axios from 'axios'
 import Home from './pages/home'
 import Signin from './pages/signin';
 import Signup from './pages/signup';
+import Auth from './components/auth'
 /*
 import Groups from './pages/groups'
 import Arena from './pages/arena'
@@ -44,6 +45,7 @@ class App extends Component {
         <Route exact path='/' component={Home} />
         <Route exact path='/signin' component={Signin} />
         <Route exact path='/signup' component={Signup} />
+        <Route exact path='/testauth' component={Auth} />
         {/* <Route exact path='/groups' component={Groups} />
         <Route exact path='/admin/:quizId' component={AdminPanel} />
         <Route exact path='/createQuiz' component={createQuiz} />

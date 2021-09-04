@@ -1,78 +1,82 @@
-import React, { Component } from 'react'
+import React from 'react'
 import SectionCard from './sectionCard'
 import Btn from '../buttons/btn'
 import '../../styles/modules/controlPanel.scss'
+import { useHistory } from 'react-router'
 
 
-export default class ControlPanel extends Component {
-    editQuiz = () => {
-        this.props.change('quiz', null, null)
+const ControlPanel = (props) => {
+
+    let history = useHistory()
+
+    const editQuiz = () => {
+        props.change('quiz', null, null)
     }
 
-    showRegistrants = () => {
-        this.props.change('registrants', null, null)
+    const showRegistrants = () => {
+        props.change('registrants', null, null)
     }
 
-    autoCheck = () => {
-        this.props.change('autoCheck', null, null)
-        this.props.autoCheck()
+    const autoCheck = () => {
+        props.change('autoCheck', null, null)
+        props.autoCheck()
     }
 
-    openResults = () => {
-        window.location = '/results/' + this.props.quizId;
+    const openResults = () => {
+        history.push(`/results/${props.quizId}`)
     }
 
-    render() {
-        return (
-            <div className="cp">
-                <div className="cp-info">
-                    <div className="cp-info-heading">
-                        Select the section that you wish to change.
-                    </div>
-                </div>
-                <div className="section-card ">
-                    <div className="section-title-container">
-                        <Btn className={"section-title"}
-                            html={"Edit Quiz Details"}
-                            onClick={this.editQuiz} 
-                        />
-                    </div>
-                </div>
-                <div className="section-card ">
-                    <div className="section-title-container">
-                        <Btn className={"section-title"}
-                            html={"Show Registrants"}
-                            onClick={this.showRegistrants} 
-                        />
-                    </div>
-                </div>
-                {
-                    this.props.quiz.map((section, sectionNo) => {
-                        return (
-                            <SectionCard action='edit' section={section} key={'edit' + section.sid} change={this.props.change} create={this.props.create} />
-                        )
-                    })
-                }
-                <SectionCard action='create' create={this.props.create} />
-                <div className="section-card ">
-                    <div className="section-title-container">
-                        <Btn className={"section-title"}
-                            html={"Auto Check"}
-                            onClick={this.autoCheck}
-                            type={"rounded"}
-                        />
-                    </div>
-                </div>
-                <div className="section-card ">
-                    <div className="section-title-container">
-                        <Btn className='section-title'
-                            type = 'rounded'
-                            html='Results'
-                            onClick={this.openResults}
-                        />
-                    </div>
+    return (
+        <div className="cp">
+            <div className="cp-info">
+                <div className="cp-info-heading">
+                    Select the section that you wish to change.
                 </div>
             </div>
-        )
-    }
+            <div className="section-card ">
+                <div className="section-title-container">
+                    <Btn className={"section-title"}
+                        html={"Edit Quiz Details"}
+                        onClick={editQuiz}
+                    />
+                </div>
+            </div>
+            <div className="section-card ">
+                <div className="section-title-container">
+                    <Btn className={"section-title"}
+                        html={"Show Registrants"}
+                        onClick={showRegistrants}
+                    />
+                </div>
+            </div>
+            {
+                props.quiz.map((section, sectionNo) => {
+                    return (
+                        <SectionCard action='edit' section={section} key={'edit' + section.sid} change={props.change} create={props.create} />
+                    )
+                })
+            }
+            <SectionCard action='create' create={props.create} />
+            <div className="section-card ">
+                <div className="section-title-container">
+                    <Btn className={"section-title"}
+                        html={"Auto Check"}
+                        onClick={autoCheck}
+                        type={"rounded"}
+                    />
+                </div>
+            </div>
+            <div className="section-card ">
+                <div className="section-title-container">
+                    <Btn className='section-title'
+                        type='rounded'
+                        html='Results'
+                        onClick={openResults}
+                    />
+                </div>
+            </div>
+        </div>
+    )
 }
+
+export default ControlPanel
