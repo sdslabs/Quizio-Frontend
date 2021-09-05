@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../../styles/modules/header.scss'
 
- export default class TableHeading extends Component {
-    render() {
-        return (
-            <div className='heading' >
-                <div className='logo heading-logo'>{this.props.value}</div>
-            </div>
-        )
-    }
+const TableHeading = (props) => {
+
+    return (
+        <div className='heading' >
+            <div className='logo heading-logo'>{props.value}</div>
+        </div>
+    )
+
 }
+
+export default TableHeading

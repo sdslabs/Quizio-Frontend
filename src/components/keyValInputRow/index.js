@@ -1,30 +1,30 @@
 import React, { Component } from 'react'
 import '../../styles/modules/keyValInputRow.scss'
 
-export default class KeyValInputRow extends Component {
-    render() {
-        return (
-            <div className = "flex row formRow">
-                <div className = "inputTitleContainer">
-                    <div className = "inputTitle">{this.props.title}</div>
-                </div>
-                {this.props.type=="checkbox" && 
-                    <input className = "inputBox" 
-                    type = {this.props.type} 
-                    name = {this.props.name} 
-                    checked = {this.props.checked}
-                    onChange = {this.props.onChange} />
-                }
-                {this.props.type!="checkbox" &&
-                    <input className = "inputBox" 
-                    type = {this.props.type} 
-                    placeholder = {this.props.placeholder || ''} 
-                    name = {this.props.name} 
-                    value = {this.props.value} 
-                    onChange = {this.props.onChange} 
-                    readOnly = {this.props.readOnly || false}/>
-                }
+const KeyValInputRow = (props) => {
+    return (
+        <div className="flex row formRow">
+            <div className="inputTitleContainer">
+                <div className="inputTitle">{props.title}</div>
             </div>
-        )
-    }
+            {props.type == "checkbox" &&
+                <input className="inputBox"
+                    type={props.type}
+                    name={props.name}
+                    checked={props.checked}
+                    onChange={props.onChange} />
+            }
+            {props.type != "checkbox" &&
+                <input className="inputBox"
+                    type={props.type}
+                    placeholder={props.placeholder || ''}
+                    name={props.name}
+                    value={props.value}
+                    onChange={props.onChange}
+                    readOnly={props.readOnly || false} />
+            }
+        </div>
+    )
+
 }
+export default KeyValInputRow

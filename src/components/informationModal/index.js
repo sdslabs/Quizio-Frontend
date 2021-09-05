@@ -1,37 +1,45 @@
-import React, { Component } from 'react'
+import React from 'react'
 import MarkDown from '../../parser/markdown'
 
-export default class InformationModal extends Component {
-    render() {
-        let announcement
-        if (this.props.state === 'past') {
+const InformationModal = (props) => {
+    let announcement
+    switch (props.state) {
+        case "past":
             announcement = "This quiz is yet to start"
-        } else if (this.props.state === 'future') {
+            break;
+        case "future":
             announcement = "This quiz is over"
-        } else if (this.props.state === 'over') {
+            break;
+
+        case "over":
             announcement = "This quiz is over for you! Try to contact the ADMINS if you exited the quiz by mistake!"
-        }
-        return (
-            <div className="information-modal">
-                <div className="information-modal-heading center-text">
-                    {announcement}
+            break;
+
+        default:
+            break;
+    }
+
+    return (
+        <div className="information-modal">
+            <div className="information-modal-heading center-text">
+                {announcement}
+            </div>
+            <div className="information-modal-body">
+                <div className="quiz-timing-information align-center">
+                    <MarkDown code={props.description} />
                 </div>
-                <div className="information-modal-body">
-                    <div className="quiz-timing-information align-center">
-                        <MarkDown code={this.props.description}/>
-                    </div>
-                    <div className="quiz-timing-information align-center">
-                        <div className="bold">Instructions </div>
-                        <MarkDown code={this.props.instructions}/>
-                    </div>
-                    <div className="quiz-timing-information align-center">
-                        <span className="bold">Start time: </span>{this.props.startTime}<br />
-                        <span className="bold">End time: </span>{this.props.endTime}<br />
-                        <span className="bold">Duration: </span>{this.props.duration}
-                    </div>
+                <div className="quiz-timing-information align-center">
+                    <div className="bold">Instructions </div>
+                    <MarkDown code={props.instructions} />
+                </div>
+                <div className="quiz-timing-information align-center">
+                    <span className="bold">Start time: </span>{props.startTime}<br />
+                    <span className="bold">End time: </span>{props.endTime}<br />
+                    <span className="bold">Duration: </span>{props.duration}
                 </div>
             </div>
+        </div>
 
-        )
-    }
+    )
 }
+export default InformationModal

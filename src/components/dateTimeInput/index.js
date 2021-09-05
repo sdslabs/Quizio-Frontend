@@ -1,29 +1,27 @@
-import React,  {Component} from 'react';
-import "react-datetime/css/react-datetime.css";
+import React, { Component } from 'react';
 import Datetime from "react-datetime";
 import moment from "moment";
+import "react-datetime/css/react-datetime.css";
 
-class DateTimeInput extends Component {
+const DateTimeInput = (props) => {
     // need onChange function(for input value) and initValue as props
-    render() {
-        let yesterday = moment().subtract(1, "day");
+    let yesterday = moment().subtract(1, "day");
 
-        function valid(current) {
-            return current.isAfter(yesterday);
-        }
+    const valid = (current) => {
+        return current.isAfter(yesterday);
+    }
 
-        return <Datetime 
-            isValidDate={valid} 
-            timeFormat="HH:mm:ss A" 
-            timeConstraints={{
+    return <Datetime
+        isValidDate={valid}
+        timeFormat="HH:mm:ss A"
+        timeConstraints={{
             hours: { min: 1, max: 12 },
             minutes: { min: 0, max: 59 },
             seconds: { min: 0, max: 59 }
-            }} 
-            onChange={this.props.onChange} 
-            initialValue={this.props.initValue || moment()}
-        />;
-    }
+        }}
+        onChange={props.onChange}
+        initialValue={props.initValue || moment()}
+    />;
 }
 
 export default DateTimeInput

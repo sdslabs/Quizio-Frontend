@@ -1,28 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import '../styles/modules/quizAttemptSpace.scss'
 
-export default class MarkDown extends Component {
-    constructor (props) {
-        super(props)
-        this.state = { md: this.props.code }
-    }
+const MarkDown = (props) => {
 
-    static getDerivedStateFromProps(newProps) {
+    const [md, setMd] = useState(props.code)
+
+    const getDerivedStateFromProps = (newProps) => {
         return {
             md: newProps.code
         }
     }
 
-    render() {
-        let { md } = this.state
-        if(md == null) {
-            return null
-        }
-        return (
+    return (
+        md ? (
             <div className="inline markdown-inline">
-                <ReactMarkdown source={md} escapeHtml={!this.props.keepHtml}/>
+                <ReactMarkdown source={md} escapeHtml={!props.keepHtml} />
             </div>
-        )
-    }
+        ) : null
+    )
 }
+
+export default MarkDown

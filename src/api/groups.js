@@ -73,13 +73,4 @@ export const updateGroup = (groupId, update) => {
         postdata['addMembers'] = [update.addMembers]
     }
     return axiosInstance.post(`/groups/${groupId}`, postdata)
-    // .then(res => {
-    //     let body = res.data
-    //     const error = body.error || null
-    //     if (error) throw error
-    //     else return body
-    // })
-    // .catch((error) => {
-    //     console.log(error)
-    // })
 }

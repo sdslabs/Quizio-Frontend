@@ -1,34 +1,33 @@
-import React,  {Component} from 'react';
+import React from 'react';
 import '../../styles/modules/createdQuizTable.scss'
-const config = require('../../config/config.json')
+import config from '../../config/config'
 
-class CreatedQuizList extends Component
-{
-    adminPanelLink(){
-        return config.baseURL + 'admin/' +  this.props.id
+const CreatedQuizList = (props) => {
+
+    // TODO: use onClick instead of href
+    const adminPanelLink = () => {
+        return config.baseURL + 'admin/' + props.id
     }
-    resultPaneLine(){
-        return config.baseURL + 'results/' +  this.props.id
+    const resultPaneLine = () => {
+        return config.baseURL + 'results/' + props.id
     }
-    render(){
-        return( 
-            <div>
-                <div className = "container-quiz">
-                    <div className = "info-tab">   
-                    <a href = {this.adminPanelLink()} className = "link-quiz">{this.props.name}</a>
-                    </div>
-                    <div className = "info-tab">   
-                        {this.props.date}
-                    </div>
-                    <div className = "info-tab">   
-                        {this.props.group ? this.props.group : 'Public' }
-                    </div>
-                    <div className = "info-tab">   
-                        <a href = {this.resultPaneLine()} className = "link1">View Results</a>
-                    </div>
+    return (
+        <div>
+            <div className="container-quiz">
+                <div className="info-tab">
+                    <a href={adminPanelLink()} className="link-quiz">{props.name}</a>
                 </div>
-            </div>    
-        )
-    }
+                <div className="info-tab">
+                    {props.date}
+                </div>
+                <div className="info-tab">
+                    {props.group ? props.group : 'Public'}
+                </div>
+                <div className="info-tab">
+                    <a href={resultPaneLine()} className="link1">View Results</a>
+                </div>
+            </div>
+        </div>
+    )
 }
-export default  CreatedQuizList
+export default CreatedQuizList

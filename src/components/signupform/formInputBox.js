@@ -1,30 +1,34 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../../styles/modules/signupForm.scss'
-export default class FormInputBox extends Component {
-    render() {
-        return (
-            <div className = "flex form-input-box-container">
-              {!this.props.isSelect &&
-                <input className = "form-input-box"
-                  id = "form-input-box-id"
-                  type = {this.props.type}
-                  placeholder = {this.props.placeholder || ''}
-                  name = {this.props.name}
-                  value = {this.props.value}
-                  onChange = {this.props.onChange}
-                  required = {this.props.required || false}
-                  readOnly = {this.props.readOnly || false}/>
-              }
-              {
-                this.props.isSelect &&
-                  <select className = "select-course" name={this.props.name} value = {this.props.value} onChange = {this.props.onChange} required>
-                      <option value="">Course</option>
-                      <option value="BTECH" className = "course-option">BTECH</option>
-                      <option value="MTECH" className = "course-option">MTECH</option>
-                      <option value="PHD" className = "course-option">PHD</option>
-                  </select>
-              }
-            </div>
-        )
-    }
+
+
+const FormInputBox = (props) => {
+
+  return (
+    <div className="flex form-input-box-container">
+      {!props.isSelect &&
+        <input className="form-input-box"
+          id="form-input-box-id"
+          type={props.type}
+          placeholder={props.placeholder || ''}
+          name={props.name}
+          value={props.value}
+          onChange={props.onChange}
+          required={props.required || false}
+          readOnly={props.readOnly || false} />
+      }
+      {
+        props.isSelect &&
+        <select className="select-course" name={props.name} value={props.value} onChange={props.onChange} required>
+          <option value="">Course</option>
+          <option value="BTECH" className="course-option">BTECH</option>
+          <option value="MTECH" className="course-option">MTECH</option>
+          <option value="PHD" className="course-option">PHD</option>
+        </select>
+      }
+    </div>
+  )
 }
+
+
+export default FormInputBox

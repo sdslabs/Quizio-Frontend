@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import Btn from '../buttons/btn'
 
-export default class CarouselSlide extends Component {
-    toggleSection = () => {
-        this.props.onClick(this.props.index)
+const CarouselSlide = (props) => {
+    const toggleSection = () => {
+        props.onClick(props.index)
     }
 
-    render() {
-        let visibleBtnClass = this.props.index>=this.props.slideIndex && this.props.index<this.props.slideIndex+8 ? "visibleBtn" : "invisibleBtn"
-        return (
-            <Btn className={"section-toggle "+this.props.className + " " + visibleBtnClass}
-            onClick={this.toggleSection}
-            html={<div className={"button"+this.props.index}>Section {this.props.index}</div>}
+
+    return (
+        <Btn className={"section-toggle " + props.className + " " + props.index >= props.slideIndex && props.index < props.slideIndex + 8 ? "visibleBtn" : "invisibleBtn"}
+            onClick={toggleSection}
+            html={<div className={"button" + props.index}>Section {props.index}</div>}
             type="rounded" />
-        );
-    }
+    );
+
 }
+export default CarouselSlide

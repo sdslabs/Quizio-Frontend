@@ -3,8 +3,6 @@ import Btn from '../buttons/btn'
 
 const Header = (props) => {
 
-    let className = props.state === 0 ? ["highlight", ""] : ["", "highlight"]
-
     const switchToExplore = () => {
         props.state === 1 && props.toggleState()
     }
@@ -17,11 +15,11 @@ const Header = (props) => {
         <div className="group-card-header-container">
             <div className="group-card-header flex wrap">
                 <Btn className="group-card-toggle"
-                    onClick={this.switchToExplore}
+                    onClick={switchToExplore}
                     html={<div className={props.state === 0 ? "highlight" : ""}>Explore</div>} />
 
                 <Btn className="group-card-toggle"
-                    onClick={this.switchToMyGroups}
+                    onClick={switchToMyGroups}
                     html={<div className={props.state != 0 ? "highlight" : ""}>My Groups</div>} />
 
             </div>

@@ -4,16 +4,20 @@ import '../../styles/modules/tables.scss'
 import HeadRow from './headRow'
 import Quiz from './tableData'
 
-export default class RegistrantsTable extends Component {
-    render() {
-        let {headRow, quizId, registrant, Sno} = this.props
+const RegistrantsTable = (props) => {
 
-        return (
-            <div className='flex table-container'>
-                {headRow ? <HeadRow /> 
-                         : <Quiz quizId={quizId} Sno={Number(Sno)+1} registrant={registrant} /> 
-                }
-            </div>
-        )
-    }
+    return (
+        <div className='flex table-container'>
+            {props.headRow ? <HeadRow />
+                : <Quiz
+                    quizId={props.quizId}
+                    Sno={Number(props.Sno) + 1}
+                    registrant={props.registrant}
+                />
+            }
+        </div>
+    )
 }
+
+
+export default RegistrantsTable

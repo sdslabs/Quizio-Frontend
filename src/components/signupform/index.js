@@ -5,81 +5,83 @@ import FormInputBox from './formInputBox'
 
 import '../../styles/modules/signupForm.scss'
 
-export default class SignupForm extends Component {
-    submit = () => {
-        this.props.onSubmit(this.props.username, this.props.name, this.props.bio, this.props.org , this.props.num , this.props.enrl , this.props.course, this.props.codeforces , this.props.codechef, this.props.github)
-    }
+const SignupForm = (props) => {
+  const submit = () => {
+    props.onSubmit(props.username, props.name, props.bio, props.org, props.num, props.enrl, props.course, props.codeforces, props.codechef, props.github)
+  }
 
-    render() {
-        return (
-            <div className = "signup-form-container">
-              <div className = "flex signup-title-container">
-                <div className = "signup-title">
-                  <span>SignUp</span>
-                </div>
-                <div className = "signup-title-register">
-                  Lets get you registerd first !
-                </div>
-              </div>
 
-              <div className = "flex signup-input-container">
-                <div className = "form-text-box-full">
-                  <FormInputBox type="text" placeholder = "Username *" value = {this.props.username} onChange = {this.props.onChange} name = "username" required = {true}/>
-                </div>
+  return (
+    <div className="signup-form-container">
+      <div className="flex signup-title-container">
+        <div className="signup-title">
+          <span>SignUp</span>
+        </div>
+        <div className="signup-title-register">
+          Lets get you registered first!
+        </div>
+      </div>
 
-                <div className = "flex two-input-container">
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder="First Name *" name="fname" value={this.props.fname} onChange={this.props.onChange} required = {true} />
-                  </div>
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder="Last Name" name="lname" value={this.props.lname} onChange={this.props.onChange} />
-                  </div>
-                </div>
+      <div className="flex signup-input-container">
+        <div className="form-text-box-full">
+          <FormInputBox type="text" placeholder="Username *" value={props.username} onChange={props.onChange} name="username" required={true} />
+        </div>
 
-                <div className = "flex two-input-container">
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder = "Enrollment Number *" name = "enrl" value = {this.props.enrl} onChange = {this.props.onChange}  required = {true} />
-                  </div>
-                  <div className = "form-text-box-half">
-                    <FormInputBox isSelect = {true} type="text"  name="course" value = {this.props.course} onChange = {this.props.onChange} />
-                  </div>
-                </div>
+        <div className="flex two-input-container">
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="First Name *" name="fname" value={props.fname} onChange={props.onChange} required={true} />
+          </div>
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="Last Name" name="lname" value={props.lname} onChange={props.onChange} />
+          </div>
+        </div>
 
-                <div className = "flex two-input-container">
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder = "Branch" value = {this.props.org} onChange = {this.props.onChange} name = "org" />
-                  </div>
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder = "Contact Number" value = {this.props.num} onChange = {this.props.onChange} name = "num" />
-                  </div>
-                </div>
+        <div className="flex two-input-container">
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="Enrollment Number *" name="enrl" value={props.enrl} onChange={props.onChange} required={true} />
+          </div>
+          <div className="form-text-box-half">
+            <FormInputBox isSelect={true} type="text" name="course" value={props.course} onChange={props.onChange} />
+          </div>
+        </div>
 
-                <div className = "form-text-box-full">
-                  <FormInputBox type="text" placeholder = "Bio *" value = {this.props.bio} onChange = {this.props.onChange} name = "bio" required = {true}/>
-                </div>
+        <div className="flex two-input-container">
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="Branch" value={props.org} onChange={props.onChange} name="org" />
+          </div>
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="Contact Number" value={props.num} onChange={props.onChange} name="num" />
+          </div>
+        </div>
 
-                <div className = "flex two-input-container">
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder = "Codeforces Handle" value = {this.props.codeforces} onChange = {this.props.onChange} name = "codeforces" />
-                  </div>
-                  <div className = "form-text-box-half">
-                    <FormInputBox type="text" placeholder = "Codechef Handle" value = {this.props.codechef} onChange = {this.props.onChange} name = "codechef" />
-                  </div>
-                </div>
+        <div className="form-text-box-full">
+          <FormInputBox type="text" placeholder="Bio *" value={props.bio} onChange={props.onChange} name="bio" required={true} />
+        </div>
 
-                <div className = "form-text-box-full">
-                  <FormInputBox type="text" placeholder = "Github Handle" value = {this.props.github} onChange = {this.props.onChange} name = "github" />
-                </div>
-              </div>
+        <div className="flex two-input-container">
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="Codeforces Handle" value={props.codeforces} onChange={props.onChange} name="codeforces" />
+          </div>
+          <div className="form-text-box-half">
+            <FormInputBox type="text" placeholder="Codechef Handle" value={props.codechef} onChange={props.onChange} name="codechef" />
+          </div>
+        </div>
 
-              <div className = "flex signup-btn-container">
-                <Btn className="submit-btn-signup"
-                        type="rounded"
-                        html="Submit"
-                        onClick={this.submit}
-                />
-              </div>
-            </div>
-        )
-    }
+        <div className="form-text-box-full">
+          <FormInputBox type="text" placeholder="Github Handle" value={props.github} onChange={props.onChange} name="github" />
+        </div>
+      </div>
+
+      <div className="flex signup-btn-container">
+        <Btn className="submit-btn-signup"
+          type="rounded"
+          html="Submit"
+          onClick={submit}
+        />
+      </div>
+    </div>
+  )
 }
+
+
+export default SignupForm
