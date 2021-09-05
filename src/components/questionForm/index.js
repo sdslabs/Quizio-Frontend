@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Textbox from '../textbox'
-import Btn from '../buttons/btn'
 import '../../styles/questionForm.scss'
 
 

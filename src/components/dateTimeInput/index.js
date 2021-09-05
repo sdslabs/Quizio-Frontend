@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react'
 import Datetime from "react-datetime";
 import moment from "moment";
 import "react-datetime/css/react-datetime.css";
 
 const DateTimeInput = (props) => {
+    // Move to util functions
     // need onChange function(for input value) and initValue as props
     let yesterday = moment().subtract(1, "day");
 

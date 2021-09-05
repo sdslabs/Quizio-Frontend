@@ -5,7 +5,6 @@ import { updateGroup } from '../../api/groups'
 
 const MemberInfo = (props) => {
 
-
     const removeUserFromGroup = () => {
         updateGroup(props.groupId, { removeMembers: props.id })
             .then(res => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import SectionCard from './sectionCard'
 import '../../styles/modules/controlPanel.scss'
 

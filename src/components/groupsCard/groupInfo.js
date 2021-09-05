@@ -1,11 +1,10 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Btn from '../buttons/btn'
 import GroupIcon from './groupIcon';
 import Modal from '../popup/index'
 import { joinGroup, leaveGroup } from '../../api/groups'
 
 const GroupInfo = (props) => {
-
 
     let state = props.state
     const [accessCode, setAccessCode] = useState("")

@@ -10,7 +10,6 @@ const SectionCard = (props) => {
         props.change('s', props.section.number)
     }
 
-
     return (
         <div className="section-card ">
             <div className="section-title-container">

@@ -11,6 +11,7 @@ const CreatedQuizList = (props) => {
     const resultPaneLine = () => {
         return config.baseURL + 'results/' + props.id
     }
+    
     return (
         <div>
             <div className="container-quiz">

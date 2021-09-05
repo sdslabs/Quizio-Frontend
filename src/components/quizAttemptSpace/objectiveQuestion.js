@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 
 const ObjectiveQuestion = (props) => {
+    
     let data = props.data
-
-
     const onChange = (event) => {
         props.onUpdate(data.sno, data.qno, event.target.value)
     }

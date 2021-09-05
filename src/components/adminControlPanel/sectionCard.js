@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Btn from '../buttons/btn'
 import QuestionBtn from './questionBtn'
 

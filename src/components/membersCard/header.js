@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import Btn from '../buttons/btn'
 import Modal from '../popup/index'
 import { updateGroup } from '../../api/groups'

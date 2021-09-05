@@ -4,6 +4,7 @@ import CreatedQuizList from '../createdQuizList';
 
 const CreatedQuizTable = (props) => {
 
+    // should be a util function
     const formatDate = (date) => {
         var d = new Date(date);
         return d.toLocaleDateString('en-GB');

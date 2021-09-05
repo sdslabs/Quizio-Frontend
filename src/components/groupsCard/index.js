@@ -1,12 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { useHistory } from 'react-router'
 import GroupInfo from './groupInfo'
 import NoQuizzes from '../noQuizzes'
-import '../../styles/modules/groupsCard.scss'
 import HomeCard from './homeCard'
 import Btn from '../buttons/btn'
-
-
-import { useHistory } from 'react-router'
+import '../../styles/modules/groupsCard.scss'
 
 const GroupsCard = (props) => {
     let history = useHistory()
