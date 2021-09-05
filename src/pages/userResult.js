@@ -263,7 +263,7 @@ const UserResults = (props) => {
                         let newData = { ...data }
 
                         newData.sections[Sno].questions[Qno].showCorrectionStatus = true
-                        newData.sections[Sno].questions[Qno].evaluator = localStorage.getItem('username') // Need better method (cookie)
+                        newData.sections[Sno].questions[Qno].evaluator = localStorage.getItem('username') 
                         newData.sections[Sno].questions[Qno].markGiven = ans
                         setData(newData)
                         setCurrent(prepareQuestion(Sno, Qno))

@@ -6,10 +6,12 @@ const cookies = new Cookies();
 const responseInterceptor = axiosInstance.interceptors.response.use((response) => {
     // status code = 2xx
     const data = response.data
-    console.log("data in res: ", data)
+    console.log("response intercepted!")
     if(data.success && data.token){
         // the user is now logged in
         cookies.set("token", data.token)
+        localStorage.setItem('userId', data.username)
+        console.log("token and username set!")
     }
     if (data.authenticated === false || data.registered === false || data.oauth === true) {
         // redirect to home if not authenticated or not registered or oauth is needed 

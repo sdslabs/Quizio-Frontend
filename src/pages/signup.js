@@ -52,15 +52,16 @@ const Signup = () => {
 
         } else {
             signup(username, name, bio, org, num, enrl, course, codeforces, codechef, github)
-                .then((error) => {
-                    console.log(error)
-                    if (error.code === 11000) {
+                .then((res) => {
+                    let Error = res.data.error
+                    console.log(Error)
+                    if (Error.code === 11000) {
                         setModalActive(true)
                         setModalMsg("Username already taken. Please try with different username")
 
                     } else {
                         setModalActive(true)
-                        setModalMsg(error.details[0].message)
+                        setModalMsg(Error.details[0].message)
                     }
                 })
         }

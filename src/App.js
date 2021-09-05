@@ -6,7 +6,7 @@ import axios from 'axios'
 // pages
 import Home from './pages/home'
 import Signin from './pages/signin';
-// import Signup from './pages/signup';
+import Signup from './pages/signup';
 import Groups from './pages/groups'
 // import Arena from './pages/arena'
 import Members from './pages/members'
@@ -33,6 +33,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = baseURL;
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = baseURL;
 
+// Extra
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = "http://localhost:3002/";
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = "http://localhost:3002/";
 
@@ -42,7 +43,8 @@ const App = () => {
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/signin' component={Signin} />
-      {/* <Route exact path='/signup' component={Signup} /> */}
+      <Route exact path='/signup' component={Signup} />
+
       <Route exact path='/groups' component={Groups} />
       {/* <Route exact path='/admin/:quizId' component={AdminPanel} /> */}
       {/* <Route exact path='/createQuiz' component={createQuiz} /> */}

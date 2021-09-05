@@ -5,7 +5,6 @@ import { useHistory } from "react-router";
 // components
 import Header from '../components/header'
 import Cover from '../components/svg/cover'
-
 import Table from '../components/tables/index'
 import TableHeading from '../components/tables/heading'
 import GroupsCard from '../components/groupsCard/index'
@@ -22,9 +21,11 @@ import '../styles/modules/home.scss'
 
 const Home = (props) => {
     let history = useHistory()
-    const [authenticated, setAuthenticated] = useState(false)
-    const [registered, setRegistered] = useState(false)
-    const [oauth, setOauth] = useState(false)
+
+    const [loggedIn, setLoggedIn] = useState(false) // true if user is logged into quizio
+    const [oauth, setOauth] = useState(false) // true if user is logged into accounts
+    const [registered, setRegistered] = useState(false) // TODO: what is this?
+
     const [upcomingQuizzes, setUpcomingQuizzes] = useState([])
     const [ongoingQuizzes, setOngoingQuizzes] = useState([])
     const [pastQuizzes, setPastQuizzes] = useState([])
@@ -35,42 +36,45 @@ const Home = (props) => {
         handleGetUserInfo()
     }, [])
 
-    const handleGetUserInfo = async () => {
-        let res = await checkAuthAtHome()
-        res = res.data
-        console.log(res)
+    const handleGetUserInfo = () => {
+        checkAuthAtHome()
+            .then((auth) => {
+                setOauth(auth.oauth)
+                setLoggedIn(auth.loggedIn)
+                setRegistered(auth.registered)
 
-        setAuthenticated(res.authenticated)
-        setOauth(res.oauth)
-        setRegistered(res.registered)
-        if (res.quizData) {
-            for (let i = 0; i < res.quizData.length; i++) {
-                res.quizData[i].startTime = new Date(res.quizData[i].startTime)
-                res.quizData[i].endTime = new Date(res.quizData[i].endTime)
-                res.quizData[i].duration = (res.quizData[i].endTime - res.quizData[i].startTime) / (1000 * 60)
-            }
-        }
-        setQuizData(res.quizData)
-        if (res.success) {
-            quizData.forEach(quiz => {
-                let startTime = quiz.startTime.getTime()
-                let endTime = quiz.endTime.getTime()
+                if (auth.success && auth.quizData) {
+                    // the user is authenticated to view the public quizzes
 
-                if (startTime > Date.now()) {
-                    setUpcomingQuizzes([...upcomingQuizzes, quiz])
-                } else if (startTime < Date.now() && endTime >= Date.now()) {
-                    setOngoingQuizzes([...ongoingQuizzes, quiz])
-                } else {
-                    setPastQuizzes([...this.state.pastQuizzes, quiz])
+                    // TODO: this should happen in backend!
+                    auth.quizData.forEach(quiz => {
+                        quiz.startTime = new Date(quiz.startTime)
+                        quiz.endTime = new Date(quiz.endTime)
+                        quiz.duration = (quiz.endTime - quiz.startTime) / (1000 * 60)
+
+                        let startTime = quiz.startTime.getTime()
+                        let endTime = quiz.endTime.getTime()
+
+                        if (startTime > Date.now()) {
+                            setUpcomingQuizzes([...upcomingQuizzes, quiz])
+
+                        } else if (startTime < Date.now() && endTime >= Date.now()) {
+                            setOngoingQuizzes([...ongoingQuizzes, quiz])
+
+                        } else {
+                            setPastQuizzes([...this.state.pastQuizzes, quiz])
+                        }
+                        console.log(quiz)
+                    });
+
+                    setQuizData(auth.quizData)
+                    // TODO: change the quizzes api function to pick the username by default
+                    // change quizV2 so that it does not need the username parameter
+                    let username = localStorage.getItem('username')
+                    let groups = fetchGroupsForUser(username || "")
+                    groups.data.groups && setGroups(groups.data.groups)
                 }
             })
-        }
-        /// [TODO] 
-        // change the quizzes api function to pick the username by default
-        //change quizV2 so that it does not need the username parameter
-        let username = localStorage.getItem('username')
-        let groups = await fetchGroupsForUser(username)
-        groups.data.groups && setGroups(groups.data.groups)
     }
 
     const handleLogOut = () => {
@@ -80,9 +84,9 @@ const Home = (props) => {
 
     return (
         <>
-            {authenticated || true ? (
+            {loggedIn ? (
                 <div>
-                    <Header authenticated={authenticated} handleLogOut={handleLogOut} />
+                    <Header loggedIn={loggedIn} handleLogOut={handleLogOut} />
                     <div className='flex column space-around home-res'>
                         <div className='flex space-evenly lower-res'>
                             <div className='flex table-container'>

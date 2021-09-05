@@ -1,19 +1,20 @@
 import axiosInstance from './axiosInstance'
-import cookie from 'react-cookies'
+import Cookies from 'universal-cookie';
 import requestInterceptor from './requestInterceptor'
 import responseInterceptor from './responseInterceptor'
-import { fetchPublicQuizzes } from './quizzes'
-import config from '../config/config.js'
 
 axiosInstance.defaults.withCredentials = true // can remove line?
+const cookies = new Cookies();
 
-let jwt = require('jsonwebtoken')
-const JWT_KEY = config.AUTH.jwt_key;
-
-
-export const checkAuthAtHome = () => {
-    axiosInstance.interceptors.response.eject(responseInterceptor);
-    return fetchPublicQuizzes();
+export const checkAuthAtHome = async () => {
+    axiosInstance.interceptors.response.eject(responseInterceptor)
+    return axiosInstance.get(`/home`)
+        .then((res) => {
+            return res.data
+        })
+        .catch((error) => {
+            return Promise.reject(error);
+        })
 }
 
 
@@ -47,27 +48,22 @@ export const signup = (username, name, bio, org, num, enrl, course, codeforces, 
 }
 
 /// login into quizio
-export const login = () => {
+export const login = async () => {
 
-    // axiosInstance.interceptors.response.eject(responseInterceptor);
+    axiosInstance.interceptors.response.eject(responseInterceptor);
     return axiosInstance.get(`/auth/signin`)
+        .then(res => {
+            return res.data
+        })
+        .catch((error) => {
+            return Promise.reject(error);
+        })
 }
 
 /// logout from quizio
 export const logout = () => {
-    
-    cookie.remove('token')
-    localStorage.removeItem("username");
     axiosInstance.interceptors.response.eject(responseInterceptor);
+    cookies.remove('token')
+    localStorage.removeItem("userId");
     return axiosInstance.get(`/auth/logout`)
 }
-
-/// ??
-export const giveUsername = () => {
-
-    let token = cookie.load('Quizio')
-    let obj = jwt.verify(token, JWT_KEY);
-    if (obj) return obj.email;
-    return null
-}
-
