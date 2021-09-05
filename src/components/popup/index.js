@@ -51,3 +51,5 @@ export default class Modal extends Component {
     return <noscript />;
   }
 }
+
+export default Modal

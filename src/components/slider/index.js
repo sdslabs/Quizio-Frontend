@@ -1,5 +1,4 @@
-// TODO: convert to functional
-import React, { Component, useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import CarouselSlide from './slider'
 import '../../../node_modules/font-awesome/css/font-awesome.min.css'
 

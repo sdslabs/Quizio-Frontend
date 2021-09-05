@@ -6,191 +6,188 @@ import KeyValInputRow from '../keyValInputRow'
 import DateTimeInput from '../dateTimeInput'
 import moment from 'moment'
 
-export default class QuizEditor extends Component {
+const QuizEditor = (props) => {
+    // Redundant code, violates DRY
+    let tabNavWriteTitle = "btn-link navSelected"
+    let tabNavPreviewTitle = "btn-link"
+    let tabNavWriteBody = "btn-link navSelected"
+    let tabNavPreviewBody = "btn-link"
 
-    constructor(props) {
-        super(props)
-        this.tabNavWriteTitle = "btn-link navSelected"
-        this.tabNavPreviewTitle = "btn-link"
-        this.tabNavWriteBody = "btn-link navSelected"
-        this.tabNavPreviewBody = "btn-link"
-        this.state = {
-            writeBody: true,
-            writeTitle: true,
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
+    const [writeBody, setWriteBody] = useState(true)
+    const [writeTitle, setWriteTitle] = useState(true)
 
-    onChange = (event) => {
+    const onChange = (event) => {
         const target = event.target
         let upd = {};
         upd[target.name] = target.value;
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, upd)
+        props.onUpdate(props.data.sno, props.data.qno, upd)
     }
 
-    onChangeStart = (value) => {
+    const onChangeStart = (value) => {
         let upd = {};
         upd['startTime'] = value;
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, upd)
+        props.onUpdate(props.data.sno, props.data.qno, upd)
     }
 
-    onChangeEnd = (value) => {
+    const onChangeEnd = (value) => {
         let upd = {};
         upd['endTime'] = value;
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, upd)
+        props.onUpdate(props.data.sno, props.data.qno, upd)
     }
 
-    onOwnerChange = (event) => {
+    const onOwnerChange = (event) => {
         const target = event.target
         let value = target.value
-        let newOwners = this.props.data.owners  
+        let newOwners = props.data.owners
         newOwners = newOwners.map((Owner) => {
-            if(Owner.id == target.name){
+            if (Owner.id == target.name) {
                 Owner.val = value
             }
             return Owner
         })
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, {owners: newOwners})
+        props.onUpdate(props.data.sno, props.data.qno, { owners: newOwners })
     }
 
-    onOwnerDelete = (event) => {
+    const onOwnerDelete = (event) => {
         const target = event.target
-        let newOwners = this.props.data.owners.filter((owner) => owner.id != target.name)
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, {owners: newOwners})
+        let newOwners = props.data.owners.filter((owner) => owner.id != target.name)
+        props.onUpdate(props.data.sno, props.data.qno, { owners: newOwners })
     }
 
-    onOwnerAdd = (event) => {
-        let newOwners = this.props.data.owners
+    const onOwnerAdd = (event) => {
+        let newOwners = props.data.owners
         let lastId
-        if(newOwners.length === 0){
+        if (newOwners.length === 0) {
             newOwners.push({
                 id: 0,
                 val: ""
             })
         }
-        else{
-            lastId = newOwners[newOwners.length-1].id
+        else {
+            lastId = newOwners[newOwners.length - 1].id
             newOwners.push({
-                id: lastId+1,
+                id: lastId + 1,
                 val: ""
             })
         }
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, {owners: newOwners})
+        props.onUpdate(props.data.sno, props.data.qno, { owners: newOwners })
     }
 
-    handleClick(fieldName, e) {
-        if(fieldName === "writeTitle") {
-            this.setState({...this.state, 
-                writeTitle: true
-            })
-            this.tabNavWriteTitle = "btn-link navSelected"
-            this.tabNavPreviewTitle = "btn-link"
-        } else if(fieldName === "writeBody") {
-            this.setState({...this.state, 
-                writeBody: true
-            })
-            this.tabNavWriteBody = "btn-link navSelected"
-            this.tabNavPreviewBody = "btn-link"
-        } else if(fieldName === "previewTitle") {
-            this.setState({...this.state, 
-                writeTitle: false
-            })
-            this.tabNavWriteTitle = "btn-link"
-            this.tabNavPreviewTitle = "btn-link navSelected"
-        } else if(fieldName === "previewBody") {
-            this.setState({...this.state, 
-                writeBody: false
-            })
-            this.tabNavWriteBody = "btn-link"
-            this.tabNavPreviewBody = "btn-link navSelected"
+    const handleClick = (fieldName, e) => {
+
+        switch (fieldName) {
+            case "writeTitle":
+                setWriteTitle(true)
+                tabNavWriteTitle = "btn-link navSelected"
+                tabNavPreviewTitle = "btn-link"
+                break;
+            case "writeBody":
+                setWriteTitle(true)
+                tabNavWriteTitle = "btn-link navSelected"
+                tabNavPreviewTitle = "btn-link"
+                break;
+            case "previewBody":
+                setWriteBody(false)
+                tabNavWriteBody = "btn-link"
+                tabNavPreviewBody = "btn-link navSelected"
+                break;
+            case "previewTitle":
+                setWriteTitle(false)
+                tabNavWriteTitle = "btn-link"
+                tabNavPreviewTitle = "btn-link navSelected"
+                break;
+
+            default:
+                break;
         }
     }
 
-    render() {
-        return (
-            <div className="section-modal align-center">
-                <KeyValInputRow title="Title:" type="text" name="title" placeholder="Quiz-Title" value={this.props.data.title} onChange={this.onChange} /> 
-                <div className = "flex row formRow">
-                    <div className = "inputTitleContainer">
-                        <div className = "inputTitle">Start Time:</div>
-                    </div>
-                    <DateTimeInput onChange={this.onChangeStart} initValue={this.props.data.startTime || moment()}/>
+    return (
+        <div className="section-modal align-center">
+            <KeyValInputRow title="Title:" type="text" name="title" placeholder="Quiz-Title" value={props.data.title} onChange={onChange} />
+            <div className="flex row formRow">
+                <div className="inputTitleContainer">
+                    <div className="inputTitle">Start Time:</div>
                 </div>
-                <div className = "flex row formRow">
-                    <div className = "inputTitleContainer">
-                        <div className = "inputTitle">End Time:</div>
-                    </div>
-                    <DateTimeInput onChange={this.onChangeEnd} initValue={this.props.data.endTime || moment()}/>
-                </div>
-
-                <KeyValInputRow title="Owners:" type="text" name="ownerSize" value={this.props.data.owners.length} onChange={this.onChange} readonly={true} /> 
-                {this.props.data.owners.map(owner => {
-                    return (          
-                        <div key={owner.id} className="flex qoption">
-                            <div className = "inputTitleContainer">
-                                <div className = "inputTitle">
-                                    <Btn className="question-btn"
-                                        type="round"
-                                        html="-"
-                                        onClick={this.onOwnerDelete}
-                                        name={owner.id}
-                                    />
-                                </div>
-                            </div>
-                            <input className = "inputBox" type="text" value={owner.val} name={owner.id} placeholder="Owner" onChange={this.onOwnerChange} />
-                        </div>
-                    )
-                })}
-                {/* <div>
-                    <button className="question-btn" onClick={this.onOwnerAdd} >+</button>
-                </div> */}
-                <div className = "inputTitleContainer">
-                    <div className = "inputTitle">
-                        <Btn className="question-btn"
-                            type="round"
-                            html="+"
-                            onClick={this.onOwnerAdd}
-                        />
-                    </div>
-                </div>
-
-                <div className="question-modal-body">
-                    <nav className="tabnav align-center"> 
-                        <button type="button" className={this.tabNavWriteTitle + " write-tab"} onClick={(e) => this.handleClick("writeTitle", e)}>
-                            Write
-                        </button>
-                        <button type="button" className={this.tabNavPreviewTitle + " preview-tab"} onClick={(e) => this.handleClick("previewTitle", e)}>
-                            Preview
-                        </button>
-                    </nav>
-                    <div className="center-text flex">
-                        {  this.state.writeTitle ?
-                            <textarea className="response-container response-textarea align-center" value={this.props.data.description} placeholder = "Description" name="description" onChange={this.onChange}></textarea> 
-                            : <MarkDown code={this.props.data.description}/>
-                        }
-                    </div>
-                </div>
-
-                <div className="question-modal-body">
-                    <nav className="tabnav align-center"> 
-                        <button type="button" className={this.tabNavWriteBody + " write-tab"} onClick={(e) => this.handleClick("writeBody", e)}>
-                            Write
-                        </button>
-                        <button type="button" className={this.tabNavPreviewBody + " preview-tab"} onClick={(e) => this.handleClick("previewBody", e)}>
-                            Preview
-                        </button>
-                    </nav>
-                    <div className="flex center-text">
-                        { this.state.writeBody ?
-                            <textarea className="response-container response-textarea align-center" value={this.props.data.instructions} placeholder = "Instructions"  name="instructions" onChange={this.onChange}></textarea> 
-                            : <MarkDown code={this.props.data.instructions}/>
-                        }
-                    </div>
-                </div>
-
-                <KeyValInputRow title="Access-code:" type="text" name="accessCode" placeholder="access-code" value={this.props.data.accessCode} onChange={this.onChange} /> 
-                {/* <KeyValInputRow title="Public:" type="checkbox" name="public" value={this.props.data.public} onChange={this.onChange} />  */}
+                <DateTimeInput onChange={onChangeStart} initValue={props.data.startTime || moment()} />
             </div>
-        )
-    }
+            <div className="flex row formRow">
+                <div className="inputTitleContainer">
+                    <div className="inputTitle">End Time:</div>
+                </div>
+                <DateTimeInput onChange={onChangeEnd} initValue={props.data.endTime || moment()} />
+            </div>
+
+            <KeyValInputRow title="Owners:" type="text" name="ownerSize" value={props.data.owners.length} onChange={onChange} readonly={true} />
+            {props.data.owners.map(owner => {
+                return (
+                    <div key={owner.id} className="flex qoption">
+                        <div className="inputTitleContainer">
+                            <div className="inputTitle">
+                                <Btn className="question-btn"
+                                    type="round"
+                                    html="-"
+                                    onClick={onOwnerDelete}
+                                    name={owner.id}
+                                />
+                            </div>
+                        </div>
+                        <input className="inputBox" type="text" value={owner.val} name={owner.id} placeholder="Owner" onChange={onOwnerChange} />
+                    </div>
+                )
+            })}
+            {/* <div>
+                    <button className="question-btn" onClick={onOwnerAdd} >+</button>
+                </div> */}
+            <div className="inputTitleContainer">
+                <div className="inputTitle">
+                    <Btn className="question-btn"
+                        type="round"
+                        html="+"
+                        onClick={onOwnerAdd}
+                    />
+                </div>
+            </div>
+
+            <div className="question-modal-body">
+                <nav className="tabnav align-center">
+                    <button type="button" className={tabNavWriteTitle + " write-tab"} onClick={(e) => handleClick("writeTitle", e)}>
+                        Write
+                    </button>
+                    <button type="button" className={tabNavPreviewTitle + " preview-tab"} onClick={(e) => handleClick("previewTitle", e)}>
+                        Preview
+                    </button>
+                </nav>
+                <div className="center-text flex">
+                    {writeTitle ?
+                        <textarea className="response-container response-textarea align-center" value={props.data.description} placeholder="Description" name="description" onChange={onChange}></textarea>
+                        : <MarkDown code={props.data.description} />
+                    }
+                </div>
+            </div>
+
+            <div className="question-modal-body">
+                <nav className="tabnav align-center">
+                    <button type="button" className={tabNavWriteBody + " write-tab"} onClick={(e) => handleClick("writeBody", e)}>
+                        Write
+                    </button>
+                    <button type="button" className={tabNavPreviewBody + " preview-tab"} onClick={(e) => handleClick("previewBody", e)}>
+                        Preview
+                    </button>
+                </nav>
+                <div className="flex center-text">
+                    {writeBody ?
+                        <textarea className="response-container response-textarea align-center" value={props.data.instructions} placeholder="Instructions" name="instructions" onChange={onChange}></textarea>
+                        : <MarkDown code={props.data.instructions} />
+                    }
+                </div>
+            </div>
+
+            <KeyValInputRow title="Access-code:" type="text" name="accessCode" placeholder="access-code" value={props.data.accessCode} onChange={onChange} />
+            {/* <KeyValInputRow title="Public:" type="checkbox" name="public" value={props.data.public} onChange={onChange} />  */}
+        </div>
+    )
+
 }
+
+export default QuizEditor

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Options from './options'
 import Btn from '../buttons/btn'
 import '../../styles/modules/quizAttemptSpace.scss'
@@ -6,168 +6,163 @@ import MarkDown from '../../parser/markdown'
 import KeyValInputRow from '../keyValInputRow'
 import '../../../node_modules/font-awesome/css/font-awesome.min.css'
 
-export default class Question extends Component {
+const Question = (props) => {
+    let tabNavWriteTitle = "btn-link navSelected"
+    let tabNavPreviewTitle = "btn-link"
+    let tabNavWriteBody = "btn-link navSelected"
+    let tabNavPreviewBody = "btn-link"
 
-    constructor(props) {
-        super(props)
-        this.tabNavWriteTitle = "btn-link navSelected"
-        this.tabNavPreviewTitle = "btn-link"
-        this.tabNavWriteBody = "btn-link navSelected"
-        this.tabNavPreviewBody = "btn-link"
-        this.state = {
-            writeBody: true,
-            writeTitle: true,
-        }
-        this.handleClick = this.handleClick.bind(this)
-        this.goToPrevQuestion = this.goToPrevQuestion.bind(this)
-        this.goToNextQuestion = this.goToNextQuestion.bind(this)
-    }
+    const [writeBody, setWriteBody] = useState(true)
+    const [writeTitle, setWriteTitle] = useState(true)
 
-    onChange = (event) => {
+
+    const onChange = (event) => {
         const target = event.target
         let upd = {};
         upd[target.name] = target.value;
-        if(target.type === "checkbox")
-            upd[target.name] =  target.checked;
-        this.props.onUpdate(this.props.data.sno, this.props.data.qno, upd)
+        if (target.type === "checkbox")
+            upd[target.name] = target.checked;
+        props.onUpdate(props.data.sno, props.data.qno, upd)
     }
 
-    handleClick(fieldName, e) {
-        if(fieldName === "writeTitle") {
-            this.setState({...this.state, 
-                writeTitle: true
-            })
-            this.tabNavWriteTitle = "btn-link navSelected"
-            this.tabNavPreviewTitle = "btn-link"
-        } else if(fieldName === "writeBody") {
-            this.setState({...this.state, 
-                writeBody: true
-            })
-            this.tabNavWriteBody = "btn-link navSelected"
-            this.tabNavPreviewBody = "btn-link"
-        } else if(fieldName === "previewTitle") {
-            this.setState({...this.state, 
-                writeTitle: false
-            })
-            this.tabNavWriteTitle = "btn-link"
-            this.tabNavPreviewTitle = "btn-link navSelected"
-        } else if(fieldName === "previewBody") {
-            this.setState({...this.state, 
-                writeBody: false
-            })
-            this.tabNavWriteBody = "btn-link"
-            this.tabNavPreviewBody = "btn-link navSelected"
+    const handleClick = (fieldName, e) => {
+
+        switch (fieldName) {
+            case "writeTitle":
+                setWriteTitle(true)
+                tabNavWriteTitle = "btn-link navSelected"
+                tabNavPreviewTitle = "btn-link"
+                break;
+            case "writeBody":
+                setWriteTitle(true)
+                tabNavWriteTitle = "btn-link navSelected"
+                tabNavPreviewTitle = "btn-link"
+                break;
+            case "previewBody":
+                setWriteBody(false)
+                tabNavWriteBody = "btn-link"
+                tabNavPreviewBody = "btn-link navSelected"
+                break;
+            case "previewTitle":
+                setWriteTitle(false)
+                tabNavWriteTitle = "btn-link"
+                tabNavPreviewTitle = "btn-link navSelected"
+                break;
+
+            default:
+                break;
         }
     }
 
-    goToPrevQuestion(e) {
+    const goToPrevQuestion = (e) => {
         e.preventDefault();
-        if(this.props.data.qno > 0) {
-            this.props.change('q', this.props.data.sno, this.props.data.qno-1)
-        }else if(this.props.data.sno > 0) {
-            this.props.change('q', this.props.data.sno-1, this.props.quiz[this.props.data.sno-1].questions.length-1)
+        if (props.data.qno > 0) {
+            props.change('q', props.data.sno, props.data.qno - 1)
+        } else if (props.data.sno > 0) {
+            props.change('q', props.data.sno - 1, props.quiz[props.data.sno - 1].questions.length - 1)
         }
-        
+
     }
 
-    goToNextQuestion(e) {
+    const goToNextQuestion = (e) => {
         e.preventDefault();
-        if(this.props.data.qno+1 < this.props.quiz[this.props.data.sno].questions.length) {
-            this.props.change('q', this.props.data.sno, this.props.data.qno+1)
-        }else if(this.props.data.sno+1 < this.props.quiz.length) {
-            this.props.change('q', this.props.data.sno+1, 0)
+        if (props.data.qno + 1 < props.quiz[props.data.sno].questions.length) {
+            props.change('q', props.data.sno, props.data.qno + 1)
+        } else if (props.data.sno + 1 < props.quiz.length) {
+            props.change('q', props.data.sno + 1, 0)
         }
     }
 
-    render() {
-        return (
-            <div className="attempt-space">
-                <div className="flex head-question-modal">
-                    <button type="button" className="arena-slider" onClick={e => this.goToPrevQuestion(e)}>
-                        <i className="fa fa-arrow-circle-o-left arrow arrow-items" aria-hidden="true"></i>
-                    </button>
-                    <div className="question-modal-heading">
-                        <nav className="tabnav-with-question align-center"> 
-                            <button type="button" className={this.tabNavWriteTitle + " write-tab"} onClick={(e) => this.handleClick("writeTitle", e)}>
-                                Write
-                            </button>
-                            <button type="button" className={this.tabNavPreviewTitle + " preview-tab"} onClick={(e) => this.handleClick("previewTitle", e)}>
-                                Preview
-                            </button>
-                        </nav>
-                        <div className="center-text flex">
-                            <div className="question-number inline">
-                                Q{this.props.data.qno + 1}.
-                            </div>
-                            {  this.state.writeTitle ?
-                                <textarea className="response-container response-textarea-with-question align-center" value={this.props.data.title} name="title" onChange={this.onChange}></textarea> 
-                                : <MarkDown code={this.props.data.title}/>
-                            }
+
+    return (
+        <div className="attempt-space">
+            <div className="flex head-question-modal">
+                <button type="button" className="arena-slider" onClick={goToPrevQuestion}>
+                    <i className="fa fa-arrow-circle-o-left arrow arrow-items" aria-hidden="true"></i>
+                </button>
+                <div className="question-modal-heading">
+                    <nav className="tabnav-with-question align-center">
+                        <button type="button" className={tabNavWriteTitle + " write-tab"} onClick={(e) => handleClick("writeTitle", e)}>
+                            Write
+                        </button>
+                        <button type="button" className={tabNavPreviewTitle + " preview-tab"} onClick={(e) => handleClick("previewTitle", e)}>
+                            Preview
+                        </button>
+                    </nav>
+                    <div className="center-text flex">
+                        <div className="question-number inline">
+                            Q{props.data.qno + 1}.
                         </div>
-                    </div>
-                    <button type="button" className="arena-slider" onClick={e => this.goToNextQuestion(e)}>
-                        <i className="fa fa-arrow-circle-o-right arrow arrow-items" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <div className="question-modal align-center">
-                    <div className="question-modal-body">
-                        <nav className="tabnav align-center"> 
-                            <button type="button" className={this.tabNavWriteBody + " write-tab"} onClick={(e) => this.handleClick("writeBody", e)}>
-                                Write
-                            </button>
-                            <button type="button" className={this.tabNavPreviewBody + " preview-tab"} onClick={(e) => this.handleClick("previewBody", e)}>
-                                Preview
-                            </button>
-                        </nav>
-                        <div className="qbody center-text">
-                            { this.state.writeBody ?
-                                <textarea className="response-container response-textarea align-center" value={this.props.data.body} name="body" onChange={this.onChange}></textarea> 
-                                : <MarkDown code={this.props.data.body}/>
-                            }
-                        </div>
-                        <div className="qbodySelect">
-                            <KeyValInputRow title="isMCQ:" type="checkbox" checked={this.props.data.isMCQ} name="isMCQ" onChange={this.onChange} />
-                            {this.props.data.isMCQ ? 
-                                <Options data={this.props.data} key="0" onUpdate={this.props.onUpdate} /> : 
-                                null
-                            }
-                        </div>
-                        <div className="qbodySelect">
-                            <KeyValInputRow title="autoCheck:" type="checkbox" checked={this.props.data.autocheck} name="autocheck" onChange={this.onChange} /> 
-                            {this.props.data.autocheck ?
-                                <KeyValInputRow title="answer:" type="text" name="answer" value={this.props.data.answer} onChange={this.onChange} /> 
-                                : ""
-                            }
-                        </div>
-                        <div className="qbodySelect">
-                            <KeyValInputRow title="Marks:" type="text" name="marks" placeholder="Eg: 2" value={this.props.data.marks} onChange={this.onChange} /> 
-                        </div>
-                    </div>
-                </div>
-                <div className="response-buttons-container">
-                    <div id="submission-status" className="flex center">
-                    </div>
-                    <div className="flex center">
-                        {this.props.data.actionOnSubmit=="create" ?
-                            <Btn className="submit-btn-create"
-                                type="rounded"
-                                html={this.props.data.actionOnSubmit}
-                                onClick={this.props.submit}
-                            /> : 
-                            <Btn className="submit-btn"
-                                type="rounded"
-                                html={this.props.data.actionOnSubmit}
-                                onClick={this.props.submit}
-                            />
+                        {writeTitle ?
+                            <textarea className="response-container response-textarea-with-question align-center" value={props.data.title} name="title" onChange={onChange}></textarea>
+                            : <MarkDown code={props.data.title} />
                         }
-                        <Btn className="mark-btn"
-                            type="rounded"
-                            html="Delete"
-                            onClick={this.props.delete}
-                        />
+                    </div>
+                </div>
+                <button type="button" className="arena-slider" onClick={goToNextQuestion}>
+                    <i className="fa fa-arrow-circle-o-right arrow arrow-items" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div className="question-modal align-center">
+                <div className="question-modal-body">
+                    <nav className="tabnav align-center">
+                        <button type="button" className={tabNavWriteBody + " write-tab"} onClick={(e) => handleClick("writeBody", e)}>
+                            Write
+                        </button>
+                        <button type="button" className={tabNavPreviewBody + " preview-tab"} onClick={(e) => handleClick("previewBody", e)}>
+                            Preview
+                        </button>
+                    </nav>
+                    <div className="qbody center-text">
+                        {writeBody ?
+                            <textarea className="response-container response-textarea align-center" value={props.data.body} name="body" onChange={onChange}></textarea>
+                            : <MarkDown code={props.data.body} />
+                        }
+                    </div>
+                    <div className="qbodySelect">
+                        <KeyValInputRow title="isMCQ:" type="checkbox" checked={props.data.isMCQ} name="isMCQ" onChange={onChange} />
+                        {props.data.isMCQ ?
+                            <Options data={props.data} key="0" onUpdate={props.onUpdate} /> :
+                            null
+                        }
+                    </div>
+                    <div className="qbodySelect">
+                        <KeyValInputRow title="autoCheck:" type="checkbox" checked={props.data.autocheck} name="autocheck" onChange={onChange} />
+                        {props.data.autocheck ?
+                            <KeyValInputRow title="answer:" type="text" name="answer" value={props.data.answer} onChange={onChange} />
+                            : ""
+                        }
+                    </div>
+                    <div className="qbodySelect">
+                        <KeyValInputRow title="Marks:" type="text" name="marks" placeholder="Eg: 2" value={props.data.marks} onChange={onChange} />
                     </div>
                 </div>
             </div>
-        )
-    }
+            <div className="response-buttons-container">
+                <div id="submission-status" className="flex center">
+                </div>
+                <div className="flex center">
+                    {props.data.actionOnSubmit == "create" ?
+                        <Btn className="submit-btn-create"
+                            type="rounded"
+                            html={props.data.actionOnSubmit}
+                            onClick={props.submit}
+                        /> :
+                        <Btn className="submit-btn"
+                            type="rounded"
+                            html={props.data.actionOnSubmit}
+                            onClick={props.submit}
+                        />
+                    }
+                    <Btn className="mark-btn"
+                        type="rounded"
+                        html="Delete"
+                        onClick={props.delete}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+
 }
+export default Question
