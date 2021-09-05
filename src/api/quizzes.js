@@ -24,8 +24,6 @@ export const createQuiz = (quiz) => {
 }
 
 
-
-
 export const fetchQuiz = (id, groupId = false, checkRegistration = false) => {
     return axiosInstance.get(groupId ? `/groups/${groupId}/quizzes/${id}` : `home/${id}?checkRegistration=${checkRegistration}`)
 }

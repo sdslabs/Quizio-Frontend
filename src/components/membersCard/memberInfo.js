@@ -8,28 +8,28 @@ const MemberInfo = (props) => {
     const removeUserFromGroup = () => {
         updateGroup(props.groupId, { removeMembers: props.id })
             .then(res => {
-                res = res.data
-                if (res.success && res.status) {
+                let body = res.data
+                if (body.success && body.status) {
                     window.location.reload()
                 }
             })
     }
 
     const addAdmin = () => {
-        groupsAPI.updateGroup(props.groupId, { addAdmins: props.id })
+        updateGroup(props.groupId, { addAdmins: props.id })
             .then(res => {
-                res = res.data
-                if (res.success && res.status) {
+                let body = res.data
+                if (body.success && body.status) {
                     window.location.reload()
                 }
             })
     }
 
     const removeAdmin = () => {
-        groupsAPI.updateGroup(props.groupId, { removeAdmins: props.id })
+        updateGroup(props.groupId, { removeAdmins: props.id })
             .then(res => {
-                res = res.data
-                if (res.success && res.status) {
+                let body = res.data
+                if (body.success && body.status) {
                     window.location.reload()
                 }
             })

@@ -27,8 +27,8 @@ export const fetchQuizResponseForUser = (id, userId) => {
     // })
 }
 
-export const updateMarks = (update) => {
-    return axiosInstance.post(`/responses/${id}/user?username=${userId}`, { update })
+export const updateMarks = (id, username, update) => {
+    return axiosInstance.post(`/responses/${id}/user?username=${username}`, { update })
     // .then(res => {
     //     const body = res.data
     //     const error = body.error

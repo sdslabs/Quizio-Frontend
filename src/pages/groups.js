@@ -11,7 +11,7 @@ const Groups = (props) => {
 
     const fetchData = (toggle = 0) => {
         if (pageState ^ toggle) {
-            groupsAPI.fetchGroupsForUser()
+            fetchGroupsForUser()
                 .then((res) => {
                     let userGroups = res.data.groups
                     setPageState(pageState ^ toggle)

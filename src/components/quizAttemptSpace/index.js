@@ -5,7 +5,7 @@ import ObjectiveQuestion from './objectiveQuestion'
 import Btn from '../buttons/btn'
 import '../../styles/modules/quizAttemptSpace.scss'
 import MarkDown from '../../parser/markdown'
-import '../../../node_modules/font-awesome/css/font-awesome.min.css'
+// import '../../../node_modules/font-awesome/css/font-awesome.min.css'
 
 const QuizAttemptSpace = (props) => {
 

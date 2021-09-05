@@ -14,9 +14,9 @@ const UserResults = (props) => {
     const [activeQno, setActiveQno] = useState(null)
     const [data, setData] = useState({
         sections: [],
-        endTime,
-        time,
-        title
+        endTime: 0,
+        time: 0,
+        title: ""
     })
     const [time, setTime] = useState(0)
     const [responses, setResponses] = useState([])

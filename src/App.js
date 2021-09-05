@@ -5,17 +5,17 @@ import { withCookies } from 'react-cookie';
 import axios from 'axios'
 // pages
 import Home from './pages/home'
-import Signin from './pages/signin';
-import Signup from './pages/signup';
+// import Signin from './pages/signin';
+// import Signup from './pages/signup';
 import Auth from './components/auth'
 import Groups from './pages/groups'
-import Arena from './pages/arena'
+// import Arena from './pages/arena'
 import Members from './pages/members'
-import Results from './pages/results'
+// import Results from './pages/results'
 import UserResults from './pages/userResult';
 import Users from './pages/users'
-import AdminPanel from './pages/admin';
-import createQuiz from './pages/createQuiz';
+// import AdminPanel from './pages/admin';
+// import createQuiz from './pages/createQuiz';
 
 // styles
 import './styles/main.scss'
@@ -42,27 +42,27 @@ const App = () => {
   return (
     <Switch>
       <Route exact path='/' component={Home} />
-      <Route exact path='/signin' component={Signin} />
-      <Route exact path='/signup' component={Signup} />
+      {/* <Route exact path='/signin' component={Signin} /> */}
+      {/* <Route exact path='/signup' component={Signup} /> */}
       <Route exact path='/testauth' component={Auth} />
       <Route exact path='/groups' component={Groups} />
-      <Route exact path='/admin/:quizId' component={AdminPanel} />
-      <Route exact path='/createQuiz' component={createQuiz} />
+      {/* <Route exact path='/admin/:quizId' component={AdminPanel} /> */}
+      {/* <Route exact path='/createQuiz' component={createQuiz} /> */}
 
       <Route exact path='/users/profile' component={Users} />
-
+{/* 
       <Route exact path='/:quizId'
         render={(props) => <Arena {...props} cookies={this.props.cookies} open={false} />}
       />
       <Route exact path='/groups/:groupId/quizzes/:quizId'
         render={(props) => <Arena {...props} cookies={this.props.cookies} open={true} />}
-      />
+      /> */}
       <Route exact path='/results/user/:quizId'
         render={(props) => <UserResults {...props} cookies={this.props.cookies} open={true} checkOwnership={true} />}
       />
-      <Route exact path='/results/:quizId'
+      {/* <Route exact path='/results/:quizId'
         render={(props) => <Results {...props} cookies={this.props.cookies} open={true} />}
-      />
+      /> */}
       <Route exact path='/groups/:groupId/members'
         render={(props) => <Members {...props} cookies={this.props.cookies} open={true} />}
       />

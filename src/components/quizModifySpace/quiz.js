@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Btn from '../buttons/btn'
 import '../../styles/modules/quizAttemptSpace.scss'
 import MarkDown from '../../parser/markdown'

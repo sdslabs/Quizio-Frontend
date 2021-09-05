@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/header'
 import { fetchGroupMembers } from '../api/groups'
 import MembersCard from '../components/membersCard'
@@ -9,6 +9,8 @@ const Members = (props) => {
 
     const [members, setMembers] = useState([])
     const [admins, setAdmins] = useState([])
+    const [groupId, setGroupId] = useState(props.match.params.groupId)
+
 
     const handleGetMembers = () => {
         fetchGroupMembers(groupId)
