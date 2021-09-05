@@ -13,8 +13,9 @@ import App from './App'
 import store from './redux/reduxStore/store'
 
 // set the auth token from cookies in headers
-let token = cookie.load('quiz') || null
-axios.defaults.headers.common['Authentication'] = token
+// let token = cookie.load('quiz') || null
+// axios.defaults.headers.common['Authentication'] = token
+
 
 ReactDOM.render((
     <Provider store={store}>

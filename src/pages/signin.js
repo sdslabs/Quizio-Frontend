@@ -17,7 +17,7 @@ const Signin = () => {
         login()
             .then((res) => {
                 res = res.data
-                console.log(res)
+                // console.log(res)
 
                 // if (res.success) {
                 //     localStorage.setItem('username', res.username);
