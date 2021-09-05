@@ -7,7 +7,7 @@ export const fetchGroups = () => {
 
 }
 
-export const fetchGroupsForUser = (username) => {
+export const fetchGroupsForUser = () => {
     return axiosInstance.get(`/groups`, { json: true })
 }
 

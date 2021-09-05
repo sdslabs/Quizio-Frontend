@@ -1,70 +1,55 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/header'
-import groupsAPI from '../api/groups'
+import { fetchGroupsForUser, fetchGroups } from '../api/groups'
 import GroupsCard from '../components/groupsCard'
 import GroupsCardHeader from '../components/groupsCard/header'
 
-class Groups extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            state: 0,
-            groups: []
-        }
-        this.toggleState = this.toggleState.bind(this)
-        this.groupsAPI = new groupsAPI()
-    }
+const Groups = (props) => {
 
-    componentDidMount() {
-        this.fetchData()   
-    }
-    
-    toggleState() {
-        this.fetchData(1)
-    }
+    const [groups, setGroups] = useState([])
+    const [pageState, setPageState] = useState(0)
 
-    fetchData(toggle = 0) {
-        if (this.state.state ^ toggle) {
-            this.groupsAPI.fetchGroupsForUser().then((userGroups)=>{
-                this.setState((state) => {
-                    return {
-                        state: state.state ^ toggle,
-                        groups: userGroups
-                    }
+    const fetchData = (toggle = 0) => {
+        if (pageState ^ toggle) {
+            groupsAPI.fetchGroupsForUser()
+                .then((res) => {
+                    let userGroups = res.data.groups
+                    setPageState(pageState ^ toggle)
+                    setGroups(userGroups)
                 })
-            }).catch((err)=>{
-                console.log(err)
-            })
         } else {
-            this.groupsAPI.fetchGroups().then((groupData)=>{
-                this.groupsAPI.fetchGroupsForUser().then((userGroups)=>{
-
-                    this.setState((state) => {
-                        return {
-                            state: state.state ^ toggle,
-                            groups: groupData.filter(({ _id: id1 }) => !userGroups.some(({ _id: id2 }) => id2 === id1))
-                        }
-                    })
+            fetchGroups()
+                .then((res) => {
+                    let groupData = res.data.groups
+                    fetchGroupsForUser()
+                        .then((res) => {
+                            let userGroups = res.data.groups
+                            setPageState(pageState ^ toggle)
+                            setGroups(groupData.filter(({ _id: id1 }) => !userGroups.some(({ _id: id2 }) => id2 === id1)))
+                        })
                 })
-            }).catch((err)=>{
-                console.log(err)
-            })
         }
     }
 
-    join(groupId){
-        
+    const togglePageState = () => {
+        fetchData(1)
     }
-    render() {
-        return (
-            <div>
-                <Header logo />
-                <GroupsCardHeader toggleState={this.toggleState} state={this.state.state}/>
-                <GroupsCard groups={this.state.groups} state = {this.state.state} />
-            </div>
 
-        )
-    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
+    return (
+        <div>
+            <Header logo />
+            <GroupsCardHeader togglePageState={togglePageState} state={pageState} />
+            <GroupsCard groups={groups} state={pageState} />
+        </div>
+
+    )
+
 }
 
 export default Groups

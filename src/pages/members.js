@@ -7,7 +7,6 @@ import MembersCardHeader from '../components/membersCard/header'
 
 const Members = (props) => {
 
-    const [groupId, setGroupId] = useState(props.match.params.groupId)
     const [members, setMembers] = useState([])
     const [admins, setAdmins] = useState([])
 
@@ -29,8 +28,8 @@ const Members = (props) => {
     return (
         <div>
             <Header logo />
-            <MembersCardHeader numMembers={(members).length} groupId={groupId} />
-            <MembersCard members={members} groupId={groupId} admins={admins} />
+            <MembersCardHeader numMembers={(members).length} groupId={props.match.params.groupId} />
+            <MembersCard members={members} groupId={props.match.params.groupId} admins={admins} />
         </div>
 
     )
