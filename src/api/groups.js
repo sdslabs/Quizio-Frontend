@@ -4,15 +4,7 @@ import responseInterceptor from './responseInterceptor'
 
 export const fetchGroups = () => {
     return axiosInstance.get(`/groups/?all=true`, { json: true })
-    // .then(res => {
-    //     const body = res.data
-    //     const error = body.error || null
-    //     if (error) throw error
-    //     else return body.groups
-    // })
-    // .catch(error => {
-    //     console.log(error)
-    // })
+
 }
 
 export const fetchGroupsForUser = (username) => {
@@ -46,15 +38,6 @@ export const leaveGroup = (groupId) => {
 }
 export const fetchGroupMembers = (groupId) => {
     return axiosInstance.get(`/groups/${groupId}/members`)
-    // .then(res => {
-    //     let body = res.data
-    //     const error = body.error || null
-    //     if (error) throw error
-    //     else return body
-    // })
-    // .catch(error => {
-    //     console.log(error)
-    // })
 }
 export const updateGroup = (groupId, update) => {
     let postdata = {}

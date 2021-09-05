@@ -1,51 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import Header from '../components/header'
-import groupsAPI from '../api/groups'
+import { fetchGroupMembers } from '../api/groups'
 import MembersCard from '../components/membersCard'
 import MembersCardHeader from '../components/membersCard/header'
 
 
-class Members extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            groupId : this.props.match.params.groupId,
-            members : [],
-            admins : []
-        }
-        this.groupsAPI = new groupsAPI()
-    }
+const Members = (props) => {
 
-    componentDidMount() {
-        console.log(this.state.members[0])
-        this.getMembers()
-        this.setState({
-            groupId : this.props.match.params.groupId,
-        })
+    const [groupId, setGroupId] = useState(props.match.params.groupId)
+    const [members, setMembers] = useState([])
+    const [admins, setAdmins] = useState([])
 
-    }
-    
-    getMembers(){
-        this.groupsAPI.fetchGroupMembers(this.state.groupId).then(res=>{
- 
-            this.setState({
-                members :  res.groupMembers.members,
-                admins : res.groupMembers.admins
+    const handleGetMembers = () => {
+        fetchGroupMembers(groupId)
+            .then(res => {
+                res = res.data
+                setMembers(res.groupMembers.members)
+                setAdmins(res.groupMembers.admins)
             })
-        })
 
     }
 
-    render() {
-        return (
-            <div>
-                <Header logo />
-                <MembersCardHeader numMembers = {(this.state.members).length} groupId = {this.state.groupId}/>
-                <MembersCard members = {this.state.members} groupId = {this.state.groupId} admins = {this.state.admins} />
-            </div>
+    useEffect(() => {
+        handleGetMembers()
 
-        )
-    }
+    }, [])
+
+    return (
+        <div>
+            <Header logo />
+            <MembersCardHeader numMembers={(members).length} groupId={groupId} />
+            <MembersCard members={members} groupId={groupId} admins={admins} />
+        </div>
+
+    )
+
 }
 
 export default Members
