@@ -1,63 +1,59 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import Header from '../components/header'
-import usersAPI from '../api/user'
 import CreatedQuizTable from '../components/createdQuizTable'
 import GroupNameBoard from '../components/groupNameBoard'
 import GroupName from '../components/groupName'
 import GroupsCard from '../components/groupsCard/index'
+import { fetchUserData } from '../api/user'
 
 import UserDashboard from '../components/userDashboard'
 import '../styles/modules/userpage.scss'
 
 
-class Users extends Component {
-constructor(props)
-{ 
-    super(props);
-    usersAPI.fetchUserData = usersAPI.fetchUserData.bind(this)
-    this.render = this.render.bind(this)
-    this.state = {
-        createdQuizData : [],
-        userData : null,
-        groupData : [],
-        registeredQuizzes : null
-    }
-}
-componentDidMount()
-{
-    usersAPI.fetchUserData().then((userData) =>{
-        this.setState({
-            userData : userData,
-            groupData : userData.groups,
-            createdQuizData : userData.publicQuizzes,
-            registeredQuizzes : userData.registeredQuizzes
-        })
-    })
-}
+const Users = (props) => {
+    const [createdQuizData, setCreatedQuizData] = useState([])
+    const [groupData, setGroupData] = useState([])
+    const [userData, setUserData] = useState(null)
+    const [registeredQuizzes, setRegisteredQuizzes] = useState(null)
 
-    render() {
-        return (
-            <div>
-                <Header logo profile={true} noProfile = {true}/>
-                <UserDashboard  
-                        name = {this.state.userData ? this.state.userData.name : "Not Found"}
-                        bio = {this.state.userData ? this.state.userData.bio : "Not Found"}
-                        username = {this.state.userData ? this.state.userData.username : "Not Found"}
-                        lenGroups = {this.state.groupData}
-                        lenCreatedQuizzes = {this.state.createdQuizData}
-                        lenRegisteredQuizzes = {this.state.registeredQuizzes}
-                ></UserDashboard>
-                <div className = "container-for-dashb">
-                    <div className = "created-quiz-div">
-                        <CreatedQuizTable data = {(this.state.createdQuizData).length > 0  ? this.state.createdQuizData : null}></CreatedQuizTable>  
-                    </div>
-                <div className = "groups-div">
-                    <GroupNameBoard groups = {(this.state.groupData).length > 0 ? this.state.groupData : null} />
-                </div>
-                </div>
-                
-            </div>
-        )
+
+    const handleFetchUserData = () => {
+        fetchUserData()
+            .then((res) => {
+                userData = res.data.userData
+                setUserData(userData)
+                setGroupData(userData.groups)
+                setCreatedQuizData(userData.publicQuizzes)
+                setRegisteredQuizzes(userData.registeredQuizzes)
+            })
     }
+    useEffect(() => {
+        handleFetchUserData()
+    }, [])
+
+
+    return (
+        <div>
+            <Header logo profile={true} noProfile={true} />
+            <UserDashboard
+                name={userData ? userData.name : "Not Found"}
+                bio={userData ? userData.bio : "Not Found"}
+                username={userData ? userData.username : "Not Found"}
+                lenGroups={groupData}
+                lenCreatedQuizzes={createdQuizData}
+                lenRegisteredQuizzes={registeredQuizzes}
+            ></UserDashboard>
+            <div className="container-for-dashb">
+                <div className="created-quiz-div">
+                    <CreatedQuizTable data={(createdQuizData).length > 0 ? createdQuizData : null}></CreatedQuizTable>
+                </div>
+                <div className="groups-div">
+                    <GroupNameBoard groups={(groupData).length > 0 ? groupData : null} />
+                </div>
+            </div>
+
+        </div>
+    )
+
 }
 export default Users
