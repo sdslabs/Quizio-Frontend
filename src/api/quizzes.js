@@ -26,22 +26,8 @@ export const createQuiz = (quiz) => {
 
 
 
-export const fetchQuiz = (id, groupId) => {
-    return axiosInstance.get(`/groups/${groupId}/quizzes/${id}`)
-    // .then(res => {
-    //     const body = res.data
-    //     const error = body.error
-    //     if (error) throw error
-    //     if (body.quizData) {
-    //         body.quizData.startTime = new Date(body.quizData.startTime)
-    //         body.quizData.endTime = new Date(body.quizData.endTime)
-    //         body.quizData.duration =  (body.quizData.endTime - body.quizData.startTime) / (1000 * 60)
-    //         this.data = body.quizData
-    //         this.data.time = body.time
-    //     }
-    // }).catch((err) => {
-    //     console.log(err)
-    // })
+export const fetchQuiz = (id, groupId = false, checkRegistration = false) => {
+    return axiosInstance.get(groupId ? `/groups/${groupId}/quizzes/${id}` : `home/${id}?checkRegistration=${checkRegistration}`)
 }
 
 export const fetchQuizForAdmin = (id) => {
@@ -110,58 +96,16 @@ export const submitResponse = ({ sno, qno, sectionId, questionId }, response, re
 }
 
 
-export const fetchUserResponses = (username) => {
-    return axiosInstance.get(this.responseURL + "&username=" + username)
-    //     .then((res) => {
-    //         const body = res.data
-    //         const error = body.error
-    //         if (error) {
-    //             throw error
-    //         } else {
-    //             this.responses = body.responses
-    //             return body.responses
-    //         }
-    //     }).catch((err) => {
-    //         return err
-    //     }
-    // )
+export const fetchUserResponses = (userId, checkOwnership = false) => {
+    return axiosInstance.get(`/responses/${userId}/user?checkOwnership=${checkOwnership}&username=${userId}`)
 }
 
 
 
 // MOVE TO Component
-export const resetAnswers = () => {
-    for (const sectionNo in this.data.sections) {
-        for (const questionNo in this.data.sections[sectionNo].questions) {
-            this.data.sections[sectionNo].questions[questionNo].answer = null
-        }
-    }
-}
 
 // MOVE TO Component
-export const resetSubmissions = () => {
-    let sectionIndex = {}
-    let questionIndex = {}
-    for (const sectionNo in this.data.sections) {
-        let section = this.data.sections[sectionNo]
-        sectionIndex[section._id] = sectionNo
-        for (const questionNo in section.questions) {
-            let question = section.questions[questionNo]
-            questionIndex[question._id] = questionNo
-        }
-    }
-    for (const responseNo in this.responses) {
-        let response = this.responses[responseNo]
-        let sid = response.sectionId
-        let qid = response.questionId
-        if (!qid || !sid) continue;
-        // this.data.sections[sectionIndex[sid]].questions[questionIndex[qid]] = {}
-        this.data.sections[sectionIndex[sid]].questions[questionIndex[qid]].submitted = response.body
-        this.data.sections[sectionIndex[sid]].questions[questionIndex[qid]].showCorrectionStatus = !response.history || !response.history.length ? false : true
-        this.data.sections[sectionIndex[sid]].questions[questionIndex[qid]].evaluator = !response.history || !response.history.length ? '' : response.history[response.history.length - 1].evaluator
-        this.data.sections[sectionIndex[sid]].questions[questionIndex[qid]].markGiven = response.score
-    }
-}
+
 
 // MOVE TO Component
 export const convertOptionsToObject = () => {
@@ -240,11 +184,6 @@ export const deleteQuestionLocally = (sid, qid) => {
 
 
 // MOVE TO Component
-export const updateAnswer = ({ sno, qno }, ans) => {
-    this.data.sections[sno].questions[qno].answer = ans
-}
+
 
 // MOVE TO Component
-export const markQuestion = ({ sno, qno }) => {
-    this.data.sections[sno].questions[qno].marked ^= true
-}
