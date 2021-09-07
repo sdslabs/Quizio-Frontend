@@ -1,0 +1,98 @@
+@import '../partials/base';
+
+button {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+}
+
+.rounded {
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.group-card-toggle {
+    font: normal 600 1.3rem 'Open Sans' !important;
+    background: none;
+    border: none;
+    margin-right: 3.3125rem;
+    color: $font-body-color;
+}
+
+.result-toggle {
+    font: normal 600 1em 'Open Sans' !important;
+    background: none;
+    border: none;
+    margin-right: 1.1rem;
+    color: $font-body-color;
+}
+
+.create-group-btn {
+    background-color: $btn-primary-color;
+    color: $primary-modal-background;
+    font: normal 600 0.875rem 'Open Sans';
+}
+
+.section-title {
+    font: bold 0.875rem 'Montserrat';
+    color: $font-body-color;
+    border: 1px solid $primary-color;
+}
+
+.section-active {
+    border: none;
+}
+
+.question-btn {
+    font: bold 0.7rem 'Open Sans';
+    color: $font-body-color;
+    height: 2.2rem;
+    width: 2.2rem;
+    border: 1px solid #192B2F;
+}
+
+// In order of cascade
+.attempted {
+    color: $primary-modal-background;
+    background-color: $attempted-question;
+    border-color: $attempted-question;
+}
+
+.marked {
+    color: $primary-modal-background;
+    background-color: $marked-question;
+    border-color: $marked-question;
+}
+
+.question-active {
+    color: $font-body-color;
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+// ==========
+
+.submit-btn {
+    background-color: $attempted-question;
+    color: $primary-modal-background;
+    font: normal 600 1rem 'Open Sans';
+    margin-right: 0.75rem;
+}
+
+.mark-btn {
+    border: 2px solid $btn-primary-color;
+    color: $btn-primary-color;
+    font: normal 600 1rem 'Open Sans';
+}
+.submit-btn_fullscreen {
+    background-color: $attempted-question;
+    color: $primary-modal-background;
+    font: normal 600 1rem 'Open Sans';
+    margin-right: 0.75rem;
+    margin-left: 50%;
+    margin-top: 4%;
+}

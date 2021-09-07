@@ -1,0 +1,112 @@
+@import '../partials/base';
+
+.signup-form-container{
+  margin-top:10vh;
+  height: 80vh;
+  width: 100vw;
+}
+.signup-title-container{
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    height : 13vh;
+}
+.signup-title{
+  height: 8vh;
+  color: $font-body-color;
+  font-weight: 700;
+  font-family: Montserrat;
+  font-size: 2rem;
+  position:relative;
+
+}
+.signup-title span{
+  padding-bottom: 0.5rem;
+  border-bottom : 0.5vh solid $primary-color;
+}
+.signup-title-register{
+  height : 4vh;
+  font-size: 1rem;
+  font-family: Montserrat;
+  font-weight: 700;
+}
+.signup-input-container{
+  height: 50vh;
+  width : 60vh;
+  margin: auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.two-input-container{
+  flex-direction: row;
+  justify-content: space-between;
+}
+.form-input-box-container{
+  width : 100%;
+  justify-content: center;
+}
+
+.form-text-box-half{
+  width : 48%;
+}
+
+#form-input-box-id{
+  width : 100%;
+  padding: 0.8rem 1.2rem;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 0.15rem solid #C4C4C4;
+  font-size: 1rem;
+}
+
+#form-input-box-id:focus {
+  outline-width: 0;
+  border-bottom: 0.15rem solid $quizio-yellow;
+}
+
+.form-input-box-container select{
+  background-color: white;
+  border-top : none;
+  border-right : none;
+  border-left: none;
+  border-bottom: 0.15rem solid #C4C4C4;
+  width : 100%;
+  padding: 0.8rem 1.2rem;
+  box-sizing: border-box;
+  font-size : 1rem;
+  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
+  background-color: white;
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Safari, Chrome, Opera */
+  -webkit-appearance: none;
+  color:black;
+}
+
+.form-input-box-container select:focus{
+  outline-width: 0;
+  border-bottom: 0.15rem solid $quizio-yellow;
+}
+.form-input-box-container select:invalid{
+  color: grey;
+}
+
+.form-input-box-container select::-ms-expand {
+  display: none;
+}
+
+.signup-btn-container{
+  flex-direction: row;
+  justify-content: center;
+  height : 10vh;
+}
+
+.submit-btn-signup
+{
+  margin: auto;
+  background-color : #F69A3D;
+  font-family:  'Open Sans';
+  font-size : 1rem;
+  font-weight: 600;
+  color: #F9F9FA;
+}

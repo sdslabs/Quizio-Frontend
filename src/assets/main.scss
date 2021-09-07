@@ -1,0 +1,10 @@
+@import './partials/_reset';
+@import './partials/typography';
+
+.fullscreen-enabled .root{
+    background-color : white;
+}
+
+.h-100{
+    height: 100vh;
+}
