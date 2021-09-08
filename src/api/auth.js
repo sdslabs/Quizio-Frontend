@@ -10,16 +10,16 @@ export const checkAuth = async () => {
             let data = res.data
             if (data.oauth && data.authenticated) {
                 localStorage.setItem('userId', data.userId)
-                // cookies.set('token', data.token)
+                cookies.set('token', data.token)
             }
             return data
         })
-}
-
-/// login into quizio
-export const login = async () => {
-    console.log(`/auth/signin`)
-    return axiosInstance.get(`/auth/signin`)
+    }
+    
+    /// login into quizio
+    export const login = async () => {
+        console.log(`/auth/signin`)
+        return axiosInstance.get(`/auth/signin`)
         .then(res => {
             let data = res.data
             if (data.success) {

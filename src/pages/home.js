@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Cookies from 'universal-cookie';
-import { checkAuth, login } from '../api/auth'
+import { checkAuth, login, logout } from '../api/auth'
 import { getUser } from "../api/user";
 import Cover from '../components/svg/cover'
 import Header from "../components/header"
@@ -15,6 +15,8 @@ const Home = () => {
     const [loggedIn, setLoggedIn] = useState(false)     // true when logged in to quizio   (`token` cookie is set and `userId` is set)
 
     const [showModal, setShowModal] = useState(false); // toggle to show the login modal
+    const [userId, setUserId] = useState("")
+    const [userName, setUserName] = useState("")
 
     /// login with SDSLabs Oauth
     const continueWithSDSLabs = () => {
@@ -32,6 +34,11 @@ const Home = () => {
                     }
                 })
         }
+    }
+
+    const handleLogout = () => {
+        setLoggedIn(false)
+        logout()
     }
 
     useEffect(() => {
@@ -67,15 +74,17 @@ const Home = () => {
                                 if (status) {
                                     console.log("fully logged in!")
                                     setLoggedIn(true)
+                                    let userId = localStorage.getItem('userId')
+                                    setUserId(userId)
+                                    getUser(userId)
+                                        .then(data => {
+                                            let userName = localStorage.getItem('userName')
+                                            setUserName(userName)
+                                        })
                                 }
                             })
                     }
 
-
-                    // getUser(data.userId)
-                    //     .then(data => {
-                    //         console.log(data)
-                    //     })
                 }
 
 
@@ -90,7 +99,11 @@ const Home = () => {
     return (
         <>
             {authLoaded ? loggedIn ? (<>
-                <Header loggedIn={loggedIn} />
+                <Header
+                    loggedIn={loggedIn}
+                    givingQuiz={false}
+                    userName={userName}
+                />
             </>
                 // <div>
                 //     <Header authenticated={authenticated} handleLogOut={handleLogOut} />

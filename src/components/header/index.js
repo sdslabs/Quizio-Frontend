@@ -8,31 +8,14 @@ import exitIcon from '../../assets/images/exit.svg'
 const Header = (props) => {
 
     let history = useHistory()
-    const loggedIn = props.loggedIn
-    const arena = props.arena // what is arena?
-    // const givingQuiz = props.givingQuiz
     const imageUrl = props.imageUrl || 'https://upload.wikimedia.org/wikipedia/en/5/5f/TomandJerryTitleCardc.jpg'
-    const [name, setName] = useState("");
-
-    useEffect(() => {
-        let name = localStorage.getItem('username')
-        setName(name)
-    }, [])
-
 
     const redirectToHome = () => {
-        !arena && history.push("/")
+        history.push("/")
     }
 
     const redirectToProfile = () => {
         history.push("/users/profile")
-    }
-
-    const handleLogOut = () => {
-        logout()
-            .then(res => {
-                history.push('/')
-            })
     }
 
     return (
@@ -40,17 +23,17 @@ const Header = (props) => {
             <Row className="header">
                 <Col xs={1} className="logo text-center" onClick={redirectToHome}>Quizio</Col>
                 <Col xs={7} className="search-bar text-center">
-                    {loggedIn && <>...Search Bar here...</>}
+                    {props.loggedIn && <>...Search Bar here...</>}
                 </Col>
                 <Col xs={2} className="name text-center">
-                    {loggedIn && <>Welcome {name} !</>}
+                    {props.loggedIn && <>Welcome {props.userName} !</>}
                 </Col>
                 <Col xs={1} className="d-flex align-items-center justify-content-center">
                     <img src={imageUrl} className="profile" onClick={redirectToProfile}></img>
                 </Col>
                 <Col xs={1}>
-                    {loggedIn && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
-                    {/* {givingQuiz && <button className="exit" onClick={props.handleSubmitQuiz}>Submit Quiz <img src={exitIcon} /> </button>} */}
+                    {(props.loggedIn && !props.givingQuiz) && <button className="logout" onClick={props.handleLogOut}>Logout</button>}
+                    {(props.loggedIn && props.givingQuiz) && <button className="exit" onClick={props.handleSubmitQuiz}>Submit Quiz<img src={exitIcon} /> </button>}
                 </Col>
             </Row>
         </Container>
