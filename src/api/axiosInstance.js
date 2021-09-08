@@ -19,14 +19,11 @@ axiosInstance.defaults.withCredentials = true;
 // attach request interceptor
 export const requestInterceptor = axiosInstance.interceptors.request.use((config) => {
     const token = cookies.get('token')
-    const sdslabs = cookies.get('sdslabs')
     config.headers.Authorization = token
     return config
 
 }, (error) => {
     return Promise.reject(error);
 });
-
-
 
 export default axiosInstance;

@@ -4,7 +4,6 @@ import { withCookies } from 'react-cookie';
 import axiosInstance from './api/axiosInstance';
 
 import Home from './pages/home'
-import Signin from './pages/signin';
 import ErrorPage from './pages/ErrorPage';
 
 import config from './config/config.js';
@@ -26,7 +25,6 @@ const App = () => {
   return (
     <Switch>
       <Route exact path='/' component={Home} />
-      <Route exact path='/signin' component={Signin} />
       <Route path="*" component={ErrorPage} />
     </Switch>
   );

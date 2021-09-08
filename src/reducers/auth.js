@@ -1,74 +1,74 @@
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 
-import {
-    REGISTER_SUCCESS,
-    REGISTER_FAIL,
+// import {
+//     REGISTER_SUCCESS,
+//     REGISTER_FAIL,
 
-    LOGIN_SUCCESS,
-    LOGIN_FAIL,
+//     LOGIN_SUCCESS,
+//     LOGIN_FAIL,
 
-    LOGOUT,
+//     LOGOUT,
 
-    USER_LOADING,
-    USER_LOADED,
-    AUTH_ERROR
-} from '../actions/types';
+//     USER_LOADING,
+//     USER_LOADED,
+//     AUTH_ERROR
+// } from '../actions/types';
 
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
-const initialState = {
-    token: cookies.get('token'),
-    sdslabs: cookies.get('sdslabs'),
-    isAuthenticated: null,
-    isLoading: false,
-    user: null
-}
+// const initialState = {
+//     token: cookies.get('token'),
+//     sdslabs: cookies.get('sdslabs'),
+//     isAuthenticated: null,
+//     isLoading: false,
+//     user: null
+// }
 
-export default (state = initialState, action) => {
+// export default (state = initialState, action) => {
 
-    switch (action.type) {
+//     switch (action.type) {
 
-        case REGISTER_SUCCESS:
+//         case REGISTER_SUCCESS:
 
-        case REGISTER_FAIL:
+//         case REGISTER_FAIL:
 
-        case LOGIN_SUCCESS:
-            cookies.set('token', action.payload.token)
-            return {
-                ...state,
-                ...action.payload,
-                isAuthenticated: true,
-                isLoading: false,
-            };
-        case LOGIN_FAIL:
+//         case LOGIN_SUCCESS:
+//             cookies.set('token', action.payload.token)
+//             return {
+//                 ...state,
+//                 ...action.payload,
+//                 isAuthenticated: true,
+//                 isLoading: false,
+//             };
+//         case LOGIN_FAIL:
 
-        case LOGOUT:
-            cookies.remove('token')
-            return {
-                ...state,
-                token: null,
-                user: null,
-                isAuthenticated: false,
-                isLoading: false
-            };
+//         case LOGOUT:
+//             cookies.remove('token')
+//             return {
+//                 ...state,
+//                 token: null,
+//                 user: null,
+//                 isAuthenticated: false,
+//                 isLoading: false
+//             };
 
-        case AUTH_ERROR:
+//         case AUTH_ERROR:
 
-        case USER_LOADING:
-            return {
-                ...state,
-                isLoading: true,
-            };
+//         case USER_LOADING:
+//             return {
+//                 ...state,
+//                 isLoading: true,
+//             };
 
-        case USER_LOADED:
-            return {
-                ...state,
-                isAuthenticated: true,
-                isLoading: false,
-                user: action.payload
-            };
+//         case USER_LOADED:
+//             return {
+//                 ...state,
+//                 isAuthenticated: true,
+//                 isLoading: false,
+//                 user: action.payload
+//             };
 
-        default:
-            return state;
-    }
-}
+//         default:
+//             return state;
+//     }
+// }
