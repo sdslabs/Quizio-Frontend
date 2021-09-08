@@ -10,13 +10,11 @@ import { useHistory } from "react-router";
 const Home = () => {
     let history = useHistory()
     const [authLoaded, setAuthLoaded] = useState(false) // true when /auth returns the auth status
-
     const [oauth, setOauth] = useState(false)           // true when logged in to accounts (`sdslabs` cookie is set)
     const [loggedIn, setLoggedIn] = useState(false)     // true when logged in to quizio   (`token` cookie is set and `userId` is set)
-
-    const [showModal, setShowModal] = useState(false); // toggle to show the login modal
-    const [userId, setUserId] = useState("")
-    const [userName, setUserName] = useState("")
+    const [showModal, setShowModal] = useState(false);  // toggle to show the login modal
+    const [userId, setUserId] = useState("")            // userId
+    const [userName, setUserName] = useState("")        // username
 
     /// login with SDSLabs Oauth
     const continueWithSDSLabs = () => {
@@ -38,7 +36,36 @@ const Home = () => {
 
     const handleLogout = () => {
         setLoggedIn(false)
+        setUserId("")
+        setUserName("")
         logout()
+    }
+
+    const handleCheckAuth = async () => {
+
+        let authData = await checkAuth()
+        if (authData.success) {
+            authData.oauth && setOauth(true)
+            authData.authenticated && setLoggedIn(true)
+            setAuthLoaded(true)
+            if (authData.oauth) {
+
+                let loginStatus = await login()
+                if (loginStatus) {
+                    // logged into accounts but not quizio
+                    console.log("fully logged in!")
+                    setLoggedIn(true)
+                    let userId = localStorage.getItem('userId')
+                    setUserId(userId)
+
+                    await getUser(userId)
+                    let userName = localStorage.getItem('userName')
+                    setUserName(userName)
+
+                }
+
+            }
+        }
     }
 
     useEffect(() => {
@@ -57,45 +84,6 @@ const Home = () => {
         console.log("authLoaded: ", authLoaded)
     }, [authLoaded])
 
-
-    const handleCheckAuth = () => {
-        checkAuth()
-            .then((data) => {
-                if (data.success) {
-                    data.oauth && setOauth(true)
-                    data.authenticated && setLoggedIn(true)
-                    // data.userId && setUserId(data.userId)
-                    setAuthLoaded(true)
-
-                    if (data.oauth) {
-                        // logged into accounts but not quizio
-                        login()
-                            .then((status) => {
-                                if (status) {
-                                    console.log("fully logged in!")
-                                    setLoggedIn(true)
-                                    let userId = localStorage.getItem('userId')
-                                    setUserId(userId)
-                                    getUser(userId)
-                                        .then(data => {
-                                            let userName = localStorage.getItem('userName')
-                                            setUserName(userName)
-                                        })
-                                }
-                            })
-                    }
-
-                }
-
-
-                if (!data.oauth || !data.authenticated) {
-                    // not fully auth
-                    console.log("Not authenticated, must go to arceus", data)
-                }
-            })
-
-    }
-
     return (
         <>
             {authLoaded ? loggedIn ? (<>
@@ -103,34 +91,31 @@ const Home = () => {
                     loggedIn={loggedIn}
                     givingQuiz={false}
                     userName={userName}
+                    handleLogout={handleLogout}
                 />
+                {/* <div className='flex column space-around home-res'>
+                    <div className='flex space-evenly lower-res'>
+                        <div className='flex table-container'>
+                            <TableHeading value='Ongoing Quizzes' />
+                            {ongoingQuizzes.length ?
+                                <Table headRow='true' quizzes={ongoingQuizzes} past={false} /> :
+                                <NoQuizzes showImg={true} section='No Ongoing Quizzes' />
+                            }
+                            <TableHeading value='Upcoming Quizzes' />
+                            {upcomingQuizzes.length ?
+                                <Table headRow='true' quizzes={upcomingQuizzes} past={false} /> :
+                                <NoQuizzes showImg={true} section='No Upcoming Quizzes' />
+                            }
+                            <TableHeading value='Past Quizzes' />
+                            {pastQuizzes.length ?
+                                <Table headRow='true' quizzes={pastQuizzes} past={true} /> :
+                                <NoQuizzes showImg={true} section='No Past Quizzes' />
+                            }
+                        </div>
+                        <GroupsCard home={true} groups={groups} />
+                    </div>
+                </div> */}
             </>
-                // <div>
-                //     <Header authenticated={authenticated} handleLogOut={handleLogOut} />
-                //     <div className='flex column space-around home-res'>
-                //         <div className='flex space-evenly lower-res'>
-                //             <div className='flex table-container'>
-                //                 <TableHeading value='Ongoing Quizzes' />
-                //                 {ongoingQuizzes.length ?
-                //                     <Table headRow='true' quizzes={ongoingQuizzes} past={false} /> :
-                //                     <NoQuizzes showImg={true} section='No Ongoing Quizzes' />
-                //                 }
-                //                 <TableHeading value='Upcoming Quizzes' />
-                //                 {upcomingQuizzes.length ?
-                //                     <Table headRow='true' quizzes={upcomingQuizzes} past={false} /> :
-                //                     <NoQuizzes showImg={true} section='No Upcoming Quizzes' />
-                //                 }
-                //                 <TableHeading value='Past Quizzes' />
-                //                 {pastQuizzes.length ?
-                //                     <Table headRow='true' quizzes={pastQuizzes} past={true} /> :
-                //                     <NoQuizzes showImg={true} section='No Past Quizzes' />
-                //                 }
-                //             </div>
-                //             <GroupsCard home={true} groups={groups} />
-                //         </div>
-                //     </div>
-                // </div>
-
             ) : <Cover
                 showModal={showModal}
                 setShowModal={setShowModal}
