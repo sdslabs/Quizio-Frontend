@@ -1,2 +1,6 @@
-# QuizioV2
-Quizio frontend version 2.0
+# Quizio Frontend
+
+Frontend for Quizio!
+
+## Setting Up Quizio Backend
+
