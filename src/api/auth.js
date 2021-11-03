@@ -13,4 +13,7 @@ export const Login = async () => {
 	return null;
 };
 
-export const t = 1;
+export const Logout = async () => {
+	const response = await axiosInstance.get('/auth/logout');
+	console.log(response);
+};

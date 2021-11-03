@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Login } from '@api/auth';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import { setJwtToken, setUser } from '../redux/actions/auth';
 function Landing() {
 	const { search } = useLocation();
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	useEffect(async () => {
 		const queryUsername = new URLSearchParams(search).get('username');
@@ -26,6 +27,7 @@ function Landing() {
 		if (data) {
 			dispatch(setUser(data.user));
 			dispatch(setJwtToken(data.token));
+			history.push('/');
 		} else {
 			// login using the old token stored in cookie
 			Cookies.set('username', cookieUsername);
@@ -35,6 +37,7 @@ function Landing() {
 			if (data) {
 				dispatch(setJwtToken(data.token));
 				dispatch(setUser(data));
+				history.push('/');
 			} else {
 				console.log('User not logged in.');
 				dispatch(setJwtToken(''));
