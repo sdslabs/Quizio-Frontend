@@ -2,8 +2,16 @@
     "compilerOptions":{
         "baseUrl":"./",
         "paths":{
+			"@api/*":["./src/api/*"],
+			"@components/*":["./src/components/*"],
+			"@config/*":["./src/config/*"],
 			"@pages/*":["./src/pages/*"],
+			"@redux/*":["./src/redux/*"],
+            "@actions/*":["./src/redux/actions/*"],
+            "@reducers/*":["./src/redux/reducers/*"],
+            "@store/*":["./src/redux/store/*"],
             "@types/*":["./src/redux/types/*"],
+			"@utils/*":["./src/utils/*"]
         }
     }
 }

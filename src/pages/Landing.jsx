@@ -1,17 +1,53 @@
 import React, { useEffect } from 'react';
-import LoginWithGoogle from '../components/Buttons/LoginWithGoogle';
-// import openInNewTab from '../utils/openInNewTab';
+import { useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { Login } from '@api/auth';
+import { useDispatch } from 'react-redux';
+import LoginWithGoogle from '@components/Buttons/LoginWithGoogle';
+import LoginWithGithub from '@components/Buttons/LoginWithGithub';
+import { setJwtToken, setUser } from '../redux/actions/auth';
 
 function Landing() {
-  //   const [count, setCount] = useState(0);
-  useEffect(() => {
+  const { search } = useLocation();
+  const dispatch = useDispatch();
 
+  useEffect(async () => {
+    const queryUsername = new URLSearchParams(search).get('username');
+    const queryToken = new URLSearchParams(search).get('token');
+    const cookieToken = Cookies.get().token;
+    const cookieUsername = Cookies.get().username;
+
+    // Try to login using the query params (must be done first)
+    Cookies.set('username', queryUsername);
+    Cookies.set('token', queryToken);
+
+    let user = await Login(queryUsername);
+    console.log('query params login: ', user);
+    if (user) {
+      dispatch(setJwtToken(user.token));
+      dispatch(setUser(user));
+    } else {
+      // login using the old token stored in cookie
+      Cookies.set('username', cookieUsername);
+      Cookies.set('token', cookieToken);
+      user = await Login(cookieUsername);
+      console.log('cookies login: ', user);
+      if (user) {
+        dispatch(setJwtToken(user.token));
+        dispatch(setUser(user));
+      } else {
+        console.log('User not logged in.');
+        dispatch(setJwtToken(''));
+        dispatch(setUser(null));
+      }
+    }
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center space-y-10">
       <div className="flex text-center">Welcome to Quizio!</div>
       <LoginWithGoogle />
+      <LoginWithGithub />
     </div>
   );
 }

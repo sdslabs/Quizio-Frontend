@@ -24,8 +24,17 @@ module.exports = {
     'import/resolver': {
       alias: {
         map: [
+          ['@api', './src/api'],
+          ['@components', './src/components'],
+          ['@config', './src/config'],
           ['@pages', './src/pages'],
+          ['@utils', './src/utils'],
+          ['@redux', './src/redux'],
+          ['@actions', './src/redux/actions'],
+          ['@reducers', './src/redux/reducers'],
+          ['@store', './src/redux/store'],
           ['@types', './src/redux/types'],
+          ['@utils', './src/utils'],
         ],
         extensions: ['.ts', '.js', '.jsx', '.json'],
       },

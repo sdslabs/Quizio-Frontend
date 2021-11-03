@@ -1,6 +1,10 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Landing from '@pages/Landing';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import './index.css';
 
 const App = () => (
