@@ -7,7 +7,7 @@ export const Login = async (username) => {
       return user.data.data.user;
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     return null;
   }
   return null;
