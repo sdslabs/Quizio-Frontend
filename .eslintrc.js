@@ -18,5 +18,17 @@ module.exports = {
     'react',
   ],
   rules: {
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@pages', './src/pages'],
+          ['@types', './src/redux/types'],
+        ],
+        extensions: ['.ts', '.js', '.jsx', '.json'],
+      },
+    },
   },
 };

@@ -1,6 +1,6 @@
 import {
   SET_IS_LOGGED_IN, SET_USER, SET_JWT_TOKEN, LOG_OUT,
-} from '../types/auth';
+} from '@types/auth';
 
 export const setIsLoggedIn = (isLoggedIn) => ({
   type: SET_IS_LOGGED_IN,

@@ -1,0 +1,9 @@
+{
+    "compilerOptions":{
+        "baseUrl":"./",
+        "paths":{
+			"@pages/*":["./src/pages/*"],
+            "@types/*":["./src/redux/types/*"],
+        }
+    }
+}

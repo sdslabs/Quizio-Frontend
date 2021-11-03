@@ -1,6 +1,22 @@
+/* eslint-disable global-require */
+const cracoAlias = require('craco-alias');
+
 module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
+  style: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer'),
+      ],
+    },
   },
+  plugins: [
+    {
+      plugin: cracoAlias,
+      options: {
+        baseUrl: './',
+        source: 'jsconfig',
+      },
+    },
+  ],
 };

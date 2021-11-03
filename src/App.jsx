@@ -1,9 +1,14 @@
 import React from 'react';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import Landing from '@pages/Landing';
+import './index.css';
 
 const App = () => (
-  <div className="flex w-screen justify-center">
-    Welcome to quizio!
-  </div>
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Landing} />
+    </Switch>
+  </Router>
 );
 
 export default App;
