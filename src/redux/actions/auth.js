@@ -1,17 +1,17 @@
 import {
-  SET_USER, SET_JWT_TOKEN, LOG_OUT,
+	SET_USER, SET_JWT_TOKEN, LOG_OUT,
 } from '@types/auth';
 
 export const setUser = (user) => ({
-  type: SET_USER,
-  payload: user,
+	type: SET_USER,
+	payload: user,
 });
 
 export const setJwtToken = (token) => ({
-  type: SET_JWT_TOKEN,
-  payload: token,
+	type: SET_JWT_TOKEN,
+	payload: token,
 });
 
 export const logout = () => ({
-  type: LOG_OUT,
+	type: LOG_OUT,
 });
