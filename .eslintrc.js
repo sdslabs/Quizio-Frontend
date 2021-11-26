@@ -19,8 +19,9 @@ module.exports = {
 	],
 	rules: {
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-		'react/jsx-indent': [2, 'tab', { checkAttributes: true, indentLogicalExpressions: true }],
-		indent: [2, 'tab'],
+		// 'react/jsx-indent': [4, 'tab', { checkAttributes: true, indentLogicalExpressions: true }],
+		'react/jsx-indent': ['error', 4],
+		indent: 0,
 		'no-tabs': 0,
 	},
 	settings: {
