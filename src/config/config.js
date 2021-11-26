@@ -1,2 +1,3 @@
-export const baseURL = 'http://localhost:5050/api/v2';
-export const CLIENT_ADRESS = 'http://localhost:3000';
+export const baseURL = 'http://quizioapi.sdslabs.local/api/v2';
+export const CLIENT_ADRESS = 'http://quizioapi.sdslabs.local';
+export const falconURL = 'http://arceus.sdslabs.local';

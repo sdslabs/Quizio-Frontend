@@ -5,6 +5,7 @@ import { Login } from '@api/auth';
 import { useDispatch } from 'react-redux';
 import LoginWithGoogle from '@components/Buttons/LoginWithGoogle';
 import LoginWithGithub from '@components/Buttons/LoginWithGithub';
+import LoginWithSDSLabs from '@components/Buttons/LoginWithSDSLabs';
 import { setJwtToken, setUser } from '../redux/actions/auth';
 
 function Landing() {
@@ -51,6 +52,7 @@ function Landing() {
 			<div className="flex text-center">Welcome to Quizio!</div>
 			<LoginWithGoogle />
 			<LoginWithGithub />
+			<LoginWithSDSLabs />
 		</div>
 	);
 }
