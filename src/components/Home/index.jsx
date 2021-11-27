@@ -1,42 +1,13 @@
-import React, { } from 'react';
-// import { Logout } from '@api/auth';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '@redux/actions/auth';
-import Cookies from 'js-cookie';
+import Navbar from '@components/Navbar';
+import React from 'react';
 
-const Home = () => {
-	const user = useSelector((state) => state.auth.user);
-	const dispatch = useDispatch();
+const Home = () => (
+    <div className="flex">
+        <Navbar />
+    </div>
+);
 
-	const handleLogout = () => {
-		Cookies.remove('token');
-		Cookies.remove('username');
-		dispatch(logout());
-	};
+Home.propTypes = {};
 
-	return (
-    <>
-        <div className="flex flex-col text-center">
-            <div>Hi</div>
-            {' '}
-            <div>
-                {user.username}
-                !
-            </div>
-            <button type="button" onClick={handleLogout}>
-                Logout
-            </button>
-        </div>
-
-    </>
-	);
-};
-
-Home.propTypes = {
-
-};
-
-Home.defaultProps = {
-
-};
+Home.defaultProps = {};
 export default Home;

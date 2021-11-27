@@ -18,6 +18,7 @@ module.exports = {
         DEFAULT: '#F89837',
         1: '#FFD25A',
       },
+      green: '#192B2F',
     },
     extend: {},
 
