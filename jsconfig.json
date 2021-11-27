@@ -11,7 +11,8 @@
             "@reducers/*":["./src/redux/reducers/*"],
             "@store/*":["./src/redux/store/*"],
             "@types/*":["./src/redux/types/*"],
-			"@utils/*":["./src/utils/*"]
+			"@utils/*":["./src/utils/*"],
+			"@styles/*":["./src/styles/*"]
         }
     }
 }

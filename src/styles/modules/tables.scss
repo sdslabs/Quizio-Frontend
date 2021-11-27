@@ -1,0 +1,153 @@
+@import '../partials/base';
+
+.table-container {
+    flex-direction: column;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-container {
+    flex-direction: column;
+}
+
+.table-row-header {
+    color: $font-body-color;
+    opacity: 0.4;
+    font:  normal 600  0.875rem Open Sans;
+}
+
+th {
+    color: $font-body-color;
+    opacity: 0.4;
+    font:  normal 600  0.875rem Open Sans;
+}
+
+.table-row {
+    display: flex;
+    flex-grow: 0;
+    padding: 0.5rem;
+}
+
+.lower-body {
+    flex-grow: 3;
+    width: 95%;
+    margin: 0 auto;
+    position: relative;
+    top: 21vh;
+} 
+
+ #top {
+    border-bottom: 1px solid #182C2A;
+}
+
+.text{
+    display: -webkit-box;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    color: $font-body-color;
+    font:  normal normal  0.875rem Open Sans;
+    flex-grow: 1;
+    max-height: 2.5rem; 
+    padding-right: 0.5rem;
+    text-align: center;
+}
+
+ .table-container {
+    flex-direction: column;
+    background-color: #FBFCFB;
+}
+
+.table-row:nth-child(even) {
+    background-color: #EFEFEF;
+  }
+
+.margin-below {
+    margin-bottom: 4vh;
+}
+
+ .quiz-name-text {
+    font:  normal 600  0.875rem Open Sans;
+    color: $btn-primary-color;
+}
+
+ .username {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+
+.name {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+
+ .marks {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+
+ .rank {
+    width: 3rem;
+    flex-basis: 3rem;
+}
+
+ .email {
+    width: 22rem;
+    flex-basis: 22rem;
+}
+.contact {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+
+.insti {
+    width: 7rem;
+    flex-basis: 7rem;
+    padding-right: 0rem;
+}
+
+td {
+    color: $font-body-color;
+    font:  normal normal  0.875rem Open Sans;
+}
+
+tr {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+.quiz-name {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+
+.quiz-description {
+    width: 22rem;
+    flex-basis: 22rem;
+}
+
+.quiz-serial-no {
+    width: 3rem;
+    flex-basis: 3rem;
+}
+
+.quiz-startTime {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+.quiz-endTime {
+    width: 7rem;
+    flex-basis: 7rem;
+}
+
+.quiz-group {
+    width: 6rem;
+    flex-basis: 6rem;
+}
+.quiz-duration {
+    width: 7rem;
+    flex-basis: 7rem;
+    padding-right: 0rem;
+}

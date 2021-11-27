@@ -1,0 +1,126 @@
+@import '../partials/base';
+
+// .signup-title-container
+// {
+//     width : 30%;
+//     height : 15%;
+//     display : flex;
+//     flex-direction: column;
+//     margin-left: 35%;
+//     justify-content: space-between;
+// }
+
+.Signup-title
+{   margin-left: 38%;
+    width: 24%;
+    height : 35%;
+    font-size: 1.9vw;
+    padding: 2%;
+    text-align: center;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: #192B2F;
+    border-bottom: solid;
+    border-color : $quizio-yellow;
+    margin-top: 8%;
+
+}
+.text-reg
+{   margin-top: 5%;
+    margin-left: 16%;
+    width: 70%;
+    height : 35%;
+    font-size: 1.4vw;
+    text-align: center;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: #192B2F;
+
+}
+.form-container
+{   width: 30%;
+    height : 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 35%;
+    margin-top: 2%;
+}
+.name-container
+{
+    width : 100%;
+    height : 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.name-text
+{
+    width : 48%;
+}
+.mail-container
+{
+    width : 100%;
+    height: 25%;
+}
+.submit-btn-signup
+{
+    width: 30%;
+    background-color : #F69A3D;
+    font-family:  'Open Sans';
+    font-size : 1.1vw;
+    font-weight: 600;
+    color: #F9F9FA;
+}
+.submit-btn-create
+{
+    width: max-content;
+    background-color : #F69A3D;
+    font-family:  'Open Sans';
+    font-size : 1.1vw;
+    font-weight: 600;
+    color: #F9F9FA;
+    margin-right: 0.75rem;
+}
+.btn-container
+{   margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+}
+.alert-signup-popup{
+    color: red ;
+    text-align: center;
+    margin-top : 1%;
+}
+.name-text select{
+    background-color: white;
+    border-top : none;
+    border-right : none;
+    border-left: none;
+    width : 100%;
+    padding: 0.70rem 1.2rem;
+    box-sizing: border-box;
+    font-size : 1.2vw;
+    background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
+    background-color: white;
+    /* for Firefox */ 
+    -moz-appearance: none; 
+    /* for Safari, Chrome, Opera */ 
+    -webkit-appearance: none; 
+    color:black
+}
+.name-text select:focus{
+    outline-width: 0;
+    border-bottom: 0.15rem solid $quizio-yellow;
+}
+.course-default-option{
+    color:grey;
+}
+.course-option{
+    color:black;
+}
+.name-text select::-ms-expand {
+    display: none;
+}
