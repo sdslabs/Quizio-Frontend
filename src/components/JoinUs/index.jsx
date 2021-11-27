@@ -1,6 +1,6 @@
 import React from 'react';
 import JoinUsButton from '@components/Buttons/JoinUs';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import JoinUsImg from '../../styles/images/JoinUs.png';
 
 const JoinUs = () => {
