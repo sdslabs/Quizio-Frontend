@@ -5,6 +5,7 @@
   "dependencies": {
     "@craco/craco": "^6.4.0",
     "axios": "^0.24.0",
+    "husky": "^7.0.4",
     "js-cookie": "^3.0.1",
     "prop-type": "^0.0.1",
     "prop-types": "^15.7.2",
@@ -24,7 +25,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "lint": "eslint ./src --ext .jsx"
+    "lint": "eslint ./src --ext .jsx",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
