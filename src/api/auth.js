@@ -7,7 +7,7 @@ export const Login = async () => {
 			return user.data.data;
 		}
 	} catch (e) {
-		console.error(e);
+		// console.error(e);
 		return null;
 	}
 	return null;
@@ -15,5 +15,5 @@ export const Login = async () => {
 
 export const Logout = async () => {
 	const response = await axiosInstance.get('/auth/logout');
-	console.log(response);
+	return response;
 };

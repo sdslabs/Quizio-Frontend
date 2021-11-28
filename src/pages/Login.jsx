@@ -25,7 +25,7 @@ function Landing() {
     Cookies.set('token', queryToken);
 
     let data = await Login(queryUsername);
-    console.log('query params login: ', data);
+    // console.log('query params login: ', data);
     if (data) {
       dispatch(setUser(data.user));
       dispatch(setJwtToken(data.token));
@@ -35,13 +35,13 @@ function Landing() {
       Cookies.set('username', cookieUsername);
       Cookies.set('token', cookieToken);
       data = await Login(cookieUsername);
-      console.log('cookies login: ', data);
+      // console.log('cookies login: ', data);
       if (data) {
         dispatch(setJwtToken(data.token));
         dispatch(setUser(data));
         history.push('/');
       } else {
-        console.log('User not logged in.');
+        // console.log('User not logged in.');
         dispatch(setJwtToken(''));
         dispatch(setUser(null));
       }
