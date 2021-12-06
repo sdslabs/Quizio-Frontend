@@ -23,6 +23,7 @@ module.exports = {
 		'react/jsx-indent': ['error', 4],
 		indent: 0,
 		'no-tabs': 0,
+		'react/react-in-jsx-scope': 'off',
 	},
 	settings: {
 		'import/resolver': {
