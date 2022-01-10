@@ -3,10 +3,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: [
-		'plugin:react/recommended',
-		'airbnb',
-	],
+	extends: ['plugin:react/recommended', 'airbnb'],
 	parserOptions: {
 		ecmaFeatures: {
 			jsx: true,
@@ -14,16 +11,13 @@ module.exports = {
 		ecmaVersion: 12,
 		sourceType: 'module',
 	},
-	plugins: [
-		'react',
-	],
+	plugins: ['react'],
 	rules: {
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-		// 'react/jsx-indent': [4, 'tab', { checkAttributes: true, indentLogicalExpressions: true }],
 		'react/jsx-indent': ['error', 4],
 		indent: 0,
 		'no-tabs': 0,
-		'react/react-in-jsx-scope': 'off',
+		'max-len': ['error', { code: 150 }],
 	},
 	settings: {
 		'import/resolver': {
@@ -32,7 +26,7 @@ module.exports = {
 					['@api', './src/api'],
 					['@components', './src/components'],
 					['@config', './src/config'],
-					['@pages', './src/pages'],
+					['@pages', './src/components/pages'],
 					['@utils', './src/utils'],
 					['@redux', './src/redux'],
 					['@actions', './src/redux/actions'],
@@ -40,8 +34,12 @@ module.exports = {
 					['@store', './src/redux/store'],
 					['@types', './src/redux/types'],
 					['@utils', './src/utils'],
+					['@styles', './src/styles'],
+					['@icons', './src/components/Icons'],
+					['@images', './src/assets/images'],
+					['@pagestyles', './src/styles/pages'],
 				],
-				extensions: ['.ts', '.js', '.jsx', '.json'],
+				extensions: ['.ts', '.js', '.jsx', '.json', '.scss', '.native.js'],
 			},
 		},
 	},

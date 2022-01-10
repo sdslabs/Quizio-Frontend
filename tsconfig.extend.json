@@ -5,14 +5,17 @@
 			"@api/*":["./src/api/*"],
 			"@components/*":["./src/components/*"],
 			"@config/*":["./src/config/*"],
-			"@pages/*":["./src/pages/*"],
+			"@pages/*":["./src/components/pages/*"],
 			"@redux/*":["./src/redux/*"],
             "@actions/*":["./src/redux/actions/*"],
             "@reducers/*":["./src/redux/reducers/*"],
             "@store/*":["./src/redux/store/*"],
             "@types/*":["./src/redux/types/*"],
 			"@utils/*":["./src/utils/*"],
-			"@styles/*":["./src/styles/*"]
+			"@styles/*":["./src/styles/*"],
+            "@icons/*": ["./src/components/Icons/*"],
+            "@images/*": ["./src/assets/images/*"],
+            "@pagestyles/*": ["./src/styles/pages/*"]
         }
     }
 }

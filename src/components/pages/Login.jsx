@@ -5,9 +5,9 @@ import { Login } from '@api/auth';
 import { useDispatch } from 'react-redux';
 import LoginWithGoogle from '@components/Buttons/LoginWithGoogle';
 import LoginWithGithub from '@components/Buttons/LoginWithGithub';
+import { setJwtToken, setUser } from '@actions/auth';
 /* TODO: Implement login with SDSLabs */
 // import LoginWithSDSLabs from '@components/Buttons/LoginWithSDSLabs';
-import { setJwtToken, setUser } from '../redux/actions/auth';
 
 function Landing() {
   const { search } = useLocation();
