@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import JoinUs from '@components/JoinUs';
-import Home from '@components/Home';
+import JoinUs from '@pages/Landing/JoinUs';
+import Home from '@pages/Home';
 
 function Landing() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);

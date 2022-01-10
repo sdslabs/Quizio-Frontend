@@ -35,7 +35,7 @@ module.exports = {
 					['@types', './src/redux/types'],
 					['@utils', './src/utils'],
 					['@styles', './src/styles'],
-					['@icons', './src/components/Icons'],
+					['@icons', './src/assets/icons'],
 					['@images', './src/assets/images'],
 					['@pagestyles', './src/styles/pages'],
 				],

@@ -1,7 +1,7 @@
 import React from 'react';
-import JoinUsButton from '@components/Buttons/JoinUs';
 import { useHistory } from 'react-router-dom';
-import JoinUsImg from '../../styles/images/JoinUs.png';
+import JoinUsButton from '@components/Buttons/JoinUs';
+import JoinUsImg from '@images/JoinUs.png';
 
 const JoinUs = () => {
   const history = useHistory();
