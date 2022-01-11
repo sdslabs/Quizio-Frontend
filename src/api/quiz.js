@@ -9,4 +9,13 @@ export const getQuizzes = async () => {
 	}
 };
 
-export const a = 1;
+export const createQuiz = async (quizData) => {
+	try {
+		const res = await axiosInstance
+			.post('/quizzes/quiz-details', { quiz: quizData });
+
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};

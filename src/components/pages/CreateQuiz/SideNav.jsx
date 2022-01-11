@@ -15,34 +15,37 @@ const SideNav = () => {
 
   return (
       <div className="create-quiz-sidenav">
-          <div className="create-quiz-sidenav-title">Quiz Name</div>
-          <SideNavOption
-            text="Quiz Details"
-            SelectedIcon={QuizDetailsIcon}
-            Icon={QuizDetailsIcon}
-            selected={selected}
-          />
-          <SideNavOption
-            text="Registration form"
-            SelectedIcon={RegistrationFormSelectedIcon}
-            Icon={RegistrationFormSelectedIcon}
-            selected={selected}
-          />
-          <SideNavQuestions selected={selected} />
-          <SideNavOption
-            text="Registrations"
-            SelectedIcon={RegistrantsIcon}
-            Icon={RegistrantsIcon}
-            selected={selected}
-          />
+          <div className="create-quiz-sidenav-top">
+              <div className="create-quiz-sidenav-title">Quiz Name</div>
+              <SideNavOption
+                text="Quiz Details"
+                SelectedIcon={QuizDetailsIcon}
+                Icon={QuizDetailsIcon}
+                selected={selected}
+              />
+              <SideNavOption
+                text="Registration form"
+                SelectedIcon={RegistrationFormSelectedIcon}
+                Icon={RegistrationFormSelectedIcon}
+                selected={selected}
+              />
+              <SideNavQuestions selected={selected} />
+              <SideNavOption
+                text="Registrations"
+                SelectedIcon={RegistrantsIcon}
+                Icon={RegistrantsIcon}
+                selected={selected}
+              />
+          </div>
+          <div className="create-quiz-sidenav-bottom">
+              <div className="create-quiz-sidenav-buttons">
+                  <div className="create-quiz-sidenav-publish">
+                      <SecondaryCTA text="Publish Quiz" onClick={handlePublish} />
+                  </div>
 
-          <div className="create-quiz-sidenav-buttons">
-              <div className="create-quiz-sidenav-publish">
-                  <SecondaryCTA text="Publish Quiz" onClick={handlePublish} />
-              </div>
-
-              <div className="create-quiz-sidenav-check">
-                  <SecondaryCTA text="Check Quiz" onClick={handleCheck} />
+                  <div className="create-quiz-sidenav-check">
+                      <SecondaryCTA text="Check Quiz" onClick={handleCheck} />
+                  </div>
               </div>
           </div>
       </div>

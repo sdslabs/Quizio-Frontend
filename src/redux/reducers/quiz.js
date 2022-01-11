@@ -1,9 +1,11 @@
 import {
 	SET_CREATEQUIZ_STAGE,
+	SET_CREATEQUIZ_ID,
 } from '@types/quiz';
 
 const initialState = {
 	createQuizStage: 'Quiz Details',
+	createQuizId: '',
 };
 
 const quizReducer = (state = initialState, action) => {
@@ -14,6 +16,11 @@ const quizReducer = (state = initialState, action) => {
 			return {
 				...state,
 				createQuizStage: payload,
+			};
+		case SET_CREATEQUIZ_ID:
+			return {
+				...state,
+				createQuizId: payload,
 			};
 		default:
 			return state;

@@ -1,4 +1,5 @@
 import {
+	SET_CREATEQUIZ_ID,
 	SET_CREATEQUIZ_STAGE,
 } from '@types/quiz';
 
@@ -7,4 +8,7 @@ export const setCreateQuizStage = (stage) => ({
 	payload: stage,
 });
 
-export const a = 'a';
+export const setCreateQuizId = (quizId) => ({
+	type: SET_CREATEQUIZ_ID,
+	payload: quizId,
+});

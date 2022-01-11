@@ -1,2 +1,2 @@
 export const SET_CREATEQUIZ_STAGE = 'SET_CREATEQUIZ_STAGE';
-export const a = 'a';
+export const SET_CREATEQUIZ_ID = 'SET_CREATEQUIZ_ID';

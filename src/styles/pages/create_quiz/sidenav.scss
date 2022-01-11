@@ -1,46 +1,55 @@
 @import '@styles/all.scss';
 
 .create-quiz-sidenav {
-  @apply w-1/5 flex flex-col border-r h-full;
+  @apply w-1/5 flex flex-col justify-between border-r h-full;
 
-  .create-quiz-sidenav-title {
-    @extend .primary-text;
-    @apply w-full flex items-center pl-11 h-3.75 border-b;
+  .create-quiz-sidenav-top {
+    @apply flex flex-col w-full;
+
+    .create-quiz-sidenav-title {
+      @extend .primary-text;
+      @apply w-full flex items-center pl-11 h-3.75 border-b;
+    }
+
+    .create-quiz-sidenav-option {
+      @apply flex items-center h-12 hover:bg-purple-V1 hover:bg-opacity-60;
+
+      .create-quiz-sidenav-option-icon {
+        @apply pl-4 pr-2;
+      }
+
+      .create-quiz-sidenav-option-text {
+        @extend .secondary-text;
+      }
+    }
+
+    .create-quiz-sidenav-option-selected {
+      @apply flex items-center h-12 bg-purple-V6;
+
+      .create-quiz-sidenav-option-icon {
+        @apply pl-4 pr-2;
+      }
+
+      .create-quiz-sidenav-option-text-selected {
+        @extend .secondary-text;
+        @apply text-white;
+      }
+    }
   }
 
-  .create-quiz-sidenav-option {
-    @apply flex items-center h-12;
+  .create-quiz-sidenav-bottom {
+    @apply flex flex-col w-full pb-10;
 
-    .create-quiz-sidenav-option-icon {
-      @apply pl-4 pr-2;
-    }
+    .create-quiz-sidenav-buttons {
+      padding-left: 18%;
+      padding-right: 18%;
 
-    .create-quiz-sidenav-option-text {
-      @extend .secondary-text;
-    }
-  }
-
-  .create-quiz-sidenav-option-selected {
-    @apply flex items-center h-12 bg-purple-V6;
-
-    .create-quiz-sidenav-option-icon {
-      @apply pl-4 pr-2;
-    }
-
-    .create-quiz-sidenav-option-text-selected {
-      @extend .secondary-text;
-      @apply text-white;
-    }
-  }
-
-  .create-quiz-sidenav-buttons {
-    @apply flex flex-col h-full justify-end mb-10;
-
-    .create-quiz-sidenav-publish {
-      @apply px-5 h-10 flex justify-center;
-    }
-    .create-quiz-sidenav-check {
-      @apply px-5 h-10 mt-3 flex justify-center;
+      .create-quiz-sidenav-publish {
+        @apply h-10 flex justify-center;
+      }
+      .create-quiz-sidenav-check {
+        @apply h-10 flex justify-center mt-3;
+      }
     }
   }
 }

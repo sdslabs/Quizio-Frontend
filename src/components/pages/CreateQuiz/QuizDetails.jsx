@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/create_quiz/quiz_details.scss';
+import { createQuiz } from '@api/quiz';
+import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
 
 const QuizDetails = () => {
+  const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.user.email);
   const [instructionsMode, setInstructionsMode] = useState('write');
   const [quizName, setQuizName] = useState('');
@@ -26,8 +29,8 @@ const QuizDetails = () => {
     setOwners(newOwners);
   };
 
-  const handleSubmit = () => {
-    console.log({
+  const handleSubmit = async () => {
+    const res = await createQuiz({
       quizName,
       startDate,
       startTime,
@@ -38,11 +41,17 @@ const QuizDetails = () => {
       accessCode,
       quizDesc,
       quizInst,
+      creator: email,
     });
+
+    if (res.success) {
+      dispatch(setCreateQuizId(res.data.quiz.quizId));
+      dispatch(setCreateQuizStage('Registration form'));
+    }
   };
 
   useEffect(() => {
-    setOwners([email, email, email]);
+    setOwners([email]);
   }, []);
 
   return (
