@@ -21,9 +21,9 @@ const QuizDetails = () => {
   const [quizInst, setQuizInst] = useState('');
 
   const handleRemoveOwner = (i) => {
-      const newOwners = [...owners];
-      newOwners.splice(i, 1);
-      setOwners(newOwners);
+    const newOwners = [...owners];
+    newOwners.splice(i, 1);
+    setOwners(newOwners);
   };
 
   const handleSubmit = () => {
@@ -131,7 +131,9 @@ const QuizDetails = () => {
                           <div className="quiz-details-owner-title">{currOwner}</div>
                           <button
                             type="button"
-                            onClick={() => { handleRemoveOwner(i); }}
+                            onClick={() => {
+                  handleRemoveOwner(i);
+                }}
                             className="quiz-details-owner-remove"
                           >
                               <CrossIcon />
@@ -200,8 +202,10 @@ const QuizDetails = () => {
                 setVal={setQuizInst}
               />
           </div>
-          <div className="quiz-details-submit">
-              <PrimaryCTA text="Save &amp; continue" onClick={handleSubmit} />
+          <div className="quiz-details-submit-container">
+              <div className="quiz-details-submit">
+                  <PrimaryCTA text="Save &amp; continue" onClick={handleSubmit} />
+              </div>
           </div>
       </div>
   );

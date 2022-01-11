@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import { ReactComponent as QuizDetailsIcon } from '@icons/CreateQuiz/quiz-details.svg';
 import { ReactComponent as RegistrationFormSelectedIcon } from '@icons/CreateQuiz/registration-form-selected.svg';
 import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/registrants.svg';
+import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import SideNavOption from './SideNavOption';
 import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = () => {
   const selected = useSelector((state) => state.quiz.createQuizStage);
+  const handlePublish = () => {};
+  const handleCheck = () => {};
 
   return (
       <div className="create-quiz-sidenav">
@@ -32,6 +35,16 @@ const SideNav = () => {
             Icon={RegistrantsIcon}
             selected={selected}
           />
+
+          <div className="create-quiz-sidenav-buttons">
+              <div className="create-quiz-sidenav-publish">
+                  <SecondaryCTA text="Publish Quiz" onClick={handlePublish} />
+              </div>
+
+              <div className="create-quiz-sidenav-check">
+                  <SecondaryCTA text="Check Quiz" onClick={handleCheck} />
+              </div>
+          </div>
       </div>
   );
 };
