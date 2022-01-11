@@ -20,4 +20,12 @@ module.exports = {
       },
     },
   ],
+  /*
+  TODO: figure this out and implemnt http-only cookies
+  devServer: {
+    proxy: {
+      '/api/v2': 'http://quizioapi.sdslabs.local/',
+    },
+  },
+  */
 };

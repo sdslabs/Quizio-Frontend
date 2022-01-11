@@ -1,19 +1,28 @@
 import axiosInstance from './axiosInstance';
 
-export const Login = async () => {
+export const checkAuth = async () => {
 	try {
-		const user = await axiosInstance.get('/auth/login');
-		if (user.status === 200) {
-			return user.data.data;
-		}
+		const res = await axiosInstance.get('/auth/check');
+		return res.data;
 	} catch (e) {
-		// console.error(e);
-		return null;
+		return e.response.data;
 	}
-	return null;
+};
+
+export const loginWithJwtToken = async (jwtToken) => {
+	try {
+		const res = await axiosInstance.get(`/auth/login?jwtToken=${jwtToken}`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
 };
 
 export const Logout = async () => {
-	const response = await axiosInstance.get('/auth/logout');
-	return response;
+	try {
+		const res = await axiosInstance.get('/auth/logout');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
 };

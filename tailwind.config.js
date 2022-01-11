@@ -23,13 +23,20 @@ module.exports = {
       green: '#192B2F',
       purple: {
         DEFAULT: '#593C8F',
+        V6: '#604195',
       },
       red: {
         DEFAULT: '#D73554',
         error: '#F5222D',
       },
     },
-    extend: {},
+    extend: {
+      spacing: {
+        nav: '10vh',
+        content: '90vh',
+        3.75: '3.75rem',
+      },
+    },
 
   },
   variants: {
