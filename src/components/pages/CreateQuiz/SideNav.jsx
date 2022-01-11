@@ -9,7 +9,6 @@ import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = () => {
   const selected = useSelector((state) => state.quiz.createQuizStage);
-  // const [selected, setSelected] = useState('');
 
   return (
       <div className="create-quiz-sidenav">

@@ -6,6 +6,7 @@ import { setCreateQuizStage } from '@redux/actions/quiz';
 
 const SideNavQuestions = ({ selected }) => {
   const dispatch = useDispatch();
+
   return (
       <button
         type="button"
@@ -34,7 +35,7 @@ const SideNavQuestions = ({ selected }) => {
   );
 };
 SideNavQuestions.propTypes = {
-  selected: PropTypes.bool.isRequired,
+  selected: PropTypes.string.isRequired,
 };
 
 export default SideNavQuestions;

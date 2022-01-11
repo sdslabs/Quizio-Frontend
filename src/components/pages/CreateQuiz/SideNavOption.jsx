@@ -40,7 +40,7 @@ SideNavOption.propTypes = {
   SelectedIcon: PropTypes.any.isRequired,
   Icon: PropTypes.any.isRequired,
   text: PropTypes.string.isRequired,
-  selected: PropTypes.bool.isRequired,
+  selected: PropTypes.string.isRequired,
 };
 
 export default SideNavOption;

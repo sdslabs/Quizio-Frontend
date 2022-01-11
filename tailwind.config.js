@@ -8,7 +8,10 @@ module.exports = {
         DEFAULT: '#ffffff',
         1: '#fdfdfd',
       },
-      black: '#000000',
+      black: {
+        DEFAULT: '#000000',
+        1: '#191919',
+      },
       grey: {
         DEFAULT: '#C4C4C4',
         dark: '#333333',
@@ -35,6 +38,8 @@ module.exports = {
         nav: '10vh',
         content: '90vh',
         3.75: '3.75rem',
+        15: '3.75rem',
+        '8%': '8%',
       },
     },
 

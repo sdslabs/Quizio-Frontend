@@ -1,5 +1,14 @@
 @import '@styles/all.scss';
 
-.create-quiz-q-details {
-  @apply w-4/5 flex flex-col;
+.quiz-details {
+  @apply w-full px-8% pt-3.75;
+
+  .quiz-details-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold text-3xl;
+  }
+  
+  .quiz-details-input {
+    @apply mt-8;
+  }
 }

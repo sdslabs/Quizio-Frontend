@@ -3,7 +3,7 @@ import {
 } from '@types/quiz';
 
 const initialState = {
-	createQuizStage: 'quizDetails',
+	createQuizStage: 'Quiz Details',
 };
 
 const quizReducer = (state = initialState, action) => {
