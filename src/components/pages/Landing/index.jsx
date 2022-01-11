@@ -25,7 +25,11 @@ function Landing() {
 
   return (
       <>
-          {isLoading ? <>Loading...</> : <>{isLoggedIn ? <Dashboard /> : <JoinUs />}</>}
+          {isLoading ? (
+              <>Loading...</>
+      ) : (
+          <>{isLoggedIn ? <Dashboard /> : <JoinUs />}</>
+      )}
       </>
   );
 }
