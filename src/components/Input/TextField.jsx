@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TextField = ({
- id, label, placeholder, error, limit, val, setVal,
+ id, label, placeholder, error, limit, val, setVal, onKeyDown,
 }) => {
   const [currentLen, setCurrentLen] = useState(0);
 
@@ -22,6 +22,7 @@ const TextField = ({
           <input
             value={val}
             onChange={handleChange}
+            onKeyDown={onKeyDown}
             placeholder={placeholder}
             id={id}
             className={`mt-1 p-4 border border-${
@@ -54,12 +55,14 @@ TextField.propTypes = {
   limit: PropTypes.number,
   val: PropTypes.string.isRequired,
   setVal: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func,
 };
 
 TextField.defaultProps = {
   error: '',
   label: '',
   limit: 0,
+  onKeyDown: () => {},
 };
 
 export default TextField;

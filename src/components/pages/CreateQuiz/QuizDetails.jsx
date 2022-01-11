@@ -6,6 +6,7 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/create_quiz/quiz_details.scss';
 import { createQuiz } from '@api/quiz';
 import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
+import { checkIfUserExists } from '@api/user';
 
 const QuizDetails = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,17 @@ const QuizDetails = () => {
     const newOwners = [...owners];
     newOwners.splice(i, 1);
     setOwners(newOwners);
+  };
+
+  const handleAddOwner = async (e) => {
+    if (e.key === 'Enter') {
+      const res = await checkIfUserExists(owner);
+      if (res.success) {
+          const newOwners = new Set(owners);
+          newOwners.add(owner);
+          setOwners([...newOwners]);
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -130,9 +142,9 @@ const QuizDetails = () => {
                 placeholder="Add owners"
                 label="Owners"
                 error=""
-                limit={15}
                 val={owner}
                 setVal={setOwner}
+                onKeyDown={handleAddOwner}
               />
               <div className="quiz-details-owners-list">
                   {owners.map((currOwner, i) => (
