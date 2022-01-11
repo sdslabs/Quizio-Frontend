@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar from './Navbar';
-import QuizDetails from './QuizDetails';
 import SideNav from './SideNav';
 import '@pagestyles/create_quiz/index.scss';
+import MainForm from './MainForm';
 
 const CreateQuiz = () => {
   const a = 1;
@@ -13,7 +13,7 @@ const CreateQuiz = () => {
           <Navbar />
           <div className="create-quiz-main">
               <SideNav />
-              <QuizDetails />
+              <MainForm />
           </div>
       </div>
   );

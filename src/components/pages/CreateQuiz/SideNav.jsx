@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { ReactComponent as QuizDetailsIcon } from '@icons/CreateQuiz/quiz-details.svg';
 import { ReactComponent as RegistrationFormSelectedIcon } from '@icons/CreateQuiz/registration-form-selected.svg';
 import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/registrants.svg';
@@ -7,7 +8,8 @@ import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = () => {
-  const [selected, setSelected] = useState('');
+  const selected = useSelector((state) => state.quiz.createQuizStage);
+  // const [selected, setSelected] = useState('');
 
   return (
       <div className="create-quiz-sidenav">
@@ -17,22 +19,19 @@ const SideNav = () => {
             SelectedIcon={QuizDetailsIcon}
             Icon={QuizDetailsIcon}
             selected={selected}
-            setSelected={setSelected}
           />
           <SideNavOption
             text="Registration form"
             SelectedIcon={RegistrationFormSelectedIcon}
             Icon={RegistrationFormSelectedIcon}
             selected={selected}
-            setSelected={setSelected}
           />
-          <SideNavQuestions selected={selected} setSelected={setSelected} />
+          <SideNavQuestions selected={selected} />
           <SideNavOption
             text="Registrations"
             SelectedIcon={RegistrantsIcon}
             Icon={RegistrantsIcon}
             selected={selected}
-            setSelected={setSelected}
           />
       </div>
   );
