@@ -1,8 +1,12 @@
 import axiosInstance from './axiosInstance';
 
 export const getQuizzes = async () => {
-	const quizzes = await axiosInstance.get('/quizzes');
-	return quizzes.data.data.quizzes;
+	try {
+		const res = await axiosInstance.get('/quizzes');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
 };
 
-export const t = 1;
+export const a = 1;

@@ -1,15 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import JoinUs from '@pages/Landing/JoinUs';
+import React, { useState, useEffect } from 'react';
 import Home from '@pages/Home';
+import JoinUs from '@pages/JoinUs';
+// import { login } from '@api/auth';
 
 function Landing() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const user = useSelector((state) => state.auth.user);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(async () => {
+    // const loginRes = await login();
+    // console.log({ loginRes });
+    setIsLoggedIn(false);
+    setIsLoading(false);
+  }, []);
 
   return (
       <>
-          {isLoggedIn && user ? <Home /> : <JoinUs />}
+          {isLoading ? <>Loading...</> : <>{isLoggedIn ? <Home /> : <JoinUs />}</>}
       </>
   );
 }

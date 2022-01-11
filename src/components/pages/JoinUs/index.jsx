@@ -5,6 +5,7 @@ import JoinUsImg from '@images/JoinUs.png';
 
 const JoinUs = () => {
   const history = useHistory();
+
   const handleJoinUs = () => {
     history.push('/login');
   };
