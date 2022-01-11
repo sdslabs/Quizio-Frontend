@@ -1,14 +1,51 @@
 @import '@styles/all.scss';
 
 .quiz-details {
-  @apply w-full px-8% pt-3.75;
+  @apply w-full px-8% pt-3.75 pb-10;
 
   .quiz-details-title {
     @extend .primary-text;
     @apply text-black-1 font-bold text-3xl;
   }
-  
-  .quiz-details-input {
+
+  .quiz-details-name {
     @apply mt-8;
+  }
+
+  .quiz-details-datetime {
+    @apply flex space-x-6 mt-4;
+
+    .quiz-details-start-date {
+    }
+
+    .quiz-details-start-time {
+    }
+  }
+
+  .quiz-details-owners,
+  .quiz-details-access,
+  .quiz-details-description,
+  .quiz-details-instructions {
+    @apply mt-4;
+  }
+
+  .quiz-details-instructions {
+    @apply my-4;
+
+    .quiz-details-instructions-pagination {
+      @apply flex mt-2;
+
+      .quiz-details-instructions-selected {
+        @apply text-sm font-normal text-purple-V6 border-b-2 border-purple-V6 leading-8 px-2;
+      }
+
+      .quiz-details-instructions-not-selected {
+        @apply text-sm font-normal text-grey-N6 border-b-2 border-grey-N6 leading-8 px-2;
+      }
+    }
+  }
+
+  .quiz-details-submit {
+    @apply flex justify-end pt-16;
   }
 }

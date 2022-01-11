@@ -10,7 +10,7 @@ const TextField = ({
 
   const handleChange = (e) => {
     const newVal = e.target.value;
-    if (currentLen < limit) {
+    if (newVal.length <= limit - 1) {
       setVal(newVal);
     }
     setCurrentLen(newVal.length);
@@ -38,7 +38,7 @@ const TextField = ({
               {error}
           </span>
       )}
-          {limit && (
+          {limit !== 0 && (
           <div className="flex w-full justify-end text-sm text-grey-N6">
               {currentLen}
               /
@@ -51,14 +51,11 @@ const TextField = ({
 
 TextField.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   error: PropTypes.string,
   inputProps: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    value: PropTypes.string,
     onChange: PropTypes.func,
-    placeholder: PropTypes.string,
     pattern: PropTypes.string,
     disabled: PropTypes.bool,
   }),
@@ -67,6 +64,7 @@ TextField.propTypes = {
 
 TextField.defaultProps = {
   error: '',
+  label: '',
   limit: 0,
   inputProps: {},
 };

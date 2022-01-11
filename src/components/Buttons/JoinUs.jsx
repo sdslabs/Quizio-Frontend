@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const JoinUsButton = ({ onClick }) => (
     <div className="flex w-28 h-10 py-2 px-7 bg-yellow-1">
