@@ -1,13 +1,49 @@
-import React, { useState } from 'react';
-import '@pagestyles/create_quiz/quiz_details.scss';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import '@pagestyles/create_quiz/quiz_details.scss';
 
 const QuizDetails = () => {
+  const email = useSelector((state) => state.auth.user.email);
   const [instructionsMode, setInstructionsMode] = useState('write');
-  const handleSubmit = () => {
-    console.log('submit!');
+  const [quizName, setQuizName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [examDuration, setExamDuration] = useState('');
+  const [owner, setOwner] = useState('');
+  const [owners, setOwners] = useState(['']);
+  const [accessCode, setAccessCode] = useState('');
+  const [quizDesc, setQuizDesc] = useState('');
+  const [quizInst, setQuizInst] = useState('');
+
+  const handleRemoveOwner = (i) => {
+      const newOwners = [...owners];
+      newOwners.splice(i, 1);
+      setOwners(newOwners);
   };
+
+  const handleSubmit = () => {
+    console.log({
+      quizName,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      examDuration,
+      owners,
+      accessCode,
+      quizDesc,
+      quizInst,
+    });
+  };
+
+  useEffect(() => {
+    setOwners([email, email, email]);
+  }, []);
 
   return (
       <div className="quiz-details">
@@ -19,6 +55,8 @@ const QuizDetails = () => {
                 label="Quiz Name"
                 error=""
                 limit={20}
+                val={quizName}
+                setVal={setQuizName}
               />
           </div>
           <div className="quiz-details-datetime">
@@ -28,6 +66,8 @@ const QuizDetails = () => {
                     placeholder="Select Start Date"
                     label="Start Date"
                     error=""
+                    val={startDate}
+                    setVal={setStartDate}
                   />
               </div>
               <div className="quiz-details-start-time">
@@ -36,6 +76,8 @@ const QuizDetails = () => {
                     placeholder="Select start time"
                     label="Start Time"
                     error=""
+                    val={startTime}
+                    setVal={setStartTime}
                   />
               </div>
           </div>
@@ -47,6 +89,8 @@ const QuizDetails = () => {
                     placeholder="Select end date"
                     label="End Date"
                     error=""
+                    val={endDate}
+                    setVal={setEndDate}
                   />
               </div>
               <div className="quiz-details-end-time">
@@ -55,6 +99,8 @@ const QuizDetails = () => {
                     placeholder="Select end time"
                     label="End Time"
                     error=""
+                    val={endTime}
+                    setVal={setEndTime}
                   />
               </div>
               <div className="quiz-details-start-time">
@@ -63,6 +109,8 @@ const QuizDetails = () => {
                     placeholder="Select exam duration"
                     label="Exam Duration"
                     error=""
+                    val={examDuration}
+                    setVal={setExamDuration}
                   />
               </div>
           </div>
@@ -74,7 +122,23 @@ const QuizDetails = () => {
                 label="Owners"
                 error=""
                 limit={15}
+                val={owner}
+                setVal={setOwner}
               />
+              <div className="quiz-details-owners-list">
+                  {owners.map((currOwner, i) => (
+                      <div className="quiz-details-owner">
+                          <div className="quiz-details-owner-title">{currOwner}</div>
+                          <button
+                            type="button"
+                            onClick={() => { handleRemoveOwner(i); }}
+                            className="quiz-details-owner-remove"
+                          >
+                              <CrossIcon />
+                          </button>
+                      </div>
+          ))}
+              </div>
           </div>
           <div className="quiz-details-access">
               <TextField
@@ -83,6 +147,8 @@ const QuizDetails = () => {
                 label="Access Code"
                 error=""
                 limit={15}
+                val={accessCode}
+                setVal={setAccessCode}
               />
           </div>
           <div className="quiz-details-description">
@@ -92,6 +158,8 @@ const QuizDetails = () => {
                 label="Quiz Description"
                 error=""
                 limit={150}
+                val={quizDesc}
+                setVal={setQuizDesc}
               />
           </div>
           <div className="quiz-details-instructions">
@@ -128,6 +196,8 @@ const QuizDetails = () => {
                 id="Quiz instruction"
                 placeholder="Enter quiz instruction"
                 error=""
+                val={quizInst}
+                setVal={setQuizInst}
               />
           </div>
           <div className="quiz-details-submit">

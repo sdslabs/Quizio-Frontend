@@ -22,7 +22,18 @@
     }
   }
 
-  .quiz-details-owners,
+  .quiz-details-owners {
+    @apply mt-4;
+    
+    .quiz-details-owners-list{
+      @apply flex flex-wrap;
+      
+      .quiz-details-owner {
+        @apply px-3 py-1 mr-3 mt-3 bg-purple-V1 text-purple-V6 flex items-center justify-center rounded;
+      }
+    }
+  }
+
   .quiz-details-access,
   .quiz-details-description,
   .quiz-details-instructions {
