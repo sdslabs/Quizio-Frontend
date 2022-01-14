@@ -7,6 +7,7 @@ import '@pagestyles/create_quiz/quiz_details.scss';
 import { createQuiz } from '@api/quiz';
 import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
 import { checkIfUserExists } from '@api/user';
+import { nanoid } from 'nanoid';
 
 const QuizDetails = () => {
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const QuizDetails = () => {
               />
               <div className="quiz-details-owners-list">
                   {owners.map((currOwner, i) => (
-                      <div className="quiz-details-owner">
+                      <div key={nanoid()} className="quiz-details-owner">
                           <div className="quiz-details-owner-title">{currOwner}</div>
                           <button
                             type="button"
