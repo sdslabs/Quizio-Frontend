@@ -23,6 +23,22 @@
       }
     }
 
+    .create-quiz-sidenav-question {
+      @apply flex items-center h-12 hover:bg-purple-V1 hover:bg-opacity-60;
+
+      .icon {
+        @apply pl-4 pr-2;
+      }
+
+      .text {
+        @extend .secondary-text;
+      }
+
+      .dropdown{
+        @apply ml-auto mr-4;
+      }
+    }
+
     .create-quiz-sidenav-option-selected {
       @apply flex items-center h-12 bg-purple-V6;
 

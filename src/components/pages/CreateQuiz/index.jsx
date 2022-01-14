@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar from './Navbar';
 import SideNav from './SideNav';
-import '@pagestyles/create_quiz/index.scss';
 import MainForm from './MainForm';
+import '@pagestyles/create_quiz/index.scss';
 
 const CreateQuiz = () => {
   const a = 1;
