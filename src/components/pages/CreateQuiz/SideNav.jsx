@@ -1,8 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ReactComponent as QuizDetailsIcon } from '@icons/CreateQuiz/quiz-details.svg';
-import { ReactComponent as RegistrationFormSelectedIcon } from '@icons/CreateQuiz/registration-form-selected.svg';
-import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/registrants.svg';
+import { ReactComponent as QuizDetailsIcon } from '@icons/CreateQuiz/SideNavIcons/quizDetails.svg';
+import { ReactComponent as QuizDetailsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/quizDetailsSelected.svg';
+import { ReactComponent as RegistrationFormSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrationFormSelected.svg';
+import { ReactComponent as RegistrationFormIcon } from '@icons/CreateQuiz/SideNavIcons/registrationForm.svg';
+import { ReactComponent as RegistrantsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrantsSelected.svg';
+import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/SideNavIcons/registrants.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import SideNavOption from './SideNavOption';
 import SideNavQuestions from './SideNavQuestions';
@@ -19,20 +22,20 @@ const SideNav = () => {
               <div className="create-quiz-sidenav-title">Quiz Name</div>
               <SideNavOption
                 text="Quiz Details"
-                SelectedIcon={QuizDetailsIcon}
+                SelectedIcon={QuizDetailsSelectedIcon}
                 Icon={QuizDetailsIcon}
                 selected={selected}
               />
               <SideNavOption
                 text="Registration form"
                 SelectedIcon={RegistrationFormSelectedIcon}
-                Icon={RegistrationFormSelectedIcon}
+                Icon={RegistrationFormIcon}
                 selected={selected}
               />
               <SideNavQuestions selected={selected} />
               <SideNavOption
                 text="Registrations"
-                SelectedIcon={RegistrantsIcon}
+                SelectedIcon={RegistrantsSelectedIcon}
                 Icon={RegistrantsIcon}
                 selected={selected}
               />

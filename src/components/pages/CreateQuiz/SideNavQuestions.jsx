@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as QuestionsIcon } from '@icons/CreateQuiz/questions.svg';
+import { ReactComponent as QuestionsIcon } from '@icons/CreateQuiz/SideNavIcons/questions.svg';
+import { ReactComponent as QuestionsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/questionsSelected.svg';
 import { useDispatch } from 'react-redux';
 import { setCreateQuizStage } from '@redux/actions/quiz';
 
@@ -20,7 +21,7 @@ const SideNavQuestions = ({ selected }) => {
       }
       >
           <div className="create-quiz-sidenav-option-icon">
-              {selected === 'Questions' ? <QuestionsIcon /> : <QuestionsIcon />}
+              {selected === 'Questions' ? <QuestionsSelectedIcon /> : <QuestionsIcon />}
           </div>
           <div
             className={
