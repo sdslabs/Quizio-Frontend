@@ -4,7 +4,9 @@ Frontend for Quizio!
 
 ## Setting Up Quizio Backend
 
-- run `npm install && npm start`
+- run `npm install && npm start` 
+> OR
+- run `docker-compose up`
 
 # Dev Notes:
 
