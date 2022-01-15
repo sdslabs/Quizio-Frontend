@@ -10,6 +10,10 @@
       border-color: #D7D7D7;
       border-width: 2px 2px 2px 2px;
       border-radius: 4px;
+      ::placeholder {
+        color: #191919;
+      }
+      pointer-events: none;
   }
   .registration-form-title {
     @extend .primary-text;
@@ -40,7 +44,16 @@
   .registration-form-organisation-name {
     @apply mt-4 ;
   }
-  .registration-form-access-code {
-    @apply mt-4 ;
+  .registration-form-additional-details-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold mt-8 pb-4 pl-4 ;
+  }
+  .registration-details-submit-container {
+    @apply pt-10;
+    display: flex;
+    justify-content: right;
+    .registration-details-submit-save-details {
+      @apply pr-4;
+    }
   }
 }
