@@ -22,8 +22,12 @@ module.exports = {
       yellow: {
         DEFAULT: '#F89837',
         1: '#FFD25A',
+        Y9: '#FF8900',
       },
-      green: '#192B2F',
+      green: {
+        DEFAULT: '#192B2F',
+        1: '#27A624',
+      },
       purple: {
         DEFAULT: '#593C8F',
         V6: '#604195',
@@ -43,7 +47,6 @@ module.exports = {
         '8%': '8%',
       },
     },
-
   },
   variants: {
     extend: {},
