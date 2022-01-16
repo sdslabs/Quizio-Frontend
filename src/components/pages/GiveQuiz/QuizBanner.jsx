@@ -27,7 +27,7 @@ const QuestionBubbles = [
 
 const QuizBanner = () => (
     <div className="border-b border-grey-N4 pl-10 flex items-stretch">
-        <div className="flex flex-wrap flex-grow justify-center">
+        <div className="flex flex-wrap flex-grow justify-center disable-hover">
             {QuestionBubbles.map(({ type, number, label }) => (
                 <div className="flex items-center my-3">
                     <QuestionBubble

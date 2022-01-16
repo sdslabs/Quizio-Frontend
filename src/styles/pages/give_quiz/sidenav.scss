@@ -1,0 +1,54 @@
+@import '@styles/all.scss';
+
+.side-nav-item {
+    @apply text-purple-V6 pl-8 p-3 rounded hover:bg-purple-V1 hover:bg-opacity-40 mx-2 font-semibold cursor-pointer transition-all duration-500;
+}
+
+.side-nav-item-active {
+    @extend .side-nav-item;
+    @apply bg-purple-V1 bg-opacity-80 hover:bg-purple-V1 hover:bg-opacity-80;
+    .side-nav-toggle {
+        @apply transform rotate-180 transition-all duration-500;
+    }
+}
+
+.side-nav-questions {
+    @apply flex flex-wrap gap-3.5 h-0 overflow-hidden transition-all duration-300 mx-8;
+}
+
+.side-nav-questions-active {
+    @extend .side-nav-questions;
+    @apply mt-3 mb-6 h-auto;
+}
+
+.bubble-hover {
+    @apply hover:opacity-60 transition-opacity cursor-pointer;
+}
+
+.question-bubble- {
+    &not-visited {
+        @extend .bubble-hover;
+        @apply border-purple text-purple; 
+    }
+
+    &marked {
+        @extend .bubble-hover;
+        @apply border-yellow-Y9 text-white bg-yellow-Y9;
+    }
+
+    &answered {
+        @extend .bubble-hover;
+       @apply  border-green-1 text-white bg-green-1;
+    }
+
+    &active {
+        @extend .bubble-hover;
+        @apply bg-purple-V6 text-white;
+    }
+}
+
+.disable-hover {
+    .bubble-hover {
+        @apply hover:opacity-100 cursor-default;
+    }
+}

@@ -5,13 +5,16 @@ import CheckMark from '@icons/check.svg';
 const getBubbleClassName = (type) => {
     switch (type) {
         case 'not-visited':
-            return 'border-purple text-purple';
+            return 'question-bubble-not-visited';
 
         case 'marked': case 'marked-answered':
-            return 'border-yellow-Y9 text-white bg-yellow-Y9 bg-opacity-60';
+            return 'question-bubble-marked';
 
         case 'answered':
-            return 'border-green-1 text-white bg-green-1 bg-opacity-60';
+            return 'question-bubble-answered';
+
+        case 'active':
+            return 'question-bubble-active';
 
         default:
             return '';
