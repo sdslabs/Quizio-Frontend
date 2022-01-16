@@ -4,16 +4,10 @@
   @apply w-full px-8% pt-3.75 pb-10 ;
 
   .registration-form-basic-details {
-      @apply w-full px-8% pt-4 pl-4 pr-4 pb-4 ;
-      background-color: #F8F8F8;
-      border-style:  dashed;
-      border-color: #D7D7D7;
-      border-width: 2px 2px 2px 2px;
-      border-radius: 4px;
+      @apply w-full px-8% pt-4 pl-4 pr-4 pb-4 bg-grey-N2 border-grey-N4 border-dashed border-2 rounded-sm pointer-events-none ;
       ::placeholder {
-        color: #191919;
+         @apply text-black-1 ;
       }
-      pointer-events: none;
   }
   .registration-form-title {
     @extend .primary-text;
@@ -49,9 +43,7 @@
     @apply text-black-1 font-bold mt-8 pb-4 pl-4 ;
   }
   .registration-details-submit-container {
-    @apply pt-10;
-    display: flex;
-    justify-content: right;
+    @apply flex justify-end pt-10 ;
     .registration-details-submit-save-details {
       @apply pr-4;
     }
