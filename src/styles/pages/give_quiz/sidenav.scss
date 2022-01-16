@@ -33,12 +33,12 @@
 
     &marked {
         @extend .bubble-hover;
-        @apply border-yellow-Y9 text-white bg-yellow-Y9;
+        @apply border-yellow-Y9 text-white bg-yellow-Y9 bg-opacity-60;
     }
 
     &answered {
         @extend .bubble-hover;
-       @apply  border-green-1 text-white bg-green-1;
+       @apply  border-green-1 text-white bg-green-1 bg-opacity-60;
     }
 
     &active {
