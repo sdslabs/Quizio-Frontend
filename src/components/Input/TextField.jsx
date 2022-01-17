@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TextField = ({
- id, label, placeholder, error, limit, val, setVal, onKeyDown, bgColor,
+ id, label, placeholder, error, limit, val, setVal, onKeyDown, extraStyles,
 }) => {
   const [currentLen, setCurrentLen] = useState(0);
 
@@ -25,9 +25,9 @@ const TextField = ({
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             id={id}
-            className={`mt-1 p-4 bg-${bgColor} border border-${
+            className={`mt-1 p-4 border border-${
           error ? 'red-error' : 'grey-N4'
-        } rounded
+        } rounded ${extraStyles}
           w-full text-sm placeholder-grey-N4::placeholder
           focus:outline-none focus:border-purple`}
           />
@@ -56,7 +56,7 @@ TextField.propTypes = {
   val: PropTypes.string.isRequired,
   setVal: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func,
-  bgColor: PropTypes.string,
+  extraStyles: PropTypes.string,
 };
 
 TextField.defaultProps = {
@@ -64,7 +64,7 @@ TextField.defaultProps = {
   label: '',
   limit: 0,
   onKeyDown: () => {},
-  bgColor: 'white-DEFAULT',
+  extraStyles: 'bg-white-DEFAULT',
 };
 
 export default TextField;

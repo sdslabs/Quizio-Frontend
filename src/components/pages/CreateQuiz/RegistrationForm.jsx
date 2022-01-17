@@ -34,7 +34,7 @@ const RegistrationForm = () => {
                       error=""
                       val={firstName}
                       setVal={setFirstName}
-                      bgColor="grey-N2"
+                      extraStyles="bg-grey-N2"
                     />
                 </div>
                 <div className="registration-form-last-name">
@@ -45,7 +45,7 @@ const RegistrationForm = () => {
                       error=""
                       val={lastName}
                       setVal={setLastName}
-                      bgColor="grey-N2"
+                      extraStyles="bg-grey-N2"
                     />
                 </div>
             </div>
@@ -58,7 +58,7 @@ const RegistrationForm = () => {
                       error=""
                       val={emailID}
                       setVal={setEmailID}
-                      bgColor="grey-N2"
+                      extraStyles="bg-grey-N2"
                     />
                 </div>
                 <div className="registration-form-contact-contactno">
@@ -69,7 +69,7 @@ const RegistrationForm = () => {
                       error=""
                       val={contactNo}
                       setVal={setContactNo}
-                      bgColor="grey-N2"
+                      extraStyles="bg-grey-N2"
                     />
                 </div>
             </div>
@@ -81,7 +81,7 @@ const RegistrationForm = () => {
                   error=""
                   val={organisationName}
                   setVal={setOrganisationName}
-                  bgColor="grey-N2"
+                  extraStyles="bg-grey-N2"
                 />
             </div>
         </div>
