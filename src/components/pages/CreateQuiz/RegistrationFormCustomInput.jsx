@@ -4,7 +4,7 @@ import TextField from '@components/Input/TextField';
 import Switch from 'react-switch';
 import '@pagestyles/create_quiz/registration_form.scss';
 
-const CustomField = ({
+const RegistrationFormCustomInput = ({
   id, fieldName, setFieldName, fieldLabel, setFieldLabel, required, setRequired,
 }) => (
     <div className="w-full px-8% pl-4 pr-4 pb-7">
@@ -13,17 +13,20 @@ const CustomField = ({
                 {`Custom Field ${id}`}
                 <p className={`text-red  ${required ? 'visible' : 'invisible'}`}>&nbsp;*</p>
             </div>
-            <div>
-                <Switch
-                  onChange={setRequired}
-                  checked={required}
-                  offColor="#DADADA"
-                  onColor="#604195"
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  height={15}
-                  width={30}
-                />
+            <div className="flex justify-between">
+                <div className="text-sm text-grey-N6">Required&nbsp;&nbsp;</div>
+                <div>
+                    <Switch
+                      onChange={setRequired}
+                      checked={required}
+                      offColor="#DADADA"
+                      onColor="#604195"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      height={15}
+                      width={30}
+                    />
+                </div>
             </div>
         </div>
         <div className="mt-4">
@@ -49,7 +52,7 @@ const CustomField = ({
     </div>
 );
 
-CustomField.propTypes = {
+RegistrationFormCustomInput.propTypes = {
   id: PropTypes.number,
   fieldName: PropTypes.string.isRequired,
   setFieldName: PropTypes.func.isRequired,
@@ -59,8 +62,8 @@ CustomField.propTypes = {
   setRequired: PropTypes.func.isRequired,
 };
 
-CustomField.defaultProps = {
+RegistrationFormCustomInput.defaultProps = {
   id: '',
 };
 
-export default CustomField;
+export default RegistrationFormCustomInput;
