@@ -1,0 +1,46 @@
+@import '@styles/all.scss';
+
+.user-quiz-registration {
+  @apply w-full px-8% pt-3.75 pb-10 ;
+
+  .user-quiz-registration-form-basic-details {
+      @apply w-full px-8% pt-4 pl-4 pr-4 pb-4 ;
+
+  }
+  .user-quiz-registration-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold text-3xl pb-8 ;
+  }
+  .user-quiz-registration-name {
+    @apply flex space-x-6 ;
+
+    .user-quiz-registration-first-name {
+      @apply w-full flex justify-end ;
+    }
+
+    .user-quiz-registration-last-name {
+      @apply w-full flex justify-end ;
+    }
+  }
+  .user-quiz-registration-contact {
+    @apply flex space-x-6 mt-4 ;
+
+    .user-quiz-registration-contact-email {
+      @apply w-full flex justify-end ;
+    }
+
+    .user-quiz-registration-contact-contactno {
+      @apply w-full flex justify-end ;
+    }
+  }
+  .user-quiz-registration-organisation-name {
+    @apply mt-4 ;
+  }
+  .user-quiz-registration-additional-details-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold mt-8 pb-4 pl-4 ;
+  }
+  .user-quiz-registration-register-container {
+    @apply flex justify-end pt-10 ;
+  }
+}
