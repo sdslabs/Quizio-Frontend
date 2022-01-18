@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import TextField from '@components/Input/TextField';
-import CustomField from '@components/Input/CustomField';
 import '@pagestyles/create_quiz/registration_form.scss';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import RegistrationFormCustomInput from './RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
 	const [firstName, setFirstName] = useState('');
@@ -87,7 +87,7 @@ const RegistrationForm = () => {
         </div>
         <div className="registration-form-additional-details-title">Additional Details</div>
         <div className="registration-form-additional-details">
-            <CustomField
+            <RegistrationFormCustomInput
               id={1}
               fieldName={fieldName1}
               setFieldName={setFieldName1}
@@ -96,7 +96,7 @@ const RegistrationForm = () => {
               required={required1}
               setRequired={setRequired1}
             />
-            <CustomField
+            <RegistrationFormCustomInput
               id={2}
               fieldName={fieldName2}
               setFieldName={setFieldName2}
@@ -105,7 +105,7 @@ const RegistrationForm = () => {
               required={required2}
               setRequired={setRequired2}
             />
-            <CustomField
+            <RegistrationFormCustomInput
               id={3}
               fieldName={fieldName3}
               setFieldName={setFieldName3}
