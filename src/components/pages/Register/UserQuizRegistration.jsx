@@ -9,6 +9,7 @@ const UserQuizRegistration = () => {
 	const [emailID, setEmailID] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [organisationName, setOrganisationName] = useState('');
+  const [fieldInput, setfieldInput] = useState('');
 
 	return (
     <div className="user-quiz-registration">
@@ -70,6 +71,36 @@ const UserQuizRegistration = () => {
             </div>
         </div>
         <div className="user-quiz-registration-additional-details-title">Additional Details</div>
+        <div className="user-quiz-registration-field-input">
+            <TextField
+              id="Field Name"
+              placeholder="Field Label"
+              label="Field Name"
+              error=""
+              val={fieldInput}
+              setVal={setfieldInput}
+            />
+        </div>
+        <div className="user-quiz-registration-field-input">
+            <TextField
+              id="Field Name"
+              placeholder="Field Label"
+              label="Field Name"
+              error=""
+              val={fieldInput}
+              setVal={setfieldInput}
+            />
+        </div>
+        <div className="user-quiz-registration-field-input">
+            <TextField
+              id="Field Name"
+              placeholder="Field Label"
+              label="Field Name"
+              error=""
+              val={fieldInput}
+              setVal={setfieldInput}
+            />
+        </div>
         <div className="user-quiz-registration-register-container">
             <div>
                 <PrimaryCTA text="Register" onClick={console.log('todo')} />

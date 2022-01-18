@@ -38,9 +38,12 @@
   }
   .user-quiz-registration-additional-details-title {
     @extend .primary-text;
-    @apply text-black-1 font-bold mt-8 pb-4 pl-4 ;
+    @apply text-black-1 font-bold mt-8 ;
   }
   .user-quiz-registration-register-container {
     @apply flex justify-end pt-10 ;
+  }
+  .user-quiz-registration-field-input {
+    @apply mt-4 ;
   }
 }
