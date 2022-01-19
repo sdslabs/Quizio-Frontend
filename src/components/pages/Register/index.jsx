@@ -5,7 +5,7 @@ import StartQuiz from './StartQuizModal';
 const index = () => (
     <div>
         Register!!!
-        <StartQuiz />
+        <StartQuiz showAccessCode={false} />
         <UserQuizRegistration />
     </div>
 	);

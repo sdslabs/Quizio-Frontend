@@ -3,9 +3,13 @@ import TextField from '@components/Input/TextField';
 import '@pagestyles/register/start_quiz_modal.scss';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
+import PropTypes from 'prop-types';
 
-const StartQuizModal = () => {
+const StartQuizModal = ({
+  showAccessCode,
+}) => {
   const [accessCode, setAccessCode] = useState('');
+console.log(showAccessCode);
 
 	return (
     <div className="start-quiz">
@@ -17,7 +21,7 @@ const StartQuizModal = () => {
             <div className="start-quiz-container-text">
                 Are you sure you want to start this quiz ?
             </div>
-            <div className="start-quiz-access-code">
+            <div className={`start-quiz-access-code ${showAccessCode ? '' : 'hidden'}`}>
                 <TextField
                   id="Access Code"
                   placeholder="Enter the quiz access code Eg: F4CSeb"
@@ -36,6 +40,10 @@ const StartQuizModal = () => {
         </div>
     </div>
 	);
+};
+
+StartQuizModal.propTypes = {
+  showAccessCode: PropTypes.bool.isRequired,
 };
 
 export default StartQuizModal;
