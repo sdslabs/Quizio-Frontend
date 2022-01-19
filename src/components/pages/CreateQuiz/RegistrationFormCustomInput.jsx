@@ -53,7 +53,7 @@ const RegistrationFormCustomInput = ({
 );
 
 RegistrationFormCustomInput.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.number.isRequired,
   fieldName: PropTypes.string.isRequired,
   setFieldName: PropTypes.func.isRequired,
   fieldLabel: PropTypes.string.isRequired,
@@ -63,7 +63,6 @@ RegistrationFormCustomInput.propTypes = {
 };
 
 RegistrationFormCustomInput.defaultProps = {
-  id: '',
 };
 
 export default RegistrationFormCustomInput;

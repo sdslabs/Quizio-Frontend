@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TextField = ({
-<<<<<<< HEAD
  id, label, placeholder, error, limit, val, setVal, onKeyDown, additionalClassName, disabled, pattern,
-=======
- id, label, placeholder, error, limit, val, setVal, onKeyDown, extraStyles,
->>>>>>> [Refactor]: Add extraStyle prop instead of bgColor
 }) => {
   const [currentLen, setCurrentLen] = useState(0);
 
@@ -29,17 +25,11 @@ const TextField = ({
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             id={id}
-<<<<<<< HEAD
             disabled={disabled}
             pattern={pattern}
             className={`mt-1 p-4 border border-${
           error ? 'red-error' : 'grey-N4'
         } rounded ${additionalClassName}
-=======
-            className={`mt-1 p-4 border border-${
-          error ? 'red-error' : 'grey-N4'
-        } rounded ${extraStyles}
->>>>>>> [Refactor]: Add extraStyle prop instead of bgColor
           w-full text-sm placeholder-grey-N4::placeholder
           focus:outline-none focus:border-purple`}
           />
@@ -68,13 +58,9 @@ TextField.propTypes = {
   val: PropTypes.string.isRequired,
   setVal: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func,
-<<<<<<< HEAD
   additionalClassName: PropTypes.string,
   disabled: PropTypes.bool,
   pattern: PropTypes.string,
-=======
-  extraStyles: PropTypes.string,
->>>>>>> [Refactor]: Add extraStyle prop instead of bgColor
 };
 
 TextField.defaultProps = {
@@ -82,13 +68,9 @@ TextField.defaultProps = {
   label: '',
   limit: 0,
   onKeyDown: () => {},
-<<<<<<< HEAD
   additionalClassName: 'bg-white',
   disabled: false,
   pattern: '',
-=======
-  extraStyles: 'bg-white-DEFAULT',
->>>>>>> [Refactor]: Add extraStyle prop instead of bgColor
 };
 
 export default TextField;

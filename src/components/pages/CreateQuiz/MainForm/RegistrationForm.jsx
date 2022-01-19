@@ -34,7 +34,7 @@ const RegistrationForm = () => {
                       error=""
                       val={firstName}
                       setVal={setFirstName}
-                      extraStyles="bg-grey-N2"
+                      additionalClassName="bg-grey-N2"
                     />
                 </div>
                 <div className="registration-form-last-name">
@@ -45,7 +45,7 @@ const RegistrationForm = () => {
                       error=""
                       val={lastName}
                       setVal={setLastName}
-                      extraStyles="bg-grey-N2"
+                      additionalClassName="bg-grey-N2"
                     />
                 </div>
             </div>
@@ -58,7 +58,7 @@ const RegistrationForm = () => {
                       error=""
                       val={emailID}
                       setVal={setEmailID}
-                      extraStyles="bg-grey-N2"
+                      additionalClassName="bg-grey-N2"
                     />
                 </div>
                 <div className="registration-form-contact-contactno">
@@ -69,7 +69,7 @@ const RegistrationForm = () => {
                       error=""
                       val={contactNo}
                       setVal={setContactNo}
-                      extraStyles="bg-grey-N2"
+                      additionalClassName="bg-grey-N2"
                     />
                 </div>
             </div>
@@ -81,7 +81,7 @@ const RegistrationForm = () => {
                   error=""
                   val={organisationName}
                   setVal={setOrganisationName}
-                  extraStyles="bg-grey-N2"
+                  additionalClassName="bg-grey-N2"
                 />
             </div>
         </div>
@@ -117,10 +117,10 @@ const RegistrationForm = () => {
         </div>
         <div className="registration-details-submit-container">
             <div className="registration-details-submit-save-details">
-                <SecondaryCTA text="Save Details" onClick={console.log('todo')} />
+                <SecondaryCTA text="Save Details" onClick={() => console.log('foo')} />
             </div>
             <div>
-                <PrimaryCTA text="Start Adding Questions" onClick={console.log('todo')} />
+                <PrimaryCTA text="Start Adding Questions" onClick={() => console.log('foo')} />
             </div>
         </div>
     </div>
