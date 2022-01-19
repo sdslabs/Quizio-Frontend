@@ -1,0 +1,20 @@
+@import '@styles/all.scss';
+
+.start-quiz {
+  @apply w-full px-8% pt-3.75 pb-10 ;
+
+  .start-quiz-title {
+    @extend .primary-text;
+    @apply flex text-black-1 font-semibold text-3xl pb-4 justify-between ;
+  }
+  .start-quiz-container-text {
+    @apply pb-4 ;
+  }
+  .start-quiz-submit-container {
+    @apply w-full flex justify-end;
+
+    .start-quiz-button {
+      @apply flex justify-end pt-4;
+    }
+  }
+}
