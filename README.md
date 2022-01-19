@@ -2,12 +2,19 @@
 
 Frontend for Quizio!
 
-## Setting Up Quizio Backend
+## Setting Up Guide
 
-- run `npm install && npm start` 
+- run `npm install`
+- run `npm start`
+
 > OR
+
+- run `docker-compose build` 
 - run `docker-compose up`
 
+## Deployment Guide
+
+- run `bash deploy.sh`
 # Dev Notes:
 
 ## Security:

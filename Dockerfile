@@ -1,15 +1,18 @@
-FROM node:14.18.1-alpine
+FROM node:14.18.1-alpine AS builder
 
-# directory for the app in the container
 WORKDIR /usr/app
 
-# copies all the app's files from host into the container folder which 
-# might include the node_modules dir if npm install executed in the host
 COPY . /usr/app
 
-# removes any existing node_modules folder
-# this prevents the host's node_modules from being used in the container
-# which could cause issues with native binaries such as node_sass.
 RUN rm -rf /usr/app/node_modules/
 
-RUN npm install
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:1.19-alpine AS server
+
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /usr/app/build /usr/share/nginx/html
