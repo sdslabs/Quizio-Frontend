@@ -31,7 +31,7 @@ const StartQuizModal = () => {
         </div>
         <div className="start-quiz-submit-container">
             <div className="start-quiz-button">
-                <PrimaryCTA text="Start Quiz" onClick={()=>console.log('todo')} />
+                <PrimaryCTA text="Start Quiz" onClick={() => console.log('todo')} />
             </div>
         </div>
     </div>
