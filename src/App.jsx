@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Landing from '@pages/Landing';
 import Login from '@pages/Login';
+import Logs from '@pages/Logs';
 import Register from '@pages/Register';
 import CreateQuiz from '@pages/CreateQuiz';
 import './index.css';
@@ -13,6 +14,7 @@ const App = () => (
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/quiz/create" component={CreateQuiz} />
+            <Route exact path="/log" component={Logs} />
         </Switch>
     </Router>
 );
