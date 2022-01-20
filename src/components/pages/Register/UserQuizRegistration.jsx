@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@components/Input/TextField';
 import '@pagestyles/register/user_quiz_registration.scss';
+import constants from '@constants/constants';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 
 const UserQuizRegistration = () => {
@@ -9,7 +10,9 @@ const UserQuizRegistration = () => {
 	const [emailID, setEmailID] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [organisationName, setOrganisationName] = useState('');
-  const [fieldInput, setfieldInput] = useState('');
+  const [fieldInput1, setfieldInput1] = useState('');
+  const [fieldInput2, setfieldInput2] = useState('');
+  const [fieldInput3, setfieldInput3] = useState('');
 
 	return (
     <div className="user-quiz-registration">
@@ -49,6 +52,7 @@ const UserQuizRegistration = () => {
                       val={emailID}
                       setVal={setEmailID}
                       disabled
+                      pattern={constants.REGEX.email}
                     />
                 </div>
                 <div className="user-quiz-registration-contact-contactno">
@@ -60,6 +64,7 @@ const UserQuizRegistration = () => {
                       val={contactNo}
                       setVal={setContactNo}
                       disabled
+                      pattern={constants.REGEX.contact}
                     />
                 </div>
             </div>
@@ -82,8 +87,8 @@ const UserQuizRegistration = () => {
               placeholder="Field Label"
               label="Field Name"
               error=""
-              val={fieldInput}
-              setVal={setfieldInput}
+              val={fieldInput1}
+              setVal={setfieldInput1}
             />
         </div>
         <div className="user-quiz-registration-field-input">
@@ -92,8 +97,8 @@ const UserQuizRegistration = () => {
               placeholder="Field Label"
               label="Field Name"
               error=""
-              val={fieldInput}
-              setVal={setfieldInput}
+              val={fieldInput2}
+              setVal={setfieldInput2}
             />
         </div>
         <div className="user-quiz-registration-field-input">
@@ -102,8 +107,8 @@ const UserQuizRegistration = () => {
               placeholder="Field Label"
               label="Field Name"
               error=""
-              val={fieldInput}
-              setVal={setfieldInput}
+              val={fieldInput3}
+              setVal={setfieldInput3}
             />
         </div>
         <div className="user-quiz-registration-register-container">

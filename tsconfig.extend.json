@@ -15,7 +15,8 @@
 			"@styles/*":["./src/styles/*"],
             "@icons/*": ["./src/assets/icons/*"],
             "@images/*": ["./src/assets/images/*"],
-            "@pagestyles/*": ["./src/styles/pages/*"]
+            "@pagestyles/*": ["./src/styles/pages/*"],
+            "@constants/*": ["./src/constants/*"]
         }
     }
 }
