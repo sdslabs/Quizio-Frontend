@@ -5,12 +5,12 @@ const Countdown = () => {
     const [countMinutes, setCountMinutes] = useState('00');
     const [countSeconds, setCountSecounds] = useState('00');
 
-    let period = useRef();
-    const timer = () => {
+    const period = useRef();
+    const startCountdownTimer = () => {
         const endTime = new Date('Januarary 22, 2022 00:00:00').getTime();
         const now = new Date().getTime();
 
-        period = setInterval(() => {
+        period.current = setInterval(() => {
             const duration = endTime - now;
             const seconds = Math.floor((duration / 1000) % 60);
             const minutes = Math.floor((duration / 1000 / 60) % 60);
@@ -26,7 +26,7 @@ const Countdown = () => {
         }, 1000);
     };
     useEffect(() => {
-        timer();
+        startCountdownTimer();
         return () => {
             clearInterval(period.current);
         };
