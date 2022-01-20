@@ -30,22 +30,12 @@ const LogsTest = () => {
 
   useEffect(() => {
     document.addEventListener('contextmenu', handleContextMenu);
-
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-    };
-  }, []);
-  useEffect(() => {
     document.addEventListener('visibilitychange', handleTabChange);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleTabChange);
-    };
-  }, []);
-  useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('visibilitychange', handleTabChange);
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
