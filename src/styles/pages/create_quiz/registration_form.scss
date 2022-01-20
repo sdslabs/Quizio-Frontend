@@ -4,7 +4,7 @@
   @apply w-full px-8% pt-3.75 pb-10 ;
 
   .registration-form-basic-details {
-      @apply w-full px-8% pt-4 pl-4 pr-4 pb-4 bg-grey-N2 border-grey-N4 border-dashed border-2 rounded-sm pointer-events-none ;
+      @apply w-full px-8% pt-4 pl-4 pr-4 pb-4 bg-grey-N2 border-grey-N4 border-dashed border-2 rounded-sm ;
       ::placeholder {
          @apply text-black-1 ;
       }

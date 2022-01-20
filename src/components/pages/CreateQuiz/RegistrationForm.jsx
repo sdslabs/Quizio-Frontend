@@ -35,6 +35,7 @@ const RegistrationForm = () => {
                       val={firstName}
                       setVal={setFirstName}
                       additionalClassName="bg-grey-N2"
+                      disabled
                     />
                 </div>
                 <div className="registration-form-last-name">
@@ -46,6 +47,7 @@ const RegistrationForm = () => {
                       val={lastName}
                       setVal={setLastName}
                       additionalClassName="bg-grey-N2"
+                      disabled
                     />
                 </div>
             </div>
@@ -59,6 +61,7 @@ const RegistrationForm = () => {
                       val={emailID}
                       setVal={setEmailID}
                       additionalClassName="bg-grey-N2"
+                      disabled
                     />
                 </div>
                 <div className="registration-form-contact-contactno">
@@ -70,6 +73,7 @@ const RegistrationForm = () => {
                       val={contactNo}
                       setVal={setContactNo}
                       additionalClassName="bg-grey-N2"
+                      disabled
                     />
                 </div>
             </div>
@@ -82,6 +86,7 @@ const RegistrationForm = () => {
                   val={organisationName}
                   setVal={setOrganisationName}
                   additionalClassName="bg-grey-N2"
+                  disabled
                 />
             </div>
         </div>
