@@ -24,6 +24,7 @@ const UserQuizRegistration = () => {
                       error=""
                       val={firstName}
                       setVal={setFirstName}
+                      disabled
                     />
                 </div>
                 <div className="user-quiz-registration-last-name">
@@ -34,6 +35,7 @@ const UserQuizRegistration = () => {
                       error=""
                       val={lastName}
                       setVal={setLastName}
+                      disabled
                     />
                 </div>
             </div>
@@ -46,6 +48,7 @@ const UserQuizRegistration = () => {
                       error=""
                       val={emailID}
                       setVal={setEmailID}
+                      disabled
                     />
                 </div>
                 <div className="user-quiz-registration-contact-contactno">
@@ -56,6 +59,7 @@ const UserQuizRegistration = () => {
                       error=""
                       val={contactNo}
                       setVal={setContactNo}
+                      disabled
                     />
                 </div>
             </div>
@@ -67,6 +71,7 @@ const UserQuizRegistration = () => {
                   error=""
                   val={organisationName}
                   setVal={setOrganisationName}
+                  disabled
                 />
             </div>
         </div>

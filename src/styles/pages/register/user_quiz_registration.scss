@@ -4,7 +4,6 @@
   @apply w-full px-8% pt-3.75 pb-10 ;
 
   .user-quiz-registration-basic-details {
-    @apply pointer-events-none ;
       ::placeholder {
         @apply text-black-1 ;
      }
