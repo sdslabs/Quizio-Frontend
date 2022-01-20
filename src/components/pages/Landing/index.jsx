@@ -4,6 +4,7 @@ import JoinUs from '@pages/JoinUs';
 import { checkAuth } from '@api/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@redux/actions/auth';
+import MarkdownTextField from '@components/Input/MarkdownTextField';
 
 function Landing() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function Landing() {
   return (
       <>
           {isLoading ? (
-              <>Loading...</>
+              <MarkdownTextField />
       ) : (
           <>{isLoggedIn ? <Dashboard /> : <JoinUs />}</>
       )}
