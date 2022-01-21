@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@components/Input/TextField';
 import '@pagestyles/register/user_quiz_registration.scss';
-import constants from '@constants/constants';
+import { REGEX } from '@constants/constants';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 
 const UserQuizRegistration = () => {
@@ -52,7 +52,7 @@ const UserQuizRegistration = () => {
                       val={emailID}
                       setVal={setEmailID}
                       disabled
-                      pattern={constants.REGEX.email}
+                      pattern={REGEX.email}
                     />
                 </div>
                 <div className="user-quiz-registration-contact-contactno">
@@ -64,7 +64,7 @@ const UserQuizRegistration = () => {
                       val={contactNo}
                       setVal={setContactNo}
                       disabled
-                      pattern={constants.REGEX.contact}
+                      pattern={REGEX.contact}
                     />
                 </div>
             </div>

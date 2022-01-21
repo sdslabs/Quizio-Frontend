@@ -3,7 +3,7 @@ import TextField from '@components/Input/TextField';
 import '@pagestyles/create_quiz/registration_form.scss';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-import constants from '@constants/constants';
+import { REGEX } from '@constants/constants';
 import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
@@ -63,7 +63,7 @@ const RegistrationForm = () => {
                       setVal={setEmailID}
                       additionalClassName="bg-grey-N2"
                       disabled
-                      pattern={constants.REGEX.email}
+                      pattern={REGEX.email}
                     />
                 </div>
                 <div className="registration-form-contact-contactno">
@@ -76,7 +76,7 @@ const RegistrationForm = () => {
                       setVal={setContactNo}
                       additionalClassName="bg-grey-N2"
                       disabled
-                      pattern={constants.REGEX.contact}
+                      pattern={REGEX.contact}
                     />
                 </div>
             </div>
