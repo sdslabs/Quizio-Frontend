@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import '@styles/pages/give_quiz/sidenav.scss';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
-import QuestionBubble from './QuestionBubble';
+import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
+import { useParams } from 'react-router-dom';
 
 const sections = [
     {
@@ -21,9 +22,11 @@ const sections = [
 
 const SideNav = () => {
     const [activeNav, setActiveNav] = useState('');
+    const { quizId, sectionId } = useParams();
+    console.log({ quizId, sectionId });
 
     return (
-        <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto pb-28">
+        <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
             <p className="primary-text py-8 px-10">
                 Quiz Name
             </p>

@@ -1,18 +1,14 @@
 import React from 'react';
-import Navbar from '@components/Navbar/Navbar';
-import SideNav from './SideNav';
-import QuizBanner from './QuizBanner';
+import { Switch, Route } from 'react-router-dom';
+import QuizLanding from '@pages/GiveQuiz/QuizLanding';
+import SectionLanding from '@pages/GiveQuiz//SectionLanding';
+import MasterWrapper from './MasterWrapper';
 
 const GiveQuiz = () => (
-    <>
-        <Navbar />
-        <div className="mt-14 fixed top-0 flex w-screen">
-            <SideNav />
-            <div className="flex-grow">
-                <QuizBanner />
-            </div>
-        </div>
-    </>
-    );
+    <Switch>
+        <Route exact path="/quiz/:quizId" render={() => <MasterWrapper><QuizLanding /></MasterWrapper>} />
+        <Route exact path="/quiz/:quizId/:sectionId" render={() => <MasterWrapper><SectionLanding /></MasterWrapper>} />
+    </Switch>
+);
 
 export default GiveQuiz;
