@@ -16,8 +16,10 @@ module.exports = {
         DEFAULT: '#C4C4C4',
         dark: '#333333',
         1: '#172B2F',
+        N2: '#F8F8F8',
         N4: '#D7D7D7',
         N6: '#939393',
+        N10: '#6B6B6B',
       },
       yellow: {
         DEFAULT: '#F89837',
