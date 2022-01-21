@@ -1,6 +1,6 @@
 import React from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
-import QuestionBubble from './QuestionBubble';
+import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
 
 const QuestionBubbles = [
     {
