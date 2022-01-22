@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+import SubmitQuiz from '@components/Modals/SubmitQuiz';
 
 const SectionLanding = () => {
     const { sectionId } = useParams();
@@ -24,6 +26,7 @@ const SectionLanding = () => {
             <div className="ml-auto mt-16 w-40">
                 <PrimaryCTA text="Start Answering" />
             </div>
+            <ModalWrapper showModal><SubmitQuiz /></ModalWrapper>
         </>
     );
 };

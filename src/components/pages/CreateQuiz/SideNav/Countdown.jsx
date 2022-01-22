@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
+// Make sure time - now < 24hrs
 const Countdown = ({ time }) => {
     const [countHours, setCountHours] = useState('00');
     const [countMinutes, setCountMinutes] = useState('00');
@@ -34,11 +35,7 @@ const Countdown = ({ time }) => {
     });
     return (
         <span>
-            {countHours}
-            :
-            {countMinutes}
-            :
-            {countSeconds}
+            {`${countHours} : ${countMinutes} : ${countSeconds}`}
         </span>
     );
 };
