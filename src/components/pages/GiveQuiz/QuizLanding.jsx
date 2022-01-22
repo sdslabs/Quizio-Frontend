@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+// import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
+import StartQuizModal from '@pages/Register/StartQuizModal';
 
 const QuizLanding = () => {
     const { quizId } = useParams();
     console.log(quizId);
+
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <>
@@ -36,8 +41,9 @@ const QuizLanding = () => {
                 Section 3 consists of 6 questions and the answer to each question will be in numerical format.
             </p>
             <div className="ml-auto mt-16 w-28">
-                <PrimaryCTA text="Continue" />
+                <PrimaryCTA text="Continue" onClick={() => setShowModal(true)} />
             </div>
+            <ModalWrapper showModal={showModal} hideOnOverlayClick setShowModal={setShowModal}><StartQuizModal /></ModalWrapper>
         </>
     );
 };
