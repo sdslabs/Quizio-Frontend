@@ -1,10 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+import SubmitQuiz from '@components/Modals/SubmitQuiz';
 
 const SectionLanding = () => {
     const { sectionId } = useParams();
     console.log(sectionId);
+    const [showModal, setShowModal] = React.useState(false);
 
     return (
         <>
@@ -22,8 +25,9 @@ const SectionLanding = () => {
                 Shifts: Both the papers will be conducted on the same day which is 17th May 2020.
             </p>
             <div className="ml-auto mt-16 w-40">
-                <PrimaryCTA text="Start Answering" />
+                <PrimaryCTA text="Start Answering" onClick={() => setShowModal(true)} />
             </div>
+            <ModalWrapper showModal={showModal} setShowModal={setShowModal} hideOnOverlayClick><SubmitQuiz /></ModalWrapper>
         </>
     );
 };
