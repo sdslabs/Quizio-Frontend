@@ -6,6 +6,7 @@ import Countdown from '@components/pages/CreateQuiz/SideNav/Countdown';
 import { PropTypes } from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
+import { PieChart } from 'react-minimal-pie-chart';
 
 const dummyData = [
     {
@@ -72,10 +73,16 @@ const SubmitQuiz = () => (
             <h1 className="text-lg font-semibold">Submit Quiz</h1>
             <CrossIcon />
         </div>
-        <Banner endTime="January 21, 2022 21:00:00" submitted={false} />
-        <div className="flex mt-6">
+        <Banner endTime="January 22, 2022 21:00:00" submitted={false} />
+        <div className="flex mt-6 items-center">
             <div className="w-6/12">
-                <p>ausdhbsau</p>
+                <div className="w-52 mx-auto">
+                    <PieChart
+                      data={dummyData}
+                      radius={PieChart.defaultProps.radius - 5}
+                      segmentsShift={(i) => (i === 0 ? 5 : 0.5)}
+                    />
+                </div>
             </div>
             <div className="flex-grow">
                 <p className="text-lg mb-6">
