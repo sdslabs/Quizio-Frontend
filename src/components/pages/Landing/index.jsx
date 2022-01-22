@@ -4,6 +4,7 @@ import JoinUs from '@pages/JoinUs';
 import { checkAuth } from '@api/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@redux/actions/auth';
+import Countdown from '../CreateQuiz/SideNav/Countdown';
 
 function Landing() {
   const dispatch = useDispatch();
@@ -26,7 +27,10 @@ function Landing() {
   return (
       <>
           {isLoading ? (
-              <>Loading...</>
+              <>
+                  Loading...
+                  <Countdown time="Janurary 24, 2022 00:00:00" />
+              </>
       ) : (
           <>{isLoggedIn ? <Dashboard /> : <JoinUs />}</>
       )}

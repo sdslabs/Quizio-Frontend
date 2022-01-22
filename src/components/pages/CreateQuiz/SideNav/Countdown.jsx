@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Countdown = () => {
+const Countdown = ({ time }) => {
     const [countHours, setCountHours] = useState('00');
     const [countMinutes, setCountMinutes] = useState('00');
     const [countSeconds, setCountSecounds] = useState('00');
 
     const period = useRef();
     const startCountdownTimer = () => {
-        const endTime = new Date('Januarary 22, 2022 00:00:00').getTime();
+        const endTime = new Date(time).getTime();
         const now = new Date().getTime();
 
         period.current = setInterval(() => {
@@ -32,15 +33,18 @@ const Countdown = () => {
         };
     });
     return (
-        <div>
-            <p>
-                {countHours}
-                :
-                {countMinutes}
-                :
-                {countSeconds}
-            </p>
-        </div>
+        <span>
+            {countHours}
+            :
+            {countMinutes}
+            :
+            {countSeconds}
+        </span>
     );
 };
+
+Countdown.propTypes = {
+    time: PropTypes.string.isRequired,
+};
+
 export default Countdown;
