@@ -61,7 +61,7 @@ const MarkdownTextField = ({
                   </div>
         ) : (
             <div className="relative pt-2 w-full">
-                <div className="h-32 overflow-auto border border-grey-N4 text-sm">
+                <div className="h-32 overflow-auto border border-grey-N4 rounded text-sm">
                     {/* eslint-disable-next-line */}
                     <ReactMarkdown children={val} />
                 </div>
