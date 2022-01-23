@@ -35,7 +35,7 @@ function Landing() {
                 placeholder="Enter quiz name"
                 label="Quiz Name"
                 error=""
-                limit={20}
+                limit={100}
                 val={example}
                 setVal={setExample}
               />
