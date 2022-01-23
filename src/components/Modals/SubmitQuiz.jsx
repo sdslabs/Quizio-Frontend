@@ -79,8 +79,8 @@ const SubmitQuiz = () => (
                 <div className="w-52 mx-auto">
                     <PieChart
                       data={dummyData}
-                      radius={PieChart.defaultProps.radius - 5}
-                      segmentsShift={(i) => (i === 0 ? 5 : 0.5)}
+                      radius={PieChart.defaultProps.radius - 2}
+                      segmentsShift={1}
                     />
                 </div>
             </div>
