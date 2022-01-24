@@ -1,6 +1,51 @@
 @import '@styles/all.scss';
 
-.create-quiz-registration-form{
+.registration-form {
+  @apply w-full px-8% pt-3.75 pb-10 ;
 
-  
+  .registration-form-basic-details {
+      @apply w-full px-8% pt-4 pl-4 pr-4 pb-4 bg-grey-N2 border-grey-N4 border-dashed border-2 rounded-sm ;
+      ::placeholder {
+         @apply text-black-1 ;
+      }
+  }
+  .registration-form-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold text-3xl pb-4 pl-4 ;
+  }
+  .registration-form-name {
+    @apply flex space-x-6 ;
+
+    .registration-form-first-name {
+      @apply w-full flex justify-end ;
+    }
+
+    .registration-form-last-name {
+      @apply w-full flex justify-end ;
+    }
+  }
+  .registration-form-contact {
+    @apply flex space-x-6 mt-4 ;
+
+    .registration-form-contact-email {
+      @apply w-full flex justify-end ;
+    }
+
+    .registration-form-contact-contactno {
+      @apply w-full flex justify-end ;
+    }
+  }
+  .registration-form-organisation-name {
+    @apply mt-4 ;
+  }
+  .registration-form-additional-details-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold mt-8 pb-4 pl-4 ;
+  }
+  .registration-details-submit-container {
+    @apply flex justify-end pt-10 ;
+    .registration-details-submit-save-details {
+      @apply pr-4;
+    }
+  }
 }

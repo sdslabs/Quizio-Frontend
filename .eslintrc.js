@@ -40,6 +40,7 @@ module.exports = {
 					['@icons', './src/assets/icons'],
 					['@images', './src/assets/images'],
 					['@pagestyles', './src/styles/pages'],
+					['@constants', './src/constants'],
 				],
 				extensions: ['.ts', '.js', '.jsx', '.json', '.scss', '.native.js'],
 			},

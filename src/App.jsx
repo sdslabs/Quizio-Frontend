@@ -1,11 +1,11 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Landing from '@pages/Landing';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
 import CreateQuiz from '@pages/CreateQuiz';
+import GiveQuiz from '@pages/GiveQuiz/index';
 import './index.css';
-import GiveQuiz from './components/pages/GiveQuiz/index';
 
 const App = () => (
     <Router>
@@ -14,7 +14,7 @@ const App = () => (
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/quiz/create" component={CreateQuiz} />
-            <Route exact path="/quiz/:id" component={GiveQuiz} />
+            <Route path="/quiz" component={GiveQuiz} />
         </Switch>
     </Router>
 );

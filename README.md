@@ -4,6 +4,7 @@ Frontend for Quizio!
 
 ## Setting Up Guide
 
+- use `nvm` to install and use node `v14.18.1`
 - run `npm install`
 - run `npm start`
 
