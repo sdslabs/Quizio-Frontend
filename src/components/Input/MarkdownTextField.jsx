@@ -17,7 +17,7 @@ const MarkdownTextField = ({
   };
 
   return (
-      <div className="markdown">
+      <div className="py-1">
           <button
             type="button"
             onClick={() => setNavState('write')}
@@ -61,8 +61,8 @@ const MarkdownTextField = ({
                   </div>
         ) : (
             <div className="relative pt-2 w-full">
-                <div className="h-32 overflow-auto border border-grey-N4 rounded text-sm">
-                    {/* eslint-disable-next-line */}
+                <div className="h-32 p-4 mt-1 text-sm overflow-auto border border-grey-N4 rounded text-sm">
+                    {/* eslint-disable-next-line react/no-children-prop */}
                     <ReactMarkdown children={val} />
                 </div>
             </div>
