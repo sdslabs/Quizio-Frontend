@@ -1,9 +1,0 @@
-@import '@styles/all.scss';
-
-.create-quiz-navbar {
-  @apply w-full h-14 flex items-center px-10 py-3 shadow-md;
-
-  .create-quiz-navbar-logo {
-    @extend .primary-text;
-  }
-}
