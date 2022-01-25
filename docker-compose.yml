@@ -1,12 +1,13 @@
 version: '3.8'
+
 services:
-  app:
+  web:
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    command: npm start
+      dockerfile: Dockerfile
     volumes:
       - .:/usr/app/
       - /usr/app/node_modules
+    restart: unless-stopped
     ports:
-      - 3000:3000
+      - ${PORT}:80
