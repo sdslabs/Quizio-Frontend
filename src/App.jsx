@@ -5,6 +5,7 @@ import Login from '@pages/Login';
 import Register from '@pages/Register';
 import CreateQuiz from '@pages/CreateQuiz';
 import GiveQuiz from '@pages/GiveQuiz/index';
+import Dashboard from '@pages/Dashboard';
 import './index.css';
 
 const App = () => (
@@ -15,6 +16,7 @@ const App = () => (
             <Route exact path="/register" component={Register} />
             <Route exact path="/quiz/create" component={CreateQuiz} />
             <Route path="/quiz" component={GiveQuiz} />
+            <Route path="/dashboard" component={Dashboard} />
         </Switch>
     </Router>
 );
