@@ -32,7 +32,9 @@ const SideNav = () => {
                 Icon={RegistrationFormIcon}
                 selected={selected}
               />
-              <SideNavQuestions selected={selected} />
+              <SideNavQuestions
+                selected={selected}
+              />
               <SideNavOption
                 text="Registrations"
                 SelectedIcon={RegistrantsSelectedIcon}
