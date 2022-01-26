@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/create_quiz/quiz_details.scss';
-import { createQuiz } from '@api/quiz';
-import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
-import { checkIfUserExists } from '@api/user';
+// import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
 import { nanoid } from 'nanoid';
 
 const QuizDetails = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.user.email);
   const [instructionsMode, setInstructionsMode] = useState('write');
   const [quizName, setQuizName] = useState('');
@@ -31,36 +29,36 @@ const QuizDetails = () => {
     setOwners(newOwners);
   };
 
-  const handleAddOwner = async (e) => {
-    if (e.key === 'Enter') {
-      const res = await checkIfUserExists(owner);
-      if (res.success) {
-          const newOwners = new Set(owners);
-          newOwners.add(owner);
-          setOwners([...newOwners]);
-      }
-    }
-  };
+  // const handleAddOwner = async (e) => {
+  //   if (e.key === 'Enter') {
+  //     const res = await checkIfUserExists(owner);
+  //     if (res.success) {
+  //         const newOwners = new Set(owners);
+  //         newOwners.add(owner);
+  //         setOwners([...newOwners]);
+  //     }
+  //   }
+  // };
 
   const handleSubmit = async () => {
-    const res = await createQuiz({
-      quizName,
-      startDate,
-      startTime,
-      endDate,
-      endTime,
-      examDuration,
-      owners,
-      accessCode,
-      quizDesc,
-      quizInst,
-      creator: email,
-    });
+    // const res = await createQuiz({
+    //   quizName,
+    //   startDate,
+    //   startTime,
+    //   endDate,
+    //   endTime,
+    //   examDuration,
+    //   owners,
+    //   accessCode,
+    //   quizDesc,
+    //   quizInst,
+    //   creator: email,
+    // });
 
-    if (res.success) {
-      dispatch(setCreateQuizId(res.data.quiz.quizId));
-      dispatch(setCreateQuizStage('Registration form'));
-    }
+    // if (res.success) {
+    //   dispatch(setCreateQuizId(res.data.quiz.quizId));
+    //   dispatch(setCreateQuizStage('Registration form'));
+    // }
   };
 
   useEffect(() => {
@@ -145,7 +143,7 @@ const QuizDetails = () => {
                 error=""
                 val={owner}
                 setVal={setOwner}
-                onKeyDown={handleAddOwner}
+                // onKeyDown={handleAddOwner}
               />
               <div className="quiz-details-owners-list">
                   {owners.map((currOwner, i) => (

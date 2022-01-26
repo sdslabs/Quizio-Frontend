@@ -1,31 +1,31 @@
 import React, { useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { loginWithJwtToken } from '@api/auth';
+import { useLocation } from 'react-router-dom';
+// import Cookies from 'js-cookie';
+// import { loginWithJwtToken } from '@api/auth/authFetcher';
 import LoginWithGoogle from '@components/Buttons/LoginWithGoogle';
 import LoginWithGithub from '@components/Buttons/LoginWithGithub';
 
 function Login() {
   const { search } = useLocation();
-  const history = useHistory();
+  // const history = useHistory();
 
   useEffect(async () => {
     console.log('load');
     const queryJwtToken = new URLSearchParams(search).get('jwtToken');
-    const isNewUser = new URLSearchParams(search).get('new');
+    // const isNewUser = new URLSearchParams(search).get('new');
 
     if (queryJwtToken) {
       // login using the query params if they exist
-      const jwtLoginRes = await loginWithJwtToken(queryJwtToken);
+      // const jwtLoginRes = await loginWithJwtToken(queryJwtToken);
 
-      if (jwtLoginRes.success) {
-        Cookies.set('jwtToken', jwtLoginRes.data.jwtToken);
-        if (isNewUser === 'true') {
-          history.push('/register');
-        } else {
-          history.push('/');
-        }
-      }
+      // if (jwtLoginRes.success) {
+      //   Cookies.set('jwtToken', jwtLoginRes.data.jwtToken);
+      //   if (isNewUser === 'true') {
+      //     history.push('/register');
+      //   } else {
+      //     history.push('/');
+      //   }
+      // }
     }
   }, []);
 
