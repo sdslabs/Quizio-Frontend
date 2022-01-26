@@ -1,0 +1,28 @@
+@import '@styles/all.scss';
+
+.navbar {
+  @apply w-full h-14 flex justify-between items-center pl-10 py-3 shadow-md;
+
+  .left {
+    .logo {
+      @extend .primary-text;
+    }
+  }
+
+  .right {
+
+    @apply flex mr-11;
+
+    .host-quiz {
+      @apply mr-4;
+    }
+
+    .profile-pic {
+      @apply flex justify-center items-center w-10 h-10;
+
+      .profile-pic-img {
+        @apply rounded-full;
+      }
+    }
+  }
+}

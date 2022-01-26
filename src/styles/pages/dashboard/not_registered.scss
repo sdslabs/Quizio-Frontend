@@ -1,0 +1,17 @@
+@import '@styles/all.scss';
+
+.not-registered-container {
+  @apply w-full h-full pl-16 flex flex-col justify-center;
+
+  .not-registered-title {
+    @apply text-purple-V6 font-semibold text-3xl pb-2;
+  }
+
+  .not-registered-content {
+    @apply text-purple-V6 font-normal text-xl;
+  }
+
+  .not-registered-button{
+	  @apply w-32 mt-3;
+  }
+}

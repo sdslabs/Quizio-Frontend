@@ -10,6 +10,7 @@ function Login() {
   const history = useHistory();
 
   useEffect(async () => {
+    console.log('load');
     const queryJwtToken = new URLSearchParams(search).get('jwtToken');
     const isNewUser = new URLSearchParams(search).get('new');
 
@@ -26,7 +27,7 @@ function Login() {
         }
       }
     }
-  });
+  }, []);
 
   return (
       <div className="flex flex-col items-center space-y-10">
