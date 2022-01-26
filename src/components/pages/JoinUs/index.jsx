@@ -1,27 +1,29 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import JoinUsButton from '@components/Buttons/JoinUs';
-import JoinUsImg from '@images/JoinUs.png';
+import React, { useState } from 'react';
+// import { useHistory } from 'react-router-dom';
+import JoinUsImg from '@images/JoinUsImg.svg';
+import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import '@pagestyles/join_us/join_us.scss';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+import OAuthModal from '@components/Modals/OAuthModal';
 
 const JoinUs = () => {
-  const history = useHistory();
-
-  const handleJoinUs = () => {
-    history.push('/login');
-  };
+  const [showModal, setShowModal] = useState(false);
 
   return (
-      <div className="flex h-screen">
-          <div className="w-1/2 flex flex-col pt-56 pl-10">
-              <div className="font-semibold text-8xl text-yellow-1">Quizio</div>
-              <div className="leading-normal font-medium text-2xl text-grey-1 pb-10 pt-8">
-                  Quizzing platform developed by SDSLabs
+      <div className="join-us">
+          <div className="join-us-image">
+              <img src={JoinUsImg} alt="Join Us" />
+          </div>
+          <div className="join-us-details">
+              <div className="join-us-title">Quizio</div>
+              <div className="join-us-description">
+                  Testing platform developed by SDSLabs
               </div>
-              <JoinUsButton onClick={handleJoinUs} />
+              <div className="join-us-submit">
+                  <PrimaryCTA text="Join Us" onClick={() => setShowModal(true)} />
+              </div>
           </div>
-          <div className="w-1/2">
-              <img src={JoinUsImg} alt="" />
-          </div>
+          <ModalWrapper showModal={showModal} setShowModal={setShowModal} hideOnOverlayClick maxWidth="md"><OAuthModal /></ModalWrapper>
       </div>
   );
 };

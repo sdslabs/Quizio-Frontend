@@ -1,11 +1,10 @@
 import React from 'react';
+import OAuthButton from '@components/Buttons/OAuthButton';
 import { baseURL } from '../../config/config';
 
 const LoginWithGoogle = () => (
     <a href={`${baseURL}/auth/google`}>
-        <button type="button" label="Continue with Google" className="bg-red-400">
-            Continue with Google
-        </button>
+        <OAuthButton label="Continue with Google" id="google" />
     </a>
 );
 

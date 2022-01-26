@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 const ModalWrapper = ({
- children, showModal, hideOnOverlayClick, setShowModal,
+ children, showModal, hideOnOverlayClick, setShowModal, maxWidth,
 }) => {
     const handleClick = () => {
         if (hideOnOverlayClick && setShowModal) setShowModal(false);
@@ -16,7 +16,7 @@ const ModalWrapper = ({
           role="presentation"
         >
             <div
-              className="modal-content rounded bg-white shadow-2xl overflow-auto"
+              className={`modal-content rounded bg-white shadow-2xl overflow-auto max-w-${maxWidth}`}
               onClick={(e) => e.stopPropagation()}
               role="presentation"
             >
@@ -31,11 +31,13 @@ ModalWrapper.propTypes = {
     showModal: PropTypes.bool.isRequired,
     hideOnOverlayClick: PropTypes.bool,
     setShowModal: PropTypes.func,
+    maxWidth: PropTypes.string,
 };
 
 ModalWrapper.defaultProps = {
     hideOnOverlayClick: false,
     setShowModal: () => {},
+    maxWidth: '3xl',
 };
 
 export default ModalWrapper;
