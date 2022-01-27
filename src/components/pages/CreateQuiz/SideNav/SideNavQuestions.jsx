@@ -3,32 +3,23 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ReactComponent as QuestionsIcon } from '@icons/CreateQuiz/SideNavIcons/questions.svg';
 import { ReactComponent as QuestionsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/questionsSelected.svg';
-import { ReactComponent as PlusIcon } from '@icons/plusIcon.svg';
 import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDown.svg';
 import { ReactComponent as DropdownArrowUpIcon } from '@icons/dropdownArrowUp.svg';
 import { setCreateQuizStage } from '@redux/actions/quiz';
 import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
+// import { ReactComponent as PlusIcon } from '/home/diyap/labs/Quizio-Frontend-V2/src/components/assests/icons/plusIcon.svg';
+import PlusIcon from '@icons/plusIcon.svg';
+// import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 
-const sectionsArr = [
-  // {
-  //     label: 'Section 1',
-  //     count: 1,
-  //     questions: [],
-  // },
-
-];
+const sectionsArr = [];
 const SideNavQuestions = ({ selected }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [activeNav, setActiveNav] = useState('');
-  //  const [section, setSection] = useState(0);
   const [sections, setSections] = useState(sectionsArr);
   const [clicked, setClicked] = useState(false);
-  //  const [addSection, setAddSection] = useState(false);
-  // const [questionNo, setQuestionNo] = useState([]);
 
   const addNewSection = () => {
-    // setAddSection(!addSection);
     const newSection = {
       label: `Section ${sections.length + 1}`,
       count: sections.length + 1,
@@ -40,7 +31,6 @@ const SideNavQuestions = ({ selected }) => {
     const newSection = [...sections];
     const questionNumber = newSection[count - 1].questions.length + 1;
     newSection[count - 1].questions.push(questionNumber);
-    console.log({ newSection });
     setSections(newSection);
   };
   useEffect(() => {
@@ -98,12 +88,13 @@ const SideNavQuestions = ({ selected }) => {
                             <QuestionBubble number={question} key={question} type="not-visited" />
                       ))}
                         <div>
-                            <button
+                            {/* <button
                               type="button"
                               onClick={() => { addNewQuestion(count); }}
                             >
-                                <div className="create-quiz-sidenav-option-icon"><PlusIcon /></div>
-                            </button>
+
+                            </button> */}
+                            <img src={PlusIcon} alt="" onClick={() => addNewQuestion(count)} />
                         </div>
                     </div>
 
@@ -111,18 +102,21 @@ const SideNavQuestions = ({ selected }) => {
                 )}
                   </>
           ))}
-              <button
-                type="button"
-                className="create-quiz-sidenav-option flex-col"
-                onClick={addNewSection}
-              >
-
-                  <div className="create-quiz-sidenav-option-text">
-                      Add Section
-
-                  </div>
-
-              </button>
+              <div className="p-4">
+                  <button
+                    type="button"
+                    className="side-nav-item-active w-full "
+                    onClick={addNewSection}
+                  >
+                      + Add Section
+                  </button>
+              </div>
+              {/* <div className>
+                  <SecondaryCTA
+                    text="+ Add Section"
+                    onClick={addNewSection}
+                  />
+              </div> */}
           </div>
       )}
       </div>
@@ -134,3 +128,5 @@ SideNavQuestions.propTypes = {
 };
 
 export default SideNavQuestions;
+//    <img src="../../../assests/icons/plusIcon.svg" alt="Add Question" />
+// className="create-quiz-sidenav-option-text">
