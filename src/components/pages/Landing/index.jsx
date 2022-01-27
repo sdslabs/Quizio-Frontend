@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from '@pages/Dashboard';
 import JoinUs from '@pages/JoinUs';
+import Register from '@pages/Register';
 import { checkAuth } from '@api/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@redux/actions/auth';
@@ -9,10 +10,12 @@ import { setUser } from '@redux/actions/auth';
 function Landing() {
   const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(async () => {
     const queryParams = new URLSearchParams(window.location.search);
     const jwtToken = queryParams.get('jwtToken');
+    const isNew = queryParams.get('new');
 
     if (jwtToken == null) {
       dispatch(setUser({}));
@@ -20,9 +23,9 @@ function Landing() {
     } else {
       const checkAuthRes = await checkAuth(jwtToken);
       if (checkAuthRes.success) {
-        // TODO : if user is new user | show register  page
-
-        // else show dashboard
+        if (isNew === 'true') {
+          setIsNewUser(true);
+        }
         dispatch(setUser(checkAuthRes.data.user));
         setIsLoggedIn(true);
       } else {
@@ -34,7 +37,7 @@ function Landing() {
 
   return (
       <div>
-          <>{isLoggedIn ? <Dashboard /> : <JoinUs />}</>
+          <>{isLoggedIn ? <>{isNewUser ? <Register /> : <Dashboard />}</> : <JoinUs />}</>
       </div>
   );
 }
