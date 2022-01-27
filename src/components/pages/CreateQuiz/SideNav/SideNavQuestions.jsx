@@ -7,9 +7,7 @@ import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDow
 import { ReactComponent as DropdownArrowUpIcon } from '@icons/dropdownArrowUp.svg';
 import { setCreateQuizStage } from '@redux/actions/quiz';
 import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
-// import { ReactComponent as PlusIcon } from '/home/diyap/labs/Quizio-Frontend-V2/src/components/assests/icons/plusIcon.svg';
 import PlusIcon from '@icons/plusIcon.svg';
-// import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 
 const sectionsArr = [];
 const SideNavQuestions = ({ selected }) => {
@@ -88,12 +86,6 @@ const SideNavQuestions = ({ selected }) => {
                             <QuestionBubble number={question} key={question} type="not-visited" />
                       ))}
                         <div>
-                            {/* <button
-                              type="button"
-                              onClick={() => { addNewQuestion(count); }}
-                            >
-
-                            </button> */}
                             <img src={PlusIcon} alt="" onClick={() => addNewQuestion(count)} />
                         </div>
                     </div>
@@ -111,12 +103,6 @@ const SideNavQuestions = ({ selected }) => {
                       + Add Section
                   </button>
               </div>
-              {/* <div className>
-                  <SecondaryCTA
-                    text="+ Add Section"
-                    onClick={addNewSection}
-                  />
-              </div> */}
           </div>
       )}
       </div>
@@ -128,5 +114,3 @@ SideNavQuestions.propTypes = {
 };
 
 export default SideNavQuestions;
-//    <img src="../../../assests/icons/plusIcon.svg" alt="Add Question" />
-// className="create-quiz-sidenav-option-text">
