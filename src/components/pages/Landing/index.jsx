@@ -1,44 +1,59 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import Dashboard from '@pages/Dashboard';
 import JoinUs from '@pages/JoinUs';
-import Register from '@pages/Register';
-import { checkAuth } from '@api/auth';
+import { checkAuth, loginWithJwtToken } from '@api/auth';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { setUser } from '@redux/actions/auth';
-// import { check } from 'prettier';
 
 function Landing() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const queryParams = new URLSearchParams(window.location.search);
+  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(async () => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const jwtToken = queryParams.get('jwtToken');
+    /*
+    Everytime this page loads,
+    - first check for query params login
+    - then try to login using cookie
+    - if none are successful, then user is not logged in
+    */
+    const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');
 
-    if (jwtToken == null) {
-      dispatch(setUser({}));
-      setIsLoggedIn(false);
-    } else {
-      const checkAuthRes = await checkAuth(jwtToken);
-      if (checkAuthRes.success) {
+    // login using the query params if they exist
+    if (queryJwtToken) {
+      const jwtLoginRes = await loginWithJwtToken(queryJwtToken);
+      if (jwtLoginRes.success) {
+        Cookies.set('jwtToken', jwtLoginRes.data.jwtToken);
         if (isNew === 'true') {
-          setIsNewUser(true);
+          history.push('/register');
+        } else {
+          history.push('/');
         }
-        dispatch(setUser(checkAuthRes.data.user));
-        setIsLoggedIn(true);
-      } else {
-        dispatch(setUser({}));
-        setIsLoggedIn(false);
       }
     }
+
+    // query Params dont exist, so login using cookies
+    const userRes = await checkAuth();
+    if (userRes.success) {
+      dispatch(setUser(userRes.data.user));
+      setIsLoggedIn(true);
+    }
+    setLoading(false);
   }, []);
 
   return (
-      <div>
-          <>{isLoggedIn ? <>{isNewUser ? <Register /> : <Dashboard />}</> : <JoinUs />}</>
-      </div>
+      <>
+          {loading ? (
+              <>Loading...</>
+      ) : (
+          <>{isLoggedIn ? <Dashboard /> : <JoinUs />}</>
+      )}
+      </>
   );
 }
 export default Landing;

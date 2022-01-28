@@ -13,7 +13,6 @@ const OAuthModal = () => (
         <div className="">
             <LoginWithGithub />
             <LoginWithGoogle />
-            <LoginWithGoogle />
         </div>
     </div>
 );

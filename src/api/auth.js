@@ -1,8 +1,8 @@
 import axiosInstance from './axiosInstance';
 
-export const checkAuth = async (jwtToken) => {
+export const checkAuth = async () => {
   try {
-    const res = await axiosInstance.get(`/auth/login?jwtToken=${jwtToken}`);
+    const res = await axiosInstance.get('/auth/check');
     return res.data;
   } catch (e) {
     return e.response.data;

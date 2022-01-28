@@ -23,7 +23,14 @@ const JoinUs = () => {
                   <PrimaryCTA text="Join Us" onClick={() => setShowModal(true)} />
               </div>
           </div>
-          <ModalWrapper showModal={showModal} setShowModal={setShowModal} hideOnOverlayClick maxWidth="md"><OAuthModal /></ModalWrapper>
+          <ModalWrapper
+            showModal={showModal}
+            setShowModal={setShowModal}
+            hideOnOverlayClick
+            maxWidth="md"
+          >
+              <OAuthModal />
+          </ModalWrapper>
       </div>
   );
 };
