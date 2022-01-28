@@ -21,11 +21,11 @@ import Profile from '@components/pages/Profile';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const queryParams = new URLSearchParams(window.location.search);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(async () => {
+    const queryParams = new URLSearchParams(window.location.search);
     /*
       Everytime We are on Quizio loads,
       - first check for query params login
@@ -40,7 +40,7 @@ const App = () => {
     const isNew = queryParams.get('new');
 
     // login using the query params if they exist
-    console.log('login using the query params if they exist');
+    console.log('login using the query params if they exist', { queryJwtToken, isNew });
     if (queryJwtToken) {
       const jwtLoginRes = await loginWithJwtToken(queryJwtToken);
       console.log({ jwtLoginRes });

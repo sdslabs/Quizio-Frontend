@@ -2,7 +2,14 @@ import axiosInstance from '@api/axiosInstance';
 
 export const createNewQuiz = () => axiosInstance.post('/api/v2/quizzes');
 
-export const getAllQuizzes = () => axiosInstance.get('/api/v2/quizzes');
+export const getAllQuizzes = async () => {
+	try {
+		const res = await axiosInstance.get('/quizzes');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
 
 export const getQuizById = ({ quizId }) => axiosInstance.get(`/api/v2/quizzes/${quizId}`);
 
