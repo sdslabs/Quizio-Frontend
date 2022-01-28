@@ -4,7 +4,6 @@ import Landing from '@pages/Landing';
 import Register from '@pages/Register';
 import CreateQuiz from '@pages/CreateQuiz';
 import GiveQuiz from '@pages/GiveQuiz/index';
-import Dashboard from '@pages/Dashboard';
 import './index.css';
 
 const App = () => (
@@ -18,7 +17,7 @@ const App = () => (
 
             {/** Logged IN */}
             {/* Dashboard page */}
-            <Route exact path="/" component={Dashboard} />
+            {/* <Route exact path="/" component={Dashboard} /> */}
             {/* Registration Page */}
             <Route exact path="/register" component={Register} />
             {/* Create or edit a quiz */}
