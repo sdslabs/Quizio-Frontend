@@ -1,0 +1,25 @@
+@import '@styles/all.scss';
+
+.join-us {
+  @apply flex w-full px-8% pt-3.75 pb-10;
+  background: url('../../../assets/images/JoinUsBackground.svg');
+  background-position: center bottom;
+
+  .join-us-image {
+    @apply pl-10 max-w-xl;
+  }
+  .join-us-details {
+    @apply pl-24 pt-16;
+  }
+  .join-us-title {
+    @extend .primary-text;
+    @apply text-purple-V6 font-bold text-7xl pb-8;
+  }
+  .join-us-description {
+    @extend .primary-text;
+    @apply text-purple-V6 font-medium text-xl pb-6;
+  }
+  .join-us-submit {
+    @apply flex justify-start font-bold pt-4 w-40;
+  }
+}

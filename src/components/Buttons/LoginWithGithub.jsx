@@ -1,11 +1,10 @@
 import React from 'react';
 import { baseURL } from '../../config/config';
+import OAuthButton from './OAuthButton';
 
 const LoginWithGithub = () => (
     <a href={`${baseURL}/auth/github`}>
-        <button type="button" label="Continue with Github" className="">
-            Continue with Github
-        </button>
+        <OAuthButton label="Continue with Github" id="github" />
     </a>
 );
 
