@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Route,
-  Switch,
-  useHistory,
-} from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import Register from '@pages/Register';
@@ -33,14 +29,18 @@ const App = () => {
       - if none are successful, then user is not logged in
       */
 
-    // setIsLoggedIn(true);
-    // setLoading(false);
+    // DEV ONLY
+    setIsLoggedIn(true);
+    setLoading(false);
 
     const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');
 
     // login using the query params if they exist
-    console.log('login using the query params if they exist', { queryJwtToken, isNew });
+    console.log('login using the query params if they exist', {
+      queryJwtToken,
+      isNew,
+    });
     if (queryJwtToken) {
       const jwtLoginRes = await loginWithJwtToken(queryJwtToken);
       console.log({ jwtLoginRes });

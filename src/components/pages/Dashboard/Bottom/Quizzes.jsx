@@ -1,5 +1,6 @@
-import { getAllQuizzes } from '@api/quizzes/quizzesFetcher';
 import React, { useEffect, useState } from 'react';
+import { getAllQuizzes } from '@api/quizzes/quizzesFetcher';
+import '@pagestyles/dashboard/quizzes.scss';
 
 const Quizzes = () => {
   const [onGoingQuizzes, setOnGoingQuizzes] = useState([]);
@@ -33,13 +34,31 @@ const Quizzes = () => {
   }, [upComingQuizzes]);
 
   return (
-      <div>
+      <div className="dashboard-quizzes">
           <div className="ongoing-quizzes">
               <div className="title">Ongoing Quizzes</div>
+              <div className="list">
+                  {onGoingQuizzes
+            && onGoingQuizzes.length !== 0
+            && onGoingQuizzes.map((quiz) => (
+                <div className="list-item" key={quiz.quizioID}>
+                    {quiz.quizioID}
+                </div>
+            ))}
+              </div>
           </div>
 
           <div className="upcoming-quizzes">
               <div className="title">Upcoming Quizzes</div>
+              <div className="list">
+                  {upComingQuizzes
+            && upComingQuizzes.length !== 0
+            && upComingQuizzes.map((quiz) => (
+                <div className="list-item" key={quiz.quizioID}>
+                    {quiz.quizioID}
+                </div>
+            ))}
+              </div>
           </div>
       </div>
   );
