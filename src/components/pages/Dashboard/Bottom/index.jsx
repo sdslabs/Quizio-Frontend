@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import '@pagestyles/dashboard/bottom.scss';
+import CreatedQuizzes from './CreatedQuizzes';
+import Quizzes from './Quizzes';
 
-const index = () => (
-    <div className="dashboard-bottom">
-        <div className="pagination-container">
-            <div className="pagination-active">
-                Quizzes
-            </div>
-            <div className="pagination">
-                Created Quizzes
-            </div>
-        </div>
+const index = () => {
+  const [showCreated, setShowCreated] = useState(false);
 
-        <div className="ongoing-quizzes">
-            <div className="title">Ongoing Quizzes</div>
-        </div>
+  const handleShowCreated = () => {
+    setShowCreated(true);
+  };
 
-        <div className="upcoming-quizzes">
-            <div className="title">Upcoming Quizzes</div>
-        </div>
-    </div>
-	);
+  const handleShowQuizzes = () => {
+    setShowCreated(false);
+  };
 
+  return (
+      <div className="dashboard-bottom">
+          <div className="pagination-container">
+              <button
+                type="button"
+                onClick={handleShowQuizzes}
+                className={`quizzes ${!showCreated && 'active'}`}
+              >
+                  Quizzes
+              </button>
+              <button
+                type="button"
+                onClick={handleShowCreated}
+                className={`created-quizzes ${showCreated && 'active'}`}
+              >
+                  Created Quizzes
+              </button>
+              <div className="pagination-border" />
+          </div>
+          <div className="main">
+              {showCreated ? <CreatedQuizzes /> : <Quizzes />}
+          </div>
+      </div>
+  );
+};
 export default index;

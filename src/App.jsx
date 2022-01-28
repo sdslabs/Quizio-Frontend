@@ -32,6 +32,10 @@ const App = () => {
       - then try to login using cookie
       - if none are successful, then user is not logged in
       */
+
+    setIsLoggedIn(true);
+    setLoading(false);
+
     const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');
 
@@ -57,6 +61,7 @@ const App = () => {
       dispatch(setUser(userRes.data.user));
       setIsLoggedIn(true);
     }
+
     setLoading(false);
   }, []);
 

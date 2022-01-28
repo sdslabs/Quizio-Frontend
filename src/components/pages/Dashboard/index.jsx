@@ -10,7 +10,7 @@ const Dashboard = () => (
         <div className="top">
             <Top />
         </div>
-        <div className="main">
+        <div className="bottom">
             <Bottom />
         </div>
     </div>
