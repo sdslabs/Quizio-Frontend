@@ -33,8 +33,8 @@ const App = () => {
       - if none are successful, then user is not logged in
       */
 
-    setIsLoggedIn(true);
-    setLoading(false);
+    // setIsLoggedIn(true);
+    // setLoading(false);
 
     const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');

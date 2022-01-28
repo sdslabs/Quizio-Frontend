@@ -6,6 +6,6 @@ export const useLogout = () => {
     Cookies.remove('jwtToken');
 };
 
-export const useLoginWithToken = (jwtToken) => useMutation(fetchers.loginWithJwtToken(jwtToken));
+export const useLoginWithToken = () => useMutation(fetchers.loginWithJwtToken);
 
 export const useCheckAuth = () => useMutation(fetchers.checkAuth);

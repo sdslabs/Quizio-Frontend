@@ -19,7 +19,7 @@ export const checkAuth = async () => {
  * Login the user by sending jwtToken
  * @returns userData if user is logged in else error message
  */
-export const loginWithJwtToken = async (jwtToken) => {
+export const loginWithJwtToken = async ({ jwtToken }) => {
 	try {
 		const res = await axiosInstance.get(`/auth/login?jwtToken=${jwtToken}`);
 		return res.data;

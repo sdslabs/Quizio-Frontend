@@ -9,3 +9,12 @@ export const getQuizById = ({ quizId }) => axiosInstance.get(`/api/v2/quizzes/${
 export const updateQuizById = ({ quizId, body }) => axiosInstance.put(`/api/v2/quizzes/${quizId}`, body);
 
 export const deleteQuizById = ({ quizId }) => axiosInstance.delete(`/api/v2/quizzes/${quizId}`);
+
+export const getAllQuizzesForUser = async () => {
+	try {
+		const res = await axiosInstance.get('/users/quizzes/owned');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};

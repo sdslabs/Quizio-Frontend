@@ -1,0 +1,10 @@
+@import '@styles/all.scss';
+
+.created-quizzes-list {
+  @apply w-full flex flex-col;
+
+  .created-quiz-container {
+    @apply border border-purple-V1 rounded w-full h-44 p-4 mt-6;
+
+  }
+}
