@@ -17,52 +17,6 @@
       .list-item {
         @apply h-52 w-114 ml-6;
         // flex: 0 0 auto;
-
-        .quiz-card {
-          @apply w-114 h-52 border border-purple-V3 p-4 flex;
-
-          .banner-container {
-            @apply flex flex-col items-center justify-center w-44 h-44 bg-purple-V1;
-
-            .name {
-              @apply font-normal text-sm text-purple-V3 mt-2;
-            }
-          }
-
-          .quiz-details {
-            @apply w-56 flex flex-col p-0 ml-3;
-
-            .quiz-title {
-              @apply font-semibold text-sm leading-8 text-left text-black;
-            }
-
-            .quiz-desc {
-              @apply font-normal text-sm leading-5 text-left text-grey-N6;
-            }
-
-            .quiz-startTime {
-              @apply pt-4 flex;
-
-              .scheduled {
-                @apply font-normal text-sm leading-5 text-left text-grey-N6;
-              }
-
-              .time {
-                @apply font-normal text-sm leading-5 text-left text-black pl-1;
-              }
-            }
-
-            .register-container {
-              .register-button {
-                @apply h-8 w-24 mt-4;
-              }
-
-              .registered {
-                @apply mt-5 text-purple-V6 font-semibold text-sm leading-5 p-0 m-0 text-left;
-              }
-            }
-          }
-        }
       }
     }
   }

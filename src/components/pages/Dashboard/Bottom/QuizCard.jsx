@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactComponent as QuizName } from '@icons/quizname.svg';
 import { truncateQuizName } from '@utils/truncate';
-import '@pagestyles/dashboard/quizzes.scss';
 import { getDateTime } from '@utils/date';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import '@pagestyles/dashboard/quiz_card.scss';
 
 const QuizCard = ({ data }) => {
   const handleRegister = () => {};
@@ -14,11 +14,11 @@ const QuizCard = ({ data }) => {
       <div className="quiz-card">
           <div className="banner-container">
               <QuizName />
-              <h3 className="name">{truncateQuizName(data.name)}</h3>
+              <h3 className="name">{data.name ? truncateQuizName(data.name) : 'Quiz Name'}</h3>
           </div>
           <div className="quiz-details">
-              <div className="quiz-title">{data.name}</div>
-              <div className="quiz-desc">{data.name}</div>
+              <div className="quiz-title">{data.name ? data.name : 'Quiz Name'}</div>
+              <div className="quiz-desc">{data.description ? data.description : 'Quiz Description'}</div>
               <div className="quiz-startTime">
                   <div className="scheduled">Scheduled:</div>
                   <div className="time">
