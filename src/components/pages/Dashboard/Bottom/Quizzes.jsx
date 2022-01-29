@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { getAllQuizzes } from '@api/quizzes/quizzesFetcher';
+import QuizCard from './QuizCard';
 import '@pagestyles/dashboard/quizzes.scss';
 
 const Quizzes = () => {
-  const [onGoingQuizzes, setOnGoingQuizzes] = useState([]);
-  const [upComingQuizzes, setUpcomingQuizzes] = useState([]);
+  const [onGoingQuizzes, setOnGoingQuizzes] = useState(null);
+  const [upComingQuizzes, setUpcomingQuizzes] = useState(null);
 
+  // This will depend on the global state
   useEffect(async () => {
     const quizRes = await getAllQuizzes();
 
@@ -38,11 +40,12 @@ const Quizzes = () => {
           <div className="ongoing-quizzes">
               <div className="title">Ongoing Quizzes</div>
               <div className="list">
+                  {!onGoingQuizzes && <div>Fetching ongoing quizzes...</div>}
                   {onGoingQuizzes
             && onGoingQuizzes.length !== 0
             && onGoingQuizzes.map((quiz) => (
                 <div className="list-item" key={quiz.quizioID}>
-                    {quiz.quizioID}
+                    <QuizCard data={quiz} />
                 </div>
             ))}
               </div>
@@ -51,11 +54,12 @@ const Quizzes = () => {
           <div className="upcoming-quizzes">
               <div className="title">Upcoming Quizzes</div>
               <div className="list">
+                  {!upComingQuizzes && <div>Fetching upcoming quizzes...</div>}
                   {upComingQuizzes
             && upComingQuizzes.length !== 0
             && upComingQuizzes.map((quiz) => (
                 <div className="list-item" key={quiz.quizioID}>
-                    {quiz.quizioID}
+                    <QuizCard data={quiz} />
                 </div>
             ))}
               </div>
