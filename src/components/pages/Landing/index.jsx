@@ -1,9 +1,9 @@
 import React from 'react';
-import JoinUs from '@pages/JoinUs';
+import ProfilePage from '@pages/ProfilePage';
 
 function Landing() {
   return (
-      <JoinUs />
+      <ProfilePage />
   );
 }
 export default Landing;
