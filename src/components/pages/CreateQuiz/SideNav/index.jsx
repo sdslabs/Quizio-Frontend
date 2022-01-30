@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { ReactComponent as QuizDetailsIcon } from '@icons/CreateQuiz/SideNavIcons/quizDetails.svg';
 import { ReactComponent as QuizDetailsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/quizDetailsSelected.svg';
 import { ReactComponent as RegistrationFormSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrationFormSelected.svg';
@@ -12,7 +11,6 @@ import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = () => {
-  const selected = useSelector((state) => state.quiz.createQuizStage);
   const handlePublish = () => {};
   const handleCheck = () => {};
 
@@ -24,22 +22,17 @@ const SideNav = () => {
                 text="Quiz Details"
                 SelectedIcon={QuizDetailsSelectedIcon}
                 Icon={QuizDetailsIcon}
-                selected={selected}
               />
               <SideNavOption
                 text="Registration form"
                 SelectedIcon={RegistrationFormSelectedIcon}
                 Icon={RegistrationFormIcon}
-                selected={selected}
               />
-              <SideNavQuestions
-                selected={selected}
-              />
+              <SideNavQuestions />
               <SideNavOption
                 text="Registrations"
                 SelectedIcon={RegistrantsSelectedIcon}
                 Icon={RegistrantsIcon}
-                selected={selected}
               />
           </div>
           <div className="create-quiz-sidenav-bottom">
