@@ -30,8 +30,8 @@ const App = () => {
       */
 
     // DEV ONLY
-    setIsLoggedIn(true);
-    setLoading(false);
+    // setIsLoggedIn(true);
+    // setLoading(false);
 
     const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');
