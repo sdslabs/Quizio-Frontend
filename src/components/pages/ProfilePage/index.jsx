@@ -3,23 +3,69 @@ import React from 'react';
 const ProfilePage = () => (
     <div>
         <ProfileCard />
+        <QuizCard />
+        <ProfileDataCard />
+    </div>
+);
+
+const QuizCard = () => (
+    <div className="relative w-full h-36 rounded border border-solid border-purple-V6">
+        <div className="flex flex-row">
+            <div className="p-4">
+                <img src="./blackbird.jpg" className="h-28 w-28 object-cover rounded" alt="QuizImage" />
+            </div>
+            <div className="flex flex-grow flex-col p-4">
+                <div className="align-middle pb-2">
+                    <div className="float-left text-sm font-semibold">Quiz Title </div>
+                    <div className="float-left text-xs text-black-1"> | Created By: </div>
+                    <div className="float-left text-xs text-purple-V6"> Name</div>
+                </div>
+
+                <div className="text-grey-N6 text-ellipsis">Description</div>
+                <div className="pb-1">
+                    <div className="float-left text-grey-N6">Scheduled: </div>
+                    <div className="float-left text-black-1">Date</div>
+                </div>
+                <div>
+                    <a href="www.google.com">
+                        <button type="button" className="bg-purple-V6 text-white px-4 py-2 rounded">
+                            View Report
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 );
 
 const ProfileCard = () => (
     <div className="relative h-52 w-6/12 shadow-lg rounded">
         <div className="flex flex-row">
-            <div className="flex flex-col w-36">
-                <div className="h-36 w-36 rounded-full">
-                    <img src="./blackbird.jpg" alt="Profile" />
-                </div>
-                <div className="text-center text-purple-V6">
+            <div className="flex flex-col w-40 py-4 px-2">
+                <img src="./blackbird.jpg" className="h-36 w-36 rounded-full object-cover" alt="Profile" />
+                <div className="text-center text-purple-V6 py-1">
                     <a href="https://github.com/">Edit Details</a>
                 </div>
+            </div>
+
+            <div className="flex flex-grow flex-col p-4">
+                <div className="text-2xl text-purple-V6 font-bold pt-3">Somesh Solanki</div>
+                <div className="text-black-1">Indian Institute of Technology</div>
+                <div className="text-purple-V6">Bangalore</div>
+                <div className="pt-4">john.doe@gmail.com</div>
+                <div className="text-black-1">+91 9876543210</div>
             </div>
         </div>
     </div>
 );
+
+const ProfileDataCard = () => (
+    <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-evenly items-center">
+        <div className="text-6xl font-semibold">3</div>
+        <div className="text-xl break-normal text-center">Attempted Quizdddd</div>
+    </div>
+);
+
 export default ProfilePage;
 
 // {name, college, location, email, phoneNumber}
