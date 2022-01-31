@@ -1,5 +1,8 @@
 import React from 'react';
 
+// const [attemptedQuizzes, setAttemptedQuizzes] = useState([]);
+// const [hostedQuizzes, setHostedQuizzes] = useState([]);
+
 const ProfilePage = () => (
     <div>
         <div className="absolute w-full h-14 shadow-sm py-3 px-40">
@@ -8,8 +11,17 @@ const ProfilePage = () => (
         <div className="mx-40 pt-32">
             <div className="flex flex-row justify-evenly">
                 <ProfileCard />
-                <ProfileDataCard />
-                <ProfileDataCard />
+                I
+                <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-center items-center">
+                    <div className="text-6xl font-semibold text-purple-V6 pb-4">5</div>
+                    <div className="text-xl text-center text-purple-V6">Attempted</div>
+                    <div className="text-xl text-center text-purple-V6">Quizzes</div>
+                </div>
+                <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-center items-center">
+                    <div className="text-6xl font-semibold text-purple-V6 pb-4">10</div>
+                    <div className="text-xl text-center text-purple-V6">Hosted</div>
+                    <div className="text-xl text-center text-purple-V6">Quizzes</div>
+                </div>
             </div>
 
             <div className="pt-12 pb-9 text-purple-V6 font-semibold text-xl">Attempted Quizzes</div>
@@ -23,7 +35,6 @@ const ProfilePage = () => (
         </div>
     </div>
 );
-
 const QuizCard = () => (
     <div className="relative w-full h-36 my-2 rounded border border-solid border-purple-V6">
         <div className="flex flex-row">
@@ -75,13 +86,4 @@ const ProfileCard = () => (
     </div>
 );
 
-const ProfileDataCard = () => (
-    <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-evenly items-center">
-        <div className="text-6xl font-semibold text-purple-V6">3</div>
-        <div className="text-xl break-normal text-center text-purple-V6">Attempted Quizdddd</div>
-    </div>
-);
-
 export default ProfilePage;
-
-// {name, college, location, email, phoneNumber}
