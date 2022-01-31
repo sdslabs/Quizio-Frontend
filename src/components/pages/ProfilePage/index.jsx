@@ -2,14 +2,30 @@ import React from 'react';
 
 const ProfilePage = () => (
     <div>
-        <ProfileCard />
-        <QuizCard />
-        <ProfileDataCard />
+        <div className="absolute w-full h-14 shadow-sm py-3 px-40">
+            <div className="text-xl font-bold text-purple-V6">Quizio</div>
+        </div>
+        <div className="mx-40 pt-32">
+            <div className="flex flex-row justify-evenly">
+                <ProfileCard />
+                <ProfileDataCard />
+                <ProfileDataCard />
+            </div>
+
+            <div className="pt-12 pb-9 text-purple-V6 font-semibold text-xl">Attempted Quizzes</div>
+
+            <div className="flex flex-col">
+                <QuizCard />
+                <QuizCard />
+                <QuizCard />
+                <QuizCard />
+            </div>
+        </div>
     </div>
 );
 
 const QuizCard = () => (
-    <div className="relative w-full h-36 rounded border border-solid border-purple-V6">
+    <div className="relative w-full h-36 my-2 rounded border border-solid border-purple-V6">
         <div className="flex flex-row">
             <div className="p-4">
                 <img src="./blackbird.jpg" className="h-28 w-28 object-cover rounded" alt="QuizImage" />
@@ -39,7 +55,7 @@ const QuizCard = () => (
 );
 
 const ProfileCard = () => (
-    <div className="relative h-52 w-6/12 shadow-lg rounded">
+    <div className="relative h-52 w-8/12 shadow-lg rounded">
         <div className="flex flex-row">
             <div className="flex flex-col w-40 py-4 px-2">
                 <img src="./blackbird.jpg" className="h-36 w-36 rounded-full object-cover" alt="Profile" />
@@ -61,8 +77,8 @@ const ProfileCard = () => (
 
 const ProfileDataCard = () => (
     <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-evenly items-center">
-        <div className="text-6xl font-semibold">3</div>
-        <div className="text-xl break-normal text-center">Attempted Quizdddd</div>
+        <div className="text-6xl font-semibold text-purple-V6">3</div>
+        <div className="text-xl break-normal text-center text-purple-V6">Attempted Quizdddd</div>
     </div>
 );
 
