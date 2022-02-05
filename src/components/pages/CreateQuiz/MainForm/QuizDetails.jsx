@@ -5,7 +5,10 @@ import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/create_quiz/quiz_details.scss';
 // import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
+// import { useCreateQuiz } from '@api/quizzes/useQuizzes';
+// import { setCreateQuizStage } from '@redux/actions/quiz';
 import { nanoid } from 'nanoid';
+import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 
 const QuizDetails = () => {
   // const dispatch = useDispatch();
@@ -40,7 +43,22 @@ const QuizDetails = () => {
   //   }
   // };
 
+  const { mutate: mutateQuizDetails } = useCreateQuiz();
+
   const handleSubmit = async () => {
+    mutateQuizDetails({
+      quizName,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      examDuration,
+      owners,
+      accessCode,
+      quizDesc,
+      quizInst,
+      creator: email,
+    });
     // const res = await createQuiz({
     //   quizName,
     //   startDate,
