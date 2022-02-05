@@ -23,7 +23,7 @@ const CreateQuiz = () => {
         return <div>Loading...</div>;
     }
 
-    if (isSuccess) return <Redirect to={{ pathname: '/quiz/create/', search: `?quizID=${data.data?.data?.quiz?.quizioID || ''}` }} />;
+    if (isSuccess && !quizID) return <Redirect to={{ pathname: '/quiz/create/', search: `?quizID=${data.data?.data?.quiz?.quizioID || ''}` }} />;
 
     return (
         <div className="create-quiz">

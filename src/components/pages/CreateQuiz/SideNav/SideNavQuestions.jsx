@@ -5,6 +5,7 @@ import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDow
 
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useAddSection } from '@api/quizzes/useSections';
+import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import Questions from './Questions';
 
 const TAB_NAME = 'Questions';
@@ -20,12 +21,21 @@ const SideNavQuestions = () => {
   const quizID = new URLSearchParams(window.location.search).get('quizID');
 
   const {
- data, isLoading, isSuccess: addSectionSuccess, mutate: mutateSection,
-} = useAddSection();
+  data, isLoading: isAddSectionLoading, isSuccess: addSectionSuccess, mutate: mutateSection,
+  } = useAddSection();
+
+  const { data: quizData, isLoading: isQuizLoading, isSuccess: isQuizSuccess } = useGetQuiz(quizID);
 
   const handleAddNewSection = () => {
     mutateSection({ quizId: quizID });
   };
+
+  useEffect(() => {
+    if (isQuizSuccess) {
+      const prevSections = quizData.data?.data?.quiz?.sections;
+      if (prevSections) prevSections.forEach((s) => addSection(s));
+    }
+  }, [isQuizSuccess]);
 
   useEffect(() => {
     if (addSectionSuccess) {
@@ -34,7 +44,7 @@ const SideNavQuestions = () => {
     }
   }, [addSectionSuccess, data]);
 
-  if (isLoading) {
+  if (isAddSectionLoading || isQuizLoading) {
     return <div>Loading...</div>;
   }
 
@@ -58,13 +68,13 @@ const SideNavQuestions = () => {
           </button>
           {isActive && (
           <div>
-              {sections.map(({ label, questions }, index) => (
-                  <React.Fragment key={label}>
+              {sections.map(({ title, questions }, index) => (
+                  <React.Fragment key={title}>
                       <p
                         className={`side-nav-item${activeSectionIndex === index ? '-active' : ''} flex justify-between`}
                         onClick={() => setActiveSection(index)}
                       >
-                          {label}
+                          {title}
                           <DropdownArrowDownIcon />
                       </p>
                       <div>

@@ -7,8 +7,8 @@ import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useAddQuestion } from '@api/quizzes/useQuestions';
 
 const Questions = ({ isActive, questions }) => {
-    const { addQuestion, sections, activeSection } = useCreateQuizStore();
-    const sectionId = sections[activeSection]?.id;
+    const { addQuestion, sections, activeSectionIndex } = useCreateQuizStore();
+    const sectionId = sections[activeSectionIndex]?.id;
 
     const {
     data, isLoading, isSuccess, mutate: mutateAddQuestion,
