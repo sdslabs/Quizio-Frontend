@@ -6,14 +6,14 @@ import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDow
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useAddSection } from '@api/quizzes/useSections';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
-import Questions from './Questions';
+import Section from './Section';
 
 const TAB_NAME = 'Questions';
 
 const SideNavQuestions = () => {
   const {
-  currentStage, setCurrentStage, activeSectionIndex, setActiveSection, sections, addSection,
-  } = useCreateQuizStore();
+  currentStage, setCurrentStage, sections, addSection,
+} = useCreateQuizStore();
 
   const isActive = currentStage === TAB_NAME;
   const setActiveNav = () => setCurrentStage(TAB_NAME);
@@ -68,20 +68,8 @@ const SideNavQuestions = () => {
           </button>
           {isActive && (
           <div>
-              {sections.map(({ title, questions }, index) => (
-                  <React.Fragment key={title}>
-                      <p
-                        className={`side-nav-item${activeSectionIndex === index ? '-active' : ''} flex justify-between`}
-                        onClick={() => setActiveSection(index)}
-                      >
-                          {title}
-                          <DropdownArrowDownIcon />
-                      </p>
-                      <div>
-                          <Questions questions={questions} isActive={activeSectionIndex === index} />
-                      </div>
-
-                  </React.Fragment>
+              {sections.map((s, index) => (
+                  <Section key={s.id} index={index} section={s} />
           ))}
               <div className="p-4">
                   <button

@@ -7,7 +7,9 @@ import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useAddQuestion } from '@api/quizzes/useQuestions';
 
 const Questions = ({ isActive, questions }) => {
-    const { addQuestion, sections, activeSectionIndex } = useCreateQuizStore();
+    const {
+ addQuestion, sections, activeSectionIndex, addQuestionToSection,
+} = useCreateQuizStore();
     const sectionId = sections[activeSectionIndex]?.id;
 
     const {
@@ -23,7 +25,10 @@ const Questions = ({ isActive, questions }) => {
    useEffect(() => {
     if (isSuccess) {
         const response = data.data?.data?.question;
-        if (response) addQuestion(response.quizioID);
+        if (response) {
+            addQuestionToSection(response.id);
+            addQuestion(response);
+        }
     }
    }, [isSuccess, data]);
 

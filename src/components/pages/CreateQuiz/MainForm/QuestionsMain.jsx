@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import TextField from '@components/Input/TextField';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { useUpdateSection } from '@api/quizzes/useSections';
 import _ from 'lodash';
+import { useAddQuestion } from '@api/quizzes/useQuestions';
 
 const Questions = () => {
     const { showQuestion } = useCreateQuizStore();
@@ -14,17 +15,42 @@ const Questions = () => {
 };
 
 const SectionDescription = () => {
-    const { sections, activeSectionIndex, updateSection } = useCreateQuizStore();
+    const {
+ sections, activeSectionIndex, updateSection, addQuestionToSection, addQuestion, toggleQuestionForm,
+} = useCreateQuizStore();
     const currentSection = sections[activeSectionIndex];
 
     const setSectionTitle = (value) => updateSection({ ...currentSection, title: value });
     const setSectionDescription = (value) => updateSection({ ...currentSection, description: value });
 
-    const { isLoading, mutate: mutateSection } = useUpdateSection();
+    const { isLoading, mutate: mutateSection, isSuccess } = useUpdateSection();
+
+    const {
+ isLoading: isAddingQuestion, data: questionData, mutate: mutateQuestions, isSuccess: isQuestionAdded,
+} = useAddQuestion();
 
     const handleSave = () => {
         mutateSection({ sectionId: currentSection.id, body: _.omit(currentSection, ['id', 'questions']) });
     };
+
+    useEffect(() => {
+        if (isSuccess) {
+            if (currentSection.questions.length === 0) {
+                mutateQuestions({ sectionId: currentSection.id });
+            } else toggleQuestionForm(true);
+        }
+    }, [isSuccess]);
+
+    useEffect(() => {
+        if (isQuestionAdded) {
+            const question = questionData.data?.data?.question;
+            if (question) {
+                addQuestionToSection(question.quizioID);
+                addQuestion(question);
+                toggleQuestionForm(true);
+            }
+        }
+    }, [isQuestionAdded]);
 
     return (
         <div className="quiz-details">
@@ -50,7 +76,7 @@ const SectionDescription = () => {
                   setVal={setSectionDescription}
                 />
                 <div className="w-40 ml-auto mt-8">
-                    {isLoading ? 'Saving...' : <PrimaryCTA text="Save & Continue" onClick={handleSave} />}
+                    {isLoading || isAddingQuestion ? 'Saving...' : <PrimaryCTA text="Save & Continue" onClick={handleSave} />}
                 </div>
             </div>
 )}
