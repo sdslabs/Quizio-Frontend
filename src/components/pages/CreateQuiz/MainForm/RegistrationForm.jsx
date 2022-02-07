@@ -4,7 +4,7 @@ import '@pagestyles/create_quiz/registration_form.scss';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { REGEX } from '@constants/constants';
-import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
+import RegistrationFormCustomInput from '@components/Input/RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
 	const [firstName, setFirstName] = useState('');
