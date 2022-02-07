@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+// useEffect,
 import TextField from '@components/Input/TextField';
 import '@pagestyles/create_quiz/registration_form.scss';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { REGEX } from '@constants/constants';
+// useGetQuiz
+import useCreateQuizStore from '@store/zustand/createQuiz';
+import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
@@ -21,6 +25,32 @@ const RegistrationForm = () => {
   const [fieldLabel2, setFieldLabel2] = useState('');
   const [fieldName3, setFieldName3] = useState('');
   const [fieldLabel3, setFieldLabel3] = useState('');
+  const { setCurrentStage } = useCreateQuizStore();
+  // let nextPage = false;
+  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails } = useCreateQuiz();
+  const handleSave = () => {
+    const reqBod = {};
+    reqBod[fieldName1] = fieldLabel1;
+    reqBod[fieldName2] = fieldLabel2;
+    reqBod[fieldName3] = fieldLabel3;
+    console.log(reqBod);
+    const res = mutateQuizDetails(reqBod);
+    console.log(res);
+  };
+  const handleSubmit = () => {
+    console.log('before');
+    handleSave();
+    console.log(isCreateSucess); /* TODO: Fix mutation issue with backend */
+    if (true) {
+      console.log('in');
+      setCurrentStage('Questions');
+    }
+  };
+
+  // useEffect(() => {
+  //   if (nextPage) {
+  //   }
+  // }, [nextPage]);
 
 	return (
     <div className="registration-form">
@@ -125,10 +155,10 @@ const RegistrationForm = () => {
         </div>
         <div className="registration-details-submit-container">
             <div className="registration-details-submit-save-details">
-                <SecondaryCTA text="Save Details" onClick={() => console.log('foo')} />
+                <SecondaryCTA text="Save Details" onClick={handleSave} />
             </div>
             <div>
-                <PrimaryCTA text="Start Adding Questions" onClick={() => console.log('foo')} />
+                <PrimaryCTA text="Start Adding Questions" onClick={handleSubmit} />
             </div>
         </div>
     </div>

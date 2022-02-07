@@ -7,6 +7,7 @@ import '@pagestyles/create_quiz/quiz_details.scss';
 // import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { nanoid } from 'nanoid';
+// useGetQuiz
 import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 
 const QuizDetails = () => {
@@ -23,7 +24,7 @@ const QuizDetails = () => {
   const [accessCode, setAccessCode] = useState('');
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
-  const { currentStage, setCurrentStage } = useCreateQuizStore();
+  const { setCurrentStage } = useCreateQuizStore();
 
   const handleRemoveOwner = (i) => {
     const newOwners = [...owners];
@@ -42,10 +43,13 @@ const QuizDetails = () => {
   //   }
   // };
 
-  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails } = useCreateQuiz();
+  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails, data } = useCreateQuiz();
+  // const { isSuccess: isGetSuccess, data} = useGetQuiz();
+  // const quizID = new URLSearchParams(window.location.search).get('quizID');
 
   const handleSubmit = () => {
-    mutateQuizDetails({
+    console.log(data);
+    const res = mutateQuizDetails({
       quizName,
       startDate,
       startTime,
@@ -58,6 +62,7 @@ const QuizDetails = () => {
       quizInst,
       creator: email,
     });
+    console.log(res);
     // const res = await createQuiz({
     //   quizName,
     //   startDate,
@@ -87,8 +92,6 @@ const QuizDetails = () => {
   useEffect(() => {
     setOwners([email]);
   }, []);
-
-  console.log(currentStage);
 
   return (
       <div className="quiz-details">
