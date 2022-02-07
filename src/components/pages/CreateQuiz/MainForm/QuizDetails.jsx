@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/create_quiz/quiz_details.scss';
-// import { setCreateQuizId, setCreateQuizStage } from '@redux/actions/quiz';
 // import { useCreateQuiz } from '@api/quizzes/useQuizzes';
-import { setCreateQuizStage } from '@redux/actions/quiz';
+import useCreateQuizStore from '@store/zustand/createQuiz';
 import { nanoid } from 'nanoid';
 import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 
 const QuizDetails = () => {
-  const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.user.email);
   const [instructionsMode, setInstructionsMode] = useState('write');
   const [quizName, setQuizName] = useState('');
@@ -25,6 +23,7 @@ const QuizDetails = () => {
   const [accessCode, setAccessCode] = useState('');
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
+  const { currentStage, setCurrentStage } = useCreateQuizStore();
 
   const handleRemoveOwner = (i) => {
     const newOwners = [...owners];
@@ -43,9 +42,9 @@ const QuizDetails = () => {
   //   }
   // };
 
-  const { mutate: mutateQuizDetails } = useCreateQuiz();
+  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails } = useCreateQuiz();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     mutateQuizDetails({
       quizName,
       startDate,
@@ -59,7 +58,6 @@ const QuizDetails = () => {
       quizInst,
       creator: email,
     });
-    dispatch(setCreateQuizStage('Registration form'));
     // const res = await createQuiz({
     //   quizName,
     //   startDate,
@@ -81,8 +79,16 @@ const QuizDetails = () => {
   };
 
   useEffect(() => {
+    if (isCreateSucess) {
+      setCurrentStage('Registration form');
+    }
+  }, [isCreateSucess]);
+
+  useEffect(() => {
     setOwners([email]);
   }, []);
+
+  console.log(currentStage);
 
   return (
       <div className="quiz-details">

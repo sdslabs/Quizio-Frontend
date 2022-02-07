@@ -8,6 +8,8 @@ import Registrations from './Registrations';
 const MainForm = () => {
   const { currentStage } = useCreateQuizStore();
 
+  console.log(currentStage, 'index');
+
   return (
       <div className="create-quiz-main-form">
           {(() => {
@@ -21,7 +23,7 @@ const MainForm = () => {
           case 'Registrations':
             return <Registrations />;
           default:
-            return <QuizDetails />;
+            return <></>;
         }
       })()}
       </div>
