@@ -1,9 +1,9 @@
 import React from 'react';
-import ProfilePage from '@pages/ProfilePage';
+import Profile from '@pages/Profile';
 
 function Landing() {
   return (
-      <ProfilePage />
+      <Profile />
   );
 }
 export default Landing;
