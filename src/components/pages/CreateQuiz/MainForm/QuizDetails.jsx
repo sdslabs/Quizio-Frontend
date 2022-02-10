@@ -8,7 +8,8 @@ import '@pagestyles/create_quiz/quiz_details.scss';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { nanoid } from 'nanoid';
 // useGetQuiz
-import { useCreateQuiz } from '@api/quizzes/useQuizzes';
+import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
+import MarkdownTextField from '@components/Input/MarkdownTextField';
 
 const QuizDetails = () => {
   const email = useSelector((state) => state.auth.user.email);
@@ -43,13 +44,12 @@ const QuizDetails = () => {
   //   }
   // };
 
-  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails, data } = useCreateQuiz();
+  const { isSuccess: isUpdateSuccess, mutate: mutateQuizDetails, data } = useUpdateQuiz();
   // const { isSuccess: isGetSuccess, data} = useGetQuiz();
-  // const quizID = new URLSearchParams(window.location.search).get('quizID');
-
+// console.log(data);
   const handleSubmit = () => {
-    console.log(data);
-    const res = mutateQuizDetails({
+    const quizId = new URLSearchParams(window.location.search).get('quizID');
+    const quizDetails = {
       quizName,
       startDate,
       startTime,
@@ -61,8 +61,10 @@ const QuizDetails = () => {
       quizDesc,
       quizInst,
       creator: email,
-    });
-    console.log(res);
+    };
+    console.log(data);
+    mutateQuizDetails({ quizId, body: quizDetails });
+
     // const res = await createQuiz({
     //   quizName,
     //   startDate,
@@ -84,10 +86,10 @@ const QuizDetails = () => {
   };
 
   useEffect(() => {
-    if (isCreateSucess) {
+    if (isUpdateSuccess) {
       setCurrentStage('Registration form');
     }
-  }, [isCreateSucess]);
+  }, [isUpdateSuccess]);
 
   useEffect(() => {
     setOwners([email]);
@@ -242,12 +244,13 @@ const QuizDetails = () => {
                       Preview
                   </button>
               </div>
-              <TextField
+              <MarkdownTextField
                 id="Quiz instruction"
                 placeholder="Enter quiz instruction"
                 error=""
                 val={quizInst}
                 setVal={setQuizInst}
+                limit={1500}
               />
           </div>
           <div className="quiz-details-submit-container">

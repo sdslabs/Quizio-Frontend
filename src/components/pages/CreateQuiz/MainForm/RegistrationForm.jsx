@@ -7,7 +7,7 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { REGEX } from '@constants/constants';
 // useGetQuiz
 import useCreateQuizStore from '@store/zustand/createQuiz';
-import { useCreateQuiz } from '@api/quizzes/useQuizzes';
+import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
@@ -27,7 +27,7 @@ const RegistrationForm = () => {
   const [fieldLabel3, setFieldLabel3] = useState('');
   const { setCurrentStage } = useCreateQuizStore();
   // let nextPage = false;
-  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails } = useCreateQuiz();
+  const { isSuccess: isCreateSucess, mutate: mutateQuizDetails } = useUpdateQuiz();
   const handleSave = () => {
     const reqBod = {};
     reqBod[fieldName1] = fieldLabel1;
