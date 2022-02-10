@@ -13,19 +13,21 @@ const Profile = () => {
   useEffect(() => {
     setAttemptedQuizzes([
       {
-        title: 'Quiz 1',
-        creator: 'Rohith',
+        title: 'Recruitment Test',
+        creator: 'Stuti Lilani',
         imageURL: './blackbird.jpg',
         description: 'This is a quiz',
-        date: '2020-05-05',
+        date: '26 Jun, 2021 03:00PM',
         checked: true,
+        rank: '1',
+        totalAttempted: '10',
       },
       {
-        title: 'Quiz 2',
-        creator: 'Rohith',
+        title: 'Recruitment Test',
+        creator: 'Stuti Lilani',
         imageURL: './blackbird.jpg',
         description: 'This is a quiz',
-        date: '2020-05-05',
+        date: '26 Jun, 2021 03:00PM',
         checked: false,
       },
     ]);
@@ -37,14 +39,14 @@ const Profile = () => {
               <div className="text-xl font-bold text-purple-V6">Quizio</div>
           </div>
           <div className="mx-40 pt-32">
-              <div className="flex flex-row justify-evenly">
+              <div className="flex flex-row justify-start">
                   <ProfileCard />
-                  <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-center items-center">
+                  <div className="h-52 w-40 ml-6 rounded bg-purple-V1 flex flex-col justify-center items-center">
                       <div className="text-6xl font-semibold text-purple-V6 pb-4">{attemptedQuizzes.length}</div>
                       <div className="text-xl text-center text-purple-V6">Attempted</div>
                       <div className="text-xl text-center text-purple-V6">Quizzes</div>
                   </div>
-                  <div className="h-52 w-40 rounded bg-purple-V1 flex flex-col justify-center items-center">
+                  <div className="h-52 w-40 ml-6 rounded bg-purple-V1 flex flex-col justify-center items-center">
                       <div className="text-6xl font-semibold text-purple-V6 pb-4">{hostedQuizzes.length}</div>
                       <div className="text-xl text-center text-purple-V6">Hosted</div>
                       <div className="text-xl text-center text-purple-V6">Quizzes</div>
@@ -62,6 +64,8 @@ const Profile = () => {
                         description={quiz.description}
                         date={quiz.date}
                         checked={quiz.checked}
+                        rank={quiz.rank}
+                        totalAttempted={quiz.totalAttempted}
                       />
           ))}
               </div>
@@ -70,9 +74,9 @@ const Profile = () => {
   );
 };
 const QuizCard = ({
- title, creator, imageURL, description, date, checked,
+ title, creator, imageURL, description, date, checked, rank, totalAttempted,
 }) => (
-    <div className="relative w-full h-36 my-2 rounded border border-solid border-purple-V6 border-opacity-60">
+    <div className="relative w-full h-36 my-2 rounded border border-solid border-purple-V1 border-opacity-60">
         <div className="flex flex-row">
             <div className="p-4">
                 <img src={imageURL} className="h-28 w-28 object-cover rounded" alt="QuizImage" />
@@ -93,7 +97,7 @@ const QuizCard = ({
                     <>
                         {checked === true ? (
                             <a href="www.google.com">
-                                <button type="button" className="bg-purple-V6 text-white px-4 py-2 rounded">
+                                <button type="button" className="bg-purple text-white px-4 py-2 rounded text-sm">
                                     View Report
                                 </button>
                             </a>
@@ -103,6 +107,21 @@ const QuizCard = ({
                     </>
                 </div>
             </div>
+            <>
+                {rank !== '' ? (
+                    <div className="flex flex-col justify-center items-center px-9">
+                        <div className="text-purple-V6 text-xl">Rank</div>
+                        <div className="text-purple-V6 font-semibold text-4xl">{rank}</div>
+                        <div className="text-purple-V6 text-sm">
+                            (Out of
+                            {totalAttempted}
+                            )
+                        </div>
+                    </div>
+        ) : (
+            <></>
+        )}
+            </>
         </div>
     </div>
 );
@@ -114,6 +133,8 @@ QuizCard.propTypes = {
   description: PropTypes.string,
   date: PropTypes.string,
   checked: PropTypes.bool,
+  rank: PropTypes.string,
+  totalAttempted: PropTypes.string,
 };
 
 QuizCard.defaultProps = {
@@ -123,6 +144,8 @@ QuizCard.defaultProps = {
   description: '',
   date: '',
   checked: false,
+  rank: '',
+  totalAttempted: '',
 };
 
 const ProfileCard = () => {
@@ -137,18 +160,18 @@ const ProfileCard = () => {
   const [linkedinURL, setLinkedinURL] = useState('');
 
   useEffect(() => {
-    setName('Rohith');
-    setEmail('exmaple@gmail.com');
-    setPhoneNumber('9898988989');
-    setInstitute('IIT Roorkee');
-    setCity('Chandigarh');
+    setName('Somesh Solanki');
+    setEmail('someshmarider@gmail.com');
+    setPhoneNumber('0123456789');
+    setInstitute('Indian Institute of Technology, Roorkee');
+    setCity('Jaipur, Rajasthan');
     setImageURL('./blackbird.jpg');
     setFacebookURL('');
     setInstagramURL('');
     setLinkedinURL('');
   }, []);
   return (
-      <div className="relative h-52 w-8/12 shadow-lg rounded">
+      <div className="relative h-52 w-9/12 shadow-lg rounded">
           <div className="flex flex-row">
               <div className="flex flex-col w-40 py-4 px-2">
                   <img src={imageURL} className="h-36 w-36 rounded-full object-cover" alt="Profile" />
