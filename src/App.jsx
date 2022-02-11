@@ -13,6 +13,7 @@ import { setUser } from '@redux/actions/auth';
 import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
 import './index.css';
 import Profile from '@components/pages/Profile';
+import CheckQuiz from '@components/pages/CheckQuiz';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const App = () => {
                       {/* Create or edit a quiz */}
                       <Route exact path="/quiz/edit" component={CreateQuiz} />
                       {/* Check a quiz */}
-                      <Route path="/quiz/check/:quizID" component={CreateQuiz} />
+                      <Route path="/quiz/check/:quizID" component={CheckQuiz} />
                       {/* Attempt a quiz */}
                       <Route path="/quiz/:quizID" component={GiveQuiz} />
                       {/* Private profile page */}
