@@ -1,0 +1,20 @@
+@import '@styles/all.scss';
+
+.progress-container{
+  @apply flex flex-col items-center;
+  .progress-base{
+    @apply bg-white border-2 border-purple rounded-full h-3.5 p-0 w-40;
+    .progress-done{
+      @apply bg-purple h-full rounded-full;
+    }
+  }
+  .progress-text {
+    @apply text-center text-purple-V6;
+  }
+}
+.progress-completed{
+  @apply text-green-1 font-bold;
+}
+.progress-not-started{
+  @apply text-yellow font-bold;
+}
