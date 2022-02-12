@@ -20,8 +20,9 @@ const CheckingProgress = ({ progress }) => {
   const progressStr = `${progress.toString()}%`;
   return (
       <div className="progress-container">
-          <div className="progress-base">
-              <div className="progress-done" style={{ width: progressStr }} />
+          <div className="progress-bar">
+              <div className="progress-base" />
+              <div className="progress-done" style={{ width: progress > 1 ? progressStr : '0%' }} />
           </div>
           <div className="progress-text">{progressStr}</div>
       </div>

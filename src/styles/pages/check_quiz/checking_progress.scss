@@ -2,10 +2,14 @@
 
 .progress-container{
   @apply flex flex-col items-center;
-  .progress-base{
-    @apply bg-white border-2 border-purple rounded-full h-3.5 p-0 m-0 w-40 flex items-center ;
+
+  .progress-bar{
+    @apply flex items-center justify-start relative w-40 h-3.5;
+    .progress-base{
+      @apply bg-white border-2 border-purple h-3.5 w-40 absolute left-0 top-0 rounded-full;
+    }
     .progress-done{
-      @apply bg-purple h-3.5 border-2  border-purple rounded-full;
+      @apply bg-purple h-3.5 absolute left-0 top-0 rounded-full;
     }
   }
   .progress-text {
