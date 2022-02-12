@@ -4,8 +4,9 @@ import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetRegistrants } from '@api/register/useRegister';
 
 const Top = () => {
- const search = new URLSearchParams(window.location.search);
+    const search = new URLSearchParams(window.location.search);
     const quizID = search.get('quizID');
+    const [quizName, setQuizName] = useState('');
     const [creator, setCreator] = useState('');
     const [createdOn, setCreatedOn] = useState('');
     const [totalParticipants, setTotalParticipants] = useState(1);
@@ -13,28 +14,29 @@ const Top = () => {
     const { data: registrantsData, isLoading: isRegistrantsLoading, isSuccess: isRegistrantsSuccess } = useGetRegistrants(quizID);
     useEffect(() => {
         if (isQuizSuccess) {
-            console.log(quizData);
+            setQuizName(quizData.data.data.quiz.name);
             setCreator(quizData.data.data.quiz.creator);
-            console.log(isQuizLoading);
-            const date = new Date(quizData.data.data.quiz.createdOn);
+            const date = new Date(quizData.data.data.quiz.startTime);
             const options = {
             year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
             };
             setCreatedOn(date.toLocaleDateString('en-US', options));
         }
-      }, [isQuizSuccess]);
+     }, [isQuizSuccess]);
 
-      useEffect(() => {
+    useEffect(() => {
         if (isRegistrantsSuccess) {
-            console.log(isRegistrantsLoading);
             setTotalParticipants(registrantsData.data.data.users.length);
         }
       }, [isRegistrantsSuccess]);
 
+    if (isQuizLoading || isRegistrantsLoading) {
+        return <div>Loading...</div>;
+    }
     return (
         <div className="dashboard-top">
             <div className="quiz-details-container">
-                <div className="quiz-details-title">Maths Quiz</div>
+                <div className="quiz-details-title">{quizName}</div>
                 <div className="quiz-details-content">
                     Scheduled on
                     {' '}

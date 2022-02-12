@@ -1,8 +1,9 @@
 import React, {} from 'react';
 import '@pagestyles/check_quiz/checking_table.scss';
+import PropTypes from 'prop-types';
 import CheckingProgress from './CheckingProgress';
 
-const CheckingTable = () => (
+const CheckingTable = ({ data }) => (
     <div className="checking-table-container">
         <table>
             <tbody>
@@ -14,30 +15,18 @@ const CheckingTable = () => (
                     <th className="table-content">Checking progress</th>
                     <th className="table-content">Check quiz</th>
                 </tr>
-                <tr>
-                    <td className="text-left table-content">1</td>
-                    <td className="text-left table-content table-link">Angad</td>
-                    <td className="text-center table-content">69</td>
-                    <td className="text-center table-content">96</td>
-                    <td className="text-center table-content"><CheckingProgress progress={0} /></td>
-                    <td className="text-center table-content table-link">Check Quiz</td>
-                </tr>
-                <tr>
-                    <td className="text-left table-content">1</td>
-                    <td className="text-left table-content table-link">Angad</td>
-                    <td className="text-center table-content">69</td>
-                    <td className="text-center table-content">96</td>
-                    <td className="text-center table-content"><CheckingProgress progress={10} /></td>
-                    <td className="text-center table-content table-link">Check Quiz</td>
-                </tr>
-                <tr>
-                    <td className="text-left table-content">1</td>
-                    <td className="text-left table-content table-link">Angad</td>
-                    <td className="text-center table-content">69</td>
-                    <td className="text-center table-content">96</td>
-                    <td className="text-center table-content"><CheckingProgress progress={100} /></td>
-                    <td className="text-center table-content table-link">Check Quiz</td>
-                </tr>
+                {
+                        data.map((participant) => (
+                            <tr>
+                                <td className="text-left table-content">{participant.sr_num}</td>
+                                <td className="text-left table-content table-link">{participant.name}</td>
+                                <td className="text-center table-content">{participant.rank}</td>
+                                <td className="text-center table-content">{participant.marks}</td>
+                                <td className="text-center table-content"><CheckingProgress progress={participant.progress} /></td>
+                                <td className="text-center table-content table-link">Check Quiz</td>
+                            </tr>
+                            ))
+                    }
             </tbody>
         </table>
         <div className="page-cta-flex">
@@ -46,5 +35,11 @@ const CheckingTable = () => (
         </div>
     </div>
 );
+
+CheckingTable.propTypes = {
+    data: PropTypes.arrayOf(
+        PropTypes.object,
+    ).isRequired,
+  };
 
 export default CheckingTable;

@@ -23,7 +23,7 @@ const CheckingProgress = ({ progress }) => {
           <div className="progress-base">
               <div className="progress-done" style={{ width: progressStr }} />
           </div>
-          <div className="progress-text">90%</div>
+          <div className="progress-text">{progressStr}</div>
       </div>
   );
 };
