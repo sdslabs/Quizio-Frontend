@@ -3,9 +3,9 @@
 .progress-container{
   @apply flex flex-col items-center;
   .progress-base{
-    @apply bg-white border-2 border-purple rounded-full h-3.5 p-0 w-40;
+    @apply bg-white border-2 border-purple rounded-full h-3.5 p-0 m-0 w-40 flex items-center ;
     .progress-done{
-      @apply bg-purple h-full rounded-full;
+      @apply bg-purple h-3.5 border-2  border-purple rounded-full;
     }
   }
   .progress-text {
