@@ -41,12 +41,12 @@ const Profile = () => {
           <div className="mx-40 pt-32">
               <div className="flex flex-row justify-start">
                   <ProfileCard />
-                  <div className="h-52 w-40 ml-6 rounded bg-purple-V1 flex flex-col justify-center items-center">
+                  <div className="h-52 w-40 ml-6 rounded bg-purple-V1 bg-opacity-40 flex flex-col justify-center items-center">
                       <div className="text-6xl font-semibold text-purple-V6 pb-4">{attemptedQuizzes.length}</div>
                       <div className="text-xl text-center text-purple-V6">Attempted</div>
                       <div className="text-xl text-center text-purple-V6">Quizzes</div>
                   </div>
-                  <div className="h-52 w-40 ml-6 rounded bg-purple-V1 flex flex-col justify-center items-center">
+                  <div className="h-52 w-40 ml-6 rounded bg-purple-V1 bg-opacity-40 flex flex-col justify-center items-center">
                       <div className="text-6xl font-semibold text-purple-V6 pb-4">{hostedQuizzes.length}</div>
                       <div className="text-xl text-center text-purple-V6">Hosted</div>
                       <div className="text-xl text-center text-purple-V6">Quizzes</div>
@@ -76,9 +76,9 @@ const Profile = () => {
 const QuizCard = ({
  title, creator, imageURL, description, date, checked, rank, totalAttempted,
 }) => (
-    <div className="relative w-full h-36 my-2 rounded border border-solid border-purple-V1 border-opacity-60">
+    <div className="relative w-full h-40 my-2 rounded border border-solid border-purple-V1 border-opacity-60">
         <div className="flex flex-row">
-            <div className="p-4">
+            <div className="p-4 flex flex-col justify-center">
                 <img src={imageURL} className="h-28 w-28 object-cover rounded" alt="QuizImage" />
             </div>
             <div className="flex flex-grow flex-col p-4">
@@ -88,8 +88,8 @@ const QuizCard = ({
                     <div className="float-left text-xs text-purple-V6">{creator}</div>
                 </div>
 
-                <div className="text-grey-N6 text-ellipsis">{description}</div>
-                <div className="pb-1">
+                <div className="pb-1 text-grey-N6 text-ellipsis">{description}</div>
+                <div className="pb-3">
                     <div className="float-left text-grey-N6">Scheduled: </div>
                     <div className="float-left text-black-1">{date}</div>
                 </div>
@@ -173,7 +173,7 @@ const ProfileCard = () => {
   return (
       <div className="relative h-52 w-9/12 shadow-lg rounded">
           <div className="flex flex-row">
-              <div className="flex flex-col w-40 py-4 px-2">
+              <div className="flex flex-col w-40 py-4 pl-2">
                   <img src={imageURL} className="h-36 w-36 rounded-full object-cover" alt="Profile" />
                   <div className="text-center text-purple-V6 py-1">
                       <a href="https://github.com/">Edit Details</a>
@@ -182,7 +182,7 @@ const ProfileCard = () => {
                   </div>
               </div>
 
-              <div className="flex flex-grow flex-col p-4">
+              <div className="flex flex-grow flex-col p-4 pl-6">
                   <div className="text-2xl text-purple-V6 font-bold pt-3">{name}</div>
                   <div className="text-black-1">{institute}</div>
                   <div className="text-purple-V6">{city}</div>
