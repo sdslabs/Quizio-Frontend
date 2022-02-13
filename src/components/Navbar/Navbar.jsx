@@ -38,9 +38,9 @@ const Navbar = ({ type }) => {
               <div className="host-quiz">
                   <PrimaryCTA text="+ Host Quiz" onClick={handleHostQuiz} />
               </div>
-              <div className="profile-pic">
+              <a href={`/profile/${user.username}`} className="profile-pic">
                   <img className="profile-pic-img" src={profilePic} alt="" />
-              </div>
+              </a>
           </div>
       )}
       </div>
