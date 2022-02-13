@@ -76,7 +76,7 @@ const App = () => {
                       {/* Dashboard page */}
                       <Route exact path="/" component={Dashboard} />
                       {/* Registration Page */}
-                      <Route exact path="/register" component={Register} />
+                      <Route path="/register/:quizID" component={Register} />
                       {/* Create or edit a quiz */}
                       <Route exact path="/quiz/create" component={CreateQuiz} />
                       {/* Create or edit a quiz */}

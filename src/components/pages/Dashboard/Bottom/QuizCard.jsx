@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import PropTypes from 'prop-types';
 import { ReactComponent as QuizName } from '@icons/quizname.svg';
@@ -6,9 +6,19 @@ import { truncateQuizName } from '@utils/truncate';
 import { getDateTime } from '@utils/date';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/dashboard/quiz_card.scss';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+import UserQuizRegistrationModal from '@components/Modals/UserQuizRegistrationModal';
+// import { useHistory } from 'react-router';
 
 const QuizCard = ({ data }) => {
-  const handleRegister = () => {};
+//  const history = useHistory();
+const [showModal, setShowModal] = useState(false);
+
+  const handleRegister = () => {
+  //  history.push(`/register/${data.quizioID}`);
+ // console.log(data.quizioID);
+  setShowModal(true);
+};
 
   return (
       <div className="quiz-card">
@@ -37,6 +47,14 @@ const QuizCard = ({ data }) => {
           )}
               </div>
           </div>
+          <ModalWrapper
+            showModal={showModal}
+            setShowModal={setShowModal}
+            hideOnOverlayClick
+            maxWidth="md"
+          >
+              <UserQuizRegistrationModal quizID={data.quizioID} />
+          </ModalWrapper>
       </div>
   );
 };
