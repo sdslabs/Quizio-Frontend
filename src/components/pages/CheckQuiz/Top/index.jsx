@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import '@pagestyles/check_quiz/top.scss';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetRegistrants } from '@api/register/useRegister';
+import { useParams } from 'react-router-dom';
 
 const Top = () => {
-    const search = new URLSearchParams(window.location.search);
-    const quizID = search.get('quizID');
+    const { quizID } = useParams();
     const [quizName, setQuizName] = useState('');
     const [creator, setCreator] = useState('');
     const [createdOn, setCreatedOn] = useState('');

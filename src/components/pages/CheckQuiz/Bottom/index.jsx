@@ -3,6 +3,7 @@ import '@pagestyles/check_quiz/bottom.scss';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { useGetRegistrants } from '@api/register/useRegister';
+import { useParams } from 'react-router-dom';
 import CheckingTable from './CheckingTable';
 
 const SORT_TYPES = {
@@ -13,8 +14,7 @@ const SORT_TYPES = {
     RANKLIST: 'Ranklist',
 };
 const Bottom = () => {
-    const search = new URLSearchParams(window.location.search);
-    const quizID = search.get('quizID');
+    const { quizID } = useParams();
     const [tableData, setTableData] = useState([]);
     const [sortBy, setSortBy] = useState(0);
     const {

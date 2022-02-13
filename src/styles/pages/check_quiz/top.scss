@@ -4,7 +4,7 @@
   @apply flex w-full;
 
   .quiz-details-container {
-    @apply h-52 w-2/3 bg-purple-V1 pl-16 flex flex-col justify-center;
+    @apply h-52 w-2/3 bg-purple-V1 pl-16 flex flex-col justify-center flex-grow;
 
     .quiz-details-title {
       @apply text-purple-V6 font-semibold text-3xl pb-2;
