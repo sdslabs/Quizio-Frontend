@@ -32,8 +32,9 @@ module.exports = {
       },
       purple: {
         DEFAULT: '#593C8F',
-        V6: '#604195',
         V1: '#EBE7F2',
+        V3: '#AD9EC9',
+        V6: '#604195',
       },
       red: {
         DEFAULT: '#D73554',
@@ -47,6 +48,7 @@ module.exports = {
         3.75: '3.75rem',
         15: '3.75rem',
         '8%': '8%',
+        114: '28.5rem',
       },
     },
   },

@@ -1,9 +1,10 @@
 import React from 'react';
-import Profile from '@pages/Profile';
+import JoinUs from '@pages/JoinUs';
 
 function Landing() {
   return (
-      <Profile />
+      <JoinUs />
   );
 }
+
 export default Landing;

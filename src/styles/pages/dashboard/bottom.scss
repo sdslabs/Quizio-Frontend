@@ -3,4 +3,29 @@
 .dashboard-bottom {
   @apply flex flex-col w-full;
 
+  .pagination-container {
+    @apply w-full h-8 flex;
+
+    .quizzes {
+      @apply px-4;
+    }
+    .created-quizzes {
+      @apply px-4;
+    }
+    .pagination-border {
+      @apply border-b-2 border-grey-N6 flex-1;
+    }
+
+    .false {
+      @apply font-semibold text-sm text-grey-N6 border-b-2 border-grey-N6;
+    }
+
+    .active {
+      @apply font-semibold text-sm text-purple-V6 border-b-2 border-purple-V6;
+    }
+  }
+
+  .main{
+    
+  }
 }

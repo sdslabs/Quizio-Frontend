@@ -23,6 +23,9 @@ module.exports = {
 	},
 	settings: {
 		'import/resolver': {
+			node: {
+				extensions: ['.js', '.jsx', '.ts', '.tsx'],
+			},
 			alias: {
 				map: [
 					['@api', './src/api'],
