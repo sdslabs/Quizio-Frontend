@@ -56,7 +56,7 @@ const Profile = () => {
                       <QuizCard
                         title={quiz.title}
                         creator={quiz.creator}
-                        imageURL={quiz.imageURL}
+                        imageURL="https://i1.sndcdn.com/artworks-qyrckKJE1mdut7kS-6IJvzQ-t500x500.jpg"
                         description={quiz.description}
                         date={quiz.date}
                         checked={quiz.checked}

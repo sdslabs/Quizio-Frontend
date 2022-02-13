@@ -22,7 +22,7 @@ const ProfileCard = () => {
     setPhoneNumber('0123456789');
     setInstitute('Indian Institute of Technology, Roorkee');
     setCity('Jaipur, Rajasthan');
-    setImageURL('./blackbird.jpg');
+    setImageURL('https://img.apmcdn.org/768cb350c59023919f564341090e3eea4970388c/square/72dd92-20180309-rick-astley.jpg');
     setFacebookURL('');
     setInstagramURL('');
     setLinkedinURL('');
