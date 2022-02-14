@@ -13,7 +13,7 @@ import UserQuizRegistrationModal from '@components/Modals/UserQuizRegistrationMo
 const QuizCard = ({ data }) => {
 //  const history = useHistory();
 const [showModal, setShowModal] = useState(false);
-
+console.log(data);
   const handleRegister = () => {
   //  history.push(`/register/${data.quizioID}`);
  // console.log(data.quizioID);

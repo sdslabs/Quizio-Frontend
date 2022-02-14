@@ -10,7 +10,7 @@ const Quizzes = () => {
   // This will depend on the global state
   useEffect(async () => {
     const quizRes = await getAllQuizzes();
-
+    console.log(quizRes, 'aaaa');
     const upcomingFilter = (quiz) => {
       if (quiz.startTime) {
         const quizStartTime = new Date(quiz.startTime);

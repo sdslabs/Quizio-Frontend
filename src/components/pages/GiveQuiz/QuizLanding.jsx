@@ -46,7 +46,7 @@ const QuizLanding = () => {
             <div className="ml-auto mt-16 w-28">
                 <PrimaryCTA text="Continue" onClick={() => setShowModal(true)} />
             </div>
-            <ModalWrapper showModal={showModal} hideOnOverlayClick setShowModal={setShowModal}><StartQuizModal /></ModalWrapper>
+            <ModalWrapper showModal={showModal} hideOnOverlayClick setShowModal={setShowModal}><StartQuizModal quizID={quizId} /></ModalWrapper>
         </>
     );
 };

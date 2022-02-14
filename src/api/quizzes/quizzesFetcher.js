@@ -11,7 +11,7 @@ export const getAllQuizzes = async () => {
 	}
 };
 
-export const getQuizById = ({ quizId }) => axiosInstance.get(`/quizzes/${quizId}`);
+export const getQuizById = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[1]}`);
 
 export const updateQuizById = ({ quizId, body }) => axiosInstance.put(`/quizzes/${quizId}`, body);
 

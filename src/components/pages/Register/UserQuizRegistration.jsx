@@ -32,11 +32,8 @@ const UserQuizRegistration = ({
   const userEmail = useSelector((state) => state.auth.user?.email);
   const userFirstName = useSelector((state) => state.auth.user?.firstName);
   const userLastName = useSelector((state) => state.auth.user?.lastName);
-  //  const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
+  const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
 
-  //  const username = useSelector((state) => state.auth.user?.username);
-
-  // const userContactNo = useSelector((state) => state.auth.user.phones);
   console.log(userEmail);
   // const { data, isLoading, isSuccess } = useGetUserDetails();
   // useEffect(() => {
@@ -71,7 +68,7 @@ return (
             <div className="user-quiz-registration-title">Registration Form</div>
             <div className="user-quiz-registration-basic-details">
                 <div className="user-quiz-registration-name">
-                    <div className="user-quiz-registration-first-name">
+                    <div className={`user-quiz-registration-first-name ${userFirstName ? '' : 'hidden'}`}>
                         <TextField
                           id="First name"
                           placeholder={userFirstName}
@@ -82,7 +79,7 @@ return (
                           disabled
                         />
                     </div>
-                    <div className="user-quiz-registration-last-name">
+                    <div className={`user-quiz-registration-last-name ${userLastName ? '' : 'hidden'}`}>
                         <TextField
                           id="Last name"
                           placeholder={userLastName}
@@ -94,7 +91,7 @@ return (
                         />
                     </div>
                 </div>
-                <div className="user-quiz-registration-contact">
+                <div className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'}`}>
                     <div className="user-quiz-registration-contact-email">
                         <TextField
                           id="Email"
@@ -107,7 +104,7 @@ return (
                           pattern={REGEX.email}
                         />
                     </div>
-                    <div className="user-quiz-registration-contact-contactno">
+                    <div className={`user-quiz-registration-contact-contactno ${userPhoneNumber ? '' : 'hidden'}`}>
                         <TextField
                           id="Contact No."
                           placeholder="Candidate&#39;s contact number"
