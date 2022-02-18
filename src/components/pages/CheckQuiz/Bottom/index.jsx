@@ -4,7 +4,7 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { useGetRegistrants } from '@api/register/useRegister';
 import { useParams } from 'react-router-dom';
-import CheckingTable from './CheckingTable';
+import CheckingTable from '@pages/CheckQuiz/Bottom/CheckingTable';
 
 const SORT_TYPES = {
     CHECKED_ASC: 'Checked (0 - 100%)',
@@ -38,9 +38,7 @@ const Bottom = () => {
             );
         }
     }, [isRegistrantsSuccess]);
-    const handleDropdownChange = (e) => {
-        const sortByval = e.target.value;
-        console.log(sortByval);
+    const sortTableData = (sortByval) => {
         if (sortByval === SORT_TYPES.CHECKED_ASC) {
             setTableData(
                 tableData
@@ -73,6 +71,10 @@ const Bottom = () => {
             );
         }
         setSortBy(sortByval);
+    };
+    const handleDropdownChange = (e) => {
+        const sortByval = e.target.value;
+        sortTableData(sortByval);
     };
     if (isRegistrantsLoading) {
         return <div>Loading...</div>;

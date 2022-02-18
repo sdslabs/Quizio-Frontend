@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar from '@components/Navbar/Navbar';
 import '@pagestyles/check_quiz/index.scss';
-import Top from './Top';
-import Bottom from './Bottom';
+import Top from '@pages/CheckQuiz/Top';
+import Bottom from '@pages/CheckQuiz/Bottom';
 
 const CheckQuiz = () => (
     <div className="check-quiz">

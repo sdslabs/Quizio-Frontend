@@ -1,11 +1,44 @@
 import React, { useState } from 'react';
 import '@pagestyles/check_quiz/checking_table.scss';
 import PropTypes from 'prop-types';
-import CheckingProgress from './CheckingProgress';
+import ProgressBar from '@pages/CheckQuiz/Bottom/ProgressBar';
 
-const MAX_PAGE_SIZE = 5;
+const MAX_PAGE_SIZE = 10;
+
+const parseTableData = (data, pageNum) => data
+    .filter(
+        (val, index) => index >= MAX_PAGE_SIZE * pageNum
+            && index < MAX_PAGE_SIZE * (pageNum + 1),
+    )
+    .map((participant) => (
+        <tr key={participant.sr_num}>
+            <td className="text-left table-content">
+                {participant.sr_num}
+            </td>
+            <td className="text-left table-content table-link">
+                {participant.name}
+            </td>
+            <td className="text-center table-content">
+                {participant.rank}
+            </td>
+            <td className="text-center table-content">
+                {participant.marks}
+            </td>
+            <td className="text-center table-content">
+                <ProgressBar
+                  progress={participant.progress}
+                />
+            </td>
+            <td className="text-center table-content table-link">
+                Check Quiz
+            </td>
+        </tr>
+    ));
+
 const CheckingTable = ({ data }) => {
     const [pageNum, setPageNum] = useState(0);
+    const incrementPageNum = () => { if ((pageNum + 1) * MAX_PAGE_SIZE < data.length) { setPageNum(pageNum + 1); } };
+    const decrementPageNum = () => { if (pageNum > 0) setPageNum(pageNum - 1); };
     return (
         <div className="checking-table-container">
             <table>
@@ -18,35 +51,7 @@ const CheckingTable = ({ data }) => {
                         <th className="table-content">Checking progress</th>
                         <th className="table-content">Check quiz</th>
                     </tr>
-                    {data
-                        .filter(
-                            (val, index) => index >= MAX_PAGE_SIZE * pageNum
-                                && index < MAX_PAGE_SIZE * (pageNum + 1),
-                        )
-                        .map((participant) => (
-                            <tr key={participant.sr_num}>
-                                <td className="text-left table-content">
-                                    {participant.sr_num}
-                                </td>
-                                <td className="text-left table-content table-link">
-                                    {participant.name}
-                                </td>
-                                <td className="text-center table-content">
-                                    {participant.rank}
-                                </td>
-                                <td className="text-center table-content">
-                                    {participant.marks}
-                                </td>
-                                <td className="text-center table-content">
-                                    <CheckingProgress
-                                      progress={participant.progress}
-                                    />
-                                </td>
-                                <td className="text-center table-content table-link">
-                                    Check Quiz
-                                </td>
-                            </tr>
-                        ))}
+                    {parseTableData(data, pageNum)}
                 </tbody>
             </table>
             <div className="page-cta-flex">
@@ -54,9 +59,7 @@ const CheckingTable = ({ data }) => {
                   role="button"
                   tabIndex={0}
                   className="page-cta"
-                  onClick={() => {
-                        if (pageNum > 0) setPageNum(pageNum - 1);
-                    }}
+                  onClick={decrementPageNum}
                 >
                     Previous
                 </span>
@@ -64,9 +67,7 @@ const CheckingTable = ({ data }) => {
                   role="button"
                   tabIndex={0}
                   className="page-cta"
-                  onClick={() => {
-                        if ((pageNum + 1) * MAX_PAGE_SIZE < data.length) { setPageNum(pageNum + 1); }
-                    }}
+                  onClick={incrementPageNum}
                 >
                     Next
                 </span>

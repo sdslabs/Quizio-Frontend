@@ -2,7 +2,7 @@ import React, {} from 'react';
 import PropTypes from 'prop-types';
 import '@pagestyles/check_quiz/checking_progress.scss';
 
-const CheckingProgress = ({ progress }) => {
+const ProgressBar = ({ progress }) => {
   if (progress === 0) {
     return (
         <div className="progress-not-started">
@@ -29,8 +29,8 @@ const CheckingProgress = ({ progress }) => {
   );
 };
 
-CheckingProgress.propTypes = {
+ProgressBar.propTypes = {
   progress: PropTypes.number.isRequired,
 };
 
-export default CheckingProgress;
+export default ProgressBar;
