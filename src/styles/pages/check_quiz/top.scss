@@ -3,30 +3,41 @@
 .dashboard-top {
   @apply flex w-full;
 
-  .status-container {
-    @apply h-52 w-2/3 bg-purple-V1 flex-grow;
+  .quiz-details-container {
+    @apply h-52 w-2/3 bg-purple-V1 pl-16 flex flex-col justify-center flex-grow;
+
+    .quiz-details-title {
+      @apply text-purple-V6 font-semibold text-3xl pb-2;
+    }
+    
+    .quiz-details-content {
+      @apply text-black font-normal text-xl;
+      .content-link {
+        @apply text-purple-V6 cursor-pointer;
+      }
+    }
   }
 
-  .attempted-container {
+  .participants-container {
     @apply h-52 w-40 bg-purple-V1 ml-6 flex flex-col items-center justify-center;
 
-    .attempted-count {
+    .participants-count {
       @apply text-purple-V6 font-semibold text-6xl pb-4;
     }
 
-    .attempted-text {
+    .participants-text {
       @apply text-purple-V6 font-normal text-xl text-center;
     }
   }
 
-  .hosted-container {
+  .checks-container {
     @apply h-52 w-40 bg-purple-V1 ml-6 flex flex-col items-center justify-center;
 
-    .hosted-count {
+    .checks-count {
       @apply text-purple-V6 font-semibold text-6xl pb-4;
     }
 
-    .hosted-text {
+    .checks-text {
       @apply text-purple-V6 font-normal text-xl text-center;
     }
   }

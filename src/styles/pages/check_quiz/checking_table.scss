@@ -1,0 +1,24 @@
+@import '@styles/all.scss';
+
+.checking-table-container
+{
+  @apply flex flex-col w-full mt-5;
+  .table-content{
+    @apply p-4;
+  }
+  tr:nth-child(odd) {
+    @apply bg-white;
+  }
+  tr:nth-child(even) {
+    @apply bg-purple-V1;
+  }
+  .table-link {
+    @apply text-purple cursor-pointer;
+  }
+  .page-cta-flex {
+    @apply flex gap-5 mt-5;
+    .page-cta {
+      @apply text-purple cursor-pointer;
+    }
+  }
+}

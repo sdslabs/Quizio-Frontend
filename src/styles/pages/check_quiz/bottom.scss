@@ -1,0 +1,20 @@
+@import '@styles/all.scss';
+
+.dashboard-bottom {
+  @apply flex flex-col w-full;
+  .actionables {
+    @apply flex flex-row w-full justify-between items-center;
+    .dropdown {
+      @apply border-2 border-grey;
+      .select-selected {
+        @apply rounded-sm border-2 border-grey;
+      }      
+    }
+    .cta-flex {
+      @apply flex flex-row gap-5 whitespace-nowrap;
+      .quiz-check-button {
+        @apply w-40;
+      }
+    }
+  }
+}
