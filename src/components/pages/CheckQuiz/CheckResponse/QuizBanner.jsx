@@ -1,28 +1,28 @@
 import React from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
-import QuizTimer from './QuizTimer';
+import QuizTimer from '@pages/GiveQuiz/QuizTimer';
 
 const QuestionBubbles = [
   {
-    type: 'not-visited',
+    type: 'unattempted',
     number: 0,
-    label: 'Not visited',
+    label: 'Unattempted',
   },
   {
-    type: 'marked',
-    number: 24,
-    label: 'Marked for review',
+    type: 'visited-unchecked',
+    number: 0,
+    label: 'Unchecked',
   },
   {
-    type: 'answered',
-    number: 12,
-    label: 'Answered',
+    type: 'checked',
+    number: 0,
+    label: 'Checked',
   },
   {
-    type: 'marked-answered',
-    number: 55,
-    label: 'Answered & Marked for review',
+    type: 'autochecked',
+    number: 0,
+    label: 'Autochecked',
   },
 ];
 

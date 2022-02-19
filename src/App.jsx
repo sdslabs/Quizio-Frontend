@@ -13,6 +13,8 @@ import { setUser } from '@redux/actions/auth';
 import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
 import './index.css';
 import Profile from '@components/pages/Profile';
+import CheckQuiz from '@components/pages/CheckQuiz';
+import Components from '@components/pages/Components/Components';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -65,38 +67,34 @@ const App = () => {
     setLoading(false);
   }, []);
 
+  if (loading) return <div>Loading...</div>;
+
+  if (isLoggedIn) {
+    return (
+        <Switch>
+            {/* Dashboard page */}
+            <Route exact path="/" component={Dashboard} />
+            {/* Registration Page */}
+            <Route exact path="/register" component={Register} />
+            {/* Create or edit a quiz */}
+            <Route exact path="/quiz/create" component={CreateQuiz} />
+            {/* Create or edit a quiz */}
+            <Route exact path="/quiz/edit" component={CreateQuiz} />
+            {/* Check a quiz */}
+            <Route path="/quiz/check/:quizID" component={CheckQuiz} />
+            {/* Attempt a quiz */}
+            <Route path="/quiz/:quizID" component={GiveQuiz} />
+            {/* Private profile page */}
+            <Route path="/profile/:profileID" component={Profile} />
+        </Switch>
+    );
+  }
+
   return (
-      <>
-          {loading ? (
-              <>Loading...</>
-      ) : (
-          <>
-              {isLoggedIn ? (
-                  <Switch>
-                      {/* Dashboard page */}
-                      <Route exact path="/" component={Dashboard} />
-                      {/* Registration Page */}
-                      <Route exact path="/register" component={Register} />
-                      {/* Create or edit a quiz */}
-                      <Route exact path="/quiz/create" component={CreateQuiz} />
-                      {/* Create or edit a quiz */}
-                      <Route exact path="/quiz/edit" component={CreateQuiz} />
-                      {/* Check a quiz */}
-                      <Route path="/quiz/check/:quizID" component={CreateQuiz} />
-                      {/* Attempt a quiz */}
-                      <Route path="/quiz/:quizID" component={GiveQuiz} />
-                      {/* Private profile page */}
-                      <Route path="/profile/:profileID" component={Profile} />
-                  </Switch>
-          ) : (
-              <Switch>
-                  <Route exact path="/" component={JoinUs} />
-                  <Route path="/profile/:profileID" component={Profile} />
-              </Switch>
-          )}
-          </>
-      )}
-      </>
+      <Switch>
+          <Route exact path="/" component={JoinUs} />
+          <Route path="/profile/:profileID" component={Profile} />
+      </Switch>
   );
 };
 export default App;

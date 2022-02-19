@@ -1,0 +1,36 @@
+import React, {} from 'react';
+import PropTypes from 'prop-types';
+import '@pagestyles/check_quiz/checking_progress.scss';
+
+const ProgressBar = ({ progress }) => {
+  if (progress === 0) {
+    return (
+        <div className="progress-not-started">
+            NOT STARTED
+        </div>
+    );
+  }
+  if (progress === 100) {
+    return (
+        <div className="progress-completed">
+            COMPLETED
+        </div>
+    );
+  }
+  const progressStr = `${progress.toString()}%`;
+  return (
+      <div className="progress-container">
+          <div className="progress-bar">
+              <div className="progress-base" />
+              <div className="progress-done" style={{ width: progress > 5 ? progressStr : '0%' }} />
+          </div>
+          <div className="progress-text">{progressStr}</div>
+      </div>
+  );
+};
+
+ProgressBar.propTypes = {
+  progress: PropTypes.number.isRequired,
+};
+
+export default ProgressBar;
