@@ -39,36 +39,44 @@ const Bottom = () => {
         }
     }, [isRegistrantsSuccess]);
     const sortTableData = (sortByval) => {
-        if (sortByval === SORT_TYPES.CHECKED_ASC) {
-            setTableData(
-                tableData
-                    .sort((val1, val2) => val1.progress - val2.progress)
-                    .map((val, index) => ({ ...val, sr_num: index + 1 })),
-            );
-        } else if (sortByval === SORT_TYPES.CHECKED_DES) {
-            setTableData(
-                tableData
-                    .sort((val1, val2) => val2.progress - val1.progress)
-                    .map((val, index) => ({ ...val, sr_num: index + 1 })),
-            );
-        } else if (sortByval === SORT_TYPES.ALPHA_ASC) {
-            setTableData(
-                tableData
-                    .sort((val1, val2) => val1.name.localeCompare(val2.name))
-                    .map((val, index) => ({ ...val, sr_num: index + 1 })),
-            );
-        } else if (sortByval === SORT_TYPES.ALPHA_DES) {
-            setTableData(
-                tableData
-                    .sort((val1, val2) => -val1.name.localeCompare(val2.name))
-                    .map((val, index) => ({ ...val, sr_num: index + 1 })),
-            );
-        } else if (sortByval === SORT_TYPES.RANKLIST) {
-            setTableData(
-                tableData
-                    .sort((val1, val2) => val1.rank - val2.rank)
-                    .map((val, index) => ({ ...val, sr_num: index + 1 })),
-            );
+        switch (sortByval) {
+            case SORT_TYPES.CHECKED_ASC:
+                setTableData(
+                    tableData
+                        .sort((val1, val2) => val1.progress - val2.progress)
+                        .map((val, index) => ({ ...val, sr_num: index + 1 })),
+                );
+                break;
+            case SORT_TYPES.CHECKED_DES:
+                setTableData(
+                    tableData
+                        .sort((val1, val2) => val2.progress - val1.progress)
+                        .map((val, index) => ({ ...val, sr_num: index + 1 })),
+                );
+                break;
+            case SORT_TYPES.ALPHA_ASC:
+                setTableData(
+                    tableData
+                        .sort((val1, val2) => val1.name.localeCompare(val2.name))
+                        .map((val, index) => ({ ...val, sr_num: index + 1 })),
+                );
+                break;
+            case SORT_TYPES.ALPHA_DES:
+                setTableData(
+                    tableData
+                        .sort((val1, val2) => -val1.name.localeCompare(val2.name))
+                        .map((val, index) => ({ ...val, sr_num: index + 1 })),
+                );
+                break;
+            case SORT_TYPES.RANKLIST:
+                setTableData(
+                    tableData
+                        .sort((val1, val2) => val1.rank - val2.rank)
+                        .map((val, index) => ({ ...val, sr_num: index + 1 })),
+                );
+                break;
+            default:
+                // do nothing
         }
         setSortBy(sortByval);
     };
