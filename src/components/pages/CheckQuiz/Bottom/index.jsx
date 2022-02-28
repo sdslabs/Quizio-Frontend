@@ -5,6 +5,9 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { useGetRegistrants } from '@api/register/useRegister';
 import { useParams } from 'react-router-dom';
 import CheckingTable from '@pages/CheckQuiz/Bottom/CheckingTable';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+import AutoCheckModal from '@components/Modals/AutoCheck';
+import PublishResultsModal from '@components/Modals/PublishResults';
 
 const SORT_TYPES = {
     CHECKED_ASC: 'Checked (0 - 100%)',
@@ -17,6 +20,8 @@ const Bottom = () => {
     const { quizID } = useParams();
     const [tableData, setTableData] = useState([]);
     const [sortBy, setSortBy] = useState(0);
+    const [showAutoCheckModal, setShowAutoCheckModal] = useState(false);
+    const [showPublishQuizModal, setShowPublishQuizModal] = useState(false);
     const {
         data: registrantsData,
         isLoading: isRegistrantsLoading,
@@ -84,6 +89,12 @@ const Bottom = () => {
         const sortByval = e.target.value;
         sortTableData(sortByval);
     };
+    const handleAutoCheck = () => {
+        setShowAutoCheckModal(true);
+    };
+    const handlePublish = () => {
+        setShowPublishQuizModal(true);
+    };
     if (isRegistrantsLoading) {
         return <div>Loading...</div>;
     }
@@ -102,14 +113,21 @@ const Bottom = () => {
                     </select>
                 </div>
                 <div className="cta-flex">
-                    <SecondaryCTA text="Autocheck" />
+                    <SecondaryCTA text="Autocheck" onClick={handleAutoCheck} />
                     <PrimaryCTA
                       text="Publish Results"
                       additionalClassName="quiz-check-button"
+                      onClick={handlePublish}
                     />
                 </div>
             </div>
             <CheckingTable data={tableData} />
+            <ModalWrapper showModal={showAutoCheckModal} hideOnOverlayClick setShowModal={setShowAutoCheckModal}>
+                <AutoCheckModal quizID={quizID} setShowModal={setShowAutoCheckModal} />
+            </ModalWrapper>
+            <ModalWrapper showModal={showPublishQuizModal} hideOnOverlayClick setShowModal={setShowPublishQuizModal}>
+                <PublishResultsModal quizID={quizID} setShowModal={setShowPublishQuizModal} data={tableData} />
+            </ModalWrapper>
         </div>
     );
 };
