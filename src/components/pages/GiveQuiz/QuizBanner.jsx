@@ -1,6 +1,7 @@
 import React from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
 import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
+import QuizTimer from './QuizTimer';
 
 const QuestionBubbles = [
     {
@@ -41,7 +42,10 @@ const QuizBanner = () => (
         </div>
         <div className="py-4 px-8 bg-purple-V1 flex items-center">
             <img src={TimerIcon} alt="" className="mr-2" />
-            <p className="text-purple-V6 whitespace-nowrap">00 : 00 : 00</p>
+            <p className="text-purple-V6 whitespace-nowrap">
+                {/* TODO: Remove hardcoded quizID */}
+                <QuizTimer quizID="quizioID.DA2vvLi_en83TY0z3HVAi" />
+            </p>
         </div>
     </div>
     );
