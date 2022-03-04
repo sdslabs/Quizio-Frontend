@@ -4,7 +4,7 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { useGetRegistrants } from '@api/register/useRegister';
 import { useParams } from 'react-router-dom';
-import CheckingTable from '@pages/CheckQuiz/Bottom/CheckingTable';
+import CheckingTable from '@components/pages/CheckQuiz/ResponseList/Bottom/CheckingTable';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import AutoCheckModal from '@components/Modals/AutoCheck';
 import PublishResultsModal from '@components/Modals/PublishResults';

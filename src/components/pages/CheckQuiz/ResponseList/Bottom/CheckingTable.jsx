@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '@pagestyles/check_quiz/checking_table.scss';
 import PropTypes from 'prop-types';
-import ProgressBar from '@pages/CheckQuiz/Bottom/ProgressBar';
+import ProgressBar from '@components/pages/CheckQuiz/ResponseList/Bottom/ProgressBar';
 import { Link } from 'react-router-dom';
 
 const MAX_PAGE_SIZE = 10;

@@ -1,19 +1,13 @@
 import React from 'react';
-import Navbar from '@components/Navbar/Navbar';
 import '@pagestyles/check_quiz/index.scss';
-import Top from '@pages/CheckQuiz/Top';
-import Bottom from '@pages/CheckQuiz/Bottom';
+import { Route, Switch } from 'react-router-dom';
+import ResponseList from './ResponseList';
 
 const CheckQuiz = () => (
-    <div className="check-quiz">
-        <Navbar type="dashboard" />
-        <div className="top">
-            <Top />
-        </div>
-        <div className="bottom">
-            <Bottom />
-        </div>
-    </div>
-    );
+    <Switch>
+        <Route path="/quiz/check/:quizID" component={ResponseList} />
+        <Route path="/quiz/check/:quizID/:participantID" component={ResponseList} />
+    </Switch>
+);
 
 export default CheckQuiz;
