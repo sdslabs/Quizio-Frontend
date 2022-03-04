@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { io } from 'socket.io-client';
 import { timerURL } from '@config/config';
+import { useParams } from 'react-router-dom';
 
-const QuizTimer = ({ quizID }) => {
+const QuizTimer = () => {
+  const { quizId } = useParams();
+
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [seconds, setSeconds] = useState('');
@@ -11,7 +13,7 @@ const QuizTimer = ({ quizID }) => {
   useEffect(() => {
     const socket = io(timerURL);
     socket.on('quizTimer', (quizzes) => {
-      const { time } = quizzes.find((quiz) => quiz.quizioID === quizID);
+      const { time } = quizzes.find((quiz) => quiz.quizioID === quizId);
 
       const hours1 = Math.floor(time / 3600);
       const minutes1 = Math.floor(time / 60);
@@ -28,7 +30,7 @@ const QuizTimer = ({ quizID }) => {
         socket?.disconnect();
       }
     });
-  }, []);
+  }, [quizId]);
 
   return (
       <div>
@@ -43,10 +45,6 @@ const QuizTimer = ({ quizID }) => {
           {seconds}
       </div>
   );
-};
-
-QuizTimer.propTypes = {
-  quizID: PropTypes.string.isRequired,
 };
 
 export default QuizTimer;
