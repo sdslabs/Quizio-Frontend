@@ -37,6 +37,7 @@ const Bottom = () => {
                         rank: Math.floor(Math.random() * 50),
                         marks: Math.floor(Math.random() * 50),
                         progress: Math.floor(Math.random() * 100),
+                        participantID: 'DhinchangDhichang',
                     }))
                     .sort((val1, val2) => val1.progress - val2.progress)
                     .map((val, index) => ({ ...val, sr_num: index + 1 })),
@@ -121,7 +122,7 @@ const Bottom = () => {
                     />
                 </div>
             </div>
-            <CheckingTable data={tableData} />
+            <CheckingTable data={tableData} quizID={quizID} />
             <ModalWrapper showModal={showAutoCheckModal} hideOnOverlayClick setShowModal={setShowAutoCheckModal}>
                 <AutoCheckModal quizID={quizID} setShowModal={setShowAutoCheckModal} />
             </ModalWrapper>

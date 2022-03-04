@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import '@pagestyles/check_quiz/checking_table.scss';
 import PropTypes from 'prop-types';
 import ProgressBar from '@pages/CheckQuiz/Bottom/ProgressBar';
+import { Link } from 'react-router-dom';
 
 const MAX_PAGE_SIZE = 10;
 
-const parseTableData = (data, pageNum) => data
+const parseTableData = (data, pageNum, quizID) => data
     .filter(
         (val, index) => index >= MAX_PAGE_SIZE * pageNum
             && index < MAX_PAGE_SIZE * (pageNum + 1),
@@ -30,12 +31,12 @@ const parseTableData = (data, pageNum) => data
                 />
             </td>
             <td className="text-center table-content table-link">
-                Check Quiz
+                <Link to={`/quiz/check/${quizID}/${participant.participantID}`}>Check Quiz</Link>
             </td>
         </tr>
     ));
 
-const CheckingTable = ({ data }) => {
+const CheckingTable = ({ data, quizID }) => {
     const [pageNum, setPageNum] = useState(0);
     const incrementPageNum = () => { if ((pageNum + 1) * MAX_PAGE_SIZE < data.length) { setPageNum(pageNum + 1); } };
     const decrementPageNum = () => { if (pageNum > 0) setPageNum(pageNum - 1); };
@@ -51,7 +52,7 @@ const CheckingTable = ({ data }) => {
                         <th className="table-content">Checking progress</th>
                         <th className="table-content">Check quiz</th>
                     </tr>
-                    {parseTableData(data, pageNum)}
+                    {parseTableData(data, pageNum, quizID)}
                 </tbody>
             </table>
             <div className="page-cta-flex">
@@ -78,6 +79,7 @@ const CheckingTable = ({ data }) => {
 
 CheckingTable.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    quizID: PropTypes.string.isRequired,
 };
 
 export default CheckingTable;

@@ -81,6 +81,8 @@ const App = () => {
             <Route exact path="/quiz/edit" component={CreateQuiz} />
             {/* Check a quiz */}
             <Route path="/quiz/check/:quizID" component={CheckQuiz} />
+            {/* Check a quiz */}
+            <Route path="/quiz/check/:quizID/:participantID" component={CheckQuiz} />
             {/* Attempt a quiz */}
             <Route path="/quiz/:quizID" component={GiveQuiz} />
             {/* Private profile page */}
