@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '@components/Navbar/Navbar';
 import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 import { Redirect } from 'react-router-dom';
+import ModalWrapper from '@components/Modals/ModalWrapper';
 import SideNav from './SideNav';
 import MainForm from './MainForm';
 import '@pagestyles/create_quiz/index.scss';
+import PublishQuizModal from './PublishQuizModal';
 
 const CreateQuiz = () => {
     const search = new URLSearchParams(window.location.search);
@@ -12,6 +14,8 @@ const CreateQuiz = () => {
     const {
     mutate, data, isLoading, isSuccess,
     } = useCreateQuiz();
+
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (!quizID) {
@@ -27,9 +31,16 @@ const CreateQuiz = () => {
 
     return (
         <div className="create-quiz">
+            <ModalWrapper
+              showModal={showModal}
+              hideOnOverlayClick
+              setShowModal={setShowModal}
+            >
+                <PublishQuizModal setShowModal={setShowModal} />
+            </ModalWrapper>
             <Navbar />
             <div className="create-quiz-main">
-                <SideNav />
+                <SideNav setShowModal={setShowModal} />
                 <MainForm />
             </div>
         </div>

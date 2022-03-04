@@ -80,7 +80,6 @@ const QuizDetails = () => {
       quizInst,
       creator: email,
     };
-    console.log(data);
     mutateQuizDetails({ quizId, body: quizDetails });
 
     // const res = await createQuiz({
@@ -105,6 +104,7 @@ const QuizDetails = () => {
 
   useEffect(() => {
     if (isUpdateSuccess) {
+      console.log(data);
       setCurrentStage('Registration form');
     }
   }, [isUpdateSuccess]);

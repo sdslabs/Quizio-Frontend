@@ -12,6 +12,7 @@ const ModalWrapper = ({
         <div
           className={`${showModal ? '' : 'hidden'} h-screen w-screen fixed top-0 
           left-0 bg-black bg-opacity-25 flex justify-center items-center`}
+          style={{ zIndex: '300' }}
           onClick={handleClick}
           role="presentation"
         >

@@ -6,12 +6,13 @@ import { ReactComponent as RegistrationFormIcon } from '@icons/CreateQuiz/SideNa
 import { ReactComponent as RegistrantsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrantsSelected.svg';
 import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/SideNavIcons/registrants.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
+import PropTypes from 'prop-types';
 import SideNavOption from './SideNavOption';
 import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
-const SideNav = () => {
-  const handlePublish = () => {};
+const SideNav = ({ setShowModal }) => {
+  // const handlePublish = () => {};
   const handleCheck = () => {};
 
   return (
@@ -38,9 +39,8 @@ const SideNav = () => {
           <div className="create-quiz-sidenav-bottom">
               <div className="create-quiz-sidenav-buttons">
                   <div className="create-quiz-sidenav-publish">
-                      <SecondaryCTA text="Publish Quiz" onClick={handlePublish} />
+                      <SecondaryCTA text="Publish Quiz" onClick={() => setShowModal(true)} />
                   </div>
-
                   <div className="create-quiz-sidenav-check">
                       <SecondaryCTA text="Check Quiz" onClick={handleCheck} />
                   </div>
@@ -49,4 +49,12 @@ const SideNav = () => {
       </div>
   );
 };
+
+  SideNav.propTypes = {
+      setShowModal: PropTypes.func,
+    };
+
+  SideNav.defaultProps = {
+      setShowModal: () => {},
+  };
 export default SideNav;
