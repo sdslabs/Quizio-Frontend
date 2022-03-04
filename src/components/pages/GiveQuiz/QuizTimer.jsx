@@ -12,6 +12,7 @@ const QuizTimer = ({ quizID }) => {
     const socket = io(timerURL);
     socket.on('quizTimer', (quizzes) => {
       const { time } = quizzes.find((quiz) => quiz.quizioID === quizID);
+
       const hours1 = Math.floor(time / 3600);
       const minutes1 = Math.floor(time / 60);
       const seconds1 = time - minutes1 * 60;
@@ -23,13 +24,9 @@ const QuizTimer = ({ quizID }) => {
         minutes1 >= 10 ? minutes1.toString() : `0${minutes1.toString()}`,
       );
       setHours(hours1 >= 10 ? hours1.toString() : `0${hours1.toString()}`);
-    });
-
-    socket.on('quizTimeEnd', (quizzes) => {
-      setHours('00');
-      setMinutes('00');
-      setSeconds('00');
-      console.log(quizzes.find((quiz) => quiz.quizioID === quizID).msg);
+      if (time === 0) {
+        socket?.disconnect();
+      }
     });
   }, []);
 
