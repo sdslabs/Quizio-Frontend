@@ -13,7 +13,7 @@ import MarkdownTextField from '@components/Input/MarkdownTextField';
 
 const QuizDetails = () => {
   const email = useSelector((state) => state.auth.user.email);
-  const [instructionsMode, setInstructionsMode] = useState('write');
+  // const [instructionsMode, setInstructionsMode] = useState('write');
   const [quizName, setQuizName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -26,6 +26,7 @@ const QuizDetails = () => {
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
   const { setCurrentStage } = useCreateQuizStore();
+  let emailCheck = 'Invalid Email';
 
   const handleRemoveOwner = (i) => {
     const newOwners = [...owners];
@@ -43,6 +44,23 @@ const QuizDetails = () => {
   //     }
   //   }
   // };
+
+  const emailValidation = async () => {
+    emailCheck = true;
+    console.log('yaas');
+  };
+
+  const handleAddOwner = async (e) => {
+    console.log(e.keyCode);
+    const newOwners = [...owners];
+    newOwners.push(owner);
+    /* adds a new owner after the spacebar is pressed */
+      if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
+        setOwner('');
+        console.log(newOwners);
+        setOwners([...newOwners]);
+      }
+  };
 
   const { isSuccess: isUpdateSuccess, mutate: mutateQuizDetails, data } = useUpdateQuiz();
   // const { isSuccess: isGetSuccess, data} = useGetQuiz();
@@ -112,6 +130,7 @@ const QuizDetails = () => {
           <div className="quiz-details-datetime">
               <div className="quiz-details-start-date">
                   <TextField
+                    type="date"
                     id="Start Date"
                     placeholder="Select Start Date"
                     label="Start Date"
@@ -170,10 +189,12 @@ const QuizDetails = () => {
                 id="Owners"
                 placeholder="Add owners"
                 label="Owners"
-                error=""
+                error={emailCheck}
+                helperText="Invalid email"
+                onChange={emailValidation}
                 val={owner}
                 setVal={setOwner}
-                // onKeyDown={handleAddOwner}
+                onKeyDown={handleAddOwner}
               />
               <div className="quiz-details-owners-list">
                   {owners.map((currOwner, i) => (
@@ -217,7 +238,7 @@ const QuizDetails = () => {
           <div className="quiz-details-instructions">
               <div className="text-sm text-grey-N6">Quiz Instructions</div>
               <div className="quiz-details-instructions-pagination">
-                  <button
+                  {/* <button
                     type="button"
                     onClick={() => {
               setInstructionsMode('write');
@@ -242,7 +263,7 @@ const QuizDetails = () => {
             }
                   >
                       Preview
-                  </button>
+                  </button> */}
               </div>
               <MarkdownTextField
                 id="Quiz instruction"
