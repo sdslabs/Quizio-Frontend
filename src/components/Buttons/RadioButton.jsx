@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '@styles/base/buttons.scss';
 
+// Pass in quizioId one of the props of Radio Button
+
 const RadioButton = ({ text, onChange, quizioId }) => (
     <div className="radio-button">
         <input
@@ -10,7 +12,8 @@ const RadioButton = ({ text, onChange, quizioId }) => (
           className="radio-button-input"
           id={quizioId}
           onChange={onChange()}
-          checked={console.log('kitty-kat')}
+          checked={console.log('kitty-kat')} // Sets value of button to the quizioID
+          value={quizioId}
         />
         <label htmlFor={quizioId} className="radio-button-label">
             {text}
