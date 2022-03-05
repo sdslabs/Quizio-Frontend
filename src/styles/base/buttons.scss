@@ -9,3 +9,15 @@
 .o-auth-button-div {
   @apply flex justify-between m-7 text-black-1 text-base font-normal rounded p-8 hover:bg-purple-V1 border border-purple border-opacity-0 hover:border-opacity-100 shadow;
 }
+
+.radio-button {
+  @apply inline-flex items-center;
+}
+
+.radio-button-input{
+  @apply rounded-full h-4 w-4 align-middle;
+}
+
+.radio-button-label{
+  @apply ml-2 pt-2 pb-2 pl-3 pr-3 text-black font-normal hover:bg-purple-V1 rounded;
+}
