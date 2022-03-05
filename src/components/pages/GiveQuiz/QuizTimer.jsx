@@ -12,18 +12,18 @@ const QuizTimer = () => {
   const [seconds, setSeconds] = useState('');
 
   useEffect(() => {
+    const getHours = (time) => Math.floor(time / 3600).toString();
+    const getMinutes = (time) => Math.floor(time / 60).toString();
+    const getSeconds = (time) => (time - getMinutes(time) * 60).toString();
+
     const socket = io(timerURL);
 
     socket.on('quizTimer', (quizzes) => {
       const { time } = _.find(quizzes, (quiz) => quiz.quizioID === quizId);
 
-      const hours1 = Math.floor(time / 3600).toString();
-      const minutes1 = Math.floor(time / 60).toString();
-      const seconds1 = (time - minutes1 * 60).toString();
-
-      setSeconds(seconds1.padStart(2, '0'));
-      setMinutes(minutes1.padStart(2, '0'));
-      setHours(hours1.padStart(2, '0'));
+      setSeconds(getSeconds(time).padStart(2, '0'));
+      setMinutes(getMinutes(time).padStart(2, '0'));
+      setHours(getHours(time).padStart(2, '0'));
 
       if (time === 0) {
         socket?.disconnect();
