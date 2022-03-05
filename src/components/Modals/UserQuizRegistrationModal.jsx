@@ -36,128 +36,133 @@ const UserQuizRegistrationModal = ({
   // useEffect(() => {
   //   console.log({ quizID });
   // }, [quizID]);
-useEffect(() => {
-  console.log(data, isSuccess, 'data');
+  useEffect(() => {
+    console.log(data, isSuccess, 'data');
 
-  // if (isSuccess) {
-  // }
-}, [isSuccess]);
-const handleRegisterParticipant = () => {
-  console.log(quizID);
-  mutateRegisterParticipant({ quizId: quizID });
-  console.log('after');
-};
-return (
-    <div className="user-quiz-registration">
-        {isLoading ? (
-            <div>Fetching Quiz Details</div>
-    ) : (
-        <>
-            <div className="user-quiz-registration-title">Registration Form</div>
-            <div className="user-quiz-registration-basic-details">
-                <div className="user-quiz-registration-name">
-                    <div className={`user-quiz-registration-first-name ${userFirstName ? '' : 'hidden'}`}>
-                        <TextField
-                          id="First name"
-                          placeholder={userFirstName}
-                          label="First Name"
-                          error=""
-                          val={firstName}
-                          setVal={setFirstName}
-                          disabled
-                        />
-                    </div>
-                    <div className={`user-quiz-registration-last-name ${userLastName ? '' : 'hidden'}`}>
-                        <TextField
-                          id="Last name"
-                          placeholder={userLastName}
-                          label="Last Name"
-                          error=""
-                          val={lastName}
-                          setVal={setLastName}
-                          disabled
-                        />
-                    </div>
-                </div>
-                <div className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'}`}>
-                    <div className="user-quiz-registration-contact-email">
-                        <TextField
-                          id="Email"
-                          placeholder={userEmail}
-                          label="Email"
-                          error=""
-                          val={emailID}
-                          setVal={setEmailID}
-                          disabled
-                          pattern={REGEX.email}
-                        />
-                    </div>
-                    <div className={`user-quiz-registration-contact-contactno ${userContactNumber ? '' : 'hidden'}`}>
-                        <TextField
-                          id="Contact No."
-                          placeholder={userContactNumber}
-                          label="Contact No."
-                          error=""
-                          val={contactNo}
-                          setVal={setContactNo}
-                          disabled
-                          pattern={REGEX.contact}
-                        />
-                    </div>
-                </div>
-                <div className="user-quiz-registration-organisation-name">
-                    <TextField
-                      id="Organisation Name"
-                      placeholder={organisationName}
-                      label="Organisation Name"
-                      error=""
-                      val={organisationName}
-                      setVal={setOrganisationName}
-                      disabled
-                    />
-                </div>
-            </div>
-            <div className="user-quiz-registration-additional-details-title">Additional Details</div>
-            <div className={`user-quiz-registration-field-input ${detail1 ? '' : 'hidden'}`}>
-                <TextField
-                  id="detail1"
-                  placeholder={detail1}
-                  label={detail1}
-                  error=""
-                  val={detail1Value}
-                  setVal={setDetail1Value}
-                />
-            </div>
-            <div className={`user-quiz-registration-field-input ${detail2 ? '' : 'hidden'}`}>
-                <TextField
-                  id="detail2"
-                  placeholder={detail2}
-                  label={detail2}
-                  error=""
-                  val={detail2Value}
-                  setVal={setDetail2Value}
-                />
-            </div>
-            <div className={`user-quiz-registration-field-input ${detail3 ? '' : 'hidden'}`}>
-                <TextField
-                  id="detail3"
-                  placeholder={detail3}
-                  label={detail3}
-                  error=""
-                  val={detail3Value}
-                  setVal={setDetail3Value}
-                />
-            </div>
-            <div className="user-quiz-registration-register-container">
-                <div>
-                    <PrimaryCTA text="Register" onClick={handleRegisterParticipant} />
-                </div>
-            </div>
-        </>
-    )}
-        ;
-    </div>
-);
+    // if (isSuccess) {
+    // }
+  }, [isSuccess]);
+  const handleRegisterParticipant = () => {
+    console.log(quizID);
+    mutateRegisterParticipant({ quizId: quizID });
+    console.log('after');
+  };
+  return (
+      <div className="user-quiz-registration">
+          {isLoading ? (
+              <div>Fetching Quiz Details</div>
+      ) : (
+          <>
+              <div className="user-quiz-registration-title">Registration Form</div>
+              <div className="registration-form-basic-details">
+                  <div className="user-quiz-registration-name">
+                      <div className={`user-quiz-registration-first-name ${userFirstName ? '' : 'hidden'}`}>
+                          <TextField
+                            id="First name"
+                            placeholder={userFirstName}
+                            label="First Name"
+                            error=""
+                            val={firstName}
+                            setVal={setFirstName}
+                            additionalClassName="bg-grey-N2"
+                            disabled
+                          />
+                      </div>
+                      <div className={`user-quiz-registration-last-name ${userLastName ? '' : 'hidden'}`}>
+                          <TextField
+                            id="Last name"
+                            placeholder={userLastName}
+                            label="Last Name"
+                            error=""
+                            val={lastName}
+                            setVal={setLastName}
+                            additionalClassName="bg-grey-N2"
+                            disabled
+                          />
+                      </div>
+                  </div>
+                  <div className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'}`}>
+                      <div className="user-quiz-registration-contact-email">
+                          <TextField
+                            id="Email"
+                            placeholder={userEmail}
+                            label="Email"
+                            error=""
+                            val={emailID}
+                            setVal={setEmailID}
+                            additionalClassName="bg-grey-N2"
+                            disabled
+                            pattern={REGEX.email}
+                          />
+                      </div>
+                      <div className={`user-quiz-registration-contact-contactno ${userContactNumber ? '' : 'hidden'}`}>
+                          <TextField
+                            id="Contact No."
+                            placeholder={userContactNumber}
+                            label="Contact No."
+                            error=""
+                            val={contactNo}
+                            setVal={setContactNo}
+                            additionalClassName="bg-grey-N2"
+                            disabled
+                            pattern={REGEX.contact}
+                          />
+                      </div>
+                  </div>
+                  <div className="user-quiz-registration-organisation-name">
+                      <TextField
+                        id="Organisation Name"
+                        placeholder={organisationName}
+                        label="Organisation Name"
+                        error=""
+                        val={organisationName}
+                        setVal={setOrganisationName}
+                        additionalClassName="bg-grey-N2"
+                        disabled
+                      />
+                  </div>
+              </div>
+              <div className="user-quiz-registration-additional-details-title">Additional Details</div>
+              <div className={`user-quiz-registration-field-input ${detail1 ? '' : 'hidden'}`}>
+                  <TextField
+                    id="detail1"
+                    placeholder={detail1}
+                    label={detail1}
+                    error=""
+                    val={detail1Value}
+                    setVal={setDetail1Value}
+                  />
+              </div>
+              <div className={`user-quiz-registration-field-input ${detail2 ? '' : 'hidden'}`}>
+                  <TextField
+                    id="detail2"
+                    placeholder={detail2}
+                    label={detail2}
+                    error=""
+                    val={detail2Value}
+                    setVal={setDetail2Value}
+                  />
+              </div>
+              <div className={`user-quiz-registration-field-input ${detail3 ? '' : 'hidden'}`}>
+                  <TextField
+                    id="detail3"
+                    placeholder={detail3}
+                    label={detail3}
+                    error=""
+                    val={detail3Value}
+                    setVal={setDetail3Value}
+                  />
+              </div>
+              <div className="user-quiz-registration-register-container">
+                  <div>
+                      <PrimaryCTA text="Register" onClick={handleRegisterParticipant} />
+                  </div>
+              </div>
+          </>
+      )}
+          ;
+      </div>
+  );
 };
 UserQuizRegistrationModal.propTypes = {
   quizID: PropTypes.string.isRequired,

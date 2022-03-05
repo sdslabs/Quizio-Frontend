@@ -1,24 +1,25 @@
 @import '@styles/all.scss';
 
 .create-quiz-sidenav {
-  @apply w-1/5 flex flex-col justify-between border-r h-full;
+  @apply w-1/6 flex flex-col justify-between border-r-2 border-grey-N4 h-full;
 
   .create-quiz-sidenav-top {
     @apply flex flex-col w-full;
 
     .create-quiz-sidenav-title {
       @extend .primary-text;
-      @apply w-full flex items-center pl-11 h-3.75 border-b;
+      @apply w-full flex items-center pl-11 h-4 pt-11 pb-16 ;
     }
 
     .create-quiz-sidenav-option {
-      @apply flex items-center h-12 hover:bg-purple-V1 hover:bg-opacity-60;
+      @apply flex items-center h-12 hover:bg-purple-V1 hover:bg-opacity-60 p-2;
 
       .create-quiz-sidenav-option-icon {
         @apply pl-4 pr-2;
       }
 
       .create-quiz-sidenav-option-text {
+        @apply font-semibold;
         @extend .secondary-text;
       }
     }
@@ -40,15 +41,15 @@
     }
 
     .create-quiz-sidenav-option-selected {
-      @apply flex items-center h-12 bg-purple-V6;
+      @apply flex rounded items-center h-12 bg-purple-V1 p-2;
 
       .create-quiz-sidenav-option-icon {
         @apply pl-4 pr-2;
       }
 
       .create-quiz-sidenav-option-text-selected {
+        @apply font-semibold;
         @extend .secondary-text;
-        @apply text-white;
       }
     }
   }

@@ -11,6 +11,9 @@
         @apply transform rotate-180 transition-all duration-500;
     }
 }
+.side-nav-toggle-question {
+    @apply transform rotate-180 transition-all duration-500;
+}
 
 .side-nav-questions {
     @apply flex flex-wrap gap-3.5 h-0 overflow-hidden transition-all duration-300 mx-8;
