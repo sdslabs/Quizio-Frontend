@@ -11,7 +11,7 @@
 }
 
 .radio-button {
-  @apply inline-flex items-center;
+  @apply w-full flex items-center;
 }
 
 .radio-button-input{
@@ -19,5 +19,5 @@
 }
 
 .radio-button-label{
-  @apply ml-2 pt-2 pb-2 pl-3 pr-3 text-black font-normal hover:bg-purple-V1 rounded;
+  @apply flex-grow ml-2 py-2 pl-3 text-black font-normal hover:bg-purple-V1 rounded;
 }
