@@ -12,12 +12,21 @@
 
 .radio-button {
   @apply w-full flex items-center;
+
+  // input[type='radio']:checked + label span {
+  //   background-color: red; //bg-blue
+  //   box-shadow: 0px 0px 0px 2px white inset;
+  // }
 }
 
-.radio-button-input{
-  @apply rounded-full h-4 w-4 align-middle;
+.radio-button-input {
+  @apply rounded-full h-4 w-4 align-middle appearance-none bg-white border-2 border-purple-V6;
+}
+.radio-button-input:checked {
+  @apply rounded-full h-4 w-4 align-middle appearance-none bg-purple-V6 border-2 border-purple-V6;
+  box-shadow: 0px 0px 0px 2.5px white inset;
 }
 
-.radio-button-label{
+.radio-button-label {
   @apply flex-grow ml-2 py-2 pl-3 text-black font-normal hover:bg-purple-V1 rounded;
 }
