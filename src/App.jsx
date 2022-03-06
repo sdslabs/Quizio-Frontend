@@ -14,6 +14,7 @@ import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
 import './index.css';
 import Profile from '@components/pages/Profile';
 import CheckQuiz from '@components/pages/CheckQuiz';
+import Components from '@components/pages/Components/Components';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -88,11 +89,15 @@ const App = () => {
                       <Route path="/quiz/:quizID" component={GiveQuiz} />
                       {/* Private profile page */}
                       <Route path="/profile/:profileID" component={Profile} />
+                      {/* Demo page for components */}
+                      <Route exact path="/components" component={Components} />
                   </Switch>
           ) : (
               <Switch>
                   <Route exact path="/" component={JoinUs} />
                   <Route path="/profile/:profileID" component={Profile} />
+                  {/* Demo page for components */}
+                  <Route exact path="/components" component={Components} />
               </Switch>
           )}
           </>
