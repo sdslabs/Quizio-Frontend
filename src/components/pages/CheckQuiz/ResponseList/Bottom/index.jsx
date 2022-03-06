@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import '@pagestyles/check_quiz/bottom.scss';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
-import { useGetRegistrants } from '@api/register/useRegister';
+// import { useGetRegistrants } from '@api/register/useRegister';
 import { useParams } from 'react-router-dom';
 import CheckingTable from '@components/pages/CheckQuiz/ResponseList/Bottom/CheckingTable';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import AutoCheckModal from '@components/Modals/AutoCheck';
 import PublishResultsModal from '@components/Modals/PublishResults';
+import { useGetRankList } from '@api/quizzes/useQuizzes';
 
 const SORT_TYPES = {
     CHECKED_ASC: 'Checked (0 - 100%)',
@@ -26,18 +27,20 @@ const Bottom = () => {
         data: registrantsData,
         isLoading: isRegistrantsLoading,
         isSuccess: isRegistrantsSuccess,
-    } = useGetRegistrants(quizID);
+    } = useGetRankList(quizID);
+
     useEffect(() => {
         if (isRegistrantsSuccess) {
+            console.log(registrantsData);
             setTableData(
-                registrantsData.data.data.users
+                registrantsData.data.data.rankList.rankList
                     .map((val, index) => ({
                         sr_num: index + 1,
-                        name: val,
-                        rank: Math.floor(Math.random() * 50),
-                        marks: Math.floor(Math.random() * 50),
-                        progress: Math.floor(Math.random() * 100),
-                        participantID: 'DhinchangDhichang',
+                        name: val.name,
+                        rank: index + 1,
+                        marks: val.quizScore,
+                        progress: val.checkingProgress,
+                        participantID: val.registrantID,
                     }))
                     .sort((val1, val2) => val1.progress - val2.progress)
                     .map((val, index) => ({ ...val, sr_num: index + 1 })),

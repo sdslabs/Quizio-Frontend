@@ -3,9 +3,14 @@ import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { PropTypes } from 'prop-types';
+import axiosInstance from '@api/axiosInstance';
 
 const AutoCheckModal = ({ quizID, setShowModal }) => {
-  const onYes = () => { console.log('Placeholder', quizID); };
+  const onYes = () => {
+      axiosInstance.post(`/quizzes/${quizID}/check`);
+      console.log('Placeholder', quizID);
+      setShowModal(false);
+};
   const onCancel = () => { setShowModal(false); };
   return (
       <div className="">
