@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import '@styles/pages/give_quiz/sidenav.scss';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
-import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
+import QuestionBubble from '@components/Visual/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useParams, useHistory } from 'react-router-dom';
 import { useGetMultipleSections } from '@api/quizzes/useSections';
