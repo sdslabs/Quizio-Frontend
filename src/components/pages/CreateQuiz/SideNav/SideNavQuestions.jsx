@@ -17,7 +17,7 @@ const SideNavQuestions = () => {
 
   const isActive = currentStage === TAB_NAME;
   const setActiveNav = () => setCurrentStage(TAB_NAME);
-
+  console.log(TAB_NAME);
   const quizID = new URLSearchParams(window.location.search).get('quizID');
 
   const {

@@ -22,6 +22,16 @@
     }
   }
 
+  .question-title {
+    @extend .primary-text;
+    @apply text-black-1 font-bold text-base;
+  }
+
+  hr.rounded {
+    border-top: 1px solid #CDC4DE;
+    border-radius: 5px;
+  }
+
   .quiz-details-owners {
     @apply mt-4;
 
@@ -63,4 +73,11 @@
       @apply flex justify-end pt-16;
     }
   }
+}
+
+.mcq-answer-dropdown {
+  @apply border-2 border-grey;
+  .select-selected {
+    @apply rounded-sm border-2 border-grey;
+  }      
 }
