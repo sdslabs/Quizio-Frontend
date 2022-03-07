@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import CheckMark from '@icons/check.svg';
+import CheckMarkYellow from '@icons/checkYellow.svg';
 
 const getBubbleClassName = (type) => {
     switch (type) {
@@ -38,7 +39,8 @@ const QuestionBubble = ({ type, number }) => (
         <span className="font-semibold text-sm">
             {number}
         </span>
-        {(type === 'marked-answered' || type === 'autochecked') && <img src={CheckMark} alt="" className="absolute -bottom-1 -right-1" />}
+        {type === 'marked-answered' && <img src={CheckMark} alt="" className="absolute -bottom-1 -right-1" />}
+        {type === 'autochecked' && <img src={CheckMarkYellow} alt="" className="absolute -bottom-1 -right-1" />}
     </div>
     );
 
