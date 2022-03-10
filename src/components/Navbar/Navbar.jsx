@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@styles/common/navbar.scss';
 
-const Navbar = ({ type }) => {
-  const history = useHistory();
+const Navbar = ({ type, handleHostQuiz }) => {
   const user = useSelector((state) => state.auth.user);
   const [profilePic, setProfilePic] = useState('');
-
-  const handleHostQuiz = () => {
-    history.push('/quiz/create');
-  };
 
   useEffect(() => {
     if (user.avatar) {
@@ -48,9 +42,11 @@ const Navbar = ({ type }) => {
 };
 Navbar.propTypes = {
   type: PropTypes.string,
+  handleHostQuiz: PropTypes.func,
 };
 
 Navbar.defaultProps = {
   type: '',
+  handleHostQuiz: () => {},
 };
 export default Navbar;
