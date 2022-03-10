@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllQuizzes } from '@api/quizzes/quizzesFetcher';
+import log from '@utils/log';
 import QuizCard from './QuizCard';
 import '@pagestyles/dashboard/quizzes.scss';
 
@@ -28,11 +29,11 @@ const Quizzes = () => {
   }, []);
 
   useEffect(() => {
-    console.log({ onGoingQuizzes });
+    log({ onGoingQuizzes });
   }, [onGoingQuizzes]);
 
   useEffect(() => {
-    console.log({ upComingQuizzes });
+    log({ upComingQuizzes });
   }, [upComingQuizzes]);
 
   return (

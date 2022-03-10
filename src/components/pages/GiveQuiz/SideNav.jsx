@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import '@styles/pages/give_quiz/sidenav.scss';
+import { useParams } from 'react-router-dom';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
-import { useParams } from 'react-router-dom';
+import '@styles/pages/give_quiz/sidenav.scss';
+import log from '@utils/log';
 
 const sections = [
     {
@@ -23,7 +24,7 @@ const sections = [
 const SideNav = () => {
     const [activeNav, setActiveNav] = useState('');
     const { quizId, sectionId } = useParams();
-    console.log({ quizId, sectionId });
+    log({ quizId, sectionId });
 
     return (
         <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">

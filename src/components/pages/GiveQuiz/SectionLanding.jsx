@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import SubmitQuiz from '@components/Modals/SubmitQuiz';
+import log from '@utils/log';
 
 const SectionLanding = () => {
     const { sectionId } = useParams();
-    console.log(sectionId);
+    log({ sectionId });
     const [showModal, setShowModal] = React.useState(false);
 
     return (

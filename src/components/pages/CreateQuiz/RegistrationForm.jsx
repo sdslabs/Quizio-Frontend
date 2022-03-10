@@ -3,6 +3,7 @@ import TextField from '@components/Input/TextField';
 import '@pagestyles/create_quiz/registration_form.scss';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import log from '@utils/log';
 import RegistrationFormCustomInput from './RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
@@ -122,10 +123,10 @@ const RegistrationForm = () => {
         </div>
         <div className="registration-details-submit-container">
             <div className="registration-details-submit-save-details">
-                <SecondaryCTA text="Save Details" onClick={() => console.log('foo')} />
+                <SecondaryCTA text="Save Details" onClick={() => log('foo')} />
             </div>
             <div>
-                <PrimaryCTA text="Start Adding Questions" onClick={() => console.log('foo')} />
+                <PrimaryCTA text="Start Adding Questions" onClick={() => log('foo')} />
             </div>
         </div>
     </div>
