@@ -11,12 +11,11 @@
       @apply w-full h-10 bg-purple-V1 text-purple-V6 font-semibold text-sm leading-8 py-1 text-center mt-6 mb-4;
     }
 
-    .list {
-      @apply flex overflow-x-scroll flex-nowrap;
+    .quiz-list {
+      @apply flex overflow-x-scroll flex-nowrap -ml-6;
 
-      .list-item {
+      .quiz-list-item {
         @apply h-52 w-114 ml-6;
-        // flex: 0 0 auto;
       }
     }
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-// import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import PropTypes from 'prop-types';
 import { ReactComponent as QuizName } from '@icons/quizname.svg';
 import { truncateQuizName } from '@utils/truncate';
