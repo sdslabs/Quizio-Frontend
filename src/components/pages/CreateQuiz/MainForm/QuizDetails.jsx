@@ -36,31 +36,21 @@ const QuizDetails = () => {
     setOwners(newOwners);
   };
 
-  // const handleAddOwner = async (e) => {
-  //   if (e.key === 'Enter') {
-  //     const res = await checkIfUserExists(owner);
-  //     if (res.success) {
-  //         const newOwners = new Set(owners);
-  //         newOwners.add(owner);
-  //         setOwners([...newOwners]);
-  //     }
-  //   }
-  // };
-
-  const emailValidation = async () => {
-    // TODO: Actual validation
-    setEmailError('Invalid Email');
-  };
-
   const handleAddOwner = async (e) => {
     const newOwners = [...owners];
     newOwners.push(owner);
-    /* adds a new owner after the spacebar is pressed */
-    if ((e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) && !owners.find((o) => o === owner)) {
-      const isEmailValid = await checkIfEmailExists(owner);
-      if (isEmailValid) {
-        setOwner('');
-        setOwners([...newOwners]);
+    /* adds a new owner after the spacebar(32), enter(13) or comma(188) is pressed */
+    if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
+      if (owners.find((o) => o === owner)) {
+        setEmailError('Already an owner!');
+      } else {
+        const isEmailValid = await checkIfEmailExists(owner);
+        if (isEmailValid.success) {
+          setOwner('');
+          setOwners([...newOwners]);
+        } else {
+          setEmailError('Email not found!');
+        }
       }
     }
   };
@@ -69,6 +59,7 @@ const QuizDetails = () => {
     isSuccess: isUpdateSuccess,
     mutate: mutateQuizDetails,
   } = useUpdateQuiz();
+
   const handleSubmit = () => {
     if (!isDateTimeValid) {
       console.error('Error with quiz time');
@@ -89,25 +80,6 @@ const QuizDetails = () => {
       creator: email,
     };
     mutateQuizDetails({ quizId, body: quizDetails });
-
-    // const res = await createQuiz({
-    //   quizName,
-    //   startDate,
-    //   startTime,
-    //   endDate,
-    //   endTime,
-    //   examDuration,
-    //   owners,
-    //   accessCode,
-    //   quizDesc,
-    //   quizInst,
-    //   creator: email,
-    // });
-
-    // if (res.success) {
-    //   dispatch(setCreateQuizId(res.data.quiz.quizId));
-    //   dispatch(setCreateQuizStage('Registration form'));
-    // }
   };
 
   const handleStartDate = (e) => {
@@ -254,7 +226,6 @@ const QuizDetails = () => {
                 label="Owners"
                 error={emailError}
                 helperText="Invalid email"
-                onChange={emailValidation}
                 val={owner}
                 setVal={setOwner}
                 onKeyDown={handleAddOwner}

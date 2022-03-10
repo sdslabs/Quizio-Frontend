@@ -6,4 +6,11 @@ export const getUserDetails = ({ queryKey }) => axiosInstance.get(`/api/v2/users
 
 export const getMyQuizzes = () => axiosInstance.get('/api/v2/users/me/quizzes');
 
-export const checkIfEmailExists = (emailID) => axiosInstance.get(`/users/check/email/${emailID}`);
+export const checkIfEmailExists = async (emailID) => {
+	try {
+		const res = await axiosInstance.get(`/users/check/email/${emailID}`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
