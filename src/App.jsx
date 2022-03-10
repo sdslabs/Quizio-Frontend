@@ -9,6 +9,8 @@ import GiveQuiz from '@pages/GiveQuiz/index';
 import Dashboard from '@pages/Dashboard';
 import CheckQuiz from '@pages/CheckQuiz';
 import Components from '@pages/Components';
+import Page404 from '@components/pages/404';
+import LoadingPage from '@pages/Loading';
 
 import { setUser } from '@redux/actions/auth';
 import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
@@ -65,7 +67,7 @@ const App = () => {
   return (
       <>
           {loading ? (
-              <>Loading...</>
+              <LoadingPage />
       ) : (
           <Switch>
               {/* Dashboard page */}
@@ -80,6 +82,8 @@ const App = () => {
               <Route path="/quiz/:quizID" component={GiveQuiz} />
               {/* Demo page for components */}
               <Route exact path="/components" component={Components} />
+              {/* 404 Page */}
+              <Route path="" component={Page404} />
           </Switch>
       )}
       </>
