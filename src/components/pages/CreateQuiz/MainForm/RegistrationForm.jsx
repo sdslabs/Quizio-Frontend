@@ -5,7 +5,7 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { REGEX } from '@constants/constants';
 import log from '@utils/log';
-import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
+import RegistrationFormCustomInput from './RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
 	const [firstName, setFirstName] = useState('');
