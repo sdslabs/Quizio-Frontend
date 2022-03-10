@@ -42,6 +42,7 @@ module.exports = {
 					['@styles', './src/styles'],
 					['@icons', './src/assets/icons'],
 					['@images', './src/assets/images'],
+					['@animations', './src/assets/animations'],
 					['@pagestyles', './src/styles/pages'],
 					['@constants', './src/constants'],
 				],
