@@ -40,12 +40,12 @@ const Quizzes = () => {
       <div className="dashboard-quizzes">
           <div className="ongoing-quizzes">
               <div className="title">Ongoing Quizzes</div>
-              <div className="list">
+              <div className="quiz-list hide-scrollbar">
                   {!onGoingQuizzes && <div>Fetching ongoing quizzes...</div>}
                   {onGoingQuizzes
             && onGoingQuizzes.length !== 0
             && onGoingQuizzes.map((quiz) => (
-                <div className="list-item" key={quiz.quizioID}>
+                <div className="quiz-list-item" key={quiz.quizioID}>
                     <QuizCard data={quiz} />
                 </div>
             ))}
@@ -54,12 +54,12 @@ const Quizzes = () => {
 
           <div className="upcoming-quizzes">
               <div className="title">Upcoming Quizzes</div>
-              <div className="list">
+              <div className="quiz-list hide-scrollbar">
                   {!upComingQuizzes && <div>Fetching upcoming quizzes...</div>}
                   {upComingQuizzes
             && upComingQuizzes.length !== 0
             && upComingQuizzes.map((quiz) => (
-                <div className="list-item" key={quiz.quizioID}>
+                <div className="quiz-list-item" key={quiz.quizioID}>
                     <QuizCard data={quiz} />
                 </div>
             ))}

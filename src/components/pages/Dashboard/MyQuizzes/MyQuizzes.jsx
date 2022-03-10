@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '@pagestyles/dashboard/bottom.scss';
 import CreatedQuizzes from './CreatedQuizzes';
 import Quizzes from './Quizzes';
+import '@pagestyles/dashboard/bottom.scss';
 
 const index = () => {
   const [showCreated, setShowCreated] = useState(false);

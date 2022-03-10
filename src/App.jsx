@@ -5,14 +5,14 @@ import Cookies from 'js-cookie';
 
 import CreateQuiz from '@pages/CreateQuiz';
 import JoinUs from '@pages/JoinUs';
-import GiveQuiz from '@pages/GiveQuiz/index';
+import GiveQuiz from '@pages/GiveQuiz';
 import Dashboard from '@pages/Dashboard';
 import CheckQuiz from '@pages/CheckQuiz';
 import Components from '@pages/Components';
-import Page404 from '@components/pages/404';
+import Page404 from '@pages/404';
 import LoadingPage from '@pages/Loading';
 
-import { setUser } from '@redux/actions/auth';
+import { setUser } from '@actions/auth';
 import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
 import log from '@utils/log';
 import './index.css';
