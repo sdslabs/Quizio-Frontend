@@ -5,13 +5,11 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 // import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import StartQuizModal from '@pages/Register/StartQuizModal';
 import log from '@utils/log';
-import useSampleStore from '../../../redux/store/zustand/sample';
 
 const QuizLanding = () => {
     const { quizId } = useParams();
-    const sampleStore = useSampleStore();
 
-    log({ sampleStore, quizId });
+    log({ quizId });
 
     const [showModal, setShowModal] = useState(false);
 

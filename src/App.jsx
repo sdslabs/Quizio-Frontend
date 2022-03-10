@@ -24,14 +24,8 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(async () => {
+    // TODO: use react-query
     const queryParams = new URLSearchParams(window.location.search);
-    /*
-      Everytime Quizio loads,
-      - first check for query params login
-      - then try to login using cookie
-      - if none are successful, then user is not logged in
-      */
-
     const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');
 
@@ -45,11 +39,7 @@ const App = () => {
       log({ jwtLoginRes });
       if (jwtLoginRes.success) {
         Cookies.set('jwtToken', jwtLoginRes.data.jwtToken);
-        if (isNew === 'true') {
-          history.push('/register');
-        } else {
-          history.push('/');
-        }
+        history.push('/');
       }
     }
 
@@ -73,13 +63,11 @@ const App = () => {
               {/* Dashboard page */}
               <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
               {/* Create or edit a quiz */}
-              <Route exact path="/quiz/create" component={CreateQuiz} />
-              {/* Create or edit a quiz */}
-              <Route exact path="/quiz/edit" component={CreateQuiz} />
+              <Route exact path="/quiz/edit/:quizID" component={CreateQuiz} />
               {/* Check a quiz */}
               <Route path="/quiz/check/:quizID" component={CheckQuiz} />
               {/* Attempt a quiz */}
-              <Route path="/quiz/:quizID" component={GiveQuiz} />
+              <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
               {/* Demo page for components */}
               <Route exact path="/components" component={Components} />
               {/* 404 Page */}
