@@ -2,7 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TextField = ({
- id, label, placeholder, error, limit, val, setVal, onKeyDown, additionalClassName, disabled, pattern,
+  id,
+  label,
+  placeholder,
+  error,
+  limit,
+  val,
+  setVal,
+  onKeyDown,
+  additionalClassName,
+  disabled,
+  pattern,
 }) => {
   const [currentLen, setCurrentLen] = useState(0);
 
@@ -56,7 +66,7 @@ TextField.propTypes = {
   error: PropTypes.string,
   limit: PropTypes.number,
   val: PropTypes.string.isRequired,
-  setVal: PropTypes.func.isRequired,
+  setVal: PropTypes.func,
   onKeyDown: PropTypes.func,
   additionalClassName: PropTypes.string,
   disabled: PropTypes.bool,
@@ -71,6 +81,7 @@ TextField.defaultProps = {
   additionalClassName: 'bg-white',
   disabled: false,
   pattern: '',
+  setVal: () => {},
 };
 
 export default TextField;

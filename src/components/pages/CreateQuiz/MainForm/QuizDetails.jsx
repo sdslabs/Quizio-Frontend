@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import TextField from '@components/Input/TextField';
@@ -10,6 +12,7 @@ import { nanoid } from 'nanoid';
 // useGetQuiz
 import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
+import DateTimeField from '@components/Input/DateTimeField';
 
 const QuizDetails = () => {
   const email = useSelector((state) => state.auth.user.email);
@@ -26,6 +29,8 @@ const QuizDetails = () => {
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
   const { setCurrentStage } = useCreateQuizStore();
+  const [isDateTimeValid, setIsDateTimeValid] = useState(true);
+
   let emailCheck = 'Invalid Email';
 
   const handleRemoveOwner = (i) => {
@@ -55,17 +60,25 @@ const QuizDetails = () => {
     const newOwners = [...owners];
     newOwners.push(owner);
     /* adds a new owner after the spacebar is pressed */
-      if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
-        setOwner('');
-        console.log(newOwners);
-        setOwners([...newOwners]);
-      }
+    if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
+      setOwner('');
+      console.log(newOwners);
+      setOwners([...newOwners]);
+    }
   };
 
-  const { isSuccess: isUpdateSuccess, mutate: mutateQuizDetails, data } = useUpdateQuiz();
+  const {
+    isSuccess: isUpdateSuccess,
+    mutate: mutateQuizDetails,
+    data,
+  } = useUpdateQuiz();
   // const { isSuccess: isGetSuccess, data} = useGetQuiz();
-// console.log(data);
+  // console.log(data);
   const handleSubmit = () => {
+    if (!isDateTimeValid) {
+      console.error('Error with quiz time');
+      return;
+    }
     const quizId = new URLSearchParams(window.location.search).get('quizID');
     const quizDetails = {
       quizName,
@@ -102,6 +115,64 @@ const QuizDetails = () => {
     // }
   };
 
+  const handleStartDate = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleStartTime = (e) => {
+    setStartTime(e.target.value);
+  };
+  const handleEndDate = (e) => {
+    setEndDate(e.target.value);
+  };
+  const handleEndTime = (e) => {
+    setEndTime(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log({
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+    });
+    if (startDate && startTime && endDate && endTime) {
+      // TODO: use dayjs
+      const [s_year, s_month, s_date] = startDate.split('-');
+      const [e_year, e_month, e_date] = endDate.split('-');
+
+      const [s_hour, s_min] = startTime.split(':');
+      const [e_hour, e_min] = endTime.split(':');
+
+      const start = new Date(s_year, s_month - 1, s_date);
+      const end = new Date(e_year, e_month - 1, e_date);
+      const now = new Date();
+      start.setHours(s_hour);
+      start.setMinutes(s_min);
+      end.setHours(e_hour);
+      end.setMinutes(e_min);
+
+      const startDayJS = dayjs(start);
+      const endDayJS = dayjs(end);
+      const nowDayJS = dayjs(now);
+
+      const isValid = startDayJS.isAfter(nowDayJS) && endDayJS.isAfter(startDayJS);
+      if (!isValid) {
+        setIsDateTimeValid(false);
+      } else {
+        let totalSeconds = endDayJS.diff(startDayJS, 'seconds');
+        let hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        minutes = String(minutes).padStart(2, '0');
+        hours = String(hours).padStart(2, '0');
+        seconds = String(seconds).padStart(2, '0');
+        setExamDuration(`${hours} : ${minutes} : ${seconds}`);
+      }
+    }
+  }, [startDate, startTime, endDate, endTime]);
+
   useEffect(() => {
     if (isUpdateSuccess) {
       console.log(data);
@@ -129,7 +200,7 @@ const QuizDetails = () => {
           </div>
           <div className="quiz-details-datetime">
               <div className="quiz-details-start-date">
-                  <TextField
+                  <DateTimeField
                     type="date"
                     id="Start Date"
                     placeholder="Select Start Date"
@@ -137,49 +208,56 @@ const QuizDetails = () => {
                     error=""
                     val={startDate}
                     setVal={setStartDate}
+                    onChange={handleStartDate}
                   />
               </div>
               <div className="quiz-details-start-time">
-                  <TextField
+                  <DateTimeField
+                    type="time"
                     id="Start Time"
                     placeholder="Select start time"
                     label="Start Time"
                     error=""
                     val={startTime}
                     setVal={setStartTime}
+                    onChange={handleStartTime}
                   />
               </div>
           </div>
 
           <div className="quiz-details-datetime">
               <div className="quiz-details-start-date">
-                  <TextField
+                  <DateTimeField
+                    type="date"
                     id="End Date"
                     placeholder="Select end date"
                     label="End Date"
                     error=""
                     val={endDate}
                     setVal={setEndDate}
+                    onChange={handleEndDate}
                   />
               </div>
               <div className="quiz-details-end-time">
-                  <TextField
+                  <DateTimeField
+                    type="time"
                     id="End Time"
                     placeholder="Select end time"
                     label="End Time"
                     error=""
                     val={endTime}
                     setVal={setEndTime}
+                    onChange={handleEndTime}
                   />
               </div>
               <div className="quiz-details-start-time">
                   <TextField
                     id="Exam Duration"
-                    placeholder="Select exam duration"
+                    disabled
+                    placeholder="Exam duration"
                     label="Exam Duration"
                     error=""
                     val={examDuration}
-                    setVal={setExamDuration}
                   />
               </div>
           </div>
