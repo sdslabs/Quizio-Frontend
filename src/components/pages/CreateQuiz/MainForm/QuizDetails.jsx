@@ -9,8 +9,8 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import DateTimeField from '@components/Input/DateTimeField';
-import '@pagestyles/create_quiz/quiz_details.scss';
 import { checkIfEmailExists } from '@api/users/usersFetcher';
+import '@pagestyles/create_quiz/quiz_details.scss';
 
 const QuizDetails = () => {
   const email = useSelector((state) => state.auth.user.email);
@@ -26,9 +26,12 @@ const QuizDetails = () => {
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
-  const { setCurrentStage } = useCreateQuizStore();
-
   const [emailError, setEmailError] = useState('');
+  const { setCurrentStage } = useCreateQuizStore();
+  const {
+    isSuccess: isUpdateSuccess,
+    mutate: mutateQuizDetails,
+  } = useUpdateQuiz();
 
   const handleRemoveOwner = (i) => {
     const newOwners = [...owners];
@@ -55,11 +58,6 @@ const QuizDetails = () => {
     }
   };
 
-  const {
-    isSuccess: isUpdateSuccess,
-    mutate: mutateQuizDetails,
-  } = useUpdateQuiz();
-
   const handleSubmit = () => {
     if (!isDateTimeValid) {
       console.error('Error with quiz time');
@@ -82,19 +80,13 @@ const QuizDetails = () => {
     mutateQuizDetails({ quizId, body: quizDetails });
   };
 
-  const handleStartDate = (e) => {
-    setStartDate(e.target.value);
-  };
+  const handleStartDate = (e) => setStartDate(e.target.value);
 
-  const handleStartTime = (e) => {
-    setStartTime(e.target.value);
-  };
-  const handleEndDate = (e) => {
-    setEndDate(e.target.value);
-  };
-  const handleEndTime = (e) => {
-    setEndTime(e.target.value);
-  };
+  const handleStartTime = (e) => setStartTime(e.target.value);
+
+  const handleEndDate = (e) => setEndDate(e.target.value);
+
+  const handleEndTime = (e) => setEndTime(e.target.value);
 
   useEffect(() => {
     if (startDate && startTime && endDate && endTime) {
