@@ -25,7 +25,7 @@ const Navbar = ({ type, handleHostQuiz }) => {
   return (
       <div className="navbar">
           <div className="left">
-              <div className="logo">Quizio</div>
+              <a href="/" className="logo">Quizio</a>
           </div>
           {type === 'dashboard' && user && (
           <div className="right">

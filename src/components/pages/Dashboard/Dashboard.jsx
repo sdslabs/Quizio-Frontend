@@ -21,7 +21,7 @@ const Dashboard = () => {
   useEffect(() => {
       if (data?.success) {
           const { quizioID } = data.data.quiz;
-          history.push(`/quiz/create/${quizioID}`);
+          history.push(`/quiz/edit/${quizioID}`);
       } else {
           log('Failed to create quiz!', data);
       }

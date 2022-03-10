@@ -24,14 +24,8 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(async () => {
+    // TODO: use react-query
     const queryParams = new URLSearchParams(window.location.search);
-    /*
-      Everytime Quizio loads,
-      - first check for query params login
-      - then try to login using cookie
-      - if none are successful, then user is not logged in
-      */
-
     const queryJwtToken = queryParams.get('jwtToken');
     const isNew = queryParams.get('new');
 
@@ -68,8 +62,6 @@ const App = () => {
           <Switch>
               {/* Dashboard page */}
               <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
-              {/* Create or edit a quiz */}
-              <Route exact path="/quiz/create/:quizID" component={CreateQuiz} />
               {/* Create or edit a quiz */}
               <Route exact path="/quiz/edit/:quizID" component={CreateQuiz} />
               {/* Check a quiz */}
