@@ -1,22 +1,19 @@
-/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
+import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-import '@pagestyles/create_quiz/quiz_details.scss';
-// import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 import useCreateQuizStore from '@store/zustand/createQuiz';
-import { nanoid } from 'nanoid';
-// useGetQuiz
-import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import DateTimeField from '@components/Input/DateTimeField';
+import '@pagestyles/create_quiz/quiz_details.scss';
+import { checkIfEmailExists } from '@api/users/usersFetcher';
 
 const QuizDetails = () => {
   const email = useSelector((state) => state.auth.user.email);
-  // const [instructionsMode, setInstructionsMode] = useState('write');
   const [quizName, setQuizName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -28,10 +25,10 @@ const QuizDetails = () => {
   const [accessCode, setAccessCode] = useState('');
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
-  const { setCurrentStage } = useCreateQuizStore();
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
+  const { setCurrentStage } = useCreateQuizStore();
 
-  let emailCheck = 'Invalid Email';
+  const [emailError, setEmailError] = useState('');
 
   const handleRemoveOwner = (i) => {
     const newOwners = [...owners];
@@ -51,29 +48,27 @@ const QuizDetails = () => {
   // };
 
   const emailValidation = async () => {
-    emailCheck = true;
-    console.log('yaas');
+    // TODO: Actual validation
+    setEmailError('Invalid Email');
   };
 
   const handleAddOwner = async (e) => {
-    console.log(e.keyCode);
     const newOwners = [...owners];
     newOwners.push(owner);
     /* adds a new owner after the spacebar is pressed */
-    if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
-      setOwner('');
-      console.log(newOwners);
-      setOwners([...newOwners]);
+    if ((e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) && !owners.find((o) => o === owner)) {
+      const isEmailValid = await checkIfEmailExists(owner);
+      if (isEmailValid) {
+        setOwner('');
+        setOwners([...newOwners]);
+      }
     }
   };
 
   const {
     isSuccess: isUpdateSuccess,
     mutate: mutateQuizDetails,
-    data,
   } = useUpdateQuiz();
-  // const { isSuccess: isGetSuccess, data} = useGetQuiz();
-  // console.log(data);
   const handleSubmit = () => {
     if (!isDateTimeValid) {
       console.error('Error with quiz time');
@@ -130,27 +125,20 @@ const QuizDetails = () => {
   };
 
   useEffect(() => {
-    console.log({
-      startDate,
-      startTime,
-      endDate,
-      endTime,
-    });
     if (startDate && startTime && endDate && endTime) {
-      // TODO: use dayjs
-      const [s_year, s_month, s_date] = startDate.split('-');
-      const [e_year, e_month, e_date] = endDate.split('-');
+      const [startYear, startMonth, startDay] = startDate.split('-');
+      const [endYear, endMonth, endDay] = endDate.split('-');
 
-      const [s_hour, s_min] = startTime.split(':');
-      const [e_hour, e_min] = endTime.split(':');
+      const [startHour, startMinute] = startTime.split(':');
+      const [endHour, endMinute] = endTime.split(':');
 
-      const start = new Date(s_year, s_month - 1, s_date);
-      const end = new Date(e_year, e_month - 1, e_date);
+      const start = new Date(startYear, startMonth - 1, startDay);
+      const end = new Date(endYear, endMonth - 1, endDay);
       const now = new Date();
-      start.setHours(s_hour);
-      start.setMinutes(s_min);
-      end.setHours(e_hour);
-      end.setMinutes(e_min);
+      start.setHours(startHour);
+      start.setMinutes(startMinute);
+      end.setHours(endHour);
+      end.setMinutes(endMinute);
 
       const startDayJS = dayjs(start);
       const endDayJS = dayjs(end);
@@ -174,10 +162,7 @@ const QuizDetails = () => {
   }, [startDate, startTime, endDate, endTime]);
 
   useEffect(() => {
-    if (isUpdateSuccess) {
-      console.log(data);
-      setCurrentStage('Registration form');
-    }
+    if (isUpdateSuccess) setCurrentStage('Registration form');
   }, [isUpdateSuccess]);
 
   useEffect(() => {
@@ -267,7 +252,7 @@ const QuizDetails = () => {
                 id="Owners"
                 placeholder="Add owners"
                 label="Owners"
-                error={emailCheck}
+                error={emailError}
                 helperText="Invalid email"
                 onChange={emailValidation}
                 val={owner}
