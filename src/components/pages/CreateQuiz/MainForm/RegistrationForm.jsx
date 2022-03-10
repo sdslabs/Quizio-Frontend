@@ -5,10 +5,11 @@ import '@pagestyles/create_quiz/registration_form.scss';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { REGEX } from '@constants/constants';
-// useGetQuiz
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
+import log from '@utils/log';
+import RegistrationFormCustomInput from './RegistrationFormCustomInput';
 
 const RegistrationForm = () => {
 	const [firstName, setFirstName] = useState('');

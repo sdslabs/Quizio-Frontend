@@ -33,7 +33,7 @@ const Top = () => {
 
     const interval = setInterval(() => {
       setUpdateCarousel((t) => t + 1);
-    }, 7000);
+    }, 3000);
 
     return () => {
       clearInterval(interval);

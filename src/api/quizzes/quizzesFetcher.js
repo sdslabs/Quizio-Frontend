@@ -1,6 +1,13 @@
 import axiosInstance from '@api/axiosInstance';
 
-export const createNewQuiz = () => axiosInstance.post('/quizzes');
+export const createNewQuiz = async () => {
+	try {
+		const res = await axiosInstance.post('/quizzes');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
 
 export const getAllQuizzes = async () => {
 	try {

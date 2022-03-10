@@ -4,13 +4,12 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 // import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import StartQuizModal from '@pages/Register/StartQuizModal';
-import useSampleStore from '../../../redux/store/zustand/sample';
+import log from '@utils/log';
 
 const QuizLanding = () => {
     const { quizId } = useParams();
-    const sampleStore = useSampleStore();
 
-    console.log({ sampleStore, quizId });
+    log({ quizId });
 
     const [showModal, setShowModal] = useState(false);
 

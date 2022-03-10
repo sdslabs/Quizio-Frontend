@@ -4,7 +4,7 @@
   @apply flex w-full;
 
   .status-container {
-    @apply h-52 w-2/3 bg-purple-V1;
+    @apply h-52 w-2/3 bg-purple-V1 flex-grow;
   }
 
   .attempted-container {

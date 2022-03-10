@@ -3,6 +3,7 @@ import TextField from '@components/Input/TextField';
 import '@pagestyles/register/user_quiz_registration.scss';
 import { REGEX } from '@constants/constants';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import log from '@utils/log';
 
 const UserQuizRegistration = () => {
 	const [firstName, setFirstName] = useState('');
@@ -113,7 +114,7 @@ const UserQuizRegistration = () => {
         </div>
         <div className="user-quiz-registration-register-container">
             <div>
-                <PrimaryCTA text="Register" onClick={console.log('todo')} />
+                <PrimaryCTA text="Register" onClick={log('todo')} />
             </div>
         </div>
     </div>

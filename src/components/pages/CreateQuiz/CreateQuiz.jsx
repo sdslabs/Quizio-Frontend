@@ -1,50 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '@components/Navbar/Navbar';
-import { useCreateQuiz } from '@api/quizzes/useQuizzes';
-import { Redirect } from 'react-router-dom';
-import ModalWrapper from '@components/Modals/ModalWrapper';
-import SideNav from './SideNav/SideNav';
-import MainForm from './MainForm/MainForm';
+import useCreateQuizStore from '@redux/store/zustand/createQuiz';
+import log from '@utils/log';
+import SideNav from './SideNav';
+import MainForm from './MainForm';
 import '@pagestyles/create_quiz/index.scss';
-import PublishQuizModal from './PublishQuizModal';
 
 const CreateQuiz = () => {
-    const search = new URLSearchParams(window.location.search);
-    const quizID = search.get('quizID');
-    const {
-    mutate, data, isLoading, isSuccess,
-    } = useCreateQuiz();
+  const { quizID } = useParams();
+  const { setCurrentID } = useCreateQuizStore();
 
-    const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    log(quizID);
+    setCurrentID(quizID);
+  }, [quizID]);
 
-    useEffect(() => {
-        if (!quizID) {
-            mutate();
-        }
-    }, [quizID]);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (isSuccess && !quizID) return <Redirect to={{ pathname: '/quiz/create/', search: `?quizID=${data.data?.data?.quiz?.quizioID || ''}` }} />;
-
-    return (
-        <div className="create-quiz">
-            <ModalWrapper
-              showModal={showModal}
-              hideOnOverlayClick
-              setShowModal={setShowModal}
-            >
-                <PublishQuizModal setShowModal={setShowModal} />
-            </ModalWrapper>
-            <Navbar />
-            <div className="create-quiz-main">
-                <SideNav setShowModal={setShowModal} />
-                <MainForm />
-            </div>
-        </div>
-    );
+  return (
+      <div className="create-quiz">
+          <Navbar />
+          <div className="create-quiz-main">
+              <SideNav />
+              <MainForm />
+          </div>
+      </div>
+  );
 };
 
 export default CreateQuiz;

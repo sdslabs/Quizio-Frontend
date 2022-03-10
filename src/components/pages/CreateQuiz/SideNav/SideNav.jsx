@@ -12,7 +12,6 @@ import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = ({ setShowModal }) => {
-  // const handlePublish = () => {};
   const handleCheck = () => {};
 
   return (
@@ -39,7 +38,7 @@ const SideNav = ({ setShowModal }) => {
           <div className="create-quiz-sidenav-bottom">
               <div className="create-quiz-sidenav-buttons">
                   <div className="create-quiz-sidenav-publish">
-                      <SecondaryCTA text="Publish Quiz" onClick={() => setShowModal(true)} />
+                      <SecondaryCTA text="Publish Quiz" onClick={handlePublish} />
                   </div>
                   <div className="create-quiz-sidenav-check">
                       <SecondaryCTA text="Check Quiz" onClick={handleCheck} />
@@ -49,7 +48,6 @@ const SideNav = ({ setShowModal }) => {
       </div>
   );
 };
-
   SideNav.propTypes = {
       setShowModal: PropTypes.func,
     };

@@ -1,0 +1,14 @@
+@import '@styles/all.scss';
+
+.check-quiz {
+  @extend .page;
+
+  .top{
+	  @apply pt-20 px-8%;
+	}
+  
+  .bottom{
+    @apply pt-10 px-8% mb-40;
+  }
+}
+

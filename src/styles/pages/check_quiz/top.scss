@@ -1,0 +1,44 @@
+@import '@styles/all.scss';
+
+.dashboard-top {
+  @apply flex w-full;
+
+  .quiz-details-container {
+    @apply h-52 w-2/3 bg-purple-V1 pl-16 flex flex-col justify-center flex-grow;
+
+    .quiz-details-title {
+      @apply text-purple-V6 font-semibold text-3xl pb-2;
+    }
+    
+    .quiz-details-content {
+      @apply text-black font-normal text-xl;
+      .content-link {
+        @apply text-purple-V6 cursor-pointer;
+      }
+    }
+  }
+
+  .participants-container {
+    @apply h-52 w-40 bg-purple-V1 ml-6 flex flex-col items-center justify-center;
+
+    .participants-count {
+      @apply text-purple-V6 font-semibold text-6xl pb-4;
+    }
+
+    .participants-text {
+      @apply text-purple-V6 font-normal text-xl text-center;
+    }
+  }
+
+  .checks-container {
+    @apply h-52 w-40 bg-purple-V1 ml-6 flex flex-col items-center justify-center;
+
+    .checks-count {
+      @apply text-purple-V6 font-semibold text-6xl pb-4;
+    }
+
+    .checks-text {
+      @apply text-purple-V6 font-normal text-xl text-center;
+    }
+  }
+}
