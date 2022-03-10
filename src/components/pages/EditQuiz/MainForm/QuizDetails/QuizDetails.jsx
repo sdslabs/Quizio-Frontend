@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
-import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
+import { useGetQuiz, useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import useCreateQuizStore from '@store/zustand/createQuiz';
@@ -11,6 +11,7 @@ import MarkdownTextField from '@components/Input/MarkdownTextField';
 import DateTimeField from '@components/Input/DateTimeField';
 import { checkIfEmailExists } from '@api/users/usersFetcher';
 import '@pagestyles/create_quiz/quiz_details.scss';
+import log from '@utils/log';
 
 const QuizDetails = () => {
   const email = useSelector((state) => state.auth.user.email);
@@ -27,11 +28,12 @@ const QuizDetails = () => {
   const [quizInst, setQuizInst] = useState('');
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
   const [emailError, setEmailError] = useState('');
-  const { setCurrentStage } = useCreateQuizStore();
+  const { setCurrentStage, currentID } = useCreateQuizStore();
   const {
     isSuccess: isUpdateSuccess,
     mutate: mutateQuizDetails,
   } = useUpdateQuiz();
+  const { data, isSuccess } = useGetQuiz(currentID);
 
   const handleRemoveOwner = (i) => {
     const newOwners = [...owners];
@@ -131,7 +133,9 @@ const QuizDetails = () => {
 
   useEffect(() => {
     setOwners([email]);
-  }, []);
+    log('quizData', data.quiz);
+    setQuizName(data.quiz?.name);
+  }, [isSuccess]);
 
   return (
       <div className="quiz-details">

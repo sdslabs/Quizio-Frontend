@@ -18,7 +18,14 @@ export const getAllQuizzes = async () => {
 	}
 };
 
-export const getQuizById = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[1]}`);
+export const getQuizById = async ({ queryKey }) => {
+	try {
+		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
+		return res.data.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
 
 export const updateQuizById = ({ quizId, body }) => axiosInstance.put(`/quizzes/${quizId}`, body);
 

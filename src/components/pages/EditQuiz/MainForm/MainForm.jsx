@@ -7,7 +7,6 @@ import RegistrationForm from './RegistrationForm';
 
 const MainForm = () => {
   const { currentStage } = useCreateQuizStore();
-  console.log(currentStage, 'index');
 
   return (
       <div className="create-quiz-main-form">
