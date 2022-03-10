@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { PropTypes } from 'prop-types';
 
 import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDown.svg';
-import Questions from './Questions';
+import Questions from '../Questions';
 
 const Section = ({ index, section }) => {
    const {

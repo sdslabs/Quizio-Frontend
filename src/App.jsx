@@ -63,7 +63,7 @@ const App = () => {
               {/* Dashboard page */}
               <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
               {/* Create or edit a quiz */}
-              <Route exact path="/quiz/edit/:quizID" component={EditQuiz} />
+              <Route path="/quiz/edit/:quizID" component={EditQuiz} />
               {/* Check a quiz */}
               <Route path="/quiz/check/:quizID" component={CheckQuiz} />
               {/* Attempt a quiz */}

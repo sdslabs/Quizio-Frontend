@@ -6,16 +6,13 @@ import { ReactComponent as RegistrationFormIcon } from '@icons/CreateQuiz/SideNa
 import { ReactComponent as RegistrantsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrantsSelected.svg';
 import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/SideNavIcons/registrants.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
-import PropTypes from 'prop-types';
 import SideNavOption from './SideNavOption';
 import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
-const SideNav = ({ setShowModal }) => {
+const SideNav = () => {
   const handleCheck = () => {};
   const handlePublish = () => {};
-
-  console.log(setShowModal);
 
   return (
       <div className="create-quiz-sidenav">
@@ -51,11 +48,5 @@ const SideNav = ({ setShowModal }) => {
       </div>
   );
 };
-  SideNav.propTypes = {
-      setShowModal: PropTypes.func,
-    };
 
-  SideNav.defaultProps = {
-      setShowModal: () => {},
-  };
 export default SideNav;

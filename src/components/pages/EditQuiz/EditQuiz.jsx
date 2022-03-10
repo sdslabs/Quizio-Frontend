@@ -7,7 +7,7 @@ import SideNav from './SideNav';
 import MainForm from './MainForm';
 import '@pagestyles/create_quiz/index.scss';
 
-const CreateQuiz = () => {
+const EditQuiz = () => {
   const { quizID } = useParams();
   const { setCurrentID } = useCreateQuizStore();
 
@@ -27,4 +27,4 @@ const CreateQuiz = () => {
   );
 };
 
-export default CreateQuiz;
+export default EditQuiz;

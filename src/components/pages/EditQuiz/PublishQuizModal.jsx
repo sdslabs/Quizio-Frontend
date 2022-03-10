@@ -1,14 +1,19 @@
 import React from 'react';
-import '@pagestyles/register/start_quiz_modal.scss';
+import PropTypes from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
-import PropTypes from 'prop-types';
+import '@pagestyles/register/start_quiz_modal.scss';
 
 const PublishQuizModal = ({ setShowModal }) => (
     <div className="start-quiz">
         <div className="start-quiz-title">
             Publish Quiz
-            <button type="button" onClick={() => { setShowModal(false); }}>
+            <button
+              type="button"
+              onClick={() => {
+          setShowModal(false);
+        }}
+            >
                 <CrossIcon className="m-1" />
             </button>
         </div>
@@ -24,13 +29,13 @@ const PublishQuizModal = ({ setShowModal }) => (
             </div>
         </div>
     </div>
-	);
+);
 
-    PublishQuizModal.propTypes = {
-        setShowModal: PropTypes.func,
-      };
+PublishQuizModal.propTypes = {
+  setShowModal: PropTypes.func,
+};
 
-    PublishQuizModal.defaultProps = {
-        setShowModal: () => {},
-    };
+PublishQuizModal.defaultProps = {
+  setShowModal: () => {},
+};
 export default PublishQuizModal;
