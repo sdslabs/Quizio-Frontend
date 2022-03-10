@@ -13,6 +13,9 @@ import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = ({ setShowModal }) => {
   const handleCheck = () => {};
+  const handlePublish = () => {};
+
+  console.log(setShowModal);
 
   return (
       <div className="create-quiz-sidenav">

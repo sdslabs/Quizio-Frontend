@@ -2,13 +2,13 @@ import React from 'react';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import Questions from './QuestionsMain';
 import QuizDetails from './QuizDetails';
-import RegistrationForm from './RegistrationForm';
 import Registrations from './Registrations';
+import RegistrationForm from './RegistrationForm';
 
 const MainForm = () => {
   const { currentStage } = useCreateQuizStore();
   console.log(currentStage, 'index');
-  
+
   return (
       <div className="create-quiz-main-form">
           {(() => {

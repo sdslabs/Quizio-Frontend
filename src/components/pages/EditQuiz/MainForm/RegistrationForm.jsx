@@ -7,8 +7,6 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { REGEX } from '@constants/constants';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useUpdateQuiz } from '@api/quizzes/useQuizzes';
-import RegistrationFormCustomInput from '../RegistrationFormCustomInput';
-import log from '@utils/log';
 import RegistrationFormCustomInput from './RegistrationFormCustomInput';
 
 const RegistrationForm = () => {

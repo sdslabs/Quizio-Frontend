@@ -5,7 +5,7 @@ import LoadingPage from '@pages/Loading';
 import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
 import Status from './Status';
-import Bottom from './MyQuizzes';
+import MyQuizzes from './MyQuizzes';
 import '@pagestyles/dashboard/index.scss';
 
 const Dashboard = () => {
@@ -38,7 +38,7 @@ const Dashboard = () => {
                   <Status />
               </div>
               <div className="bottom">
-                  <Bottom />
+                  <MyQuizzes />
               </div>
           </div>
       )}

@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-import CreateQuiz from '@pages/CreateQuiz';
 import JoinUs from '@pages/JoinUs';
-import GiveQuiz from '@pages/GiveQuiz';
 import Dashboard from '@pages/Dashboard';
+import EditQuiz from '@pages/EditQuiz';
+import GiveQuiz from '@pages/GiveQuiz';
 import CheckQuiz from '@pages/CheckQuiz';
 import Components from '@pages/Components';
 import Page404 from '@pages/404';
@@ -63,7 +63,7 @@ const App = () => {
               {/* Dashboard page */}
               <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
               {/* Create or edit a quiz */}
-              <Route exact path="/quiz/edit/:quizID" component={CreateQuiz} />
+              <Route exact path="/quiz/edit/:quizID" component={EditQuiz} />
               {/* Check a quiz */}
               <Route path="/quiz/check/:quizID" component={CheckQuiz} />
               {/* Attempt a quiz */}
