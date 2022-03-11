@@ -27,9 +27,23 @@ export const getQuizById = async ({ queryKey }) => {
 	}
 };
 
-export const updateQuizById = ({ quizId, body }) => axiosInstance.put(`/quizzes/${quizId}`, body);
+export const updateQuizById = async ({ quizID, body }) => {
+	try {
+		const res = await axiosInstance.put(`/quizzes/${quizID}`, body);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
 
-export const deleteQuizById = ({ quizId }) => axiosInstance.delete(`/quizzes/${quizId}`);
+export const deleteQuizById = async ({ quizId }) => {
+	try {
+		const res = await axiosInstance.delete(`/quizzes/${quizId}`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
 
 export const getAllQuizzesForUser = async () => {
 	try {

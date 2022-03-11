@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TextField = ({
@@ -23,6 +23,10 @@ const TextField = ({
     }
     setCurrentLen(newVal.length);
   };
+
+  useEffect(() => {
+    setCurrentLen(val.length);
+  }, [val]);
 
   return (
       <div className="relative pt-5 w-full">
