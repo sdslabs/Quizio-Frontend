@@ -1,0 +1,244 @@
+import React, { useEffect, useState } from 'react';
+import useCreateQuizStore from '@redux/store/zustand/createQuiz';
+import { useGetQuestion, useUpdateQuestion } from '@api/quizzes/useQuestions';
+import { ReactComponent as MCQIcon } from '@icons/radio_button.svg';
+import { ReactComponent as SubjectiveIcon } from '@icons/subjective-icon.svg';
+import TextField from '@components/Input/TextField';
+import MarkdownTextField from '@components/Input/MarkdownTextField';
+import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import SecondaryCTA from '@components/Buttons/SecondaryCTA';
+import RadioGroup from '@components/Input/RadioGroup';
+import Switch from 'react-switch';
+import Select from 'react-select';
+// import RadioButton from '@components/Input/RadioGroup/RadioButton';
+
+const Question = () => {
+    // const [selected, setSelected] = useState('');
+    const [autoCheck, setAutoCheck] = useState(false);
+    const [questionText, setQuestionText] = useState('');
+    const [questionType, setQuestionType] = useState('mcq');
+    const [checkerNotes, setCheckersNotes] = useState('');
+    // const [questionData, setQuestionData] = useState({});
+    const [mcqChoice, setMcqChoice] = useState([]);
+    const [marks, setMarks] = useState();
+
+    const {
+        sections, questions, showQuestion, activeSectionIndex, activeQuestion,
+       } = useCreateQuizStore();
+
+      //  const answerChoices = [
+      //   {
+      //     choice: 'Ans 1',
+      //     quizioID: '1',
+      //   },
+      //   {
+      //     choice: 'Ans 2',
+      //     quizioID: '2',
+      //   },
+      //   {
+      //     choice: 'Ans 3',
+      //     quizioID: '3',
+      //   },
+      // ];
+      const questionTypeOptions = [
+        { value: 'mcq', label: `${<MCQIcon />} Multiple Choice` },
+        { value: 'subjective', label: `${<SubjectiveIcon />} Subjective` },
+      ];
+
+    console.log('show question', showQuestion);
+    console.log('show active question', activeQuestion);
+    const currentSection = sections[activeSectionIndex];
+    const currentQuestion = questions[activeQuestion];
+    // console.log('question: ', currentQuestion.quizioID);
+    // setQuestionData(data);
+    // const setQuestion (value) => {};
+    const { isLoading: isUpdateLoading, mutate: mutateQuestion, isSuccess: isUpdateSuccess } = useUpdateQuestion();
+    // const isAddingQuestion = false;
+    // useEffect(() => {
+    // }, []);
+    // console.log(questionData, 'question data');
+    console.log(questionType);
+    const handleSave = async () => {
+        // cosnt isMCQ =
+        // console.log(currentQuestion.quizioID);
+        let requestBody = {};
+        switch (questionType) {
+          case 'mcq':
+            requestBody = {
+              question: questionText,
+              type: questionType,
+              choices: mcqChoice,
+              // autoCheck
+            };
+            break;
+          case 'subjective':
+            console.log(questionType);
+            requestBody = {
+              question: questionText,
+              type: questionType,
+              sectionID: currentSection.quizioID,
+              checkerNotes,
+            };
+            break;
+          default:
+            break;
+        }
+        mutateQuestion({
+            questionId: currentQuestion.quizioID,
+            body: requestBody,
+            });
+    };
+    console.log(isUpdateSuccess);
+    const { isLoading: loadingFetchQuestion, isSuccess: fetchSuccess, data } = useGetQuestion(currentQuestion.quizioID);
+
+    // useEffect(()=>{
+    //   if(currentQuestion.questionId){
+
+    //   }
+    // },[]);
+    useEffect(() => {
+      if (fetchSuccess) {
+        console.log('success');
+        console.log(data);
+        console.log(loadingFetchQuestion);
+        console.log(fetchSuccess);
+      }
+      // mutateQuestion({ questionId: currentQuestion.quizioID });
+     }, [fetchSuccess]);
+    //  console.log(loadingFetchQuestion);
+    //  console.log(fetchSuccess);
+    //  console.log(data, 'data');
+
+    const toggleSwitch = () => { setAutoCheck(!autoCheck); };
+
+    const handleQuestionType = (selectedOption) => { setQuestionType(selectedOption.value); };
+
+    const handleAddOption = () => {
+      setMcqChoice([...mcqChoice, { choice: 'New Option' }]);
+     };
+
+    const renderSwitch = (qType) => {
+      console.log('renderswtich', qType);
+      switch (qType) {
+          case 'subjective':
+            return (
+                <div className="subjective-render">
+                    <hr className="rounded" color="grey" />
+                    <div className="question-marks">
+                        <div className="marks-text flex flex-row basis-1/2">
+                            <div className="pt-8 pr-4">
+                                Marks:
+                            </div>
+                            <TextField
+                              id="question-marks"
+                              placeholder="0"
+                              setVal={setMarks}
+                              val={marks}
+                            />
+                        </div>
+                    </div>
+                    <div className="checkers-notes pt-5">
+                        <span className="text-grey pl-4">Checker&apos;s Notes</span>
+                        <MarkdownTextField
+                          id="checkers-notes"
+                          val={checkerNotes}
+                          placeholder="Enter checker's notes here"
+                          setVal={setCheckersNotes}
+                        />
+                    </div>
+                </div>
+              );
+          default:
+            return (
+                <div className="mcq-render">
+                    <div className="mcq-options ml-5">
+                        <RadioGroup
+                          choices={mcqChoice}
+                        />
+                        <div className="w-1/6 pb-6 pt-5">
+                            <SecondaryCTA text="+ Add Option" onClick={handleAddOption} />
+                        </div>
+                    </div>
+                    <hr className="rounded" color="grey" />
+                    <div className="question-marks flex flex-row">
+                        <div className="pt-8 pr-4">
+                            Marks:
+                        </div>
+                        <div className="marks-text basis-1/2">
+                            <TextField
+                              id="question-marks"
+                              placeholder="0"
+                              setVal={setMarks}
+                              val={marks}
+                            />
+                        </div>
+                        <div className="autocheck ml-5 pt-8 pr-4">
+                            Autocheck
+                            <Switch
+                              className="pl-5"
+                              onClick={toggleSwitch}
+                              onChange={toggleSwitch}
+                              checked={autoCheck}
+                              offColor="#DADADA"
+                              onColor="#604195"
+                              uncheckedIcon={false}
+                              checkedIcon={false}
+                              height={15}
+                              width={30}
+                            />
+                        </div>
+                        <div className="mcq-ans pt-8 inline-flex">
+                            Answer:
+                            <Select
+                              options={[
+                            { value: 'JS', label: 'JS' },
+                            { value: 'c++', label: 'C++' },
+                            { value: 'html', label: 'HTML' }]}
+                              className="m-5"
+                            />
+                            {/* <select
+                          className="border-2 border-grey"
+                        >
+                            {choices.map((val) => (
+                                <option key={val.quizioID}>
+                                    {val.choice}
+                                </option>
+))}
+                        </select> */}
+                        </div>
+                    </div>
+                </div>
+              );
+        }
+    };
+
+    return (
+        <div className="quiz-details w-full">
+            <div className="quiz-details-title">{currentSection ? `${currentSection.title}` : ''}</div>
+            <div className="quiz-question w-full">
+                <div className="question-title mt-6 mb-6">Question 1</div>
+                {/* TODO: add question number */}
+                <div className="question-type-dropdown flex w-full justify-end">
+                    {/* <select className="order-last">
+                        <option key="subjective">Subjective</option>
+                        <option key="mcq">Multiple Choice</option>
+                    </select> */}
+                    <div className="justify-space-between">Test</div>
+                    <Select options={questionTypeOptions} onChange={handleQuestionType} defaultValue="mcq" />
+                </div>
+                <MarkdownTextField
+                  id="question-description"
+                  val={questionText}
+                  placeholder="Enter question here"
+                  setVal={setQuestionText}
+                />
+                {renderSwitch(questionType)}
+                <div className="w-40 ml-auto mt-8">
+                    {isUpdateLoading ? 'Saving...' : <PrimaryCTA text="Save Changes" onClick={handleSave} />}
+                </div>
+            </div>
+        </div>
+   );
+};
+
+export default Question;
