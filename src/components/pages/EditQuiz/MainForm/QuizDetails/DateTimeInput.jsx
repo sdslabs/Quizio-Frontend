@@ -87,7 +87,7 @@ const DateTimeInput = ({
       const defaultStartHour = defaultStart.get('hour');
       const defaultStartMinute = defaultStart.get('minute');
 
-      console.log({
+      log({
         startDate: `${defaultStartDate}/${defaultStartMonth}/${defaultStartYear}`,
         startTime: `${defaultStartHour} : ${defaultStartMinute}`,
       });
@@ -111,7 +111,7 @@ const DateTimeInput = ({
       const defaultEndHour = defaultEnd.get('hour');
       const defaultEndMinute = defaultEnd.get('minute');
 
-      console.log({
+      log({
         endDate: `${defaultEndDate}/${defaultEndMonth}/${defaultEndYear}`,
         endTime: `${defaultEndHour
           .toString()
