@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import { ReactComponent as QuizName } from '@icons/quizname.svg';
 import { truncateQuizName } from '@utils/truncate';
 import { getDateTime } from '@utils/date';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-import '@pagestyles/dashboard/created_quizzes.scss';
 import { useHistory } from 'react-router-dom';
+import '@pagestyles/dashboard/created_quizzes.scss';
 
 const CreatedQuiz = ({ data }) => {
   const history = useHistory();
+  const [isUpcoming, setIsUpcoming] = useState(true);
+
   const handleEdit = () => history.push(`/quiz/edit/${data.quizioID}`);
+  const handleCheck = () => history.push(`/quiz/check/${data.quizioID}`);
+
+  useEffect(() => {
+    const start = dayjs(data.startTime);
+    setIsUpcoming(start.isAfter(dayjs()));
+  }, [data]);
 
   return (
       <div className="created-quiz">
@@ -37,7 +46,11 @@ const CreatedQuiz = ({ data }) => {
                       <div className="registered">Registered</div>
           ) : (
               <div className="register-button">
-                  <PrimaryCTA text="Edit" onClick={handleEdit} />
+                  {isUpcoming || !data.startTime ? (
+                      <PrimaryCTA text="Edit" onClick={handleEdit} />
+              ) : (
+                  <PrimaryCTA text="Check" onClick={handleCheck} />
+              )}
               </div>
           )}
               </div>

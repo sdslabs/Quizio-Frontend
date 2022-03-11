@@ -23,7 +23,7 @@ const CreatedQuizzes = () => {
               <div>Fetching created quizzes...</div>
       ) : (
           <>
-              {quizzes.map((quiz) => (
+              {quizzes.slice(0).reverse().map((quiz) => (
                   <div className="created-quiz-container" key={nanoid()}>
                       <CreatedQuiz data={quiz} />
                   </div>

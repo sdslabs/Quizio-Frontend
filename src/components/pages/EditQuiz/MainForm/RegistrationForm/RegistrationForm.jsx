@@ -41,10 +41,7 @@ const RegistrationForm = () => {
     });
   }, [data]);
 
-  const handleSubmit = () => {
-    console.log({ fields });
-    mutateQuizDetails({ quizID: currentID, body: { ...fields } });
-  };
+  const handleSubmit = () => mutateQuizDetails({ quizID: currentID, body: { ...fields } });
 
   useEffect(() => {
     if (isUpdateSuccess) setCurrentStage('Registration form');
