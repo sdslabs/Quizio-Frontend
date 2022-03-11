@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
 import { useGetQuiz, useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import log from '@utils/log';
-
+import { uploadImage } from '@api/misc/uploadImage';
 import Submit from './Submit';
 import AccessCodeInput from './AccessCodeInput';
 import QuizNameInput from './QuizNameInput';
@@ -13,11 +12,11 @@ import QuizDescription from './QuizDescription';
 import QuizInstructions from './QuizInstructions';
 
 import '@pagestyles/create_quiz/quiz_details.scss';
+import FileUploader from './FileUploader';
 
 const QuizDetails = () => {
   // Global Stores
   const { setCurrentStage, currentID } = useCreateQuizStore();
-  // const email = useSelector((state) => state.auth.user.email);
 
   // APIs
   const {
@@ -34,6 +33,7 @@ const QuizDetails = () => {
   const [accessCode, setAccessCode] = useState('');
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
+  const [imageURL, setImageURL] = useState('');
 
   // Form validators (TODO: Move to individual components)
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
@@ -54,8 +54,20 @@ const QuizDetails = () => {
       endTime,
       startWindow: 600, // TODO: add this as a custom input (currently 600s = 10mins)
       accessCode,
+      bannerURL: imageURL,
     };
     mutateQuizDetails({ quizID, body });
+  };
+
+  const handleFile = async (file) => {
+    const image = new FormData();
+    image.append('image', file, file.name);
+    const fileURL = await uploadImage(image);
+    if (fileURL.success) {
+      setImageURL(fileURL.data.url);
+    } else {
+      setImageURL('');
+    }
   };
 
   useEffect(() => {
@@ -72,19 +84,28 @@ const QuizDetails = () => {
     setAccessCode(data?.quiz?.accessCode);
     setQuizDesc(data?.quiz?.description);
     setQuizInst(data?.quiz?.instructions);
+    setImageURL(data?.quiz?.bannerURL);
   }, [data]);
 
   return (
       <div className="quiz-details">
-          <div className="quiz-details-title">Quiz Details</div>
-          <QuizNameInput setQuizName={setQuizName} quizName={quizName || ''} />
-          <DateTimeInput
-            setIsDateTimeValid={setIsDateTimeValid}
-            setStartDateTime={setStartTime}
-            setEndDateTime={setEndTime}
-            defaultStartTime={startTime}
-            defaultEndTime={endTime}
-          />
+          <div className="top">
+              <div className="details">
+                  <div className="quiz-details-title">Quiz Details</div>
+                  <QuizNameInput setQuizName={setQuizName} quizName={quizName || ''} />
+                  <DateTimeInput
+                    setIsDateTimeValid={setIsDateTimeValid}
+                    setStartDateTime={setStartTime}
+                    setEndDateTime={setEndTime}
+                    defaultStartTime={startTime}
+                    defaultEndTime={endTime}
+                  />
+              </div>
+
+              <div className="quiz-banner">
+                  <FileUploader handleFile={handleFile} currentImage={imageURL} />
+              </div>
+          </div>
           <OwnersInput owners={owners} setOwners={setOwners} />
           <AccessCodeInput
             accessCode={accessCode || ''}
