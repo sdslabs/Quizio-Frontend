@@ -3,7 +3,6 @@ import PropTypes, { string } from 'prop-types';
 import TextField from '@components/Input/TextField';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import { checkIfEmailExists } from '@api/users/usersFetcher';
-import log from '@utils/log';
 import '@pagestyles/create_quiz/quiz_details.scss';
 
 const OwnersInput = ({ owners, setOwners }) => {
@@ -18,15 +17,14 @@ const OwnersInput = ({ owners, setOwners }) => {
 
   const handleAddOwner = async (e) => {
     const newOwners = [...owners];
-    newOwners.push(owner);
 
     /* adds a new owner after the spacebar(32), enter(13) or comma(188) is pressed */
     if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
       if (owners.find((o) => o === owner)) {
         setEmailError('Already an owner!');
       } else {
+        newOwners.push(owner);
         const isEmailValid = await checkIfEmailExists(owner);
-        log({ isEmailValid });
         if (isEmailValid.success) {
           setOwners([...newOwners]);
         } else {
@@ -35,6 +33,8 @@ const OwnersInput = ({ owners, setOwners }) => {
       }
     }
   };
+
+  const handleSetOwner = (value) => setOwner(value?.trim());
 
   return (
       <div className="quiz-details-owners">
@@ -45,7 +45,7 @@ const OwnersInput = ({ owners, setOwners }) => {
             error={emailError}
             helperText="Invalid email"
             val={owner}
-            setVal={setOwner}
+            setVal={handleSetOwner}
             onKeyDown={handleAddOwner}
           />
           <div className="quiz-details-owners-list">
