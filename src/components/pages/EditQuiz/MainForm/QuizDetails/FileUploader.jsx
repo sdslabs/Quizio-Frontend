@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
 import bannerUploadImg from '@images/QuizUploadBanner.png';
 
@@ -8,10 +8,6 @@ const FileUploader = ({ handleFile, currentImage }) => {
   const handleClick = () => hiddenFileInput.current.click();
 
   const handleChange = (event) => handleFile(event.target.files[0]);
-
-  useEffect(() => {
-    console.log('Fileuploader update!', { currentImage });
-  }, []);
 
   return (
       <>
