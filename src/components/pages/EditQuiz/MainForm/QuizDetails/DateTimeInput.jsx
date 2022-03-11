@@ -9,6 +9,8 @@ const DateTimeInput = ({
   setIsDateTimeValid,
   setStartDateTime,
   setEndDateTime,
+  defaultStartTime,
+  defaultEndTime,
 }) => {
   // TODO: Error rendering
   const [startDate, setStartDate] = useState('');
@@ -69,6 +71,39 @@ const DateTimeInput = ({
       }
     }
   }, [startDate, startTime, endDate, endTime]);
+
+  useEffect(() => {
+    if (defaultStartTime) {
+      const defaultStart = dayjs(defaultStartTime);
+      const defaultStartDate = defaultStart.get('date');
+      const defaultStartMonth = defaultStart.get('month') + 1;
+      const defaultStartYear = defaultStart.get('year');
+
+      console.log({
+        start: `${defaultStartDate}/${defaultStartMonth}/${defaultStartYear}`,
+      });
+      setStartDate(
+        `${defaultStartYear}-${defaultStartMonth
+          .toString()
+          .padStart(2, '0')}-${defaultStartDate}`,
+      );
+    }
+    if (defaultEndTime) {
+      const defaultEnd = dayjs(defaultEndTime);
+      const defaultEndDate = defaultEnd.get('date');
+      const defaultEndMonth = defaultEnd.get('month') + 1;
+      const defaultEndYear = defaultEnd.get('year');
+
+      console.log({
+        start: `${defaultEndDate}/${defaultEndMonth}/${defaultEndYear}`,
+      });
+      setEndDate(
+        `${defaultEndYear}-${defaultEndMonth
+          .toString()
+          .padStart(2, '0')}-${defaultEndDate}`,
+      );
+    }
+  }, [defaultStartTime, defaultEndTime]);
 
   return (
       <>
@@ -142,12 +177,16 @@ DateTimeInput.propTypes = {
   setIsDateTimeValid: PropTypes.func,
   setStartDateTime: PropTypes.func,
   setEndDateTime: PropTypes.func,
+  defaultStartTime: PropTypes.string,
+  defaultEndTime: PropTypes.string,
 };
 
 DateTimeInput.defaultProps = {
   setIsDateTimeValid: () => {},
   setStartDateTime: () => {},
   setEndDateTime: () => {},
+  defaultStartTime: '',
+  defaultEndTime: '',
 };
 
 export default DateTimeInput;

@@ -66,7 +66,8 @@ const QuizDetails = () => {
   useEffect(async () => {
     log('QuizData: ', data.quiz);
     setQuizName(data.quiz?.name);
-    // set default time
+    setStartTime(data?.quiz?.startTime);
+    setEndTime(data?.quiz?.endTime);
     setOwners(data?.quiz?.owners);
     setAccessCode(data?.quiz?.accessCode);
     setQuizDesc(data?.quiz?.description);
@@ -81,6 +82,8 @@ const QuizDetails = () => {
             setIsDateTimeValid={setIsDateTimeValid}
             setStartDateTime={setStartTime}
             setEndDateTime={setEndTime}
+            defaultStartTime={startTime}
+            defaultEndTime={endTime}
           />
           <OwnersInput owners={owners} setOwners={setOwners} />
           <AccessCodeInput
