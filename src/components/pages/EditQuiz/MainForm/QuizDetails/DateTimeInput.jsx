@@ -28,6 +28,12 @@ const DateTimeInput = ({
   const handleEndTime = (e) => setEndTime(e.target.value);
 
   useEffect(() => {
+    log({
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+    });
     if (startDate && startTime && endDate && endTime) {
       const [startYear, startMonth, startDay] = startDate.split('-');
       const [endYear, endMonth, endDay] = endDate.split('-');
@@ -78,14 +84,23 @@ const DateTimeInput = ({
       const defaultStartDate = defaultStart.get('date');
       const defaultStartMonth = defaultStart.get('month') + 1;
       const defaultStartYear = defaultStart.get('year');
+      const defaultStartHour = defaultStart.get('hour');
+      const defaultStartMinute = defaultStart.get('minute');
 
       console.log({
-        start: `${defaultStartDate}/${defaultStartMonth}/${defaultStartYear}`,
+        startDate: `${defaultStartDate}/${defaultStartMonth}/${defaultStartYear}`,
+        startTime: `${defaultStartHour} : ${defaultStartMinute}`,
       });
+
       setStartDate(
         `${defaultStartYear}-${defaultStartMonth
           .toString()
           .padStart(2, '0')}-${defaultStartDate}`,
+      );
+      setStartTime(
+        `${defaultStartHour
+          .toString()
+          .padStart(2, '0')}:${defaultStartMinute.toString().padStart(2, '0')}`,
       );
     }
     if (defaultEndTime) {
@@ -93,14 +108,24 @@ const DateTimeInput = ({
       const defaultEndDate = defaultEnd.get('date');
       const defaultEndMonth = defaultEnd.get('month') + 1;
       const defaultEndYear = defaultEnd.get('year');
+      const defaultEndHour = defaultEnd.get('hour');
+      const defaultEndMinute = defaultEnd.get('minute');
 
       console.log({
-        start: `${defaultEndDate}/${defaultEndMonth}/${defaultEndYear}`,
+        endDate: `${defaultEndDate}/${defaultEndMonth}/${defaultEndYear}`,
+        endTime: `${defaultEndHour
+          .toString()
+          .padStart(2, '0')}:${defaultEndMinute.toString().padStart(2, '0')}`,
       });
       setEndDate(
         `${defaultEndYear}-${defaultEndMonth
           .toString()
           .padStart(2, '0')}-${defaultEndDate}`,
+      );
+      setEndTime(
+        `${defaultEndHour
+          .toString()
+          .padStart(2, '0')}:${defaultEndMinute.toString().padStart(2, '0')}`,
       );
     }
   }, [defaultStartTime, defaultEndTime]);
