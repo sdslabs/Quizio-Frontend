@@ -11,8 +11,8 @@ import SideNavQuestions from './SideNavQuestions';
 import '@pagestyles/create_quiz/sidenav.scss';
 
 const SideNav = () => {
-  const handlePublish = () => {};
   const handleCheck = () => {};
+  const handlePublish = () => {};
 
   return (
       <div className="create-quiz-sidenav">
@@ -40,7 +40,6 @@ const SideNav = () => {
                   <div className="create-quiz-sidenav-publish">
                       <SecondaryCTA text="Publish Quiz" onClick={handlePublish} />
                   </div>
-
                   <div className="create-quiz-sidenav-check">
                       <SecondaryCTA text="Check Quiz" onClick={handleCheck} />
                   </div>
@@ -49,4 +48,5 @@ const SideNav = () => {
       </div>
   );
 };
+
 export default SideNav;

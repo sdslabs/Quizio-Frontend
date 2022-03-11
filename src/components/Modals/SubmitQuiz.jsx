@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import timerIcon from '@icons/timerIcon.svg';
 import timerGreen from '@icons/timerGreenIcon.svg';
-import Countdown from '@components/pages/CreateQuiz/SideNav/Countdown';
+import Countdown from '@components/pages/GiveQuiz/Countdown';
 import { PropTypes } from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
