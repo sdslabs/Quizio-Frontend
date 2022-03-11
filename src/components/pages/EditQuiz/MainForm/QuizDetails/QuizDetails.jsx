@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useGetQuiz, useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import log from '@utils/log';
-import { uploadImage } from '@api/misc/uploadImage';
+
 import Submit from './Submit';
 import AccessCodeInput from './AccessCodeInput';
 import QuizNameInput from './QuizNameInput';
 import DateTimeInput from './DateTimeInput';
+import QuizBanner from './QuizBanner';
 import OwnersInput from './OwnersInput';
 import QuizDescription from './QuizDescription';
 import QuizInstructions from './QuizInstructions';
 
 import '@pagestyles/create_quiz/quiz_details.scss';
-import FileUploader from './FileUploader';
 
 const QuizDetails = () => {
   // Global Stores
@@ -59,17 +59,6 @@ const QuizDetails = () => {
     mutateQuizDetails({ quizID, body });
   };
 
-  const handleFile = async (file) => {
-    const image = new FormData();
-    image.append('image', file, file.name);
-    const fileURL = await uploadImage(image);
-    if (fileURL.success) {
-      setImageURL(fileURL.data.url);
-    } else {
-      setImageURL('');
-    }
-  };
-
   useEffect(() => {
     if (isUpdateSuccess) setCurrentStage('Registration form');
     else log('Failed to update quiz :(');
@@ -101,10 +90,7 @@ const QuizDetails = () => {
                     defaultEndTime={endTime}
                   />
               </div>
-
-              <div className="quiz-banner">
-                  <FileUploader handleFile={handleFile} currentImage={imageURL} />
-              </div>
+              <QuizBanner setImageURL={setImageURL} imageURL={imageURL} />
           </div>
           <OwnersInput owners={owners} setOwners={setOwners} />
           <AccessCodeInput
