@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetQuiz, useUpdateQuiz } from '@api/quizzes/useQuizzes';
-import { getUserPublicProfile } from '@api/users/usersFetcher';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import log from '@utils/log';
 
@@ -16,19 +15,21 @@ import QuizInstructions from './QuizInstructions';
 import '@pagestyles/create_quiz/quiz_details.scss';
 
 const QuizDetails = () => {
+  const { setCurrentStage, currentID } = useCreateQuizStore();
+
+  // Form inputs
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [ownersEmail, setOwnersEmail] = useState(['']);
   const [owners, setOwners] = useState(['']);
+  const [accessCode, setAccessCode] = useState('');
 
   const email = useSelector((state) => state.auth.user.email);
   const [quizName, setQuizName] = useState('');
 
-  const [accessCode, setAccessCode] = useState('');
   const [quizDesc, setQuizDesc] = useState('');
   const [quizInst, setQuizInst] = useState('');
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
-  const { setCurrentStage, currentID } = useCreateQuizStore();
+
   const {
     isSuccess: isUpdateSuccess,
     mutate: mutateQuizDetails,
@@ -59,23 +60,15 @@ const QuizDetails = () => {
   }, [isUpdateSuccess]);
 
   useEffect(async () => {
-    const realOwners = await Promise.all(
-      owners.map(async (userID) => getUserPublicProfile({ queryKey: ['', { userID }] })),
-    );
-    log({ realOwners });
-    setOwnersEmail([email, ...ownersEmail]);
-    log('quizData', data.quiz);
+    log('QuizData: ', data.quiz);
     setQuizName(data.quiz?.name);
+    setOwners(data?.quiz?.owners);
   }, [data]);
-
-  useEffect(() => {
-    log({ owners, ownersEmail });
-  }, [ownersEmail]);
 
   return (
       <div className="quiz-details">
           <div className="quiz-details-title">Quiz Details</div>
-          <QuizNameInput setQuizName={setQuizName} quizName={quizName} />
+          <QuizNameInput setQuizName={setQuizName} quizName={quizName || ''} />
           <DateTimeInput
             setIsDateTimeValid={setIsDateTimeValid}
             setStartDateTime={setStartTime}
@@ -84,12 +77,10 @@ const QuizDetails = () => {
           <OwnersInput
             owners={owners}
             setOwners={setOwners}
-            ownersEmail={ownersEmail}
-            setOwnersEmail={setOwnersEmail}
           />
-          <AccessCodeInput accessCode={accessCode} setAccessCode={setAccessCode} />
-          <QuizDescription quizDesc={quizDesc} setQuizDesc={setQuizDesc} />
-          <QuizInstructions quizInst={quizInst} setQuizInst={setQuizInst} />
+          <AccessCodeInput accessCode={accessCode || ''} setAccessCode={setAccessCode} />
+          <QuizDescription quizDesc={quizDesc || ''} setQuizDesc={setQuizDesc} />
+          <QuizInstructions quizInst={quizInst || ''} setQuizInst={setQuizInst} />
           <Submit handleSubmit={handleSubmit} />
       </div>
   );
