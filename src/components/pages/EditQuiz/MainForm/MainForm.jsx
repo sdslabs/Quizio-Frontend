@@ -2,7 +2,7 @@ import React from 'react';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import Questions from './QuestionsMain';
 import QuizDetails from './QuizDetails';
-import Registrations from './Registrations';
+// import Registrations from './Registrations';
 import RegistrationForm from './RegistrationForm';
 
 const MainForm = () => {
@@ -18,8 +18,8 @@ const MainForm = () => {
             return <RegistrationForm />;
           case 'Questions':
             return <Questions />;
-          case 'Registrations':
-            return <Registrations />;
+          // case 'Registrations':
+          //   return <Registrations />;
           default:
             return <QuizDetails />;
         }

@@ -3,8 +3,8 @@ import { ReactComponent as QuizDetailsIcon } from '@icons/CreateQuiz/SideNavIcon
 import { ReactComponent as QuizDetailsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/quizDetailsSelected.svg';
 import { ReactComponent as RegistrationFormSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrationFormSelected.svg';
 import { ReactComponent as RegistrationFormIcon } from '@icons/CreateQuiz/SideNavIcons/registrationForm.svg';
-import { ReactComponent as RegistrantsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrantsSelected.svg';
-import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/SideNavIcons/registrants.svg';
+// import { ReactComponent as RegistrantsSelectedIcon } from '@icons/CreateQuiz/SideNavIcons/registrantsSelected.svg';
+// import { ReactComponent as RegistrantsIcon } from '@icons/CreateQuiz/SideNavIcons/registrants.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import SideNavOption from './SideNavOption';
 import SideNavQuestions from './SideNavQuestions';
@@ -29,11 +29,11 @@ const SideNav = () => {
                 Icon={RegistrationFormIcon}
               />
               <SideNavQuestions />
-              <SideNavOption
+              {/* <SideNavOption
                 text="Registrations"
                 SelectedIcon={RegistrantsSelectedIcon}
                 Icon={RegistrantsIcon}
-              />
+              /> */}
           </div>
           <div className="create-quiz-sidenav-bottom">
               <div className="create-quiz-sidenav-buttons">
