@@ -8,19 +8,20 @@ import MarkdownTextField from '@components/Input/MarkdownTextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import RadioGroup from '@components/Input/RadioGroup';
-import Switch from 'react-switch';
+// import Switch from 'react-switch';
 import Select from 'react-select';
 // import RadioButton from '@components/Input/RadioGroup/RadioButton';
 
 const Question = () => {
     // const [selected, setSelected] = useState('');
-    const [autoCheck, setAutoCheck] = useState(false);
+    // const [autoCheck, setAutoCheck] = useState(false);
     const [questionText, setQuestionText] = useState('');
     const [questionType, setQuestionType] = useState('mcq');
     const [checkerNotes, setCheckersNotes] = useState('');
     // const [questionData, setQuestionData] = useState({});
     const [mcqChoice, setMcqChoice] = useState([]);
     const [marks, setMarks] = useState();
+    const [mcqCount, setMcqCount] = useState(0); // checks to see max no. of options is less than 4
 
     const {
         sections, questions, showQuestion, activeSectionIndex, activeQuestion,
@@ -109,11 +110,12 @@ const Question = () => {
     //  console.log(fetchSuccess);
     //  console.log(data, 'data');
 
-    const toggleSwitch = () => { setAutoCheck(!autoCheck); };
+    // const toggleSwitch = () => { setAutoCheck(!autoCheck); };
 
     const handleQuestionType = (selectedOption) => { setQuestionType(selectedOption.value); };
 
     const handleAddOption = () => {
+      setMcqCount(mcqCount + 1);
       setMcqChoice([...mcqChoice, { choice: 'New Option' }]);
      };
 
@@ -156,15 +158,15 @@ const Question = () => {
                           choices={mcqChoice}
                         />
                         <div className="w-1/6 pb-6 pt-5">
-                            <SecondaryCTA text="+ Add Option" onClick={handleAddOption} />
+                            { mcqCount < 4 ? <SecondaryCTA text="+ Add Option" onClick={handleAddOption} /> : ''}
                         </div>
                     </div>
                     <hr className="rounded" color="grey" />
-                    <div className="question-marks flex flex-row">
-                        <div className="pt-8 pr-4">
-                            Marks:
-                        </div>
-                        <div className="marks-text basis-1/2">
+                    <div className="question-marks flex justify-between">
+                        <div className="marks-text flex flex-row basis-1/2">
+                            <div className="pt-8 pr-4">
+                                Marks:
+                            </div>
                             <TextField
                               id="question-marks"
                               placeholder="0"
@@ -172,7 +174,7 @@ const Question = () => {
                               val={marks}
                             />
                         </div>
-                        <div className="autocheck ml-5 pt-8 pr-4">
+                        {/* <div className="autocheck ml-5 pt-8 pr-4">
                             Autocheck
                             <Switch
                               className="pl-5"
@@ -186,7 +188,7 @@ const Question = () => {
                               height={15}
                               width={30}
                             />
-                        </div>
+                        </div> */}
                         <div className="mcq-ans pt-8 inline-flex">
                             Answer:
                             <Select
@@ -216,15 +218,14 @@ const Question = () => {
         <div className="quiz-details w-full">
             <div className="quiz-details-title">{currentSection ? `${currentSection.title}` : ''}</div>
             <div className="quiz-question w-full">
-                <div className="question-title mt-6 mb-6">Question 1</div>
                 {/* TODO: add question number */}
-                <div className="question-type-dropdown flex w-full justify-end">
+                <div className="question-type-dropdown flex w-full justify-between">
+                    <div className="question-title mt-6 mb-6 contentEditable">Question 1</div>
                     {/* <select className="order-last">
                         <option key="subjective">Subjective</option>
                         <option key="mcq">Multiple Choice</option>
                     </select> */}
-                    <div className="justify-space-between">Test</div>
-                    <Select options={questionTypeOptions} onChange={handleQuestionType} defaultValue="mcq" />
+                    <Select options={questionTypeOptions} onChange={handleQuestionType} defaultValue="mcq" className="text-sm p-5 w-200" />
                 </div>
                 <MarkdownTextField
                   id="question-description"

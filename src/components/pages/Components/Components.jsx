@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import RadioGroup from '@components/Input/RadioGroup';
 
 const Components = () => {
-  const choices = [
+  const [selected, setSelected] = useState('');
+  const [choices, setChoices] = useState([
     {
       choice: 'JS',
       quizioID: '1',
@@ -19,9 +20,7 @@ const Components = () => {
       choice: 'C',
       quizioID: '4',
     },
-  ];
-
-  const [selected, setSelected] = useState('');
+  ]);
 
   return (
       <div className="w-screen min-h-screen flex flex-col">
@@ -31,6 +30,7 @@ const Components = () => {
             choices={choices}
             selected={selected}
             setSelected={setSelected}
+            setChoices={setChoices}
           />
           <hr />
           <hr />
