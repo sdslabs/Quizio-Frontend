@@ -5,10 +5,13 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import SubmitQuiz from '@components/Modals/SubmitQuiz';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import _ from 'lodash';
+import log from '@utils/log';
 
 const SectionLanding = () => {
     const { quizId, sectionId } = useParams();
     const { quiz, sections } = useGiveQuizStore();
+
+    log({ sectionId });
 
     const [showModal, setShowModal] = React.useState(false);
 

@@ -6,6 +6,7 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import StartQuizModal from '@pages/Register/StartQuizModal';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
+import log from '@utils/log';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
@@ -13,6 +14,8 @@ const QuizLanding = () => {
     const { quizId } = useParams();
     const { data, isLoading, isSuccess } = useGetQuiz(quizId);
     const [showModal, setShowModal] = useState(false);
+
+    log({ quizId });
 
     const { setQuiz } = useGiveQuizStore();
 

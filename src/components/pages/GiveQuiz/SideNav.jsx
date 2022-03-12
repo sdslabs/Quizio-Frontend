@@ -6,12 +6,15 @@ import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useParams, useHistory } from 'react-router-dom';
 import { useGetMultipleSections } from '@api/quizzes/useSections';
+import log from '@utils/log';
 
 const SideNav = () => {
     const { quiz } = useGiveQuizStore();
 
     const history = useHistory();
     const { sectionId } = useParams();
+
+    log({ quizId: quiz.quizioID, sectionId });
 
     return (
         <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">

@@ -1,4 +1,5 @@
 import create from 'zustand';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import _ from 'lodash';
 
 const defaultSection = {
@@ -9,7 +10,10 @@ const defaultSection = {
 };
 
 const useCreateQuizStore = create((set) => ({
-    /* Active side nav option */
+
+    /* Quiz ID */
+    currentID: '',
+    /* Quiz creation stage */
     currentStage: 'Quiz Details',
     /* Total sections in a quiz */
     sections: [],
@@ -22,12 +26,12 @@ const useCreateQuizStore = create((set) => ({
     /* Activate Question Form */
     showQuestion: false,
 
+    /* Set Current Quiz ID */
+    setCurrentID: (id) => set(() => ({ currentID: id })),
     /* Toggle side nav option */
     setCurrentStage: (stage) => set(() => ({ currentStage: stage })),
-
     /* Toggle active section */
     setActiveSection: (index) => set(() => ({ activeSectionIndex: index })),
-
     /* Add new section using ID */
     addSection: (sectionId) => set((state) => {
         const newSection = { ...defaultSection, id: sectionId, title: `Section ${state.sections.length + 1}` };
@@ -35,7 +39,6 @@ const useCreateQuizStore = create((set) => ({
             sections: [...state.sections, newSection],
         };
     }),
-
     /* Update section details for current section */
     updateSection: (update, id) => set((state) => {
         const sectionIdx = id ? _.findIndex(state.sections, { id }) : state.activeSectionIndex;
@@ -50,7 +53,6 @@ const useCreateQuizStore = create((set) => ({
             ],
         };
     }),
-
     /* Add new question ID to section */
     addQuestionToSection: (questionId) => set((state) => {
         const activeSection = state.sections[state.activeSectionIndex];
@@ -65,15 +67,13 @@ const useCreateQuizStore = create((set) => ({
             ],
         };
     }),
-
     /* Add question with details */
     addQuestion: (question) => set((state) => ({ questions: [...state.questions, question] })),
-
     /* Toggle active question */
     setActiveQuestion: (index) => set(() => ({ activeQuestionIndex: index })),
-
     /* Toggle activate question form */
     toggleQuestionForm: (flag) => set(() => ({ showQuestion: flag })),
 }));
 
+mountStoreDevtool('createQuizStore', useCreateQuizStore);
 export default useCreateQuizStore;
