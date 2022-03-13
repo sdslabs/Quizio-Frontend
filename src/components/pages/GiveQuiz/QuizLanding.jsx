@@ -7,47 +7,58 @@ import StartQuizModal from '@pages/Register/StartQuizModal';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import log from '@utils/log';
+import MasterWrapper from './MasterWrapper';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
 const QuizLanding = () => {
-    const { quizId } = useParams();
-    const { data, isLoading, isSuccess } = useGetQuiz(quizId);
-    const [showModal, setShowModal] = useState(false);
+  const { quizID } = useParams();
+  const { data, isLoading, isSuccess } = useGetQuiz(quizID);
+  const [showModal, setShowModal] = useState(false);
 
-    log({ quizId });
+  const { setQuiz } = useGiveQuizStore();
 
-    const { setQuiz } = useGiveQuizStore();
+  useEffect(() => {
+    if (isSuccess) {
+      const { name, description, sections } = mapQuizData(data);
+      setQuiz({
+        name,
+        description,
+        sections,
+        quizioID: quizID,
+      });
+    }
+  }, [isSuccess]);
 
-    useEffect(() => {
-        if (isSuccess) {
-            const { name, description, sections } = mapQuizData(data);
-            setQuiz({
-                name, description, sections, quizioID: quizId,
-            });
-        }
-    }, [isSuccess]);
+  useEffect(() => {
+    log('Quiz Landing!');
+    log({ quizID });
+  }, []);
 
-    if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
-    const { name, description, instruction } = mapQuizData(data);
+  const { name, description, instruction } = mapQuizData(data);
 
-    return (
-        <>
-            <h1 className="text-3xl font-bold">{name}</h1>
-            <p className="text-grey-N6 mt-6">
-                {description}
-            </p>
-            <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
-            <p className="text-grey-N6 mt-6">
-                {instruction || 'No instructions available'}
-            </p>
-            <div className="ml-auto mt-16 w-28">
-                <PrimaryCTA text="Continue" onClick={() => setShowModal(true)} />
-            </div>
-            <ModalWrapper showModal={showModal} hideOnOverlayClick setShowModal={setShowModal}><StartQuizModal /></ModalWrapper>
-        </>
-    );
+  return (
+      <MasterWrapper>
+          <h1 className="text-3xl font-bold">{name}</h1>
+          <p className="text-grey-N6 mt-6">{description}</p>
+          <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
+          <p className="text-grey-N6 mt-6">
+              {instruction || 'No instructions available'}
+          </p>
+          <div className="ml-auto mt-16 w-28">
+              <PrimaryCTA text="Continue" onClick={() => setShowModal(true)} />
+          </div>
+          <ModalWrapper
+            showModal={showModal}
+            hideOnOverlayClick
+            setShowModal={setShowModal}
+          >
+              <StartQuizModal setShowModal={setShowModal} />
+          </ModalWrapper>
+      </MasterWrapper>
+  );
 };
 
 export default QuizLanding;

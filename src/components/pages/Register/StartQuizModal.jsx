@@ -6,15 +6,17 @@ import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import '@pagestyles/register/start_quiz_modal.scss';
 import log from '@utils/log';
 
-const StartQuizModal = ({ showAccessCode }) => {
+const StartQuizModal = ({ showAccessCode, setShowModal }) => {
   const [accessCode, setAccessCode] = useState('');
-  log(showAccessCode);
+  const handleCloseModal = () => setShowModal(false);
 
   return (
       <div className="start-quiz">
           <div className="start-quiz-title">
               Start Quiz
-              <CrossIcon />
+              <button type="button" onClick={handleCloseModal}>
+                  <CrossIcon />
+              </button>
           </div>
           <div className="start-quiz-container">
               <div className="start-quiz-container-text">
@@ -45,6 +47,7 @@ const StartQuizModal = ({ showAccessCode }) => {
 
 StartQuizModal.propTypes = {
   showAccessCode: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 
 export default StartQuizModal;
