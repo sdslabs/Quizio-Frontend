@@ -6,7 +6,6 @@ import Cookies from 'js-cookie';
 import JoinUs from '@pages/JoinUs';
 import Dashboard from '@pages/Dashboard';
 import EditQuiz from '@pages/EditQuiz';
-// import GiveQuiz from '@pages/GiveQuiz';
 import CheckQuiz from '@pages/CheckQuiz';
 import Components from '@pages/Components';
 import Page404 from '@pages/404';
@@ -68,6 +67,7 @@ const App = () => {
           <Route path="/quiz/check/:quizID" component={CheckQuiz} />
           {/* Attempt a quiz */}
           <Route path="/quiz/attempt/:quizID" component={QuizLanding} />
+          {/* Attempt a quiz section */}
           <Route path="/quiz/attempt/:quizID/:sectionID" component={SectionLanding} />
           {/* Demo page for components */}
           <Route exact path="/components" component={Components} />

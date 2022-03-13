@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import ModalWrapper from '@components/Modals/ModalWrapper';
-// import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import StartQuizModal from '@pages/Register/StartQuizModal';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import log from '@utils/log';
-import MasterWrapper from './MasterWrapper';
+import MasterWrapper from '../MasterWrapper';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 

@@ -6,7 +6,7 @@ import SubmitQuiz from '@components/Modals/SubmitQuiz';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import _ from 'lodash';
 import log from '@utils/log';
-import MasterWrapper from './MasterWrapper';
+import MasterWrapper from '../MasterWrapper';
 
 const SectionLanding = () => {
   const { quizID, sectionID } = useParams();
