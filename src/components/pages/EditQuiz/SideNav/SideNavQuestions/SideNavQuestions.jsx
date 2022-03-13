@@ -27,7 +27,7 @@ const SideNavQuestions = () => {
   const { data: quizData, isLoading: isQuizLoading, isSuccess: isQuizSuccess } = useGetQuiz(quizID);
 
   const handleAddNewSection = () => {
-    mutateSection({ quizId: quizID });
+    mutateSection({ quizID });
   };
 
   useEffect(() => {

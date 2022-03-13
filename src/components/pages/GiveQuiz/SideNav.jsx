@@ -12,9 +12,9 @@ const SideNav = () => {
     const { quiz } = useGiveQuizStore();
 
     const history = useHistory();
-    const { sectionId } = useParams();
+    const { sectionID } = useParams();
 
-    log({ quizId: quiz.quizioID, sectionId });
+    log({ quizID: quiz.quizioID, sectionID });
 
     return (
         <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
@@ -22,7 +22,7 @@ const SideNav = () => {
                 {quiz.name}
             </p>
             <p
-              className={`side-nav-item${!sectionId ? '-active' : ''}`}
+              className={`side-nav-item${!sectionID ? '-active' : ''}`}
               onClick={() => history.push(`/quiz/${quiz.quizioID}`)}
             >
                 Instructions
@@ -46,7 +46,7 @@ const AllSections = () => {
 
     const isSuccess = result.every((data) => !data.isLoading);
 
-    const { sectionId } = useParams();
+    const { sectionID } = useParams();
 
     const history = useHistory();
 
@@ -65,13 +65,13 @@ const AllSections = () => {
             {sections.map(({ title, questions, quizioID }) => (
                 <>
                     <p
-                      className={`side-nav-item${sectionId === quizioID ? '-active' : ''} flex justify-between`}
+                      className={`side-nav-item${sectionID === quizioID ? '-active' : ''} flex justify-between`}
                       onClick={() => handleSectionTabClick(quizioID)}
                     >
                         {title}
                         <img src={DropDownIcon} alt="" className="side-nav-toggle" />
                     </p>
-                    <div className={`side-nav-questions${sectionId === quizioID ? '-active' : ''}`}>
+                    <div className={`side-nav-questions${sectionID === quizioID ? '-active' : ''}`}>
                         {questions.map((question, index) => (
                             <QuestionBubble number={index + 1} key={question} type="not-visited" />
                         ))}

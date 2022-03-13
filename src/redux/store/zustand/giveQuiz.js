@@ -4,7 +4,7 @@ const useGiveQuizStore = create((set) => ({
     quiz: {},
     sections: [],
 
-    /* Quiz Id */
+    /* Quiz ID */
     setQuiz: (quiz) => set(() => ({ quiz })),
     /* Add new section */
     setSections: (sections) => set(() => ({ sections })),

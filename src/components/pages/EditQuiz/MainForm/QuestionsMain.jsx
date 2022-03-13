@@ -30,13 +30,13 @@ const SectionDescription = () => {
 } = useAddQuestion();
 
     const handleSave = () => {
-        mutateSection({ sectionId: currentSection.id, body: _.omit(currentSection, ['id', 'questions']) });
+        mutateSection({ sectionID: currentSection.id, body: _.omit(currentSection, ['id', 'questions']) });
     };
 
     useEffect(() => {
         if (isSuccess) {
             if (currentSection.questions.length === 0) {
-                mutateQuestions({ sectionId: currentSection.id });
+                mutateQuestions({ sectionID: currentSection.id });
             } else toggleQuestionForm(true);
         }
     }, [isSuccess]);

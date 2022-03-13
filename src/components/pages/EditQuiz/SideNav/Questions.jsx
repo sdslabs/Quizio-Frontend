@@ -10,14 +10,14 @@ const Questions = ({ isActive, questions }) => {
     const {
  addQuestion, sections, activeSectionIndex, addQuestionToSection,
 } = useCreateQuizStore();
-    const sectionId = sections[activeSectionIndex]?.id;
+    const sectionID = sections[activeSectionIndex]?.id;
 
     const {
     data, isLoading, isSuccess, mutate: mutateAddQuestion,
     } = useAddQuestion();
 
     const handleAddNewQuestion = () => {
-        mutateAddQuestion({ sectionId });
+        mutateAddQuestion({ sectionID });
     };
 
     const handleBubbleClick = () => {};
@@ -36,9 +36,9 @@ const Questions = ({ isActive, questions }) => {
 
     return (
         <div className={`side-nav-questions${isActive ? '-active' : ''}`}>
-            {questions.map((question, quesIdx) => (
-                <button onClick={handleBubbleClick} key={question?.id || quesIdx} type="button">
-                    <QuestionBubble number={quesIdx + 1} type="not-visited" />
+            {questions.map((question, quesIDx) => (
+                <button onClick={handleBubbleClick} key={question?.id || quesIDx} type="button">
+                    <QuestionBubble number={quesIDx + 1} type="not-visited" />
                 </button>
             ))}
             <button onClick={handleAddNewQuestion} type="button">
