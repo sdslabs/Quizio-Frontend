@@ -1,115 +1,162 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
-import { useGetQuestion, useUpdateQuestion } from '@api/quizzes/useQuestions';
+import {
+  useGetQuestion,
+  useToggleQuestionType,
+  useUpdateQuestion,
+} from '@api/quizzes/useQuestions';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
-import Subjective from './Subjective';
-import MCQ from './MCQ';
+import Title from './Title';
+import QuestionInputArea from './QuestionInputArea';
 
 const Question = () => {
   // Local states
   const [questionText, setQuestionText] = useState('');
   const [questionType, setQuestionType] = useState('mcq');
   const [checkerNotes, setCheckersNotes] = useState('');
-  const [mcqChoice, setMcqChoice] = useState([]);
   const [marks, setMarks] = useState(0);
-
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
+
+  // Question types
+  const questionTypeOptions = [
+    { value: 'mcq', label: 'Multiple Choice' },
+    { value: 'subjective', label: 'Subjective' },
+  ];
+
   // Global create quiz store
   const { sections, activeSectionIndex, activeQuestion } = useCreateQuizStore();
 
   // Question update mutation
   const {
     isLoading: isUpdateLoading,
+    isSuccess: isUpdateSuccess,
     mutate: mutateQuestion,
   } = useUpdateQuestion();
+
+  // Question toggle mutation
+  const {
+    isLoading: isToggleLoading,
+    isSuccess: isToggleSuccess,
+    mutate: mutateToggleQuestion,
+  } = useToggleQuestionType();
 
   // Get question query
   const { isSuccess: fetchSuccess, data: questionData } = useGetQuestion(
     currentQuestionID,
   );
 
-  const questionTypeOptions = [
-    { value: 'mcq', label: 'Multiple Choice' },
-    { value: 'subjective', label: 'Subjective' },
-  ];
-
   const handleSave = async () => {
-    const requestBody = {};
+    const body = {
+      question: questionText,
+      type: questionType,
+      checkerNotes,
+      maxMarks: marks,
+      minMarks: '0',
+    };
 
-    log('Handle save!');
+    log('Handle save!', { body });
     mutateQuestion({
       questionID: currentQuestionID,
-      body: requestBody,
+      body,
     });
   };
 
+  const handleQuestionType = async (selectedOption) => {
+    log('toggle:', { questionType, newType: selectedOption.value });
+    if (questionType !== selectedOption.value) {
+      mutateToggleQuestion({ questionID: currentQuestionID });
+      setQuestionType(selectedOption.value);
+    }
+  };
+
+  useEffect(() => {
+    log('successfully toggled!');
+  }, [isToggleSuccess]);
+
   useEffect(() => {
     if (fetchSuccess) {
-      log('Fetched question :)', { question: questionData?.data?.data });
+      const {
+        question: originalQuestion,
+        // choices: originalChoices,
+        type: originalType,
+        checkerNotes: originalCheckerNotes,
+        maxMarks: originalMarks,
+      } = questionData?.data?.data?.question;
+      log('Fetched question :)', {
+        originalQuestion: questionData?.data?.data?.question,
+      });
+      setQuestionText(originalQuestion);
+      setQuestionType(originalType);
+      setCheckersNotes(originalCheckerNotes);
+      setMarks(originalMarks || 0);
     } else {
       log('Failed to fetch question :(', { currentQuestionID });
     }
   }, [fetchSuccess]);
 
   useEffect(() => {
-    // log('sections update!', { sections, section: sections[activeSectionIndex] });
+    log(
+      'sections update!',
+      { sections, section: sections[activeSectionIndex] },
+      false,
+    );
     setCurrentSection(sections[activeSectionIndex]);
   }, [sections]);
 
   useEffect(() => {
-    // log('{Question component}: ', {
-    //   currentQuestionID: sections[activeSectionIndex].questions[activeQuestion],
-    // });
+    log(
+      '{Question component}: ',
+      {
+        currentQuestionID:
+          sections[activeSectionIndex].questions[activeQuestion],
+      },
+      false,
+    );
 
     setCurrentQuestionID(sections[activeSectionIndex].questions[activeQuestion]);
   }, [activeQuestion, activeSectionIndex, sections]);
 
   useEffect(() => {
-    // log('ACTIVE QUESTION UPDATED', { activeQuestion });
+    log('ACTIVE QUESTION UPDATED', { activeQuestion }, false);
   }, [activeQuestion]);
 
-  const handleQuestionType = (selectedOption) => setQuestionType(selectedOption.value);
+  useEffect(() => {
+    log('update success: ', isUpdateSuccess);
+  }, [isUpdateSuccess]);
 
   return (
       <div className="quiz-details w-full">
           <div className="font-bold text-3xl">{currentSection?.title || ''}</div>
           <div className="quiz-question w-full">
               <div className="question-type-dropdown flex w-full justify-between">
-                  <div className="question-title mt-6 mb-6 contentEditable">
-                      Question
-                      {' '}
-                      {activeQuestion + 1}
-                  </div>
+                  <Title activeQuestion={activeQuestion} />
                   <Select
                     options={questionTypeOptions}
                     onChange={handleQuestionType}
+                    val={questionType}
                     defaultValue="mcq"
                     className="text-sm p-5 w-200"
                   />
               </div>
               <MarkdownTextField
                 id="question-description"
-                val={questionText}
+                val={questionText || ''}
                 placeholder="Enter question here"
                 setVal={setQuestionText}
               />
-              {questionType === 'subjective' ? (
-                  <Subjective
-                    marks={marks}
-                    setMarks={setMarks}
-                    checkerNotes={checkerNotes}
-                    setCheckersNotes={setCheckersNotes}
-                  />
+              {isToggleLoading ? (
+                  <div>Toggling question type...</div>
         ) : (
-            <MCQ
-              marks={marks}
+            <QuestionInputArea
+              questionType={questionType}
+              marks={marks.toString()}
               setMarks={setMarks}
-              mcqChoice={mcqChoice}
-              setMcqChoice={setMcqChoice}
+              checkerNotes={checkerNotes}
+              setCheckersNotes={setCheckersNotes}
             />
         )}
               <div className="w-40 ml-auto mt-8">

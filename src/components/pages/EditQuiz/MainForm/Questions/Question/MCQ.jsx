@@ -6,10 +6,7 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import RadioGroup from '@components/Input/RadioGroup';
 
 const MCQ = ({
-  marks,
-  setMarks,
-  mcqChoice,
-  setMcqChoice,
+ marks, setMarks, mcqChoice, setMcqChoice,
 }) => {
   const [mcqCount, setMcqCount] = useState(0); // checks to see max no. of options is less than 4
 
@@ -61,7 +58,7 @@ const MCQ = ({
   );
 };
 MCQ.propTypes = {
-  marks: PropTypes.number,
+  marks: PropTypes.string,
   setMarks: PropTypes.func,
   // eslint-disable-next-line react/forbid-prop-types
   mcqChoice: PropTypes.array,
@@ -69,7 +66,7 @@ MCQ.propTypes = {
 };
 
 MCQ.defaultProps = {
-  marks: 0,
+  marks: '0',
   setMarks: () => {},
   mcqChoice: [],
   setMcqChoice: () => {},

@@ -7,3 +7,5 @@ export const getQuestionByID = ({ queryKey }) => axiosInstance.get(`/quizzes/sec
 export const updateQuestionByID = ({ questionID, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}`, body);
 
 export const deleteQuestionByID = ({ questionID }) => axiosInstance.delete(`/quizzes/sections/questions/${questionID}`);
+
+export const toggleQuestionType = ({ questionID }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/toggle`);

@@ -39,8 +39,13 @@ const useCreateQuizStore = create((set) => ({
             id: sectionID,
             title: `Section ${state.sections.length + 1}`,
         };
+        if (!state.sections.find((section) => section.id === sectionID)) {
+            return {
+                sections: [...state.sections, newSection],
+            };
+        }
         return {
-            sections: [...state.sections, newSection],
+            sections: [...state.sections],
         };
     }),
     /* Update section details for current section */

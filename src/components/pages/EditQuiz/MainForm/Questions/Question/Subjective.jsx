@@ -15,7 +15,7 @@ const Subjective = ({
                   id="question-marks"
                   placeholder="0"
                   setVal={setMarks}
-                  val={marks}
+                  val={marks.toString()}
                 />
             </div>
         </div>
@@ -34,14 +34,14 @@ const Subjective = ({
 Subjective.propTypes = {
   checkerNotes: PropTypes.string,
   setCheckersNotes: PropTypes.func,
-  marks: PropTypes.number,
+  marks: PropTypes.string,
   setMarks: PropTypes.func,
 };
 
 Subjective.defaultProps = {
   checkerNotes: '',
   setCheckersNotes: () => {},
-  marks: 0,
+  marks: '0',
   setMarks: () => {},
 };
 

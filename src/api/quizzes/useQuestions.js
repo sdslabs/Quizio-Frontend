@@ -8,3 +8,5 @@ export const useGetQuestion = (questionID) => useQuery(['getQuestionByID', quest
 export const useUpdateQuestion = () => useMutation(fetchers.updateQuestionByID);
 
 export const useDeleteQuestion = () => useMutation(fetchers.deleteQuestionByID);
+
+export const useToggleQuestionType = () => useMutation(fetchers.toggleQuestionType);
