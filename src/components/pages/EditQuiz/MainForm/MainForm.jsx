@@ -1,6 +1,6 @@
 import React from 'react';
 import useCreateQuizStore from '@store/zustand/createQuiz';
-import Questions from './QuestionsMain';
+import Questions from './Questions';
 import QuizDetails from './QuizDetails';
 import RegistrationForm from './RegistrationForm';
 
