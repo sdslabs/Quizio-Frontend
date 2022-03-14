@@ -4,6 +4,6 @@ export const addSectionToQuiz = ({ quizID }) => axiosInstance.post(`/quizzes/${q
 
 export const getSectionDetails = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}`);
 
-export const updateSectionDetails = ({ sectionId, body }) => axiosInstance.put(`/quizzes/sections/${sectionId}`, body);
+export const updateSectionDetails = ({ sectionID, body }) => axiosInstance.put(`/quizzes/sections/${sectionID}`, body);
 
-export const deleteSection = ({ sectionId }) => axiosInstance.delete(`/quizzes/sections/${sectionId}`);
+export const deleteSection = ({ sectionID }) => axiosInstance.delete(`/quizzes/sections/${sectionID}`);

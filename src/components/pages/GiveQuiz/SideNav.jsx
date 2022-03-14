@@ -23,8 +23,8 @@ const sections = [
 
 const SideNav = () => {
     const [activeNav, setActiveNav] = useState('');
-    const { quizId, sectionId } = useParams();
-    log({ quizId, sectionId });
+    const { quizID, sectionID } = useParams();
+    log({ quizID, sectionID });
 
     return (
         <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">

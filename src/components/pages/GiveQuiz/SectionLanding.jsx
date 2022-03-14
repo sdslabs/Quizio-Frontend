@@ -6,8 +6,8 @@ import SubmitQuiz from '@components/Modals/SubmitQuiz';
 import log from '@utils/log';
 
 const SectionLanding = () => {
-    const { sectionId } = useParams();
-    log({ sectionId });
+    const { sectionID } = useParams();
+    log({ sectionID });
     const [showModal, setShowModal] = React.useState(false);
 
     return (

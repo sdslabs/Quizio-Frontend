@@ -16,7 +16,7 @@ const Question = () => {
     const [questionType, setQuestionType] = useState('mcq');
     const [checkerNotes, setCheckersNotes] = useState('');
     const [mcqChoice, setMcqChoice] = useState([]);
-    const [marks, setMarks] = useState();
+    const [marks, setMarks] = useState(0);
     const [mcqCount, setMcqCount] = useState(0); // checks to see max no. of options is less than 4
 
     const {
@@ -52,7 +52,7 @@ const Question = () => {
             requestBody = {
               question: questionText,
               type: questionType,
-              sectionID: currentSection.quizioID,
+              sectionID: currentSection?.quizioID,
               checkerNotes,
             };
             break;
@@ -60,12 +60,12 @@ const Question = () => {
             break;
         }
         mutateQuestion({
-            questionId: currentQuestion.quizioID,
+            questionID: currentQuestion?.quizioID,
             body: requestBody,
             });
     };
     log(isUpdateSuccess);
-    const { isLoading: loadingFetchQuestion, isSuccess: fetchSuccess, data } = useGetQuestion(currentQuestion.quizioID);
+    const { isLoading: loadingFetchQuestion, isSuccess: fetchSuccess, data } = useGetQuestion(currentQuestion?.quizioID);
 
     useEffect(() => {
       if (fetchSuccess) {
@@ -107,7 +107,7 @@ const Question = () => {
                         <span className="text-grey pl-4">Checker&apos;s Notes</span>
                         <MarkdownTextField
                           id="checkers-notes"
-                          val={checkerNotes}
+                          val={checkerNotes || ''}
                           placeholder="Enter checker's notes here"
                           setVal={setCheckersNotes}
                         />

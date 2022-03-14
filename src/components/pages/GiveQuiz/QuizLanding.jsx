@@ -7,9 +7,9 @@ import StartQuizModal from '@pages/Register/StartQuizModal';
 import log from '@utils/log';
 
 const QuizLanding = () => {
-    const { quizId } = useParams();
+    const { quizID } = useParams();
 
-    log({ quizId });
+    log({ quizID });
 
     const [showModal, setShowModal] = useState(false);
 

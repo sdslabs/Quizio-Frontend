@@ -45,7 +45,7 @@ const Section = ({ index, section }) => {
         } flex justify-between`}
             onClick={handleSwitchSection}
           >
-              {section.title}
+              {section.title || `Section ${index + 1}`}
               <DropdownArrowDownIcon />
           </p>
           <div>

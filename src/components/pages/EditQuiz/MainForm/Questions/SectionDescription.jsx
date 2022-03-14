@@ -9,6 +9,7 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 
 const SectionDescription = () => {
+  // Global create quiz store
   const {
     sections,
     activeSectionIndex,
@@ -17,36 +18,45 @@ const SectionDescription = () => {
     addQuestion,
     toggleQuestionForm,
   } = useCreateQuizStore();
-  const currentSection = sections[activeSectionIndex];
-  const setSectionTitle = (value) => updateSection({ ...currentSection, title: value });
-  const setSectionDescription = (value) => updateSection({ ...currentSection, description: value });
 
-  const { isLoading, mutate: mutateSection, isSuccess } = useUpdateSection();
-
+  // Add question
   const {
+    mutate: mutateQuestions,
     isLoading: isAddingQuestion,
     data: questionData,
-    mutate: mutateQuestions,
     isSuccess: isQuestionAdded,
   } = useAddQuestion();
 
+  // Update section
+  const {
+    mutate: mutateSection,
+    isLoading: isSectionUpdating,
+    isSuccess: isSectionUpdated,
+  } = useUpdateSection();
+
+  const currentSection = sections[activeSectionIndex];
+  const setSectionTitle = (title) => updateSection({ ...currentSection, title });
+  const setSectionDescription = (description) => updateSection({ ...currentSection, description });
+
   const handleSave = () => {
+    log('Saving section!');
     mutateSection({
-      sectionId: currentSection.id,
+      sectionID: currentSection.id,
       body: _.omit(currentSection, ['id', 'questions']),
     });
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSectionUpdated) {
+      log('Section updated in backend, now update questions.');
       if (currentSection.questions.length === 0) {
-        mutateQuestions({ sectionId: currentSection.id });
+        mutateQuestions({ sectionID: currentSection.id });
       } else toggleQuestionForm(true);
     }
-  }, [isSuccess]);
+  }, [isSectionUpdated]);
 
   useEffect(() => {
-    log('Section Desc page, activeSectionIndex update: ', {
+    log('{Section Desc page} activeSectionIndex update: ', {
       activeSectionIndex,
     });
   }, [activeSectionIndex]);
@@ -86,10 +96,10 @@ const SectionDescription = () => {
                 setVal={setSectionDescription}
               />
               <div className="w-40 ml-auto mt-8">
-                  {isLoading || isAddingQuestion ? (
+                  {isSectionUpdating || isAddingQuestion ? (
               'Saving...'
             ) : (
-                <PrimaryCTA text="Save & Continue" onClick={handleSave} />
+                <PrimaryCTA text="Save &amp; Continue" onClick={handleSave} />
             )}
               </div>
           </div>

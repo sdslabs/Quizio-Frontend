@@ -33,35 +33,35 @@ const useCreateQuizStore = create((set) => ({
     /* Toggle active section */
     setActiveSection: (index) => set(() => ({ activeSectionIndex: index })),
     /* Add new section using ID */
-    addSection: (sectionId) => set((state) => {
-        const newSection = { ...defaultSection, id: sectionId, title: `Section ${state.sections.length + 1}` };
+    addSection: (sectionID) => set((state) => {
+        const newSection = { ...defaultSection, id: sectionID, title: `Section ${state.sections.length + 1}` };
         return {
             sections: [...state.sections, newSection],
         };
     }),
     /* Update section details for current section */
     updateSection: (update, id) => set((state) => {
-        const sectionIdx = id ? _.findIndex(state.sections, { id }) : state.activeSectionIndex;
-        const staleSection = state.sections[sectionIdx];
+        const sectionIDx = id ? _.findIndex(state.sections, { id }) : state.activeSectionIndex;
+        const staleSection = state.sections[sectionIDx];
         const updatedSection = { ...staleSection, ...update };
 
         return {
             sections: [
-                ...state.sections.slice(0, sectionIdx),
+                ...state.sections.slice(0, sectionIDx),
                 updatedSection,
-                ...state.sections.slice(sectionIdx + 1),
+                ...state.sections.slice(sectionIDx + 1),
             ],
         };
     }),
     /* Add new question ID to section */
-    addQuestionToSection: (questionId) => set((state) => {
+    addQuestionToSection: (questionID) => set((state) => {
         const activeSection = state.sections[state.activeSectionIndex];
         return {
             sections: [
                 ...state.sections.slice(0, state.activeSectionIndex),
                 {
                     ...activeSection,
-                    questions: [...activeSection.questions, questionId],
+                    questions: [...activeSection.questions, questionID],
                 },
                 ...state.sections.slice(state.activeSectionIndex + 1),
             ],
