@@ -10,6 +10,7 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import RadioGroup from '@components/Input/RadioGroup';
 // import Switch from 'react-switch';
 import Select from 'react-select';
+import log from '@utils/log';
 // import RadioButton from '@components/Input/RadioGroup/RadioButton';
 
 const Question = () => {
@@ -46,23 +47,23 @@ const Question = () => {
         { value: 'subjective', label: `${<SubjectiveIcon />} Subjective` },
       ];
 
-    console.log('show question', showQuestion);
-    console.log('show active question', activeQuestion);
+    log('show question', showQuestion);
+    log('show active question', activeQuestion);
     const currentSection = sections[activeSectionIndex];
     const currentQuestion = questions[activeQuestion];
-    // console.log('question: ', currentQuestion.quizioID);
+    // log('question: ', currentQuestion.quizioID);
     // setQuestionData(data);
     // const setQuestion (value) => {};
     const { isLoading: isUpdateLoading, mutate: mutateQuestion, isSuccess: isUpdateSuccess } = useUpdateQuestion();
     // const isAddingQuestion = false;
     // useEffect(() => {
     // }, []);
-    // console.log(questionData, 'question data');
-    console.log(questionType);
+    // log(questionData, 'question data');
+    log(questionType);
 
     const handleSave = async () => {
         // cosnt isMCQ =
-        // console.log(currentQuestion.quizioID);
+        // log(currentQuestion.quizioID);
         let requestBody = {};
         switch (questionType) {
           case 'mcq':
@@ -74,7 +75,7 @@ const Question = () => {
             };
             break;
           case 'subjective':
-            console.log(questionType);
+            log(questionType);
             requestBody = {
               question: questionText,
               type: questionType,
@@ -90,7 +91,7 @@ const Question = () => {
             body: requestBody,
             });
     };
-    console.log(isUpdateSuccess);
+    log(isUpdateSuccess);
     const { isLoading: loadingFetchQuestion, isSuccess: fetchSuccess, data } = useGetQuestion(currentQuestion.quizioID);
 
     // useEffect(()=>{
@@ -100,16 +101,16 @@ const Question = () => {
     // },[]);
     useEffect(() => {
       if (fetchSuccess) {
-        console.log('success');
-        console.log(data);
-        console.log(loadingFetchQuestion);
-        console.log(fetchSuccess);
+        log('success');
+        log(data);
+        log(loadingFetchQuestion);
+        log(fetchSuccess);
       }
       // mutateQuestion({ questionId: currentQuestion.quizioID });
      }, [fetchSuccess]);
-    //  console.log(loadingFetchQuestion);
-    //  console.log(fetchSuccess);
-    //  console.log(data, 'data');
+    //  log(loadingFetchQuestion);
+    //  log(fetchSuccess);
+    //  log(data, 'data');
 
     // const toggleSwitch = () => { setAutoCheck(!autoCheck); };
 
@@ -121,7 +122,7 @@ const Question = () => {
      };
 
     const renderSwitch = (qType) => {
-      console.log('renderswtich', qType);
+      log('renderswtich', qType);
       switch (qType) {
           case 'subjective':
             return (

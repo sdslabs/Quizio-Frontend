@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import _ from 'lodash';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import TextField from '@components/Input/TextField';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { useUpdateSection } from '@api/quizzes/useSections';
-import _ from 'lodash';
+import log from '@utils/log';
 import { useAddQuestion /* useGetQuestion, */ } from '@api/quizzes/useQuestions';
 import Question from './Question';
 
@@ -20,7 +21,7 @@ const SectionDescription = () => {
  sections, activeSectionIndex, updateSection, addQuestionToSection, addQuestion, toggleQuestionForm,
 } = useCreateQuizStore();
     const currentSection = sections[activeSectionIndex];
-    console.log(activeSectionIndex);
+    log(activeSectionIndex);
     const setSectionTitle = (value) => updateSection({ ...currentSection, title: value });
     const setSectionDescription = (value) => updateSection({ ...currentSection, description: value });
 
