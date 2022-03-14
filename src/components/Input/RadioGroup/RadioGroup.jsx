@@ -48,7 +48,7 @@ const RadioGroup = ({
 RadioGroup.propTypes = {
   choices: PropTypes.array.isRequired,
   selected: PropTypes.string,
-  setSelected: PropTypes.func.isRequired,
+  setSelected: PropTypes.func,
   setMcqCount: PropTypes.func,
   mcqCount: PropTypes.number,
   editable: PropTypes.bool,
@@ -59,6 +59,7 @@ RadioGroup.defaultProps = {
   selected: '',
   setChoices: () => {},
   setMcqCount: () => {},
+  setSelected: () => {},
   editable: false,
   mcqCount: 0,
 };

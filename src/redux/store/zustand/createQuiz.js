@@ -34,7 +34,11 @@ const useCreateQuizStore = create((set) => ({
     setActiveSection: (index) => set(() => ({ activeSectionIndex: index })),
     /* Add new section using ID */
     addSection: (sectionID) => set((state) => {
-        const newSection = { ...defaultSection, id: sectionID, title: `Section ${state.sections.length + 1}` };
+        const newSection = {
+            ...defaultSection,
+            id: sectionID,
+            title: `Section ${state.sections.length + 1}`,
+        };
         return {
             sections: [...state.sections, newSection],
         };
@@ -70,7 +74,7 @@ const useCreateQuizStore = create((set) => ({
     /* Add question with details */
     addQuestion: (question) => set((state) => ({ questions: [...state.questions, question] })),
     /* Toggle active question */
-    setActiveQuestion: (index) => set(() => ({ activeQuestionIndex: index })),
+    setActiveQuestion: (index) => set(() => ({ activeQuestion: index })),
     /* Toggle activate question form */
     toggleQuestionForm: (flag) => set(() => ({ showQuestion: flag })),
 }));
