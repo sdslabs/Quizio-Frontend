@@ -1,6 +1,6 @@
 import axiosInstance from '@api/axiosInstance';
 
-export const addSectionToQuiz = ({ quizId }) => axiosInstance.post(`/quizzes/${quizId}/sections`);
+export const addSectionToQuiz = ({ quizID }) => axiosInstance.post(`/quizzes/${quizID}/sections`);
 
 export const getSectionDetails = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}`);
 

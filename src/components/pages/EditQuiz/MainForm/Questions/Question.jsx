@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import { useGetQuestion, useUpdateQuestion } from '@api/quizzes/useQuestions';
 import { ReactComponent as MCQIcon } from '@icons/radio_button.svg';
@@ -8,18 +9,12 @@ import MarkdownTextField from '@components/Input/MarkdownTextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import RadioGroup from '@components/Input/RadioGroup';
-// import Switch from 'react-switch';
-import Select from 'react-select';
 import log from '@utils/log';
-// import RadioButton from '@components/Input/RadioGroup/RadioButton';
 
 const Question = () => {
-    // const [selected, setSelected] = useState('');
-    // const [autoCheck, setAutoCheck] = useState(false);
     const [questionText, setQuestionText] = useState('');
     const [questionType, setQuestionType] = useState('mcq');
     const [checkerNotes, setCheckersNotes] = useState('');
-    // const [questionData, setQuestionData] = useState({});
     const [mcqChoice, setMcqChoice] = useState([]);
     const [marks, setMarks] = useState();
     const [mcqCount, setMcqCount] = useState(0); // checks to see max no. of options is less than 4
@@ -28,20 +23,6 @@ const Question = () => {
         sections, questions, showQuestion, activeSectionIndex, activeQuestion,
        } = useCreateQuizStore();
 
-      //  const answerChoices = [
-      //   {
-      //     choice: 'Ans 1',
-      //     quizioID: '1',
-      //   },
-      //   {
-      //     choice: 'Ans 2',
-      //     quizioID: '2',
-      //   },
-      //   {
-      //     choice: 'Ans 3',
-      //     quizioID: '3',
-      //   },
-      // ];
       const questionTypeOptions = [
         { value: 'mcq', label: `${<MCQIcon />} Multiple Choice` },
         { value: 'subjective', label: `${<SubjectiveIcon />} Subjective` },
@@ -51,19 +32,11 @@ const Question = () => {
     log('show active question', activeQuestion);
     const currentSection = sections[activeSectionIndex];
     const currentQuestion = questions[activeQuestion];
-    // log('question: ', currentQuestion.quizioID);
-    // setQuestionData(data);
-    // const setQuestion (value) => {};
+
     const { isLoading: isUpdateLoading, mutate: mutateQuestion, isSuccess: isUpdateSuccess } = useUpdateQuestion();
-    // const isAddingQuestion = false;
-    // useEffect(() => {
-    // }, []);
-    // log(questionData, 'question data');
     log(questionType);
 
     const handleSave = async () => {
-        // cosnt isMCQ =
-        // log(currentQuestion.quizioID);
         let requestBody = {};
         switch (questionType) {
           case 'mcq':
@@ -94,11 +67,6 @@ const Question = () => {
     log(isUpdateSuccess);
     const { isLoading: loadingFetchQuestion, isSuccess: fetchSuccess, data } = useGetQuestion(currentQuestion.quizioID);
 
-    // useEffect(()=>{
-    //   if(currentQuestion.questionId){
-
-    //   }
-    // },[]);
     useEffect(() => {
       if (fetchSuccess) {
         log('success');
@@ -106,13 +74,7 @@ const Question = () => {
         log(loadingFetchQuestion);
         log(fetchSuccess);
       }
-      // mutateQuestion({ questionId: currentQuestion.quizioID });
      }, [fetchSuccess]);
-    //  log(loadingFetchQuestion);
-    //  log(fetchSuccess);
-    //  log(data, 'data');
-
-    // const toggleSwitch = () => { setAutoCheck(!autoCheck); };
 
     const handleQuestionType = (selectedOption) => { setQuestionType(selectedOption.value); };
 

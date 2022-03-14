@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useAddQuestion } from '@api/quizzes/useQuestions';
 
-const Questions = ({ isActive, questions }) => {
+const QuestionBubbles = ({ isActive, questions }) => {
     const {
  addQuestion, sections, activeSectionIndex, addQuestionToSection,
 } = useCreateQuizStore();
@@ -32,7 +32,7 @@ const Questions = ({ isActive, questions }) => {
     }
    }, [isSuccess, data]);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div>Loading Question...</div>;
 
     return (
         <div className={`side-nav-questions${isActive ? '-active' : ''}`}>
@@ -48,9 +48,9 @@ const Questions = ({ isActive, questions }) => {
     );
 };
 
-Questions.propTypes = {
+QuestionBubbles.propTypes = {
     isActive: PropTypes.bool.isRequired,
     questions: PropTypes.array.isRequired,
 };
 
-export default Questions;
+export default QuestionBubbles;

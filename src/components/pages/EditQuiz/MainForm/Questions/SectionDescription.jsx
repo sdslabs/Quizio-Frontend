@@ -3,10 +3,10 @@ import _ from 'lodash';
 import { useAddQuestion } from '@api/quizzes/useQuestions';
 import { useUpdateSection } from '@api/quizzes/useSections';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
-import log from '@utils/log';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import log from '@utils/log';
 
 const SectionDescription = () => {
   const {
@@ -18,7 +18,6 @@ const SectionDescription = () => {
     toggleQuestionForm,
   } = useCreateQuizStore();
   const currentSection = sections[activeSectionIndex];
-  log(activeSectionIndex);
   const setSectionTitle = (value) => updateSection({ ...currentSection, title: value });
   const setSectionDescription = (value) => updateSection({ ...currentSection, description: value });
 
@@ -47,6 +46,12 @@ const SectionDescription = () => {
   }, [isSuccess]);
 
   useEffect(() => {
+    log('Section Desc page, activeSectionIndex update: ', {
+      activeSectionIndex,
+    });
+  }, [activeSectionIndex]);
+
+  useEffect(() => {
     if (isQuestionAdded) {
       const question = questionData.data?.data?.question;
       if (question) {
@@ -67,7 +72,7 @@ const SectionDescription = () => {
               <TextField
                 label="Section Name"
                 limit={10}
-                val={currentSection.title}
+                val={currentSection?.title || ''}
                 setVal={setSectionTitle}
                 placeholder="Enter Section Name"
                 id="section-name"
@@ -75,7 +80,7 @@ const SectionDescription = () => {
               <p className="text-sm text-grey-N6 mt-6 mb-2">Section Instructions</p>
               <MarkdownTextField
                 id="section-description"
-                val={currentSection.description}
+                val={currentSection?.description || ''}
                 limit={1500}
                 placeholder="Enter instructions for this section"
                 setVal={setSectionDescription}
