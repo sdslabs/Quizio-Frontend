@@ -64,29 +64,29 @@ const AdditionalDetails = ({ fields, setFields }) => {
       <div className="registration-form-additional-details">
           <RegistrationFormCustomInput
             id={1}
-            fieldName={fieldName1}
+            fieldName={fieldName1 || ''}
             setFieldName={setFieldName1}
-            fieldLabel={fieldLabel1}
+            fieldLabel={fieldLabel1 || ''}
             setFieldLabel={setFieldLabel1}
-            required={required1}
+            required={required1 || false}
             setRequired={setRequired1}
           />
           <RegistrationFormCustomInput
             id={2}
-            fieldName={fieldName2}
+            fieldName={fieldName2 || ''}
             setFieldName={setFieldName2}
-            fieldLabel={fieldLabel2}
+            fieldLabel={fieldLabel2 || ''}
             setFieldLabel={setFieldLabel2}
-            required={required2}
+            required={required2 || false}
             setRequired={setRequired2}
           />
           <RegistrationFormCustomInput
             id={3}
-            fieldName={fieldName3}
+            fieldName={fieldName3 || ''}
             setFieldName={setFieldName3}
-            fieldLabel={fieldLabel3}
+            fieldLabel={fieldLabel3 || ''}
             setFieldLabel={setFieldLabel3}
-            required={required3}
+            required={required3 || false}
             setRequired={setRequired3}
           />
       </div>
