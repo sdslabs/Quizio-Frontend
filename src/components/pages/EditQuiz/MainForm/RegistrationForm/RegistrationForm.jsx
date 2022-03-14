@@ -44,7 +44,7 @@ const RegistrationForm = () => {
   const handleSubmit = () => mutateQuizDetails({ quizID: currentID, body: { ...fields } });
 
   useEffect(() => {
-    if (isUpdateSuccess) setCurrentStage('Registration form');
+    if (isUpdateSuccess) setCurrentStage('Questions');
     else log('Failed to update quiz :(');
   }, [isUpdateSuccess]);
 

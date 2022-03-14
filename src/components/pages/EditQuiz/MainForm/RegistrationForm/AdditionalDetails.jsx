@@ -46,7 +46,7 @@ const AdditionalDetails = ({ fields, setFields }) => {
   ]);
 
   useEffect(() => {
-    log('update');
+    log('Update fields state', { fields });
     setFieldLabel1(fields?.detail1?.key);
     setFieldLabel2(fields?.detail2?.key);
     setFieldLabel3(fields?.detail3?.key);
