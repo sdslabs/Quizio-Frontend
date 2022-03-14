@@ -5,7 +5,7 @@ import RadioButton from './RadioButton';
 import EditableRadioButton from './EditableRadioButton';
 
 const RadioGroup = ({
- choices, setChoices, selected, setSelected, editable,
+ choices, setChoices, selected, setSelected, editable, setMcqCount, mcqCount,
 }) => {
   const handleChange = (e) => {
     setSelected(e.target.value);
@@ -20,7 +20,9 @@ const RadioGroup = ({
                         text={choice.choice}
                         quizioID={choice.quizioID}
                         onChange={() => {}}
+                        setMcqCount={setMcqCount}
                         setChoices={setChoices}
+                        mcqCount={mcqCount}
                         choices={choices}
                       />
 )
@@ -43,12 +45,16 @@ RadioGroup.propTypes = {
   choices: PropTypes.array.isRequired,
   selected: PropTypes.string.isRequired,
   setSelected: PropTypes.func.isRequired,
+  setMcqCount: PropTypes.func,
+  mcqCount: PropTypes.number,
   editable: PropTypes.bool,
   setChoices: PropTypes.func,
 };
 
 RadioGroup.defaultProps = {
   setChoices: () => {},
+  setMcqCount: () => {},
   editable: false,
+  mcqCount: 0,
 };
 export default RadioGroup;

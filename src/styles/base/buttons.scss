@@ -26,3 +26,7 @@
 .radio-button-label {
   @apply flex-grow ml-2 py-2 pl-3 text-black font-normal hover:bg-purple-V1 rounded;
 }
+
+.radio-button-text {
+  @apply hover:bg-purple-V1 focus:bg-white border-opacity-0
+}

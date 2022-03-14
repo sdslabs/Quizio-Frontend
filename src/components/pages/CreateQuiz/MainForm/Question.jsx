@@ -59,6 +59,7 @@ const Question = () => {
     // }, []);
     // console.log(questionData, 'question data');
     console.log(questionType);
+
     const handleSave = async () => {
         // cosnt isMCQ =
         // console.log(currentQuestion.quizioID);
@@ -156,6 +157,9 @@ const Question = () => {
                     <div className="mcq-options ml-5">
                         <RadioGroup
                           choices={mcqChoice}
+                          editable
+                          setMcqCount={setMcqCount}
+                          mcqCount={mcqCount}
                         />
                         <div className="w-1/6 pb-6 pt-5">
                             { mcqCount < 4 ? <SecondaryCTA text="+ Add Option" onClick={handleAddOption} /> : ''}
