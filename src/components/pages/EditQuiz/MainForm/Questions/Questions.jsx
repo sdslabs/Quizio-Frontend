@@ -8,7 +8,7 @@ const Questions = () => {
   const { showQuestion } = useCreateQuizStore();
 
   useEffect(() => {
-      log('Questions Page showQuestion update', { showQuestion });
+    log('Questions Page showQuestion update', { showQuestion });
   }, [showQuestion]);
 
   return showQuestion ? <Question /> : <SectionDescription />;

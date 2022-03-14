@@ -15,7 +15,7 @@ const EditQuiz = () => {
   const { isLoading } = useGetQuiz(quizID);
 
   useEffect(() => {
-    log(quizID);
+    log({ quizID });
     setCurrentID(quizID);
   }, [quizID]);
 

@@ -28,13 +28,21 @@ const Question = () => {
   ];
 
   // Global create quiz store
-  const { sections, activeSectionIndex, activeQuestion } = useCreateQuizStore();
+  const {
+    questions,
+    sections,
+    activeSectionIndex,
+    activeQuestion,
+    addQuestion,
+    updateQuestion,
+  } = useCreateQuizStore();
 
   // Question update mutation
   const {
     isLoading: isUpdateLoading,
     isSuccess: isUpdateSuccess,
     mutate: mutateQuestion,
+    data: mutatedQuestionData,
   } = useUpdateQuestion();
 
   // Question toggle mutation
@@ -45,9 +53,12 @@ const Question = () => {
   } = useToggleQuestionType();
 
   // Get question query
-  const { isSuccess: fetchSuccess, data: questionData } = useGetQuestion(
-    currentQuestionID,
-  );
+  const {
+    isSuccess: fetchSuccess,
+    isFetching: isFetchingQuestion,
+    data: questionData,
+    // refetch: refetchQuestion,
+  } = useGetQuestion(currentQuestionID);
 
   const handleSave = async () => {
     const body = {
@@ -78,6 +89,7 @@ const Question = () => {
   }, [isToggleSuccess]);
 
   useEffect(() => {
+    log('fetched question!');
     if (fetchSuccess) {
       const {
         question: originalQuestion,
@@ -93,6 +105,7 @@ const Question = () => {
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks || 0);
+      addQuestion(questionData?.data?.data?.question);
     } else {
       log('Failed to fetch question :(', { currentQuestionID });
     }
@@ -108,64 +121,98 @@ const Question = () => {
   }, [sections]);
 
   useEffect(() => {
-    log(
-      '{Question component}: ',
-      {
-        currentQuestionID:
-          sections[activeSectionIndex].questions[activeQuestion],
-      },
-      false,
-    );
+    log('{Question component}: ', {
+      currentQuestionID: sections[activeSectionIndex].questions[activeQuestion],
+    });
 
     setCurrentQuestionID(sections[activeSectionIndex].questions[activeQuestion]);
   }, [activeQuestion, activeSectionIndex, sections]);
 
   useEffect(() => {
-    log('ACTIVE QUESTION UPDATED', { activeQuestion }, false);
+    log('ACTIVE QUESTION UPDATED', { activeQuestion });
+    setCurrentQuestionID(sections[activeSectionIndex].questions[activeQuestion]);
   }, [activeQuestion]);
 
   useEffect(() => {
-    log('update success: ', isUpdateSuccess);
+    log('update success: ', { isUpdateSuccess, mutatedQuestionData });
+    if (isUpdateSuccess) {
+      const {
+        question: originalQuestion,
+        // choices: originalChoices,
+        type: originalType,
+        checkerNotes: originalCheckerNotes,
+        maxMarks: originalMarks,
+      } = mutatedQuestionData?.data?.data?.updatedQuestion;
+      log('Fetched question :)', {
+        originalQuestion: questionData?.data?.data?.question,
+      });
+      setQuestionText(originalQuestion);
+      setQuestionType(originalType);
+      setCheckersNotes(originalCheckerNotes);
+      setMarks(originalMarks || 0);
+      updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
+    }
   }, [isUpdateSuccess]);
+
+  useEffect(() => {
+    log('first load...');
+  }, []);
+
+  useEffect(() => {
+    const currentQuestionData = questions.find((q) => q.quizioID === currentQuestionID);
+    log('update current questionID:', { currentQuestionID, currentQuestionData });
+    if (currentQuestionData) {
+      setQuestionText(currentQuestionData.question);
+      setQuestionType(currentQuestionData.type);
+      setCheckersNotes(currentQuestionData.checkerNotes);
+      setMarks(currentQuestionData.marks || 0);
+    }
+  }, [currentQuestionID]);
 
   return (
       <div className="quiz-details w-full">
           <div className="font-bold text-3xl">{currentSection?.title || ''}</div>
           <div className="quiz-question w-full">
-              <div className="question-type-dropdown flex w-full justify-between">
-                  <Title activeQuestion={activeQuestion} />
-                  <Select
-                    options={questionTypeOptions}
-                    onChange={handleQuestionType}
-                    val={questionType}
-                    defaultValue="mcq"
-                    className="text-sm p-5 w-200"
-                  />
-              </div>
-              <MarkdownTextField
-                id="question-description"
-                val={questionText || ''}
-                placeholder="Enter question here"
-                setVal={setQuestionText}
-              />
-              {isToggleLoading ? (
-                  <div>Toggling question type...</div>
+              {isFetchingQuestion ? (
+                  <div>Loading Question...</div>
         ) : (
-            <QuestionInputArea
-              questionType={questionType}
-              marks={marks.toString()}
-              setMarks={setMarks}
-              checkerNotes={checkerNotes}
-              setCheckersNotes={setCheckersNotes}
-            />
+            <>
+                <div className="question-type-dropdown flex w-full justify-between">
+                    <Title activeQuestion={activeQuestion} />
+                    <Select
+                      options={questionTypeOptions}
+                      onChange={handleQuestionType}
+                      val={questionType}
+                      defaultValue="mcq"
+                      className="text-sm p-5 w-200"
+                    />
+                </div>
+                <MarkdownTextField
+                  id="question-description"
+                  val={questionText || ''}
+                  placeholder="Enter question here"
+                  setVal={setQuestionText}
+                />
+                {isToggleLoading ? (
+                    <div>Toggling question type...</div>
+            ) : (
+                <QuestionInputArea
+                  questionType={questionType}
+                  marks={marks.toString()}
+                  setMarks={setMarks}
+                  checkerNotes={checkerNotes}
+                  setCheckersNotes={setCheckersNotes}
+                />
+            )}
+                <div className="w-40 ml-auto mt-8">
+                    {isUpdateLoading ? (
+                        <PrimaryCTA text="Saving..." onClick={() => {}} disabled />
+              ) : (
+                  <PrimaryCTA text="Save Changes" onClick={handleSave} />
+              )}
+                </div>
+            </>
         )}
-              <div className="w-40 ml-auto mt-8">
-                  {isUpdateLoading ? (
-            'Saving...'
-          ) : (
-              <PrimaryCTA text="Save Changes" onClick={handleSave} />
-          )}
-              </div>
           </div>
       </div>
   );

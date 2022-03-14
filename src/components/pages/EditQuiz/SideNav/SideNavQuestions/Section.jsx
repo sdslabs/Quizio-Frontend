@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import _ from 'lodash';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import { useGetSectionDetails } from '@api/quizzes/useSections';
 import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDown.svg';
-
 import QuestionBubbles from './QuestionBubbles';
 
 const Section = ({ index, section }) => {
+  const [isBubblesActive, setIsBubblesActive] = useState(false);
   const {
     activeSectionIndex,
     updateSection,
@@ -32,6 +32,7 @@ const Section = ({ index, section }) => {
 
   const handleSwitchSection = () => {
     setActiveSection(index);
+    setIsBubblesActive(!isBubblesActive);
     toggleQuestionForm(false);
   };
 
@@ -49,7 +50,7 @@ const Section = ({ index, section }) => {
               <DropdownArrowDownIcon />
           </p>
           <div>
-              <QuestionBubbles questions={section.questions} isActive={isActive} />
+              <QuestionBubbles questions={section.questions} isActive={isBubblesActive} />
           </div>
       </>
   );

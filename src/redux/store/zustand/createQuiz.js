@@ -78,6 +78,13 @@ const useCreateQuizStore = create((set) => ({
     }),
     /* Add question with details */
     addQuestion: (question) => set((state) => ({ questions: [...state.questions, question] })),
+
+    updateQuestion: (question) => set((state) => {
+        const oldQuestionID = state.questions.findIndex((oldQuestion) => oldQuestion.quizioID === question.quizioID);
+        const stateCopy = [...state.questions];
+        stateCopy[oldQuestionID] = question;
+        return stateCopy;
+    }),
     /* Toggle active question */
     setActiveQuestion: (index) => set(() => ({ activeQuestion: index })),
     /* Toggle activate question form */

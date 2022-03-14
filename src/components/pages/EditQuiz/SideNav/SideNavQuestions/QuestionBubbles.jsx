@@ -16,36 +16,36 @@ const QuestionBubbles = ({ isActive, questions }) => {
     toggleQuestionForm,
     setActiveQuestion,
   } = useCreateQuizStore();
-  const sectionID = sections[activeSectionIndex]?.id;
 
   const {
-    data,
-    isLoading,
-    isSuccess,
+    data: addQuestionData,
+    isLoading: isAddingQuestion,
+    isSuccess: isAddedSuccessQuestion,
     mutate: mutateAddQuestion,
   } = useAddQuestion();
 
   const handleAddNewQuestion = () => {
+    const sectionID = sections[activeSectionIndex]?.id;
     mutateAddQuestion({ sectionID });
   };
 
   const handleBubbleClick = (quesIDx) => {
-      log('Bubble clicked!', { quesIDx, activeSectionIndex, sections });
-      setActiveQuestion(quesIDx);
-      toggleQuestionForm(true);
+    log('Bubble clicked!', { quesIDx, activeSectionIndex });
+    setActiveQuestion(quesIDx);
+    toggleQuestionForm(true);
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      const response = data.data?.data?.question;
+    if (isAddedSuccessQuestion) {
+      const response = addQuestionData.data?.data?.question;
       if (response) {
         addQuestionToSection(response.id);
         addQuestion(response);
       }
     }
-  }, [isSuccess, data]);
+  }, [isAddedSuccessQuestion, addQuestionData]);
 
-  if (isLoading) return <div>Loading Questions...</div>;
+  if (isAddingQuestion) return <div>Loading Questions...</div>;
 
   return (
       <div className={`side-nav-questions${isActive ? '-active' : ''}`}>
