@@ -14,22 +14,24 @@ const RadioGroup = ({
   mcqCount,
 }) => {
   const handleChange = (e) => {
+    console.log('handle change:', e.target.value, choices.find((choice) => choice.quizioID === e.target.value));
     setSelected(e.target.value);
   };
 
   return (
       <div className="w-full flex flex-col">
           {choices.map((choice) => (
-              <div key={choice.quizioID}>
+              <div key={choice.quizioID} className={choice.marks.toString() !== '0' ? 'bg-green-1' : ''}>
                   {editable ? (
                       <EditableRadioButton
                         text={choice.choice}
                         quizioID={choice.quizioID}
-                        onChange={() => {}}
                         setMcqCount={setMcqCount}
                         setChoices={setChoices}
                         mcqCount={mcqCount}
                         choices={choices}
+                        checked={selected === choice.quizioID}
+                        onChange={(e) => handleChange(e)}
                       />
           ) : (
               <RadioButton

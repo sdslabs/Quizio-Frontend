@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import {
+  useAddChoiceToQuestion,
+  useDeleteAllChoicesInQuestion,
   useGetQuestion,
   useToggleQuestionType,
   useUpdateQuestion,
@@ -20,6 +22,7 @@ const Question = () => {
   const [marks, setMarks] = useState(0);
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
+  const [choices, setChoices] = useState([]);
 
   // Question types
   const questionTypeOptions = [
@@ -57,8 +60,20 @@ const Question = () => {
     isSuccess: fetchSuccess,
     isFetching: isFetchingQuestion,
     data: questionData,
-    // refetch: refetchQuestion,
   } = useGetQuestion(currentQuestionID);
+  // Add choice to question
+  const {
+    // data: AddChoiceToQuestionData,
+    // isSuccess: AddChoiceToQuestionSuccess,
+    mutate: AddChoiceToQuestion,
+  } = useAddChoiceToQuestion();
+
+  // Delete choice in question
+  const {
+    // data: DeleteChoicesInQuestionData,
+    isSuccess: DeleteChoicesInQuestionSuccess,
+    mutate: DeleteChoicesInQuestion,
+  } = useDeleteAllChoicesInQuestion();
 
   const handleSave = async () => {
     const body = {
@@ -74,6 +89,12 @@ const Question = () => {
       questionID: currentQuestionID,
       body,
     });
+
+    if (questionType === 'mcq') {
+      log('MCQ Type save!', { choices });
+      log('deleting all old choices');
+      DeleteChoicesInQuestion({ questionID: currentQuestionID });
+    }
   };
 
   const handleQuestionType = async (selectedOption) => {
@@ -85,6 +106,19 @@ const Question = () => {
   };
 
   useEffect(() => {
+    log('choices deleted! Now saving the new choices!');
+    Promise.all(
+      choices.map((choice) => {
+        log({ questionID: currentQuestionID, body: choice });
+        return AddChoiceToQuestion({
+          questionID: currentQuestionID,
+          body: choice,
+        });
+      }),
+    );
+  }, [DeleteChoicesInQuestionSuccess]);
+
+  useEffect(() => {
     log('successfully toggled!');
   }, [isToggleSuccess]);
 
@@ -93,7 +127,7 @@ const Question = () => {
     if (fetchSuccess) {
       const {
         question: originalQuestion,
-        // choices: originalChoices,
+        choices: originalChoices,
         type: originalType,
         checkerNotes: originalCheckerNotes,
         maxMarks: originalMarks,
@@ -105,6 +139,7 @@ const Question = () => {
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks || 0);
+      setChoices(originalChoices);
       addQuestion(questionData?.data?.data?.question);
     } else {
       log('Failed to fetch question :(', { currentQuestionID });
@@ -159,8 +194,13 @@ const Question = () => {
   }, []);
 
   useEffect(() => {
-    const currentQuestionData = questions.find((q) => q.quizioID === currentQuestionID);
-    log('update current questionID:', { currentQuestionID, currentQuestionData });
+    const currentQuestionData = questions.find(
+      (q) => q.quizioID === currentQuestionID,
+    );
+    log('update current questionID:', {
+      currentQuestionID,
+      currentQuestionData,
+    });
     if (currentQuestionData) {
       setQuestionText(currentQuestionData.question);
       setQuestionType(currentQuestionData.type);
@@ -179,13 +219,16 @@ const Question = () => {
             <>
                 <div className="question-type-dropdown flex w-full justify-between">
                     <Title activeQuestion={activeQuestion} />
-                    <Select
-                      options={questionTypeOptions}
-                      onChange={handleQuestionType}
-                      val={questionType}
-                      defaultValue="mcq"
-                      className="text-sm p-5 w-200"
-                    />
+                    <div className="flex items-center">
+                        Change question type (choose):
+                        <Select
+                          options={questionTypeOptions}
+                          onChange={handleQuestionType}
+                          val={questionType}
+                          defaultValue="mcq"
+                          className="text-sm p-5 w-200"
+                        />
+                    </div>
                 </div>
                 <MarkdownTextField
                   id="question-description"
@@ -197,6 +240,8 @@ const Question = () => {
                     <div>Toggling question type...</div>
             ) : (
                 <QuestionInputArea
+                  choices={choices}
+                  setChoices={setChoices}
                   questionType={questionType}
                   marks={marks.toString()}
                   setMarks={setMarks}

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Subjective from './Subjective';
@@ -9,6 +10,8 @@ const QuestionInputArea = ({
   setMarks,
   checkerNotes,
   setCheckersNotes,
+  choices,
+  setChoices,
 }) => (
     <>
         {questionType === 'subjective' ? (
@@ -20,6 +23,8 @@ const QuestionInputArea = ({
             />
     ) : (
         <MCQ
+          choices={choices}
+          setChoices={setChoices}
           marks={marks.toString()}
           setMarks={setMarks}
           checkerNotes={checkerNotes}
@@ -35,6 +40,8 @@ QuestionInputArea.propTypes = {
   setMarks: PropTypes.func,
   checkerNotes: PropTypes.string,
   setCheckersNotes: PropTypes.func,
+  choices: PropTypes.array,
+  setChoices: PropTypes.func,
 };
 
 QuestionInputArea.defaultProps = {
@@ -43,6 +50,8 @@ QuestionInputArea.defaultProps = {
   setMarks: () => {},
   checkerNotes: '',
   setCheckersNotes: () => {},
+  choices: [],
+  setChoices: () => {},
 };
 
 export default QuestionInputArea;
