@@ -7,8 +7,7 @@ import { PropTypes } from 'prop-types';
 import RadioButton from '@components/Input/RadioGroup/RadioButton';
 import TextField from '@components/Input/TextField';
 import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
-
-const placeHolderText = 'The smallest division on the main scale of a Vernier calipers is 0.1 cm. Ten';
+import { useGetQuestion } from '@api/quizzes/useQuestions';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
@@ -18,7 +17,7 @@ const QuestionsWrapper = () => {
     const { data, isSuccess } = useGetQuiz(quizID);
     // const [showModal, setShowModal] = useState(false);
 
-    const { setQuiz, currentQuestion } = useCheckQuizStore();
+    const { setQuiz, currentQuestion, currentSection } = useCheckQuizStore();
 
     useEffect(() => {
         if (isSuccess) {
@@ -42,7 +41,7 @@ const QuestionsWrapper = () => {
     }
     return (
         <>
-            <h1 className="text-3xl font-bold">Section 1</h1>
+            <h1 className="text-3xl font-bold">{currentSection}</h1>
             <Question />
         </>
     );
@@ -50,28 +49,42 @@ const QuestionsWrapper = () => {
 
 const Question = () => {
     const {
-        currentQuestion,
+        currentQuestion, currentQuestionIndex,
        } = useCheckQuizStore();
-    const options = ['JS', 'C++', 'HTML', 'c'];
     const checked = false;
+    const [questionData, setQuestionData] = useState({});
     const [marks, setMarks] = useState(0);
-    const [notes, setNotes] = useState('');
     const saveAndNext = () => {
         console.log('marks are : ', marks);
-        console.log('notes are : ', notes);
     };
+    const {
+        data,
+        isLoading,
+        isSuccess,
+    } = useGetQuestion(currentQuestion);
+    useEffect(() => {
+        if (isSuccess) {
+            setQuestionData(data.data.data.question);
+        }
+    }, [isSuccess]);
+    if (isLoading) {
+        return <>Loading...</>;
+    }
     return (
         <div>
             <div className="flex flex-row justify-between items-center py-4">
                 <p className="text-black-N6 font-semibold">
-                    {currentQuestion}
+                    Question
+                    {' '}
+                    {currentQuestionIndex}
                 </p>
                 {checked
                 ? <div className="text-green-1 font-semibold bg-green-1 bg-opacity-25 p-1">Checked : 1/4</div>
                 : <div className="text-yellow-Y9 font-semibold bg-yellow-Y9 bg-opacity-25 p-1">Unchecked</div>}
             </div>
-            <MCQ questionText={placeHolderText} options={options} selected={0} />
-            <Descriptive questionText={placeHolderText} answer={placeHolderText} />
+            { (questionData.type === 'mcq') ? <MCQ questionText={questionData.question} options={questionData.choices} selected={0} />
+            : <Descriptive questionText={questionData.question} answer={questionData.answer} />}
+
             <div className="flex flex-row justify-between">
                 <div className="flex flex-row items-center">
                     <p className="align-middle mr-2">Marks(out of 4)</p>
@@ -102,8 +115,8 @@ const Question = () => {
             <TextField
               id="notes"
               placeholder="Write notes"
-              val={notes}
-              setVal={setNotes}
+              val={questionData.checkerNotes}
+              setVal={() => {}}
             />
         </div>
     );
@@ -115,7 +128,7 @@ const MCQ = ({ questionText, options, selected }) => (
         {options.map((choice, index) => (
             <div key={choice.quizioID}>
                 <RadioButton
-                  text={choice}
+                  text={choice.choice}
                   onChange={() => {}}
                   checked={selected === index}
                   quizioID={choice.quizioID}

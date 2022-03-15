@@ -62,7 +62,7 @@ const mapSectionsData = (result) => result.map((data) => data?.data?.data?.data?
 
 const AllSections = () => {
     const {
-        quiz, sections, setSections, setCurrentQuestion,
+        quiz, sections, setSections, setCurrentQuestion, setCurrentSection, setCurrentQuestionIndex,
        } = useCheckQuizStore();
 
     const result = useGetMultipleSections(quiz?.sections || []);
@@ -77,8 +77,10 @@ const AllSections = () => {
         history.push(`/quiz/check/${quiz.quizioID}/a/${id}`);
     };
 
-    const handleBubbleClick = (questionID) => {
+    const handleBubbleClick = (questionID, title, questionIndex) => {
         setCurrentQuestion(questionID);
+        setCurrentSection(title);
+        setCurrentQuestionIndex(questionIndex);
     };
 
     useEffect(() => {
@@ -101,7 +103,7 @@ const AllSections = () => {
                     </p>
                     <div className={`side-nav-questions${sectionID === quizioID ? '-active' : ''}`}>
                         {questions.map((question, quesIDx) => (
-                            <button onClick={() => { handleBubbleClick(question); }} key={question || quesIDx} type="button">
+                            <button onClick={() => { handleBubbleClick(question, title, quesIDx + 1); }} key={question || quesIDx} type="button">
                                 <QuestionBubble number={quesIDx + 1} type="not-visited" />
                             </button>
                         ))}
