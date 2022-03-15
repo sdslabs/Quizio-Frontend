@@ -11,6 +11,8 @@ export const getAllQuizzes = async () => {
 	}
 };
 
+export const getQuizRankList = ({ queryKey }) => axiosInstance.post(`/quizzes/${queryKey[1]}/ranklist`);
+
 export const getQuizById = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[1]}`);
 
 export const updateQuizById = ({ quizId, body }) => axiosInstance.put(`/quizzes/${quizId}`, body);

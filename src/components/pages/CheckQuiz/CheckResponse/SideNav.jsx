@@ -9,8 +9,8 @@ import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 
 const SideNav = () => {
     const { quiz } = useCheckQuizStore();
-    const history = useHistory;
-    const { sectionID } = useParams();
+    // const history = useHistory;
+    // const { sectionID } = useParams();
 
     return (
         <div className="w-80 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
