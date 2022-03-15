@@ -37,7 +37,7 @@ const Bottom = () => {
                         rank: Math.floor(Math.random() * 50),
                         marks: Math.floor(Math.random() * 50),
                         progress: Math.floor(Math.random() * 100),
-                        participantID: 'DhinchangDhichang',
+                        participantID: val,
                     }))
                     .sort((val1, val2) => val1.progress - val2.progress)
                     .map((val, index) => ({ ...val, sr_num: index + 1 })),

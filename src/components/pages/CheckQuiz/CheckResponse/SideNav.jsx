@@ -3,12 +3,12 @@ import '@styles/pages/give_quiz/sidenav.scss';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
 import { useParams, useHistory } from 'react-router-dom';
-import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetMultipleSections } from '@api/quizzes/useSections';
 import { ReactComponent as ScrollIcon } from '@icons/scrollIcon.svg';
+import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 
 const SideNav = () => {
-    const { quiz } = useGiveQuizStore();
+    const { quiz } = useCheckQuizStore();
     const history = useHistory;
     const { sectionID } = useParams();
 
@@ -53,12 +53,6 @@ const SideNav = () => {
                 <input type="checkbox" className="border-purple-V6 rounded" defaultChecked={false} onChange={() => {}} />
                 <span className="text-black text-xs px-2">Show only unchecked questions</span>
             </div>
-            <p
-              className={`side-nav-item${!sectionID ? '-active' : ''}`}
-              onClick={() => history.push(`/quiz/${quiz.quizioID}`)}
-            >
-                Instructions
-            </p>
             <AllSections />
         </div>
     );
@@ -68,19 +62,23 @@ const mapSectionsData = (result) => result.map((data) => data?.data?.data?.data?
 
 const AllSections = () => {
     const {
-        quiz, sections, setSections,
-       } = useGiveQuizStore();
+        quiz, sections, setSections, setCurrentQuestion,
+       } = useCheckQuizStore();
 
     const result = useGetMultipleSections(quiz?.sections || []);
 
     const isSuccess = result.every((data) => !data.isLoading);
 
-    const { sectionId } = useParams();
+    const { sectionID } = useParams();
 
     const history = useHistory();
 
     const handleSectionTabClick = (id) => {
-        history.push(`/quiz/${quiz.quizioID}/${id}`);
+        history.push(`/quiz/check/${quiz.quizioID}/a/${id}`);
+    };
+
+    const handleBubbleClick = (questionID) => {
+        setCurrentQuestion(questionID);
     };
 
     useEffect(() => {
@@ -95,15 +93,17 @@ const AllSections = () => {
             {sections.map(({ title, questions, quizioID }) => (
                 <>
                     <p
-                      className={`side-nav-item${sectionId === quizioID ? '-active' : ''} flex justify-between`}
+                      className={`side-nav-item${sectionID === quizioID ? '-active' : ''} flex justify-between`}
                       onClick={() => handleSectionTabClick(quizioID)}
                     >
                         {title}
                         <img src={DropDownIcon} alt="" className="side-nav-toggle" />
                     </p>
-                    <div className={`side-nav-questions${sectionId === quizioID ? '-active' : ''}`}>
-                        {questions.map((question, index) => (
-                            <QuestionBubble number={index + 1} key={question} type="not-visited" />
+                    <div className={`side-nav-questions${sectionID === quizioID ? '-active' : ''}`}>
+                        {questions.map((question, quesIDx) => (
+                            <button onClick={() => { handleBubbleClick(question); }} key={question || quesIDx} type="button">
+                                <QuestionBubble number={quesIDx + 1} type="not-visited" />
+                            </button>
                         ))}
                     </div>
                 </>

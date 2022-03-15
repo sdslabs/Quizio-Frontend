@@ -10,23 +10,18 @@ const QuestionBubbles = [
     label: 'Unattempted',
   },
   {
-    type: 'not-visited',
-    number: 0,
-    label: 'Not visited',
-  },
-  {
     type: 'visited-unchecked',
-    number: 24,
-    label: 'Visited but unchecked',
+    number: 0,
+    label: 'Unchecked',
   },
   {
     type: 'checked',
-    number: 12,
+    number: 0,
     label: 'Checked',
   },
   {
     type: 'autochecked',
-    number: 55,
+    number: 0,
     label: 'Autochecked',
   },
 ];

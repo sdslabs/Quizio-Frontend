@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 // import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
-import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { PropTypes } from 'prop-types';
 import RadioButton from '@components/Input/RadioGroup/RadioButton';
 import TextField from '@components/Input/TextField';
+import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 
 const placeHolderText = 'The smallest division on the main scale of a Vernier calipers is 0.1 cm. Ten';
 
@@ -18,7 +18,7 @@ const QuestionsWrapper = () => {
     const { data, isSuccess } = useGetQuiz(quizID);
     // const [showModal, setShowModal] = useState(false);
 
-    const { setQuiz } = useGiveQuizStore();
+    const { setQuiz, currentQuestion } = useCheckQuizStore();
 
     useEffect(() => {
         if (isSuccess) {
@@ -33,6 +33,13 @@ const QuestionsWrapper = () => {
 
     // const { description, instruction } = mapQuizData(data);
 
+    if (!currentQuestion) {
+        return (
+            <>
+                <h1 className="text-3xl font-bold">Select a question to start checking.</h1>
+            </>
+        );
+    }
     return (
         <>
             <h1 className="text-3xl font-bold">Section 1</h1>
@@ -42,16 +49,22 @@ const QuestionsWrapper = () => {
 };
 
 const Question = () => {
-    const saveAndNext = () => {};
+    const {
+        currentQuestion,
+       } = useCheckQuizStore();
     const options = ['JS', 'C++', 'HTML', 'c'];
     const checked = false;
     const [marks, setMarks] = useState(0);
     const [notes, setNotes] = useState('');
+    const saveAndNext = () => {
+        console.log('marks are : ', marks);
+        console.log('notes are : ', notes);
+    };
     return (
         <div>
             <div className="flex flex-row justify-between items-center py-4">
                 <p className="text-black-N6 font-semibold">
-                    Question 1
+                    {currentQuestion}
                 </p>
                 {checked
                 ? <div className="text-green-1 font-semibold bg-green-1 bg-opacity-25 p-1">Checked : 1/4</div>
