@@ -6,6 +6,7 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { PropTypes } from 'prop-types';
 import { PieChart } from 'react-minimal-pie-chart';
+import axiosInstance from '@api/axiosInstance';
 
 const TopAlert = ({ totalIncomplete }) => {
     if (totalIncomplete > 0) {
@@ -49,7 +50,9 @@ TopAlert.propTypes = {
 
 const PublishResultsModal = ({ quizID, setShowModal, data }) => {
     const onPublish = () => {
+        axiosInstance.post(`/quizzes/${quizID}/publish`);
         console.log('Placeholder', quizID);
+        setShowModal(false);
     };
     const onCancel = () => {
         setShowModal(false);
