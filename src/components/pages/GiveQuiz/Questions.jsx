@@ -11,7 +11,8 @@ import TextField from '@components/Input/TextField';
 import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 import { useGetQuestion } from '@api/quizzes/useQuestions';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
-import { useUpdateResponse } from '@api/quizzes/useResponse';
+import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
+import { useSelector } from 'react-redux';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
@@ -69,16 +70,30 @@ const Question = () => {
         isSuccess,
     } = useGetQuestion(currentQuestion);
     // console.log(currentQuestion);
+    const userID = useSelector((state) => state.auth.user.userID);
 
     const {
         mutate: updateResponse, isLoading: responseLoading, isSuccess: responseSucess,
     } = useUpdateResponse();
 
+    const { data: responseData, isSuccess: getResponseSuccess, isLoading: getResponseLoading } = useGetResponse(userID, currentQuestion);
+    console.log(userID, 'userID');
+    console.log(currentQuestion, 'questionID');
     useEffect(() => {
         if (responseSucess) {
             console.log('successful');
         }
     }, [responseSucess]);
+
+    useEffect(() => {
+        if (getResponseSuccess) {
+            if (responseData.data.answerChoice) {
+                console.log(responseData.data.data.answerChoice[0]);
+                setChoice(responseData.data.data.answerChoice[0]);
+}
+            setAnswer(responseData.data.data.answer);
+        }
+    }, [getResponseSuccess]);
 
     const saveAndNext = () => {
         switch (questionData.type) {
@@ -98,7 +113,7 @@ const Question = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            console.log(data);
+            // console.log(data);
             setQuestionData(data.data.data.question);
         }
     }, [isSuccess, isLoading, data]);
