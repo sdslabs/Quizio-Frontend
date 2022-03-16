@@ -7,18 +7,18 @@ import { useGetMultipleSections } from '@api/quizzes/useSections';
 import { ReactComponent as ScrollIcon } from '@icons/scrollIcon.svg';
 import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 import log from '@utils/log';
+import { useSelector } from 'react-redux';
 
 const SideNav = () => {
   const { quiz } = useCheckQuizStore();
-  // const history = useHistory;
-  // const { sectionID } = useParams();
+  const self = useSelector((state) => state.auth.user);
 
   return (
       <div className="w-80 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
           <p className="primary-text pt-8 px-10">{quiz.name}</p>
           <div className="flex flex-row pt-8 pb-4 ">
               <p className="text-purple-V6 font-semibold text-xl pl-10 pr-2">
-                  Sudanshu Patel
+                  {`${self.firstName} ${self.lastName}`}
               </p>
               <ScrollIcon />
           </div>
@@ -48,7 +48,7 @@ const SideNav = () => {
                     </p>
                 </div>
             </div> */}
-          <div className="mx-6 pt-4 pb-8 flex flex-row items-center justify-begin">
+          <div className="mx-6 pt-4 pb-8 flex flex-row items-center justify-begin hidden">
               <input
                 type="checkbox"
                 className="border-purple-V6 rounded"
