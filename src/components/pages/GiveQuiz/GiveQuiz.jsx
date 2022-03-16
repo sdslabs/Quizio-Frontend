@@ -6,8 +6,8 @@ import MasterWrapper from './MasterWrapper';
 
 const GiveQuiz = () => (
     <Switch>
-        <Route exact path="/quiz/:quizId" render={() => <MasterWrapper><QuizLanding /></MasterWrapper>} />
-        <Route exact path="/quiz/:quizId/:sectionId" render={() => <MasterWrapper><SectionLanding /></MasterWrapper>} />
+        <Route exact path="/quiz/:quizID" render={() => <MasterWrapper><QuizLanding /></MasterWrapper>} />
+        <Route exact path="/quiz/:quizID/:sectionID" render={() => <MasterWrapper><SectionLanding /></MasterWrapper>} />
     </Switch>
 );
 

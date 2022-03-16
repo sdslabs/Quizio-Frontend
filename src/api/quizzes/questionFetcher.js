@@ -1,9 +1,19 @@
 import axiosInstance from '@api/axiosInstance';
 
-export const addQuestionToSection = ({ sectionId }) => axiosInstance.post(`/quizzes/sections/${sectionId}/questions`);
+export const addQuestionToSection = ({ sectionID }) => axiosInstance.post(`/quizzes/sections/${sectionID}/questions`);
 
-export const getQuestionById = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/questions/${queryKey[1]?.questionId}`);
+export const getQuestionByID = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/questions/${queryKey[1]}`);
 
-export const updateQuestionById = ({ questionId, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionId}`, body);
+export const updateQuestionByID = ({ questionID, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}`, body);
 
-export const deleteQuestionById = ({ questionId }) => axiosInstance.delete(`/quizzes/sections/questions/${questionId}`);
+export const deleteQuestionByID = ({ questionID }) => axiosInstance.delete(`/quizzes/sections/questions/${questionID}`);
+
+export const toggleQuestionType = ({ questionID }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/toggle`);
+
+export const addChoiceToQuestion = ({ questionID, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/choices`, body);
+
+export const deleteChoiceInQuestion = ({ questionID, choiceID }) => axiosInstance
+	.delete(`/quizzes/sections/questions/${questionID}/choices/${choiceID}`);
+
+export const deleteAllChoicesInQuestion = ({ questionID }) => axiosInstance
+	.delete(`/quizzes/sections/questions/${questionID}/choices`);

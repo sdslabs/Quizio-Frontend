@@ -3,8 +3,16 @@ import * as fetchers from './questionFetcher';
 
 export const useAddQuestion = () => useMutation(fetchers.addQuestionToSection);
 
-export const useGetQuestion = (questionId) => useQuery(['getQuestionById', questionId], fetchers.getQuestionById);
+export const useGetQuestion = (questionID) => useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, { enabled: !!questionID });
 
-export const useUpdateQuestion = () => useMutation(fetchers.updateQuestionById);
+export const useUpdateQuestion = () => useMutation(fetchers.updateQuestionByID);
 
-export const useDeleteQuestion = () => useMutation(fetchers.deleteQuestionById);
+export const useDeleteQuestion = () => useMutation(fetchers.deleteQuestionByID);
+
+export const useToggleQuestionType = () => useMutation(fetchers.toggleQuestionType);
+
+export const useAddChoiceToQuestion = () => useMutation(fetchers.addChoiceToQuestion);
+
+export const useDeleteChoiceInQuestion = () => useMutation(fetchers.deleteChoiceInQuestion);
+
+export const useDeleteAllChoicesInQuestion = () => useMutation(fetchers.deleteAllChoicesInQuestion);

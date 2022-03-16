@@ -5,7 +5,7 @@ import { timerURL } from '@config/config';
 import { useParams } from 'react-router-dom';
 
 const QuizTimer = () => {
-  const { quizId } = useParams();
+  const { quizID } = useParams();
 
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
@@ -19,7 +19,7 @@ const QuizTimer = () => {
     const socket = io(timerURL);
 
     socket.on('quizTimer', (quizzes) => {
-      const { time } = _.find(quizzes, (quiz) => quiz.quizioID === quizId);
+      const { time } = _.find(quizzes, (quiz) => quiz.quizioID === quizID);
 
       setSeconds(getSeconds(time).padStart(2, '0'));
       setMinutes(getMinutes(time).padStart(2, '0'));
@@ -29,7 +29,7 @@ const QuizTimer = () => {
         socket?.disconnect();
       }
     });
-  }, [quizId]);
+  }, [quizID]);
 
   return (
       <div>

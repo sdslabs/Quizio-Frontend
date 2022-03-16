@@ -18,7 +18,7 @@ export const getAllQuizzes = async () => {
 	}
 };
 
-export const getQuizById = async ({ queryKey }) => {
+export const getQuizByID = async ({ queryKey }) => {
 	try {
 		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
 		return res.data.data;
@@ -27,7 +27,7 @@ export const getQuizById = async ({ queryKey }) => {
 	}
 };
 
-export const updateQuizById = async ({ quizID, body }) => {
+export const updateQuizByID = async ({ quizID, body }) => {
 	try {
 		const res = await axiosInstance.put(`/quizzes/${quizID}`, body);
 		return res.data;
@@ -36,9 +36,9 @@ export const updateQuizById = async ({ quizID, body }) => {
 	}
 };
 
-export const deleteQuizById = async ({ quizId }) => {
+export const deleteQuizByID = async ({ quizID }) => {
 	try {
-		const res = await axiosInstance.delete(`/quizzes/${quizId}`);
+		const res = await axiosInstance.delete(`/quizzes/${quizID}`);
 		return res.data;
 	} catch (e) {
 		return e.response.data;
