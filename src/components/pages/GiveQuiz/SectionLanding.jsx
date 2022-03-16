@@ -5,10 +5,11 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import SubmitQuiz from '@components/Modals/SubmitQuiz';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import _ from 'lodash';
+import QuestionsWrapper from './Questions';
 
 const SectionLanding = () => {
     const { quizId, sectionId } = useParams();
-    const { quiz, sections } = useGiveQuizStore();
+    const { quiz, sections, currentQuestion } = useGiveQuizStore();
 
     const [showModal, setShowModal] = React.useState(false);
 
@@ -16,7 +17,11 @@ const SectionLanding = () => {
 
     const currentSection = _.find(sections, { quizioID: sectionId }) || {};
     const { title, description } = currentSection;
-
+    if (currentQuestion) {
+        return (
+            <QuestionsWrapper />
+        );
+    }
     return (
         <>
             <h1 className="text-3xl font-bold">{title}</h1>

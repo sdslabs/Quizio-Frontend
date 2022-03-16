@@ -8,7 +8,7 @@ import axiosInstance from '@api/axiosInstance';
 const AutoCheckModal = ({ quizID, setShowModal }) => {
   const onYes = () => {
       axiosInstance.post(`/quizzes/${quizID}/check`);
-      console.log('Placeholder', quizID);
+      // console.log('Placeholder', quizID);
       setShowModal(false);
 };
   const onCancel = () => { setShowModal(false); };

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-nested-ternary */
+import React, { Fragment, useEffect } from 'react';
 import '@styles/pages/give_quiz/sidenav.scss';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
@@ -36,8 +37,8 @@ const mapSectionsData = (result) => result.map((data) => data?.data?.data?.data?
 
 const AllSections = () => {
     const {
- quiz, sections, setSections,
-} = useGiveQuizStore();
+        quiz, sections, setSections, currentQuestion, answeredQuestions, setCurrentQuestion, setCurrentSection, setCurrentQuestionIndex,
+       } = useGiveQuizStore();
 
     const result = useGetMultipleSections(quiz?.sections || []);
 
@@ -48,7 +49,13 @@ const AllSections = () => {
     const history = useHistory();
 
     const handleSectionTabClick = (id) => {
+        setCurrentQuestion(null);
         history.push(`/quiz/${quiz.quizioID}/${id}`);
+    };
+    const handleBubbleClick = (questionID, title, questionIndex) => {
+        setCurrentQuestion(questionID);
+        setCurrentSection(title);
+        setCurrentQuestionIndex(questionIndex);
     };
 
     useEffect(() => {
@@ -60,7 +67,7 @@ const AllSections = () => {
     return (
         <>
             {sections.map(({ title, questions, quizioID }) => (
-                <>
+                <Fragment key={quizioID}>
                     <p
                       className={`side-nav-item${sectionId === quizioID ? '-active' : ''} flex justify-between`}
                       onClick={() => handleSectionTabClick(quizioID)}
@@ -69,11 +76,17 @@ const AllSections = () => {
                         <img src={DropDownIcon} alt="" className="side-nav-toggle" />
                     </p>
                     <div className={`side-nav-questions${sectionId === quizioID ? '-active' : ''}`}>
-                        {questions.map((question, index) => (
-                            <QuestionBubble number={index + 1} key={question} type="not-visited" />
+                        {questions.map((question, quesIDx) => (
+                            <button onClick={() => { handleBubbleClick(question, title, quesIDx + 1); }} key={question || quesIDx} type="button">
+                                <QuestionBubble
+                                  number={quesIDx + 1}
+                                  type={currentQuestion === question ? 'active'
+                                : (answeredQuestions.includes(question) ? 'answered' : 'not-visited')}
+                                />
+                            </button>
                         ))}
                     </div>
-                </>
+                </Fragment>
             ))}
         </>
 );
