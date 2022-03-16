@@ -71,7 +71,7 @@ const Question = () => {
 
     const {
         data: marksData, isLoading: marksLoading, isSuccess: marksSuccess,
-    } = useGetScore({ questionID: currentQuestion, body: { registrantID: participantID } });
+    } = useGetScore(currentQuestion, participantID);
 
     useEffect(() => {
         if (isSuccess) {
@@ -82,9 +82,9 @@ const Question = () => {
 
     useEffect(() => {
         if (marksSuccess) {
-            console.log(data);
+            console.log(marksData, 'marksData');
         }
-    }, [marksSuccess, marksLoading]);
+    }, [marksSuccess]);
 
     if (isLoading) {
         return <>Loading...</>;
