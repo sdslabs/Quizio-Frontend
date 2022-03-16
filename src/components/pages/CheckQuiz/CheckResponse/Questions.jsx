@@ -80,7 +80,7 @@ const Question = () => {
 
   useEffect(() => {
     if (marksSuccess) {
-      log({ marksData });
+      setMarks(marksData?.data?.data?.marks.toString());
     }
   }, [marksSuccess]);
 
