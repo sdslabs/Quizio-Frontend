@@ -66,7 +66,7 @@ const Question = () => {
         if (isSuccess) {
             setQuestionData(data.data.data.question);
         }
-    }, [isSuccess]);
+    }, [isSuccess, isLoading, data]);
     if (isLoading) {
         return <>Loading...</>;
     }
