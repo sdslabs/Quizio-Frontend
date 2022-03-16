@@ -20,6 +20,7 @@ export const getAllQuizzes = async () => {
 
 export const getQuizByID = async ({ queryKey }) => {
 	try {
+		console.log('fetching', queryKey);
 		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
 		return res.data.data;
 	} catch (e) {

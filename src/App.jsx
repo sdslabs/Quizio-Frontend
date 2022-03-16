@@ -67,7 +67,7 @@ const App = () => {
               {/* Check a quiz */}
               <Route path="/quiz/check/:quizID" component={CheckQuiz} />
               {/* Attempt a quiz */}
-              <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
+              <Route path="/quiz/:quizID" component={GiveQuiz} />
               {/* Demo page for components */}
               <Route exact path="/components" component={Components} />
               {/* 404 Page */}
