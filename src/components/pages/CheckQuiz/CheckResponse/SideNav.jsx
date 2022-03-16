@@ -23,7 +23,7 @@ const SideNav = () => {
                 </p>
                 <ScrollIcon />
             </div>
-            <div className="bg-purple-V1 mx-6">
+            {/* <div className="bg-purple-V1 mx-6">
                 <div className="flex flex-row py-2 justify-between">
                     <p className="text-black text-xs px-2">
                         Total Ques :
@@ -48,7 +48,7 @@ const SideNav = () => {
                         <span className="text-purple-V6">40</span>
                     </p>
                 </div>
-            </div>
+            </div> */}
             <div className="mx-6 pt-4 pb-8 flex flex-row items-center justify-begin">
                 <input type="checkbox" className="border-purple-V6 rounded" defaultChecked={false} onChange={() => {}} />
                 <span className="text-black text-xs px-2">Show only unchecked questions</span>

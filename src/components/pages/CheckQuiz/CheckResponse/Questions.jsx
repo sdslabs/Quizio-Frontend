@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 // import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
+import { useGetScore, useUpdateScore } from '@api/quizzes/useScore';
 import { PropTypes } from 'prop-types';
 import RadioButton from '@components/Input/RadioGroup/RadioButton';
 import TextField from '@components/Input/TextField';
@@ -51,22 +53,39 @@ const Question = () => {
     const {
         currentQuestion, currentQuestionIndex,
        } = useCheckQuizStore();
+    const { participantID } = useParams();
+    const { mutate, isLoading: saveLoading, isSuccess: saveSuccess } = useUpdateScore();
     const checked = false;
     const [questionData, setQuestionData] = useState({});
     const [marks, setMarks] = useState(0);
     const saveAndNext = () => {
         console.log('marks are : ', marks);
+        mutate({ questionID: currentQuestion, body: { marks, registrantID: participantID } });
     };
     const {
         data,
         isLoading,
         isSuccess,
     } = useGetQuestion(currentQuestion);
+    // console.log(currentQuestion);
+
+    const {
+        data: marksData, isLoading: marksLoading, isSuccess: marksSuccess,
+    } = useGetScore({ questionID: currentQuestion, body: { registrantID: participantID } });
+
     useEffect(() => {
         if (isSuccess) {
+            console.log(data);
             setQuestionData(data.data.data.question);
         }
     }, [isSuccess, isLoading, data]);
+
+    useEffect(() => {
+        if (marksSuccess) {
+            console.log(data);
+        }
+    }, [marksSuccess, marksLoading]);
+
     if (isLoading) {
         return <>Loading...</>;
     }
@@ -87,12 +106,17 @@ const Question = () => {
 
             <div className="flex flex-row justify-between">
                 <div className="flex flex-row items-center">
-                    <p className="align-middle mr-2">Marks(out of 4)</p>
+                    <p className="align-middle mr-2">
+                        Marks(out of
+                        {' '}
+                        {questionData.defaultMarks ? questionData.defaultMarks : 0 }
+                        )
+                    </p>
                     <span>
                         <TextField
                           id="marks"
                           placeholder="0"
-                          limit={2}
+                        //   limit={2}
                           val={marks}
                           setVal={setMarks}
                           additionalClassName="h-10 w-10"
