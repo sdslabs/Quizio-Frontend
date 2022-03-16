@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import '@pagestyles/check_quiz/checking_table.scss';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProgressBar from '@components/pages/CheckQuiz/ResponseList/Bottom/ProgressBar';
-import { Link } from 'react-router-dom';
+import '@pagestyles/check_quiz/checking_table.scss';
 
 const MAX_PAGE_SIZE = 10;
 
@@ -23,7 +23,7 @@ const parseTableData = (data, pageNum, quizID) => data
                 <ProgressBar progress={participant.progress} />
             </td>
             <td className="text-center table-content table-link">
-                <Link to={`/quiz/check/${quizID}/${participant.participantID}`}>
+                <Link to={`/quiz/check/${quizID}/${participant.registrantID}`}>
                     Check Quiz
                 </Link>
             </td>

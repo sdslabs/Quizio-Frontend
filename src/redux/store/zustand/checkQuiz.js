@@ -1,3 +1,4 @@
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import create from 'zustand';
 
 const useCheckQuizStore = create((set) => ({
@@ -19,4 +20,5 @@ const useCheckQuizStore = create((set) => ({
 	setCurrentSection: (currentSection) => set(() => ({ currentSection })),
 }));
 
+mountStoreDevtool('checkQuizStore', useCheckQuizStore);
 export default useCheckQuizStore;

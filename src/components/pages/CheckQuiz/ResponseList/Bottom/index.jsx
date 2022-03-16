@@ -9,6 +9,7 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import AutoCheckModal from '@components/Modals/AutoCheck';
 import PublishResultsModal from '@components/Modals/PublishResults';
 import { useGetRankList } from '@api/quizzes/useQuizzes';
+import log from '@utils/log';
 
 const SORT_TYPES = {
   CHECKED_ASC: 'Checked (0 - 100%)',
@@ -32,7 +33,7 @@ const Bottom = () => {
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
-      console.log(registrantsData);
+      log({ registrantsData });
       setTableData(
         registrantsData.data.data.rankList.rankList
           .map((val, index) => ({
@@ -41,13 +42,14 @@ const Bottom = () => {
             rank: index + 1,
             marks: val.quizScore,
             progress: val.checkingProgress,
-            participantID: val.registrantID,
+            registrantID: val.registrantID,
           }))
           .sort((val1, val2) => val1.progress - val2.progress)
           .map((val, index) => ({ ...val, sr_num: index + 1 })),
       );
     }
   }, [isRegistrantsSuccess]);
+
   const sortTableData = (sortByval) => {
     switch (sortByval) {
       case SORT_TYPES.CHECKED_ASC:
@@ -90,6 +92,7 @@ const Bottom = () => {
     }
     setSortBy(sortByval);
   };
+
   const handleDropdownChange = (e) => {
     const sortByval = e.target.value;
     sortTableData(sortByval);
@@ -98,12 +101,13 @@ const Bottom = () => {
   const handleAutoCheck = () => {
     setShowAutoCheckModal(true);
   };
+
   const handlePublish = () => {
     setShowPublishQuizModal(true);
   };
-  if (isRegistrantsLoading) {
-    return <div>Loading...</div>;
-  }
+
+  if (isRegistrantsLoading) return <div>Loading Registrants...</div>;
+
   return (
       <div className="dashboard-bottom">
           <div className="actionables">

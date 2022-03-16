@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-// import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetScore, useUpdateScore } from '@api/quizzes/useScore';
 import { PropTypes } from 'prop-types';
@@ -10,20 +9,17 @@ import RadioButton from '@components/Input/RadioGroup/RadioButton';
 import TextField from '@components/Input/TextField';
 import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 import { useGetQuestion } from '@api/quizzes/useQuestions';
-
-const mapQuizData = (data) => data?.data?.data?.quiz || {};
+import log from '@utils/log';
 
 const QuestionsWrapper = () => {
   const { quizID } = useParams();
-
   const { data, isSuccess } = useGetQuiz(quizID);
-  // const [showModal, setShowModal] = useState(false);
-
   const { setQuiz, currentQuestion, currentSection } = useCheckQuizStore();
 
   useEffect(() => {
     if (isSuccess) {
-      const { name, description, sections } = mapQuizData(data);
+      log('Get quiz: ', { quiz: data });
+      const { name, description, sections } = data?.quiz;
       setQuiz({
         name,
         description,
@@ -32,10 +28,6 @@ const QuestionsWrapper = () => {
       });
     }
   }, [isSuccess]);
-
-  // if (isLoading) return <div>Loading...</div>;
-
-  // const { description, instruction } = mapQuizData(data);
 
   if (!currentQuestion) {
     return (
@@ -56,7 +48,7 @@ const QuestionsWrapper = () => {
 
 const Question = () => {
   const { currentQuestion, currentQuestionIndex } = useCheckQuizStore();
-  const { participantID } = useParams();
+  const { registrantID } = useParams();
   const {
     mutate,
     isLoading: saveLoading,
@@ -66,31 +58,29 @@ const Question = () => {
   const [questionData, setQuestionData] = useState({});
   const [marks, setMarks] = useState(0);
   const saveAndNext = () => {
-    console.log('marks are : ', marks);
+    log('marks are : ', { marks });
     mutate({
       questionID: currentQuestion,
-      body: { marks, registrantID: participantID },
+      body: { marks, registrantID },
     });
   };
   const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
-  // console.log(currentQuestion);
-
   const {
     data: marksData,
     isLoading: marksLoading,
     isSuccess: marksSuccess,
-  } = useGetScore(currentQuestion, participantID);
+  } = useGetScore(currentQuestion, registrantID);
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      log({ data });
       setQuestionData(data.data.data.question);
     }
   }, [isSuccess, isLoading, data]);
 
   useEffect(() => {
     if (marksSuccess) {
-      console.log(marksData, 'marksData');
+      log({ marksData });
     }
   }, [marksSuccess]);
 
@@ -123,8 +113,8 @@ const Question = () => {
               />
       ) : (
           <Descriptive
-            questionText={questionData.question}
-            answer={questionData.answer}
+            questionText={questionData.question || ''}
+            answer={questionData.answer || ''}
           />
       )}
 
@@ -141,7 +131,7 @@ const Question = () => {
                         id="marks"
                         placeholder="0"
               //   limit={2}
-                        val={marks}
+                        val={marks.toString()}
                         setVal={setMarks}
                         additionalClassName="h-10 w-10"
                       />
@@ -167,7 +157,7 @@ const Question = () => {
           <TextField
             id="notes"
             placeholder="Write notes"
-            val={questionData.checkerNotes}
+            val={questionData.checkerNotes || ''}
             setVal={() => {}}
           />
       </div>
@@ -202,7 +192,7 @@ const Descriptive = ({ questionText, answer }) => (
         <TextField
           id="DescriptiveAnswer"
           placeholder=""
-          val={answer}
+          val={answer.toString() || ''}
           setVal={() => {}}
         />
     </div>

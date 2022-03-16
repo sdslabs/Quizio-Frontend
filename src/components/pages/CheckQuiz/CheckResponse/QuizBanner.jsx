@@ -30,7 +30,7 @@ const QuizBanner = () => (
     <div className="border-b border-grey-N4 pl-10 flex items-stretch">
         <div className="flex flex-wrap flex-grow justify-center disable-hover">
             {QuestionBubbles.map(({ type, number, label }) => (
-                <div className="flex items-center my-3">
+                <div className="flex items-center my-3" key={label}>
                     <QuestionBubble key={type} type={type} number={number} />
                     <p className="ml-4 mr-10 text-sm">{label}</p>
                 </div>
@@ -38,9 +38,9 @@ const QuizBanner = () => (
         </div>
         <div className="py-4 px-8 bg-purple-V1 flex items-center">
             <img src={TimerIcon} alt="" className="mr-2" />
-            <p className="text-purple-V6 whitespace-nowrap">
+            <div className="text-purple-V6 whitespace-nowrap">
                 <QuizTimer />
-            </p>
+            </div>
         </div>
     </div>
 );

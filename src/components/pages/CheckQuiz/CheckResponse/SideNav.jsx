@@ -6,6 +6,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useGetMultipleSections } from '@api/quizzes/useSections';
 import { ReactComponent as ScrollIcon } from '@icons/scrollIcon.svg';
 import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
+import log from '@utils/log';
 
 const SideNav = () => {
   const { quiz } = useCheckQuizStore();
@@ -95,15 +96,17 @@ const AllSections = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('mapping');
+      log('mapping');
       setSections(mapSectionsData(result) || []);
     }
   }, [isSuccess]);
-  console.log(sections);
+  useEffect(() => {
+    log({ sections });
+  }, [sections]);
   return (
       <>
           {sections.map(({ title, questions, quizioID }) => (
-              <>
+              <div key={quizioID}>
                   <p
                     className={`side-nav-item${
               sectionID === quizioID ? '-active' : ''
@@ -130,7 +133,7 @@ const AllSections = () => {
                           </button>
             ))}
                   </div>
-              </>
+              </div>
       ))}
       </>
   );

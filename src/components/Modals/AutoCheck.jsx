@@ -4,11 +4,12 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { PropTypes } from 'prop-types';
 import axiosInstance from '@api/axiosInstance';
+import log from '@utils/log';
 
 const AutoCheckModal = ({ quizID, setShowModal }) => {
   const onYes = () => {
     axiosInstance.post(`/quizzes/${quizID}/check`);
-    console.log('Placeholder', quizID);
+    log('TODO: react query instead of direct api call');
     setShowModal(false);
   };
   const onCancel = () => {

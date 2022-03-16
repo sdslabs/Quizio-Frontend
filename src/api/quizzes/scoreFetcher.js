@@ -7,4 +7,7 @@ export const getScore = ({ queryKey }) => {
 	axiosInstance.get(`/quizzes/sections/questions/${queryKey[1]}/${queryKey[2]}/check`);
 };
 
-export const updateScore = ({ questionID, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/check`, body);
+export const updateScore = ({ questionID, body }) => {
+	log('Update score: ', { questionID, body });
+	axiosInstance.put(`/quizzes/sections/questions/${questionID}/check`, body);
+};

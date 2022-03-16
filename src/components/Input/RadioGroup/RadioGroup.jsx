@@ -14,7 +14,7 @@ const RadioGroup = ({
   mcqCount,
 }) => {
   const handleChange = (e) => {
-    console.log('handle change:', e.target.value, choices.find((choice) => choice.quizioID === e.target.value));
+    // consolelog('handle change:', e.target.value, choices.find((choice) => choice.quizioID === e.target.value));
     setSelected(e.target.value);
   };
 

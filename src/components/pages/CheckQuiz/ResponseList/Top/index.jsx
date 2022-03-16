@@ -55,7 +55,8 @@ const Top = () => {
     log('CheckQuiz/ResponseList/Top:', { quizID });
   }, [quizID]);
 
-  if (isQuizLoading || isRegistrantsLoading) return <div>Loading...</div>;
+  if (isQuizLoading) return <div>Loading Quiz...</div>;
+  if (isRegistrantsLoading) return <div>Loading Registrants...</div>;
 
   return (
       <div className="dashboard-top">
@@ -85,7 +86,7 @@ const Top = () => {
               <div className="participants-text"> Participants</div>
           </div>
           <div className="checks-container">
-              <div className="checks-count">? TODO ?</div>
+              <div className="checks-count">6969</div>
               <div className="checks-text">Checks</div>
               <div className="checks-text">Completed</div>
           </div>
