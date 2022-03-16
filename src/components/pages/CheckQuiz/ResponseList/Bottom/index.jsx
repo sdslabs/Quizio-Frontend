@@ -36,10 +36,10 @@ const Bottom = () => {
                 registrantsData.data.data.rankList.rankList
                     .map((val, index) => ({
                         sr_num: index + 1,
-                        name: val.registrantID,
+                        name: val.name,
                         rank: index + 1,
                         marks: val.quizScore,
-                        progress: Math.floor(Math.random() * 100),
+                        progress: val.checkingProgress,
                         participantID: val.registrantID,
                     }))
                     .sort((val1, val2) => val1.progress - val2.progress)
