@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
@@ -10,6 +9,7 @@ import TextField from '@components/Input/TextField';
 import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 import { useGetQuestion } from '@api/quizzes/useQuestions';
 import log from '@utils/log';
+import { useGetUserPublicProfile } from '@api/users/useUsers';
 
 const QuestionsWrapper = () => {
   const { quizID } = useParams();
@@ -49,14 +49,15 @@ const QuestionsWrapper = () => {
 const Question = () => {
   const { currentQuestion, currentQuestionIndex } = useCheckQuizStore();
   const { registrantID } = useParams();
-  const {
-    mutate,
-    isLoading: saveLoading,
-    isSuccess: saveSuccess,
-  } = useUpdateScore();
+  const { mutate } = useUpdateScore();
   const checked = false;
   const [questionData, setQuestionData] = useState({});
   const [marks, setMarks] = useState(0);
+  const [checkBy, setCheckBy] = useState('');
+  const [checkByName, setCheckByName] = useState('');
+
+  const { data: CheckerData } = useGetUserPublicProfile(checkBy);
+
   const saveAndNext = () => {
     log('marks are : ', { marks });
     mutate({
@@ -64,12 +65,18 @@ const Question = () => {
       body: { marks, registrantID },
     });
   };
+
   const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
-  const {
-    data: marksData,
-    isLoading: marksLoading,
-    isSuccess: marksSuccess,
-  } = useGetScore(currentQuestion, registrantID);
+  const { data: marksData, isSuccess: marksSuccess } = useGetScore(
+    currentQuestion,
+    registrantID,
+  );
+
+  useEffect(() => {
+    if (CheckerData) {
+      setCheckByName(CheckerData?.data?.username);
+    }
+  }, [CheckerData]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -80,7 +87,10 @@ const Question = () => {
 
   useEffect(() => {
     if (marksSuccess) {
-      setMarks(marksData?.data?.data?.marks.toString());
+      const originalMarks = marksData?.data?.data?.marks;
+      const originalChecker = marksData?.data?.data?.checkBy;
+      setMarks(originalMarks.toString());
+      setCheckBy(originalChecker);
     }
   }, [marksSuccess]);
 
@@ -145,7 +155,7 @@ const Question = () => {
               <div className="flex flex-row items-center">
                   Checked by :
                   {' '}
-                  <span className="text-purple-V6 cursor-pointer">Siddhu</span>
+                  <span className="text-purple-V6 cursor-pointer">{checkByName}</span>
               </div>
           </div>
           <div className="flex flex-row justify-end">
