@@ -76,6 +76,8 @@ const AllSections = () => {
     setCurrentQuestionIndex,
   } = useCheckQuizStore();
 
+  const { registrantID } = useParams();
+
   const result = useGetMultipleSections(quiz?.sections || []);
 
   const isSuccess = result.every((data) => !data.isLoading);
@@ -85,7 +87,7 @@ const AllSections = () => {
   const history = useHistory();
 
   const handleSectionTabClick = (id) => {
-    history.push(`/quiz/check/${quiz.quizioID}/a/${id}`);
+    history.push(`/quiz/check/${quiz.quizioID}/${registrantID}/${id}/`);
   };
 
   const handleBubbleClick = (questionID, title, questionIndex) => {
