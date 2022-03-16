@@ -7,7 +7,7 @@ const useCheckQuizStore = create((set) => ({
 	currentQuestionIndex: null,
 	currentSection: null,
 
-	/* Quiz Id */
+	/* Quiz ID */
 	setQuiz: (quiz) => set(() => ({ quiz })),
 	/* Add new section */
 	setSections: (sections) => set(() => ({ sections })),

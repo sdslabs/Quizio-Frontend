@@ -10,7 +10,7 @@ export const useUpdateSection = () => useMutation(fetchers.updateSectionDetails)
 
 export const useDeleteSection = () => useMutation(fetchers.deleteSection);
 
-export const useGetMultipleSections = (sectionIds) => useQueries(sectionIds.map((id) => ({
-	queryKey: [`getSection-${id}`, id],
+export const useGetMultipleSections = (sectionIDs) => useQueries(sectionIDs.map((ID) => ({
+	queryKey: [`getSection-${ID}`, ID],
 	queryFn: fetchers.getSectionDetails,
 })));

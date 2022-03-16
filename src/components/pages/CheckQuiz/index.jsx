@@ -7,6 +7,7 @@ import QuestionsWrapper from './CheckResponse/Questions';
 
 const CheckQuiz = () => (
     <Switch>
+        <Route path="/quiz/check/:quizID" component={ResponseList} />
         <Route
           path="/quiz/check/:quizID/:participantID/:sectionID"
           render={() => (
@@ -23,7 +24,6 @@ const CheckQuiz = () => (
               </MasterWrapper>
       )}
         />
-        <Route path="/quiz/check/:quizID" component={ResponseList} />
     </Switch>
 );
 
