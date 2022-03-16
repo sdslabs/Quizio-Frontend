@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQueries, useQuery } from 'react-query';
 import * as fetchers from './sectionFetcher';
 
 export const useAddSection = () => useMutation(fetchers.addSectionToQuiz);
@@ -9,3 +9,8 @@ export const useGetSectionDetails = (sectionID) => useQuery([`getSection-${secti
 export const useUpdateSection = () => useMutation(fetchers.updateSectionDetails);
 
 export const useDeleteSection = () => useMutation(fetchers.deleteSection);
+
+export const useGetMultipleSections = (sectionIDs) => useQueries(sectionIDs.map((ID) => ({
+	queryKey: [`getSection-${ID}`, ID],
+	queryFn: fetchers.getSectionDetails,
+})));

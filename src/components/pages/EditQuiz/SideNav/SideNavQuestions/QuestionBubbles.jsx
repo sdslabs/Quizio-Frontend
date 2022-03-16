@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect } from 'react';
-import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
+import QuestionBubble from '@components/Visual/QuestionBubble';
 import { ReactComponent as PlusIcon } from '@icons/plusIcon.svg';
 import { PropTypes } from 'prop-types';
 import useCreateQuizStore from '@store/zustand/createQuiz';

@@ -1,64 +1,87 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
-import QuestionBubble from '@pages/GiveQuiz/QuestionBubble';
-import '@styles/pages/give_quiz/sidenav.scss';
-import log from '@utils/log';
-
-const sections = [
-    {
-        label: 'Section 1',
-        questions: new Array(18).fill(0).map((_, i) => i + 1),
-    },
-    {
-        label: 'Section 2',
-        questions: new Array(12).fill(0).map((_, i) => i + 1),
-    },
-    {
-        label: 'Section 3',
-        questions: new Array(100).fill(0).map((_, i) => i + 1),
-    },
-];
+import QuestionBubble from '@components/Visual/QuestionBubble';
+import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
+import { useParams, useHistory } from 'react-router-dom';
+import { useGetMultipleSections } from '@api/quizzes/useSections';
 
 const SideNav = () => {
-    const [activeNav, setActiveNav] = useState('');
-    const { quizID, sectionID } = useParams();
-    log({ quizID, sectionID });
+  const { quiz } = useGiveQuizStore();
 
-    return (
-        <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
-            <p className="primary-text py-8 px-10">
-                Quiz Name
-            </p>
-            <p
-              className={`side-nav-item${activeNav === 'instructions' ? '-active' : ''}`}
-              onClick={() => setActiveNav('instructions')}
-            >
-                Instructions
+  const history = useHistory();
+  const { sectionID } = useParams();
 
-            </p>
-            {sections.map(({ label, questions }) => (
-                <>
-                    <p
-                      className={`side-nav-item${activeNav === label ? '-active' : ''} flex justify-between`}
-                      onClick={() => setActiveNav(label)}
-                    >
-                        {label}
-                        <img src={DropDownIcon} alt="" className="side-nav-toggle" />
-                    </p>
-                    <div className={`side-nav-questions${activeNav === label ? '-active' : ''}`}>
-                        {questions.map((question) => (
-                            <QuestionBubble number={question} key={question} type="not-visited" />
-                        ))}
-                    </div>
-                </>
+  return (
+      <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
+          <p className="primary-text py-8 px-10">{quiz.name}</p>
+          <p
+            className={`side-nav-item${!sectionID ? '-active' : ''}`}
+            onClick={() => history.push(`/quiz/${quiz.quizioID}`)}
+          >
+              Instructions
+          </p>
+          <AllSections />
+          <div className="fixed bottom-0 px-10 pt-1 pb-6 w-72 z-10 bg-white border-r border-grey-N4">
+              <SecondaryCTA text="Submit Quiz" />
+          </div>
+      </div>
+  );
+};
+
+const mapSectionsData = (result) => result.map((data) => data?.data?.data?.data?.section);
+
+const AllSections = () => {
+  const { quiz, sections, setSections } = useGiveQuizStore();
+
+  const result = useGetMultipleSections(quiz?.sections || []);
+
+  const isSuccess = result.every((data) => !data.isLoading);
+
+  const { sectionID } = useParams();
+
+  const history = useHistory();
+
+  const handleSectionTabClick = (id) => {
+    history.push(`/quiz/${quiz.quizioID}/${id}`);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setSections(mapSectionsData(result) || []);
+    }
+  }, [isSuccess]);
+
+  return (
+      <>
+          {sections.map(({ title, questions, quizioID }) => (
+              <>
+                  <p
+                    className={`side-nav-item${
+              sectionID === quizioID ? '-active' : ''
+            } flex justify-between`}
+                    onClick={() => handleSectionTabClick(quizioID)}
+                  >
+                      {title}
+                      <img src={DropDownIcon} alt="" className="side-nav-toggle" />
+                  </p>
+                  <div
+                    className={`side-nav-questions${
+              sectionID === quizioID ? '-active' : ''
+            }`}
+                  >
+                      {questions.map((question, index) => (
+                          <QuestionBubble
+                            number={index + 1}
+                            key={question}
+                            type="not-visited"
+                          />
             ))}
-            <div className="fixed bottom-0 px-10 pt-1 pb-6 w-72 z-10 bg-white border-r border-grey-N4">
-                <SecondaryCTA text="Submit Quiz" />
-            </div>
-        </div>
-    );
+                  </div>
+              </>
+      ))}
+      </>
+  );
 };
 
 export default SideNav;

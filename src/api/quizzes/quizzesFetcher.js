@@ -53,3 +53,5 @@ export const getAllQuizzesForUser = async () => {
 		return e.response.data;
 	}
 };
+
+export const getQuizRankList = ({ queryKey }) => axiosInstance.post(`/quizzes/${queryKey[1]}/ranklist`);
