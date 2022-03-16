@@ -10,3 +10,5 @@ export const useGetQuiz = (quizID) => useQuery(['getQuizDetails', quizID], fetch
 export const useUpdateQuiz = () => useMutation(fetchers.updateQuizByID);
 
 export const useDeleteQuiz = () => useMutation(fetchers.deleteQuizByID);
+
+export const useGetRankList = (quizId) => useQuery(['getQuizRankList', quizId], fetchers.getQuizRankList);

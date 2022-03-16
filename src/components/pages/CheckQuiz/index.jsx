@@ -1,19 +1,30 @@
-import React from 'react';
-import Navbar from '@components/Navbar/Navbar';
-import '@pagestyles/check_quiz/index.scss';
-import Top from '@pages/CheckQuiz/Top';
-import Bottom from '@pages/CheckQuiz/Bottom';
+import React from 'react'
+import '@pagestyles/check_quiz/index.scss'
+import { Route, Switch } from 'react-router-dom'
+import MasterWrapper from '@pages/CheckQuiz/CheckResponse/MasterWrapper'
+import ResponseList from './ResponseList'
+import QuestionsWrapper from './CheckResponse/Questions'
 
 const CheckQuiz = () => (
-    <div className="check-quiz">
-        <Navbar type="dashboard" />
-        <div className="top">
-            <Top />
-        </div>
-        <div className="bottom">
-            <Bottom />
-        </div>
-    </div>
-    );
+  <Switch>
+    <Route
+      path="/quiz/check/:quizID/:participantID/:sectionID"
+      render={() => (
+        <MasterWrapper>
+          <QuestionsWrapper />
+        </MasterWrapper>
+      )}
+    />
+    <Route
+      path="/quiz/check/:quizID/:participantID/"
+      render={() => (
+        <MasterWrapper>
+          <QuestionsWrapper />
+        </MasterWrapper>
+      )}
+    />
+    <Route path="/quiz/check/:quizID" component={ResponseList} />
+  </Switch>
+)
 
-export default CheckQuiz;
+export default CheckQuiz
