@@ -5,11 +5,13 @@ import { useGetRegistrants } from '@api/register/useRegister';
 import { useParams } from 'react-router-dom';
 import log from '@utils/log';
 import dayjs from 'dayjs';
+import { useGetUserPublicProfile } from '@api/users/useUsers';
 
 const Top = () => {
   const { quizID } = useParams();
   const [quizName, setQuizName] = useState('');
   const [creator, setCreator] = useState('');
+  const [creatorName, setCreatorName] = useState('');
   const [createdOn, setCreatedOn] = useState('');
   const [totalParticipants, setTotalParticipants] = useState(1);
   const {
@@ -23,11 +25,13 @@ const Top = () => {
     isSuccess: isRegistrantsSuccess,
   } = useGetRegistrants(quizID);
 
+  const { data: creatorPublicProfileData } = useGetUserPublicProfile(creator);
+
   useEffect(() => {
     if (isQuizSuccess) {
       log('Got Quiz Data: ', { quizData });
-      setQuizName(quizData?.quiz?.name);
-      setCreator(quizData?.quiz?.creator);
+      setQuizName(quizData?.quiz?.name || 'Quiz Name not set');
+      setCreator(quizData?.quiz?.creator || 'Quiz Creator not found');
       const date = dayjs(quizData?.quiz?.startTime);
       setCreatedOn(date.toString());
     }
@@ -38,6 +42,14 @@ const Top = () => {
       setTotalParticipants(registrantsData.data.data.users.length);
     }
   }, [isRegistrantsSuccess]);
+
+  useEffect(() => {
+    if (creatorPublicProfileData && creatorPublicProfileData.success) {
+      setCreatorName(
+        `${creatorPublicProfileData?.data?.firstName} ${creatorPublicProfileData?.data?.lastName}`,
+      );
+    }
+  }, [creatorPublicProfileData]);
 
   useEffect(() => {
     log('CheckQuiz/ResponseList/Top:', { quizID });
@@ -57,7 +69,7 @@ const Top = () => {
               <div className="quiz-details-content">
                   Created by:
                   {' '}
-                  <span className="content-link">{creator}</span>
+                  <span className="content-link">{creatorName}</span>
               </div>
               <div className="quiz-details-content">
                   Result published by:
@@ -73,7 +85,7 @@ const Top = () => {
               <div className="participants-text"> Participants</div>
           </div>
           <div className="checks-container">
-              <div className="checks-count">1000</div>
+              <div className="checks-count">? TODO ?</div>
               <div className="checks-text">Checks</div>
               <div className="checks-text">Completed</div>
           </div>
