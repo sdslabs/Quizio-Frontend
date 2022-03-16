@@ -3,6 +3,8 @@ import '@pagestyles/check_quiz/top.scss';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetRegistrants } from '@api/register/useRegister';
 import { useParams } from 'react-router-dom';
+import log from '@utils/log';
+import dayjs from 'dayjs';
 
 const Top = () => {
   const { quizID } = useParams();
@@ -23,17 +25,11 @@ const Top = () => {
 
   useEffect(() => {
     if (isQuizSuccess) {
-      setQuizName(quizData.data.data.quiz.name);
-      setCreator(quizData.data.data.quiz.creator);
-      const date = new Date(quizData.data.data.quiz.startTime);
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-      };
-      setCreatedOn(date.toLocaleDateString('en-US', options));
+      log('Got Quiz Data: ', { quizData });
+      setQuizName(quizData?.quiz?.name);
+      setCreator(quizData?.quiz?.creator);
+      const date = dayjs(quizData?.quiz?.startTime);
+      setCreatedOn(date.toString());
     }
   }, [isQuizSuccess]);
 
@@ -43,9 +39,12 @@ const Top = () => {
     }
   }, [isRegistrantsSuccess]);
 
-  if (isQuizLoading || isRegistrantsLoading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    log('CheckQuiz/ResponseList/Top:', { quizID });
+  }, [quizID]);
+
+  if (isQuizLoading || isRegistrantsLoading) return <div>Loading...</div>;
+
   return (
       <div className="dashboard-top">
           <div className="quiz-details-container">
