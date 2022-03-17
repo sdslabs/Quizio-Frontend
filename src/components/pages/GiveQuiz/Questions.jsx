@@ -17,142 +17,174 @@ import { useSelector } from 'react-redux';
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
 const QuestionsWrapper = () => {
-    const { quizID } = useParams();
+  const { quizID } = useParams();
 
-    const { data, isSuccess } = useGetQuiz(quizID);
-    // const [showModal, setShowModal] = useState(false);
+  const { data, isSuccess } = useGetQuiz(quizID);
+  // const [showModal, setShowModal] = useState(false);
 
-    const { setQuiz, currentQuestion, currentSection } = useGiveQuizStore();
+  const { setQuiz, currentQuestion, currentSection } = useGiveQuizStore();
 
-    useEffect(() => {
-        if (isSuccess) {
-            const { name, description, sections } = mapQuizData(data);
-            setQuiz({
-                name, description, sections, quizioID: quizID,
-            });
-        }
-    }, [isSuccess]);
-
-    const handleChange = (e) => {
-        // setSelected(e.target.value);
-      };
-
-    // if (isLoading) return <div>Loading...</div>;
-
-    // const { description, instruction } = mapQuizData(data);
-
-    if (!currentQuestion) {
-        return (
-            <>
-                <h1 className="text-3xl font-bold">Select a question to start checking.</h1>
-            </>
-        );
+  useEffect(() => {
+    if (isSuccess) {
+      const { name, description, sections } = mapQuizData(data);
+      setQuiz({
+        name,
+        description,
+        sections,
+        quizioID: quizID,
+      });
     }
+  }, [isSuccess]);
+
+  const handleChange = (e) => {
+    // setSelected(e.target.value);
+  };
+
+  // if (isLoading) return <div>Loading...</div>;
+
+  // const { description, instruction } = mapQuizData(data);
+
+  if (!currentQuestion) {
     return (
         <>
-            <h1 className="text-3xl font-bold">{currentSection}</h1>
-            <Question />
+            <h1 className="text-3xl font-bold">
+                Select a question to start checking.
+            </h1>
         </>
     );
+  }
+  return (
+      <>
+          <h1 className="text-3xl font-bold">{currentSection}</h1>
+          <Question />
+      </>
+  );
 };
 
 const Question = () => {
-    const {
-        currentQuestion, currentQuestionIndex, addAnsweredQuestion,
-       } = useGiveQuizStore();
-    const { participantID } = useParams();
-    const [questionData, setQuestionData] = useState({});
-    const [choice, setChoice] = useState(null);
-    const [answer, setAnswer] = useState('');
-    const {
-        data,
-        isLoading,
-        isSuccess,
-    } = useGetQuestion(currentQuestion);
-    // console.log(currentQuestion);
-    const userID = useSelector((state) => state.auth.user.userID);
+  const {
+    currentQuestion,
+    currentQuestionIndex,
+    addAnsweredQuestion,
+  } = useGiveQuizStore();
+  const { participantID } = useParams();
+  const [questionData, setQuestionData] = useState({});
+  const [choice, setChoice] = useState(null);
+  const [answer, setAnswer] = useState('');
+  const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
+  // console.log(currentQuestion);
+  const userID = useSelector((state) => state.auth.user.userID);
 
-    const {
-        mutate: updateResponse, isLoading: responseLoading, isSuccess: responseSucess,
-    } = useUpdateResponse();
+  const {
+    mutate: updateResponse,
+    isLoading: responseLoading,
+    isSuccess: responseSucess,
+  } = useUpdateResponse();
 
-    const { data: responseData, isSuccess: getResponseSuccess, isLoading: getResponseLoading } = useGetResponse(userID, currentQuestion);
-    console.log(userID, 'userID');
-    console.log(currentQuestion, 'questionID');
-    useEffect(() => {
-        if (responseSucess) {
-            console.log('successful');
-        }
-    }, [responseSucess]);
-
-    useEffect(() => {
-        if (getResponseSuccess) {
-            if (responseData.data.answerChoice) {
-                console.log(responseData.data.data.answerChoice[0]);
-                setChoice(responseData.data.data.answerChoice[0]);
-}
-            setAnswer(responseData.data.data.answer);
-        }
-    }, [getResponseSuccess]);
-
-    const saveAndNext = () => {
-        switch (questionData.type) {
-            case 'mcq':
-                updateResponse({ body: { questionID: currentQuestion, answerChoice: [choice] } });
-            break;
-            case 'subjective':
-                updateResponse({ body: { questionID: currentQuestion, answer } });
-                break;
-            default:
-                updateResponse({ body: { questionID: currentQuestion, answerChoice: [choice] } });
-            break;
-        }
-        addAnsweredQuestion(currentQuestion);
-        // console.log({ answer });
-    };
-
-    useEffect(() => {
-        if (isSuccess) {
-            // console.log(data);
-            setQuestionData(data.data.data.question);
-        }
-    }, [isSuccess, isLoading, data]);
-
-    const handleClear = () => {
-        setAnswer('');
-        setChoice(null);
-    };
-
-    if (isLoading) {
-        return <>Loading...</>;
+  const {
+    data: responseData,
+    isSuccess: getResponseSuccess,
+    isLoading: getResponseLoading,
+  } = useGetResponse(userID, currentQuestion);
+  console.log(userID, 'userID');
+  console.log(currentQuestion, 'questionID');
+  useEffect(() => {
+    if (responseSucess) {
+      console.log('successful');
     }
-    return (
-        <div>
-            <div className="flex flex-row justify-between items-center py-4">
-                <p className="text-black-N6 font-semibold">
-                    Question
-                    {' '}
-                    {currentQuestionIndex}
-                </p>
-                <p className="text-purple-V6 font-semibold">
-                    Marks :
-                    {' '}
-                    {questionData.maxMarks ? questionData.maxMarks : 0}
-                </p>
-            </div>
-            { (questionData.type === 'mcq')
-            ? <MCQ questionText={questionData.question} options={questionData.choices} selected={choice} setChoice={setChoice} />
-            : <Descriptive questionText={questionData.question} answer={answer} setAnswer={setAnswer} />}
+  }, [responseSucess]);
 
-            <div className="flex flex-row justify-end mt-8">
-                <span className="w-100 text-purple cursor-pointer" onClick={handleClear} role="button">Clear Responses</span>
-            </div>
+  useEffect(() => {
+    if (getResponseSuccess) {
+      if (responseData.data.answerChoice) {
+        console.log(responseData.data.data.answerChoice[0]);
+        setChoice(responseData.data.data.answerChoice[0]);
+      }
+      setAnswer(responseData.data.data.answer);
+    }
+  }, [getResponseSuccess]);
 
-            <div className="flex flex-row justify-end mt-8">
-                <span className="w-100"><PrimaryCTA text="Save and next" onClick={saveAndNext} /></span>
-            </div>
-        </div>
-    );
+  const saveAndNext = () => {
+    switch (questionData.type) {
+      case 'mcq':
+        updateResponse({
+          body: { questionID: currentQuestion, answerChoice: [choice] },
+        });
+        break;
+      case 'subjective':
+        updateResponse({ body: { questionID: currentQuestion, answer } });
+        break;
+      default:
+        updateResponse({
+          body: { questionID: currentQuestion, answerChoice: [choice] },
+        });
+        break;
+    }
+    addAnsweredQuestion(currentQuestion);
+    // console.log({ answer });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      // console.log(data);
+      setQuestionData(data.data.data.question);
+    }
+  }, [isSuccess, isLoading, data]);
+
+  const handleClear = () => {
+    setAnswer('');
+    setChoice(null);
+  };
+
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+  return (
+      <div>
+          <div className="flex flex-row justify-between items-center py-4">
+              <p className="text-black-N6 font-semibold">
+                  Question
+                  {' '}
+                  {currentQuestionIndex}
+              </p>
+              <p className="text-purple-V6 font-semibold">
+                  Marks :
+                  {' '}
+                  {questionData.maxMarks ? questionData.maxMarks : 0}
+              </p>
+          </div>
+          {questionData.type === 'mcq' ? (
+              <MCQ
+                questionText={questionData.question}
+                options={questionData.choices}
+                selected={choice}
+                setChoice={setChoice}
+              />
+      ) : (
+          <Descriptive
+            questionText={questionData.question}
+            answer={answer}
+            setAnswer={setAnswer}
+          />
+      )}
+
+          <div className="flex flex-row justify-end mt-8">
+              <button
+                className="w-100 text-purple cursor-pointer"
+                onClick={handleClear}
+                type="button"
+              >
+                  Clear Responses
+              </button>
+          </div>
+
+          <div className="flex flex-row justify-end mt-8">
+              <span className="w-100">
+                  <PrimaryCTA text="Save and next" onClick={saveAndNext} />
+              </span>
+          </div>
+      </div>
+  );
 };
 
 const MCQ = ({
@@ -164,20 +196,26 @@ const MCQ = ({
             <div key={choice.quizioID}>
                 <RadioButton
                   text={choice.choice}
-                  onChange={(e) => { setChoice(e.target.value); }}
+                  onChange={(e) => {
+            setChoice(e.target.value);
+          }}
                   checked={selected === choice.quizioID}
                   quizioID={choice.quizioID}
                 />
             </div>
-      ))}
+    ))}
     </div>
 );
 
 MCQ.propTypes = {
-    questionText: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selected: PropTypes.string || PropTypes.null,
-    setChoice: PropTypes.func.isRequired,
+  questionText: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selected: PropTypes.string,
+  setChoice: PropTypes.func.isRequired,
+};
+
+MCQ.defaultProps = {
+  selected: '',
 };
 
 const Descriptive = ({ questionText, answer, setAnswer }) => (
@@ -193,13 +231,13 @@ const Descriptive = ({ questionText, answer, setAnswer }) => (
 );
 
 Descriptive.propTypes = {
-    questionText: PropTypes.string,
-    answer: PropTypes.string.isRequired,
-    setAnswer: PropTypes.func.isRequired,
+  questionText: PropTypes.string,
+  answer: PropTypes.string.isRequired,
+  setAnswer: PropTypes.func.isRequired,
 };
 
 Descriptive.defaultProps = {
-    questionText: '',
+  questionText: '',
 };
 
 export default QuestionsWrapper;
