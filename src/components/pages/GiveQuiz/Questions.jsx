@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetScore, useUpdateScore } from '@api/quizzes/useScore';
@@ -13,6 +13,7 @@ import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
+import { findIndex } from 'lodash';
 import Descriptive from './Descriptive';
 import MCQ from './MCQ';
 
@@ -40,9 +41,13 @@ const Question = () => {
   const {
     currentQuestion,
     currentQuestionIndex,
+    currentSection,
     addAnsweredQuestion,
     switchToNextQuestion,
+    quiz,
+    sections,
   } = useGiveQuizStore();
+  const history = useHistory();
   const { participantID, sectionID } = useParams();
   const [questionData, setQuestionData] = useState({});
   const [choice, setChoice] = useState(null);

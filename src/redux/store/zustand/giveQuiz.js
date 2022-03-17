@@ -8,7 +8,10 @@ const useGiveQuizStore = create((set) => ({
     currentQuestion: null,
     currentQuestionIndex: null,
     currentSection: null,
+    totalQuestions: 0,
     answeredQuestions: [],
+    markedQuestions: [],
+    markedAnsweredQuestions: [],
 
     /* Quiz Id */
     setQuiz: (quiz) => set(() => ({ quiz })),
@@ -21,9 +24,14 @@ const useGiveQuizStore = create((set) => ({
     /* Open a question */
     setCurrentSection: (currentSection) => set(() => ({ currentSection })),
     /* Open a question */
+    setTotalQuestions: (totalQuestions) => set(() => ({ totalQuestions })),
+    /* Open a question */
     addAnsweredQuestion: (question) => set((state) => {
         log('{zustand} addAsnweredQuestion', { question, answeredquestions: state.answeredQuestions });
-        state.answeredQuestions.push(question);
+        const index = state.answeredQuestions.findIndex((q) => q === question);
+        if (index === -1) {
+            state.answeredQuestions.push(question);
+        }
     }),
     /* opens the first question of the current section */
     startAnsweringSection: (section) => set((state) => {

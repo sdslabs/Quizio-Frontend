@@ -37,7 +37,9 @@ const mapSectionsData = (result) => result.map((data) => data?.data?.data?.data?
 
 const AllSections = () => {
     const {
-        quiz, sections, setSections, currentQuestion, answeredQuestions, setCurrentQuestion, setCurrentSection, setCurrentQuestionIndex,
+        quiz, sections, setSections, currentQuestion, answeredQuestions,
+        setCurrentQuestion, setCurrentSection, setCurrentQuestionIndex,
+        setTotalQuestions,
        } = useGiveQuizStore();
 
   const result = useGetMultipleSections(quiz?.sections || []);
@@ -61,6 +63,13 @@ const AllSections = () => {
   useEffect(() => {
     if (isSuccess) {
       setSections(mapSectionsData(result) || []);
+      const sectionsData = mapSectionsData(result);
+    console.log(sectionsData);
+    let totalQuestions = 0;
+     sectionsData.forEach((section) => {
+       totalQuestions += section?.questions?.length || 0;
+    });
+    setTotalQuestions(totalQuestions);
     }
   }, [isSuccess]);
 
