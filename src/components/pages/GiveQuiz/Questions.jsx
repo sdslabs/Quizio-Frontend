@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-// import UserQuizRegistration from '@pages/Register/UserQuizRegistration';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetScore, useUpdateScore } from '@api/quizzes/useScore';
 import { PropTypes } from 'prop-types';
@@ -14,15 +13,11 @@ import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
+import Descriptive from './Descriptive';
+import MCQ from './MCQ';
 
 const QuestionsWrapper = () => {
-  // const [showModal, setShowModal] = useState(false);
-
   const { currentQuestion, currentSection } = useGiveQuizStore();
-
-  // if (isLoading) return <div>Loading...</div>;
-
-  // const { description, instruction } = mapQuizData(data);
 
   if (!currentQuestion) {
     return (
@@ -52,7 +47,7 @@ const Question = () => {
   const [choice, setChoice] = useState(null);
   const [answer, setAnswer] = useState('');
   const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
-  // console.log(currentQuestion);
+
   const userID = useSelector((state) => state.auth.user.userID);
 
   const {
@@ -131,7 +126,7 @@ const Question = () => {
               <p className="text-purple-V6 font-semibold">
                   Marks :
                   {' '}
-                  {questionData.maxMarks ? questionData.maxMarks : 0}
+                  {questionData?.maxMarks || 0}
               </p>
           </div>
           {questionData.type === 'mcq' ? (
@@ -166,59 +161,6 @@ const Question = () => {
           </div>
       </div>
   );
-};
-
-const MCQ = ({
- questionText, options, selected, setChoice,
-}) => (
-    <div>
-        <div className="bg-purple-V1 p-2 my-2">{questionText}</div>
-        {options.map((choice, index) => (
-            <div key={choice.quizioID}>
-                <RadioButton
-                  text={choice.choice}
-                  onChange={(e) => {
-            setChoice(e.target.value);
-          }}
-                  checked={selected === choice.quizioID}
-                  quizioID={choice.quizioID}
-                />
-            </div>
-    ))}
-    </div>
-);
-
-MCQ.propTypes = {
-  questionText: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selected: PropTypes.string,
-  setChoice: PropTypes.func.isRequired,
-};
-
-MCQ.defaultProps = {
-  selected: '',
-};
-
-const Descriptive = ({ questionText, answer, setAnswer }) => (
-    <div>
-        <div className="bg-purple-V1 p-2 my-2">{questionText}</div>
-        <TextField
-          id="DescriptiveAnswer"
-          placeholder=""
-          val={answer}
-          setVal={setAnswer}
-        />
-    </div>
-);
-
-Descriptive.propTypes = {
-  questionText: PropTypes.string,
-  answer: PropTypes.string.isRequired,
-  setAnswer: PropTypes.func.isRequired,
-};
-
-Descriptive.defaultProps = {
-  questionText: '',
 };
 
 export default QuestionsWrapper;
