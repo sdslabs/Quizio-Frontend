@@ -13,6 +13,7 @@ import { useGetQuestion } from '@api/quizzes/useQuestions';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
+import log from '@utils/log';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
@@ -86,18 +87,20 @@ const Question = () => {
     isSuccess: getResponseSuccess,
     isLoading: getResponseLoading,
   } = useGetResponse(userID, currentQuestion);
-  console.log(userID, 'userID');
-  console.log(currentQuestion, 'questionID');
+
+  log({ userID });
+  log({ currentQuestion });
+
   useEffect(() => {
     if (responseSucess) {
-      console.log('successful');
+      log('response Successful');
     }
   }, [responseSucess]);
 
   useEffect(() => {
     if (getResponseSuccess) {
       if (responseData.data.answerChoice) {
-        console.log(responseData.data.data.answerChoice[0]);
+        log({ answerChoice: responseData.data.data.answerChoice[0] });
         setChoice(responseData.data.data.answerChoice[0]);
       }
       setAnswer(responseData.data.data.answer);
@@ -121,12 +124,10 @@ const Question = () => {
         break;
     }
     addAnsweredQuestion(currentQuestion);
-    // console.log({ answer });
   };
 
   useEffect(() => {
     if (isSuccess) {
-      // console.log(data);
       setQuestionData(data.data.data.question);
     }
   }, [isSuccess, isLoading, data]);

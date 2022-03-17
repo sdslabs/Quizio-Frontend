@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import axiosInstance from '@api/axiosInstance';
 
 export const getResponse = ({ queryKey }) => axiosInstance.get(`/responses/${queryKey[1]}/${queryKey[2]}`);
