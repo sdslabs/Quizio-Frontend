@@ -1,3 +1,4 @@
+import log from '@utils/log';
 import create from 'zustand';
 
 const useGiveQuizStore = create((set) => ({
@@ -20,9 +21,9 @@ const useGiveQuizStore = create((set) => ({
     setCurrentSection: (currentSection) => set(() => ({ currentSection })),
     /* Open a question */
     addAnsweredQuestion: (question) => set((state) => {
-        console.log('question');
+        log('{zustand} addAsnweredQuestion', { question, answeredquestions: state.answeredQuestions });
         state.answeredQuestions.push(question);
-}),
+    }),
 }));
 
 export default useGiveQuizStore;

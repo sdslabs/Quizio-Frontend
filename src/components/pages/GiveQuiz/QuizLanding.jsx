@@ -6,25 +6,29 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import StartQuizModal from '@pages/Register/StartQuizModal';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
+import log from '@utils/log';
 
 const mapQuizData = (data) => data?.data?.data?.quiz || {};
 
 const QuizLanding = () => {
     const { quizID } = useParams();
     const { data, isLoading, isSuccess } = useGetQuiz(quizID);
-    console.log('quizlandig', quizID);
     const [showModal, setShowModal] = useState(false);
 
     const { setQuiz } = useGiveQuizStore();
 
     useEffect(() => {
         if (isSuccess) {
-            console.log(data.quiz.sections);
+            log({ sections: data.quiz.sections });
             setQuiz({
                 name: data.quiz.name, description: data.quiz.description, sections: data.quiz.sections, quizioID: quizID,
             });
         }
     }, [isSuccess]);
+
+    useEffect(() => {
+        log('quizlanding', { quizID });
+    }, [quizID]);
 
     if (isLoading) return <div>Loading...</div>;
 

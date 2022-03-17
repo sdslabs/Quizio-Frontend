@@ -1,4 +1,5 @@
 import axiosInstance from '@api/axiosInstance';
+import log from '@utils/log';
 
 export const createNewQuiz = async () => {
 	try {
@@ -20,7 +21,7 @@ export const getAllQuizzes = async () => {
 
 export const getQuizByID = async ({ queryKey }) => {
 	try {
-		console.log('fetching', queryKey);
+		log('fetching Quiz', { quizID: queryKey[1] });
 		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
 		return res.data.data;
 	} catch (e) {
