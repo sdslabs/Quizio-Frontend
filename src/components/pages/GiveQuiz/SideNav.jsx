@@ -21,7 +21,7 @@ const SideNav = () => {
           <p className="primary-text py-8 px-10">{quiz.name}</p>
           <p
             className={`side-nav-item${!sectionID ? '-active' : ''}`}
-            onClick={() => history.push(`/quiz/${quiz.quizioID}`)}
+            onClick={() => history.push(`/quiz/attempt/${quiz.quizioID}`)}
           >
               Instructions
           </p>
@@ -50,7 +50,7 @@ const AllSections = () => {
 
     const handleSectionTabClick = (id) => {
         setCurrentQuestion(null);
-        history.push(`/quiz/${quiz.quizioID}/${id}`);
+        history.push(`/quiz/attempt/${quiz.quizioID}/${id}`);
     };
     const handleBubbleClick = (questionID, title, questionIndex) => {
         setCurrentQuestion(questionID);

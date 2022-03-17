@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import SubmitQuiz from '@components/Modals/SubmitQuiz';
@@ -12,8 +12,9 @@ import QuestionsWrapper from './Questions';
 
 const SectionLanding = () => {
   const { sectionID, quizID } = useParams();
-  const { sections, currentQuestion } = useGiveQuizStore();
+  const { sections, currentQuestion, quiz } = useGiveQuizStore();
   log('Section Landing: ', { sectionID, quizID });
+  if (!quiz.quizioID) return <Redirect to={`/quiz/attempt/${quizID}`} />;
   const [showModal, setShowModal] = React.useState(false);
 
     const currentSection = _.find(sections, { quizioID: sectionID }) || {};

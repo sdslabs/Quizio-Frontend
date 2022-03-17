@@ -99,9 +99,9 @@ const Question = () => {
 
   useEffect(() => {
     if (getResponseSuccess) {
-      if (responseData.data.answerChoice) {
-        log({ answerChoice: responseData.data.data.answerChoice[0] });
-        setChoice(responseData.data.data.answerChoice[0]);
+      if (responseData.data.data.answerChoices) {
+        log({ answerChoice: responseData.data.data.answerChoices[0] });
+        setChoice(responseData.data.data.answerChoices[0]);
       }
       setAnswer(responseData.data.data.answer);
     }
@@ -110,8 +110,9 @@ const Question = () => {
   const saveAndNext = () => {
     switch (questionData.type) {
       case 'mcq':
+        console.log(choice, 'choice');
         updateResponse({
-          body: { questionID: currentQuestion, answerChoice: [choice] },
+          body: { questionID: currentQuestion, answerChoices: [choice] },
         });
         break;
       case 'subjective':
@@ -119,7 +120,7 @@ const Question = () => {
         break;
       default:
         updateResponse({
-          body: { questionID: currentQuestion, answerChoice: [choice] },
+          body: { questionID: currentQuestion, answerChoices: [choice] },
         });
         break;
     }
