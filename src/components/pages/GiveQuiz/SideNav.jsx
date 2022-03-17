@@ -12,7 +12,7 @@ import { useGetMultipleSections } from '@api/quizzes/useSections';
 
 const SideNav = () => {
   const { quiz } = useGiveQuizStore();
-
+  console.log(quiz, 'name');
   const history = useHistory();
   const { sectionID } = useParams();
 

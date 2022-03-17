@@ -8,8 +8,6 @@ import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import log from '@utils/log';
 
-const mapQuizData = (data) => data?.data?.data?.quiz || {};
-
 const QuizLanding = () => {
     const { quizID } = useParams();
     const { data, isLoading, isSuccess } = useGetQuiz(quizID);
@@ -32,17 +30,15 @@ const QuizLanding = () => {
 
     if (isLoading) return <div>Loading...</div>;
 
-    const { name, description, instruction } = mapQuizData(data);
-
     return (
         <>
-            <h1 className="text-3xl font-bold">{name}</h1>
+            <h1 className="text-3xl font-bold">{data.quiz.name}</h1>
             <p className="text-grey-N6 mt-6">
-                {description}
+                {data.quiz.description}
             </p>
             <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
             <p className="text-grey-N6 mt-6">
-                {instruction || 'No instructions available'}
+                {data.quiz.instruction || 'No instructions available'}
             </p>
             <div className="ml-auto mt-16 w-28">
                 <PrimaryCTA text="Continue" onClick={() => setShowModal(true)} />

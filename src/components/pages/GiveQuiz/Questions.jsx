@@ -15,31 +15,10 @@ import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
 
-const mapQuizData = (data) => data?.data?.data?.quiz || {};
-
 const QuestionsWrapper = () => {
-  const { quizID } = useParams();
-
-  const { data, isSuccess } = useGetQuiz(quizID);
   // const [showModal, setShowModal] = useState(false);
 
-  const { setQuiz, currentQuestion, currentSection } = useGiveQuizStore();
-
-  useEffect(() => {
-    if (isSuccess) {
-      const { name, description, sections } = mapQuizData(data);
-      setQuiz({
-        name,
-        description,
-        sections,
-        quizioID: quizID,
-      });
-    }
-  }, [isSuccess]);
-
-  const handleChange = (e) => {
-    // setSelected(e.target.value);
-  };
+  const { currentQuestion, currentSection } = useGiveQuizStore();
 
   // if (isLoading) return <div>Loading...</div>;
 
