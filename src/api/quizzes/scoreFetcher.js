@@ -3,8 +3,8 @@ import log from '@utils/log';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getScore = ({ queryKey }) => {
-    // console.log(queryKey, 'queryKey');
-    axiosInstance.get(`/quizzes/sections/questions/${queryKey[1]}/${queryKey[2]}/check`);
+	log('get score: ', { queryKey });
+	return axiosInstance.get(`/quizzes/sections/questions/${queryKey[1]}/${queryKey[2]}/check`);
 };
 
 export const updateScore = ({ questionID, body }) => {
