@@ -12,7 +12,9 @@ import QuestionsWrapper from './Questions';
 
 const SectionLanding = () => {
   const { sectionID, quizID } = useParams();
-  const { sections, currentQuestion, quiz } = useGiveQuizStore();
+  const {
+ sections, currentQuestion, quiz, startAnsweringSection,
+} = useGiveQuizStore();
   log('Section Landing: ', { sectionID, quizID });
   if (!quiz.quizioID) return <Redirect to={`/quiz/attempt/${quizID}`} />;
   const [showModal, setShowModal] = React.useState(false);
@@ -32,7 +34,7 @@ const SectionLanding = () => {
                 {description || 'No description provided'}
             </p>
             <div className="ml-auto mt-16 w-40">
-                <PrimaryCTA text="Start Answering" onClick={() => setShowModal(true)} />
+                <PrimaryCTA text="Start Answering" onClick={() => { startAnsweringSection(sectionID); }} />
             </div>
             <ModalWrapper showModal={showModal} setShowModal={setShowModal} hideOnOverlayClick><SubmitQuiz /></ModalWrapper>
         </>

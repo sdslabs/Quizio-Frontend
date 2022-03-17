@@ -41,8 +41,9 @@ const Question = () => {
     currentQuestion,
     currentQuestionIndex,
     addAnsweredQuestion,
+    switchToNextQuestion,
   } = useGiveQuizStore();
-  const { participantID } = useParams();
+  const { participantID, sectionID } = useParams();
   const [questionData, setQuestionData] = useState({});
   const [choice, setChoice] = useState(null);
   const [answer, setAnswer] = useState('');
@@ -99,6 +100,7 @@ const Question = () => {
         break;
     }
     addAnsweredQuestion(currentQuestion);
+    switchToNextQuestion(sectionID);
   };
 
   useEffect(() => {

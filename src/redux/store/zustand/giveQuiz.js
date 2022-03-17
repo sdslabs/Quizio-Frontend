@@ -1,5 +1,6 @@
 import log from '@utils/log';
 import create from 'zustand';
+import { find } from 'lodash';
 
 const useGiveQuizStore = create((set) => ({
     quiz: {},
@@ -23,6 +24,15 @@ const useGiveQuizStore = create((set) => ({
     addAnsweredQuestion: (question) => set((state) => {
         log('{zustand} addAsnweredQuestion', { question, answeredquestions: state.answeredQuestions });
         state.answeredQuestions.push(question);
+    }),
+    /* opens the first question of the current section */
+    startAnsweringSection: (section) => set((state) => {
+        const currentSection = find(state.sections, { quizioID: section });
+        return { currentQuestion: currentSection?.questions[0], currentQuestionIndex: 1 };
+    }),
+    switchToNextQuestion: (section) => set((state) => {
+        const currentSection = find(state.sections, { quizioID: section });
+        return { currentQuestion: currentSection?.questions[state.currentQuestionIndex], currentQuestionIndex: state.currentQuestionIndex + 1 };
     }),
 }));
 
