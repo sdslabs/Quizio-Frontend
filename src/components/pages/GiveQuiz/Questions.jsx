@@ -97,14 +97,35 @@ const Question = () => {
   }, [getResponseSuccess, responseData]);
 
   const saveAndNext = () => {
-    let status = 'answered';
-    if (markedQuestions.includes(currentQuestion)) {
-      status = 'marked-answered';
-      addMarkedAnsweredQuestion(currentQuestion);
-      removeMarkedQuestion(currentQuestion);
-      removeAnsweredQuestion(currentQuestion);
-    } else {
-      addAnsweredQuestion(currentQuestion);
+    let status = 'unanswered';
+    if (choice !== null || answer !== '') {
+      status = 'answered';
+    }
+    if (markedQuestions.includes(currentQuestion) || markedAnsweredQuestions.includes(currentQuestion)) {
+      if (status === 'answered') {
+        status = 'marked-answered';
+      } else {
+        status = 'marked';
+      }
+    }
+    switch (status) {
+      case 'unanswered':
+        removeAnsweredQuestion(currentQuestion);
+        break;
+      case 'answered':
+        addAnsweredQuestion(currentQuestion);
+        break;
+      case 'marked':
+        addMarkedQuestion(currentQuestion);
+        removeMarkedAnsweredQuestion(currentQuestion);
+        break;
+      case 'marked-answered':
+        addMarkedAnsweredQuestion(currentQuestion);
+        removeMarkedQuestion(currentQuestion);
+        break;
+      default:
+        removeAnsweredQuestion(currentQuestion);
+        break;
     }
     switch (questionData.type) {
       case 'mcq':
@@ -144,22 +165,22 @@ const Question = () => {
             body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked-answered' },
           });
           removeAnsweredQuestion(currentQuestion);
-          addMarkedQuestion(currentQuestion);
+          addMarkedAnsweredQuestion(currentQuestion);
         } else {
           updateResponse({
             body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked' },
           });
-          addMarkedAnsweredQuestion(currentQuestion);
+          addMarkedQuestion(currentQuestion);
         }
         break;
       case 'subjective':
         if (answer !== '') {
           updateResponse({ body: { questionID: currentQuestion, answer }, status: 'marked-answered' });
           removeAnsweredQuestion(currentQuestion);
-          addMarkedQuestion(currentQuestion);
+          addMarkedAnsweredQuestion(currentQuestion);
         } else {
           updateResponse({ body: { questionID: currentQuestion, answer }, status: 'marked' });
-          addMarkedAnsweredQuestion(currentQuestion);
+          addMarkedQuestion(currentQuestion);
         }
         break;
       default:
@@ -168,12 +189,12 @@ const Question = () => {
             body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked-answered' },
           });
           removeAnsweredQuestion(currentQuestion);
-          addMarkedQuestion(currentQuestion);
+          addMarkedAnsweredQuestion(currentQuestion);
         } else {
           updateResponse({
             body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked' },
           });
-          addMarkedAnsweredQuestion(currentQuestion);
+          addMarkedQuestion(currentQuestion);
         }
         break;
     }
