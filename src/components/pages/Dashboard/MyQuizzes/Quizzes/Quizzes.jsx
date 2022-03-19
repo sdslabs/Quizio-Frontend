@@ -9,12 +9,11 @@ const Quizzes = () => {
   const {
  data, isFetching, isSuccess, isRefetching,
 } = useGetAllQuizzes();
+
   const [onGoingQuizzes, setOnGoingQuizzes] = useState(null);
   const [upComingQuizzes, setUpcomingQuizzes] = useState(null);
 
-  // This will depend on the global state
   useEffect(async () => {
-    // const quizRes = await getAllQuizzes();
     if (isSuccess) {
       log({ quizData: data });
     }
@@ -24,7 +23,6 @@ const Quizzes = () => {
         const quizStartTime = new Date(quiz.startTime);
         return quizStartTime > Date.now();
       }
-      // if startTime not set, the quiz is upcoming
       return true;
     };
     setUpcomingQuizzes(
@@ -40,11 +38,11 @@ const Quizzes = () => {
   }, [isSuccess]);
 
   useEffect(() => {
-    log({ onGoingQuizzes });
+    log({ onGoingQuizzes }, null, false);
   }, [onGoingQuizzes]);
 
   useEffect(() => {
-    log({ upComingQuizzes });
+    log({ upComingQuizzes }, null, false);
   }, [upComingQuizzes]);
 
   return (
