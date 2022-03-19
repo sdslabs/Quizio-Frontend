@@ -20,7 +20,7 @@ const Banner = ({ endTime, submitted }) => {
                         {submitted ? 'Yay!' : 'Time’s up!'}
                     </p>
                     <p className="text-green-1 mt-1">
-                        Your quiz have been
+                        Your quiz has been
                         {' '}
                         <span className="font-semibold">successfully submitted</span>
                     </p>
@@ -48,7 +48,7 @@ const Banner = ({ endTime, submitted }) => {
 
 const SubmitQuiz = ({ setShowModal }) => {
     const {
- totalQuestions, answeredQuestions, markedQuestions, markedAnsweredQuestions,
+ totalQuestions, answeredQuestions, markedQuestions, markedAnsweredQuestions, quiz,
 } = useGiveQuizStore();
 const data = [
     {
@@ -78,7 +78,7 @@ const data = [
                 <h1 className="text-lg font-semibold">Submit Quiz</h1>
                 <CrossIcon className="cursor-pointer" onClick={() => { setShowModal(false); }} />
             </div>
-            <Banner endTime="January 22, 2022 21:00:00" submitted />
+            <Banner endTime={quiz?.endTime} />
             <div className="flex mt-6 items-center">
                 <div className="w-6/12">
                     <div className="w-52 mx-auto">
