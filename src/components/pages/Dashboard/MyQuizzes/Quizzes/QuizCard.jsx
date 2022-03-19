@@ -10,9 +10,12 @@ import {
   useRegisterParticipant,
 } from '@api/register/useRegister';
 import log from '@utils/log';
+import { useHistory } from 'react-router-dom';
 
 const QuizCard = ({ data }) => {
+  const history = useHistory();
   const [registered, setRegistered] = useState(false);
+
   const {
     mutate,
     isLoading,
@@ -34,7 +37,16 @@ const QuizCard = ({ data }) => {
     mutate({ body });
   };
 
-  useEffect(() => {}, [RegisterSuccess]);
+  const handleStart = () => {
+    history.push(`/quiz/attempt/${data.quizioID}`);
+  };
+
+  useEffect(() => {
+    log({ RegisterSuccess });
+    if (RegisterSuccess) {
+      setRegistered(true);
+    }
+  }, [RegisterSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -80,14 +92,10 @@ const QuizCard = ({ data }) => {
             ) : (
                 <>
                     {registered ? (
-                        <div className="registered">Registered</div>
+                        <PrimaryCTA text="Start Quiz" onClick={handleStart} />
                 ) : (
                     <PrimaryCTA
-                      text={
-                      isLoading
-                        ? 'Registering'
-                        : `${RegisterSuccess ? 'Registered' : 'Register'}`
-                    }
+                      text={isLoading ? 'Registering' : 'Register'}
                       onClick={handleRegister}
                       disabled={RegisterSuccess}
                     />
