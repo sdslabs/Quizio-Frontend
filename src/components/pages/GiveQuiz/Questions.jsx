@@ -14,6 +14,7 @@ import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
 import { findIndex } from 'lodash';
+import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import Descriptive from './Descriptive';
 import MCQ from './MCQ';
 
@@ -43,9 +44,17 @@ const Question = () => {
     currentQuestionIndex,
     currentSection,
     addAnsweredQuestion,
+    removeAnsweredQuestion,
+    addMarkedAnsweredQuestion,
+    removeMarkedAnsweredQuestion,
+    addMarkedQuestion,
+    removeMarkedQuestion,
     switchToNextQuestion,
     quiz,
     sections,
+    answeredQuestions,
+    markedAnsweredQuestions,
+    markedQuestions,
   } = useGiveQuizStore();
   const history = useHistory();
   const { participantID, sectionID } = useParams();
@@ -88,23 +97,31 @@ const Question = () => {
   }, [getResponseSuccess]);
 
   const saveAndNext = () => {
+    let status = 'answered';
+    if (markedQuestions.includes(currentQuestion)) {
+      status = 'marked-answered';
+      addMarkedAnsweredQuestion(currentQuestion);
+      removeMarkedQuestion(currentQuestion);
+      removeAnsweredQuestion(currentQuestion);
+    } else {
+      addAnsweredQuestion(currentQuestion);
+    }
     switch (questionData.type) {
       case 'mcq':
         console.log(choice, 'choice');
         updateResponse({
-          body: { questionID: currentQuestion, answerChoices: [choice] },
+          body: { questionID: currentQuestion, answerChoices: [choice], status },
         });
         break;
       case 'subjective':
-        updateResponse({ body: { questionID: currentQuestion, answer } });
+        updateResponse({ body: { questionID: currentQuestion, answer, status } });
         break;
       default:
         updateResponse({
-          body: { questionID: currentQuestion, answerChoices: [choice] },
+          body: { questionID: currentQuestion, answerChoices: [choice], status },
         });
         break;
     }
-    addAnsweredQuestion(currentQuestion);
     switchToNextQuestion(sectionID);
   };
 
@@ -117,6 +134,51 @@ const Question = () => {
   const handleClear = () => {
     setAnswer('');
     setChoice(null);
+  };
+
+  const markForReview = () => {
+    switch (questionData.type) {
+      case 'mcq':
+        if (choice) {
+          updateResponse({
+            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked-answered' },
+          });
+          removeAnsweredQuestion(currentQuestion);
+          addMarkedQuestion(currentQuestion);
+        } else {
+          updateResponse({
+            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked' },
+          });
+          addMarkedAnsweredQuestion(currentQuestion);
+        }
+        break;
+      case 'subjective':
+        if (answer !== '') {
+          updateResponse({ body: { questionID: currentQuestion, answer }, status: 'marked-answered' });
+          removeAnsweredQuestion(currentQuestion);
+          addMarkedQuestion(currentQuestion);
+        } else {
+          updateResponse({ body: { questionID: currentQuestion, answer }, status: 'marked' });
+          addMarkedAnsweredQuestion(currentQuestion);
+        }
+        break;
+      default:
+        if (choice) {
+          updateResponse({
+            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked-answered' },
+          });
+          removeAnsweredQuestion(currentQuestion);
+          addMarkedQuestion(currentQuestion);
+        } else {
+          updateResponse({
+            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked' },
+          });
+          addMarkedAnsweredQuestion(currentQuestion);
+        }
+        break;
+    }
+    // removeAnsweredQuestion(currentQuestion);
+    // addAnsweredQuestion(currentQuestion);
   };
 
   if (isLoading) {
@@ -162,6 +224,9 @@ const Question = () => {
           </div>
 
           <div className="flex flex-row justify-end mt-8">
+              <span className="w-100 mr-8">
+                  <SecondaryCTA text="Mark for Review" onClick={markForReview} />
+              </span>
               <span className="w-100">
                   <PrimaryCTA text="Save and next" onClick={saveAndNext} />
               </span>

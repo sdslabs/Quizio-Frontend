@@ -14,9 +14,9 @@ const QuizBanner = () => {
 
   const QuestionBubbles = [
     {
-      type: 'not-visited',
+      type: 'unanswered',
       number: totalQuestions - (markedQuestions?.length || 0) - (answeredQuestions?.length || 0) - (markedAnsweredQuestions?.length || 0),
-      label: 'Unattempted',
+      label: 'Unanswered',
     },
     {
       type: 'marked',

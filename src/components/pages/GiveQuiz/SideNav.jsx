@@ -45,7 +45,7 @@ const mapSectionsData = (result) => result.map((data) => data?.data?.data?.data?
 
 const AllSections = () => {
     const {
-        quiz, sections, setSections, currentQuestion, answeredQuestions,
+        quiz, sections, setSections, currentQuestion, answeredQuestions, markedAnsweredQuestions, markedQuestions,
         setCurrentQuestion, setCurrentSection, setCurrentQuestionIndex,
         setTotalQuestions,
        } = useGiveQuizStore();
@@ -93,15 +93,20 @@ const AllSections = () => {
                         <img src={DropDownIcon} alt="" className="side-nav-toggle" />
                     </p>
                     <div className={`side-nav-questions${sectionID === quizioID ? '-active' : ''}`}>
-                        {questions.map((question, quesIDx) => (
+                        {
+                        questions.map((question, quesIDx) => (
                             <button onClick={() => { handleBubbleClick(question, title, quesIDx + 1); }} key={question || quesIDx} type="button">
                                 <QuestionBubble
                                   number={quesIDx + 1}
                                   type={currentQuestion === question ? 'active'
-                                : (answeredQuestions.includes(question) ? 'answered' : 'not-visited')}
+                                : (answeredQuestions.includes(question) ? 'answered'
+                                : (markedQuestions.includes(question) ? 'marked'
+                                : (markedAnsweredQuestions.includes(question) ? 'marked-answered'
+                                : 'not-visited')))}
                                 />
                             </button>
-                        ))}
+                        ))
+}
                     </div>
                 </Fragment>
             ))}

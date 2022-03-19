@@ -7,6 +7,9 @@ const getBubbleClassName = (type) => {
         case 'not-visited':
             return 'question-bubble-not-visited';
 
+        case 'unanswered':
+            return 'question-bubble-not-visited';
+
         case 'marked': case 'marked-answered':
             return 'question-bubble-marked';
 
