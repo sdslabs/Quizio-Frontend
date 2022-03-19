@@ -51,6 +51,9 @@
         @apply font-semibold;
         @extend .secondary-text;
       }
+      .side-nav-toggle {
+        @apply transform rotate-180 transition-all duration-500;
+    }
     }
   }
 

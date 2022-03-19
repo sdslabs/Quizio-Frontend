@@ -87,7 +87,7 @@ const SideNavQuestions = ({ selected }) => {
               {/* <img src={DropDownIcon} alt="" className="side-nav-toggle" /> */}
 
           </button>
-          {selected === 'Questions' && clicked && (
+          {selected === 'Questions' && (
           <div className="pt-2">
               {' '}
 

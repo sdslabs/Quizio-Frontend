@@ -4,54 +4,65 @@ import TextField from '@components/Input/TextField';
 import '@pagestyles/register/user_quiz_registration.scss';
 import { REGEX } from '@constants/constants';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-// import { useParams } from 'react-router';
 import { useRegisterParticipant } from '@api/register/useRegister';
 import PropTypes from 'prop-types';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useSelector } from 'react-redux';
+import { getQuizById } from '@api/quizzes/quizzesFetcher';
+import { registerParticipant } from '@api/register/registrationFetcher';
 
 const UserQuizRegistrationModal = ({
-  quizID,
+  quizID, detail1, detail2, detail3, setShowModal,
 }) => {
-  console.log(quizID);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [emailID, setEmailID] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [organisationName, setOrganisationName] = useState('');
-  // const [quiz, setQuiz] = useState('');
-  const [detail1, setDetail1] = useState('');
-  const [detail2, setDetail2] = useState('');
-  const [detail3, setDetail3] = useState('');
   const [detail1Value, setDetail1Value] = useState('');
   const [detail2Value, setDetail2Value] = useState('');
   const [detail3Value, setDetail3Value] = useState('');
-  const { mutate: mutateRegisterParticipant } = useRegisterParticipant();
-  const { isLoading, data, isSuccess } = useGetQuiz(quizID);
+  // const { mutate: mutateRegisterParticipant } = useRegisterParticipant;
+  // const { isLoading, data, isSuccess } = useGetQuiz(quizID);
   const userEmail = useSelector((state) => state.auth.user?.email);
   const userFirstName = useSelector((state) => state.auth.user?.firstName);
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userContactNumber = useSelector((state) => state.auth.user?.phoneNumber);
-  // const { data, isLoading, isSuccess } = useGetUserDetails();
-  // useEffect(() => {
-  //   console.log({ quizID });
-  // }, [quizID]);
-  useEffect(() => {
-    console.log(data, isSuccess, 'data');
+  const userOrganization = useSelector((state) => state.auth.user?.instiName);
 
-    // if (isSuccess) {
-    // }
-  }, [isSuccess]);
+  useEffect(async () => {
+
+  });
+  const body = {
+    quizID,
+    firstName: userFirstName,
+    lastName: userLastName,
+    email: userEmail,
+    contactNo: userContactNumber,
+    orgName: 'SDSLabs',
+    detail1: {
+        key: detail1.key,
+        value: detail1Value,
+    },
+    detail2: {
+      key: detail2.key,
+      value: detail2Value,
+    },
+    detail3: {
+      key: detail3.key,
+      value: detail3Value,
+  },
+};
   const handleRegisterParticipant = () => {
-    console.log(quizID);
-    mutateRegisterParticipant({ quizId: quizID });
+    console.log('before');
+    registerParticipant({ body });
+    setShowModal(false);
     console.log('after');
   };
+
+  // console.log
   return (
       <div className="user-quiz-registration">
-          {isLoading ? (
-              <div>Fetching Quiz Details</div>
-      ) : (
           <>
               <div className="user-quiz-registration-title">Registration Form</div>
               <div className="registration-form-basic-details">
@@ -79,6 +90,8 @@ const UserQuizRegistrationModal = ({
                             additionalClassName="bg-grey-N2"
                             disabled
                           />
+                          {' '}
+
                       </div>
                   </div>
                   <div className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'}`}>
@@ -95,7 +108,7 @@ const UserQuizRegistrationModal = ({
                             pattern={REGEX.email}
                           />
                       </div>
-                      <div className={`user-quiz-registration-contact-contactno ${userContactNumber ? '' : 'hidden'}`}>
+                      <div className={`user-quiz-registration-contact-contactno ${userContactNumber === null ? 'hidden' : ''}`}>
                           <TextField
                             id="Contact No."
                             placeholder={userContactNumber}
@@ -112,7 +125,7 @@ const UserQuizRegistrationModal = ({
                   <div className="user-quiz-registration-organisation-name">
                       <TextField
                         id="Organisation Name"
-                        placeholder={organisationName}
+                        placeholder={userOrganization}
                         label="Organisation Name"
                         error=""
                         val={organisationName}
@@ -122,32 +135,32 @@ const UserQuizRegistrationModal = ({
                       />
                   </div>
               </div>
-              <div className="user-quiz-registration-additional-details-title">Additional Details</div>
-              <div className={`user-quiz-registration-field-input ${detail1 ? '' : 'hidden'}`}>
+              <div className={`user-quiz-registration-additional-details-title ${detail1.key === undefined ? 'hidden' : ''}`}>Additional Details</div>
+              <div className={`user-quiz-registration-field-input ${detail1.key === undefined ? 'hidden' : ''}`}>
                   <TextField
                     id="detail1"
-                    placeholder={detail1}
-                    label={detail1}
+                    placeholder={detail1.value}
+                    label={detail1.key}
                     error=""
                     val={detail1Value}
                     setVal={setDetail1Value}
                   />
               </div>
-              <div className={`user-quiz-registration-field-input ${detail2 ? '' : 'hidden'}`}>
+              <div className={`user-quiz-registration-field-input ${detail2.key === undefined ? 'hidden' : ''}`}>
                   <TextField
                     id="detail2"
                     placeholder={detail2}
-                    label={detail2}
+                    label="detail2"
                     error=""
                     val={detail2Value}
                     setVal={setDetail2Value}
                   />
               </div>
-              <div className={`user-quiz-registration-field-input ${detail3 ? '' : 'hidden'}`}>
+              <div className={`user-quiz-registration-field-input ${detail3.key === undefined ? 'hidden' : ''}`}>
                   <TextField
                     id="detail3"
-                    placeholder={detail3}
-                    label={detail3}
+                    placeholder={detail3.label}
+                    label="detail3"
                     error=""
                     val={detail3Value}
                     setVal={setDetail3Value}
@@ -159,12 +172,20 @@ const UserQuizRegistrationModal = ({
                   </div>
               </div>
           </>
-      )}
-          ;
       </div>
   );
 };
 UserQuizRegistrationModal.propTypes = {
   quizID: PropTypes.string.isRequired,
+  detail1: PropTypes.string,
+  detail2: PropTypes.string,
+  detail3: PropTypes.string,
+  setShowModal: PropTypes.func.isRequired,
+
+};
+UserQuizRegistrationModal.defaultProps = {
+  detail1: '',
+  detail2: '',
+  detail3: '',
 };
 export default UserQuizRegistrationModal;
