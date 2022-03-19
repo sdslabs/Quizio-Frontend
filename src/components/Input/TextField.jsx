@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TextField = ({
- id, label, placeholder, error, limit, val, setVal, onKeyDown, additionalClassName, disabled, pattern,
+ id, label, placeholder, error, limit, val, setVal, onKeyDown, additionalClassName, disabled, pattern, isMandatory,
 }) => {
   const [currentLen, setCurrentLen] = useState(0);
 
@@ -18,6 +18,8 @@ const TextField = ({
       <div className="relative pt-5 w-full">
           <label htmlFor={id} className="absolute top-0 text-sm text-grey-N6">
               {label}
+              {' '}
+              {isMandatory && <span className="text-red">*</span>}
           </label>
           <input
             value={val}
@@ -27,6 +29,7 @@ const TextField = ({
             id={id}
             disabled={disabled}
             pattern={pattern}
+            required={isMandatory}
             className={`mt-1 p-4 border border-${
           error ? 'red-error' : 'grey-N4'
         } rounded ${additionalClassName}
@@ -61,6 +64,7 @@ TextField.propTypes = {
   additionalClassName: PropTypes.string,
   disabled: PropTypes.bool,
   pattern: PropTypes.string,
+  isMandatory: PropTypes.bool,
 };
 
 TextField.defaultProps = {
@@ -71,6 +75,7 @@ TextField.defaultProps = {
   additionalClassName: 'bg-white',
   disabled: false,
   pattern: '',
+  isMandatory: false,
 };
 
 export default TextField;

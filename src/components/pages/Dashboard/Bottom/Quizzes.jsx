@@ -7,33 +7,41 @@ const Quizzes = () => {
   const [onGoingQuizzes, setOnGoingQuizzes] = useState(null);
   const [upComingQuizzes, setUpcomingQuizzes] = useState(null);
   // This will depend on the global state
-  useEffect(async () => {
-    const quizRes = await getAllQuizzes();
-   // console.log(quizRes, 'aaaa');
-    const upcomingFilter = (quiz) => {
-      if (quiz.startTime) {
-        const quizStartTime = new Date(quiz.startTime);
-        return quizStartTime > Date.now();
-      }
-      // if startTime not set, the quiz is upcoming
-      return true;
-    };
-    setUpcomingQuizzes(
-      quizRes.data.quizzes.filter((quiz) => upcomingFilter(quiz)),
-    );
-    setOnGoingQuizzes(
-      quizRes.data.quizzes.filter((quiz) => !upcomingFilter(quiz)),
-    );
+  const upcomingFilter = (quiz) => {
+    if (quiz.startTime) {
+      const quizStartTime = new Date(quiz.startTime);
+      return quizStartTime > Date.now();
+    }
+    // if startTime not set, the quiz is upcoming
+    return true;
+  };
+  useEffect(() => {
+    setTimeout(async () => {
+      const quizRes = await getAllQuizzes();
+       setUpcomingQuizzes(
+         quizRes.data.quizzes.filter((quiz) => upcomingFilter(quiz)),
+       );
+       setOnGoingQuizzes(
+         quizRes.data.quizzes.filter((quiz) => !upcomingFilter(quiz)),
+       );
+    }, 1000);
   }, []);
 
   useEffect(() => {
-    console.log({ onGoingQuizzes });
   }, [onGoingQuizzes]);
 
   useEffect(() => {
-    console.log({ upComingQuizzes });
   }, [upComingQuizzes]);
 
+  const updateQuizData = async () => {
+    const quizRes = await getAllQuizzes();
+     setUpcomingQuizzes(
+       quizRes.data.quizzes.filter((quiz) => upcomingFilter(quiz)),
+     );
+     setOnGoingQuizzes(
+       quizRes.data.quizzes.filter((quiz) => !upcomingFilter(quiz)),
+     );
+  };
   return (
       <div className="dashboard-quizzes">
           <div className="ongoing-quizzes">
@@ -44,7 +52,7 @@ const Quizzes = () => {
             && onGoingQuizzes.length !== 0
             && onGoingQuizzes.map((quiz) => (
                 <div className="list-item" key={quiz.quizioID}>
-                    <QuizCard data={quiz} />
+                    <QuizCard quizData={quiz} updateCallback={updateQuizData} />
                 </div>
             ))}
               </div>
@@ -58,7 +66,7 @@ const Quizzes = () => {
             && upComingQuizzes.length !== 0
             && upComingQuizzes.map((quiz) => (
                 <div className="list-item" key={quiz.quizioID}>
-                    <QuizCard data={quiz} />
+                    <QuizCard quizData={quiz} updateCallback={updateQuizData} />
                 </div>
             ))}
               </div>

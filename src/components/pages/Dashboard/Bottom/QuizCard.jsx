@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import PropTypes from 'prop-types';
 import { ReactComponent as QuizName } from '@icons/quizname.svg';
@@ -10,18 +10,23 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import UserQuizRegistrationModal from '@components/Modals/UserQuizRegistrationModal';
 // import { useHistory } from 'react-router';
 
-const QuizCard = ({ data }) => {
-//  const history = useHistory();
+const QuizCard = ({ quizData, updateCallback }) => {
 const [showModal, setShowModal] = useState(false);
-const [buttonText,setButtonText] = useState('Register');
-// console.log(data);
+const [data, setData] = useState({});
   const handleRegister = () => {
-  //  history.push(`/register/${data.quizioID}`);
- // console.log(data.quizioID);
   setShowModal(true);
 };
-// console.log(data.detail1);
+useEffect(() => {
+    setData(quizData);
+  }, []);
+useEffect(() => {
+    setData(quizData);
+  }, [quizData]);
 
+const updateQuiz = async () => {
+    console.log('callback caller=d');
+    updateCallback();
+};
   return (
       <div className="quiz-card">
           <div className="banner-container">
@@ -44,7 +49,7 @@ const [buttonText,setButtonText] = useState('Register');
                       <div className="registered">Registered</div>
           ) : (
               <div className="register-button">
-                  <PrimaryCTA text={buttonText} onClick={handleRegister} />
+                  <PrimaryCTA text="Register" onClick={handleRegister} />
               </div>
           )}
               </div>
@@ -61,6 +66,7 @@ const [buttonText,setButtonText] = useState('Register');
                 detail2={data.detail2}
                 detail3={data.detail3}
                 setShowModal={setShowModal}
+                updateCallback={updateQuiz}
               />
           </ModalWrapper>
       </div>
@@ -68,7 +74,8 @@ const [buttonText,setButtonText] = useState('Register');
 };
 QuizCard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.any.isRequired,
+  quizData: PropTypes.any.isRequired,
+  updateCallback: PropTypes.func.isRequired,
 };
 
 export default QuizCard;

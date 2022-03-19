@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TextField from '@components/Input/TextField';
 import '@pagestyles/register/user_quiz_registration.scss';
 import { REGEX } from '@constants/constants';
@@ -12,7 +12,7 @@ import { getQuizById } from '@api/quizzes/quizzesFetcher';
 import { registerParticipant } from '@api/register/registrationFetcher';
 
 const UserQuizRegistrationModal = ({
-  quizID, detail1, detail2, detail3, setShowModal,
+  quizID, detail1, detail2, detail3, setShowModal, updateCallback,
 }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -29,10 +29,10 @@ const UserQuizRegistrationModal = ({
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userContactNumber = useSelector((state) => state.auth.user?.phoneNumber);
   const userOrganization = useSelector((state) => state.auth.user?.instiName);
+  const detail1Req = detail1.isRequired;
+  const detail2Req = detail2.isRequired;
+  const detail3Req = detail3.isRequired;
 
-  useEffect(async () => {
-
-  });
   const body = {
     quizID,
     firstName: userFirstName,
@@ -54,10 +54,9 @@ const UserQuizRegistrationModal = ({
   },
 };
   const handleRegisterParticipant = () => {
-    console.log('before');
     registerParticipant({ body });
     setShowModal(false);
-    console.log('after');
+    updateCallback();
   };
 
   // console.log
@@ -144,26 +143,29 @@ const UserQuizRegistrationModal = ({
                     error=""
                     val={detail1Value}
                     setVal={setDetail1Value}
+                    isMandatory={detail1Req}
                   />
               </div>
               <div className={`user-quiz-registration-field-input ${detail2.key === undefined ? 'hidden' : ''}`}>
                   <TextField
                     id="detail2"
-                    placeholder={detail2}
-                    label="detail2"
+                    placeholder={detail2.value}
+                    label={detail2.key}
                     error=""
                     val={detail2Value}
                     setVal={setDetail2Value}
+                    isMandatory={detail2Req}
                   />
               </div>
               <div className={`user-quiz-registration-field-input ${detail3.key === undefined ? 'hidden' : ''}`}>
                   <TextField
                     id="detail3"
-                    placeholder={detail3.label}
-                    label="detail3"
+                    placeholder={detail3.value}
+                    label={detail3.key}
                     error=""
                     val={detail3Value}
                     setVal={setDetail3Value}
+                    isMandatory={detail3Req}
                   />
               </div>
               <div className="user-quiz-registration-register-container">
@@ -181,7 +183,7 @@ UserQuizRegistrationModal.propTypes = {
   detail2: PropTypes.string,
   detail3: PropTypes.string,
   setShowModal: PropTypes.func.isRequired,
-
+  updateCallback: PropTypes.func.isRequired,
 };
 UserQuizRegistrationModal.defaultProps = {
   detail1: '',
