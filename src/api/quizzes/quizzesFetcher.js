@@ -47,7 +47,7 @@ export const deleteQuizByID = async ({ quizID }) => {
 	}
 };
 
-export const getAllQuizzesForUser = async () => {
+export const getQuizzesCreatedByUser = async () => {
 	try {
 		const res = await axiosInstance.get('/users/quizzes/owned');
 		return res.data;

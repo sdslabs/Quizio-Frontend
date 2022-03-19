@@ -19,12 +19,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-      if (data?.success) {
-          const { quizioID } = data.data.quiz;
-          history.push(`/quiz/edit/${quizioID}`);
-      } else {
-          log('Failed to create quiz!', data);
-      }
+    if (data?.success) {
+      const { quizioID } = data.data.quiz;
+      history.push(`/quiz/edit/${quizioID}`);
+    } else {
+      log('Failed to create quiz!', data);
+    }
   }, [isSuccess]);
 
   return (
