@@ -184,8 +184,7 @@ const Question = () => {
   if (isLoading) {
     return <>Loading...</>;
   }
-  console.log(questionData, '======');
-  console.log(choice, '====');
+
   return (
       <div>
           <div className="flex flex-row justify-between items-center py-4">

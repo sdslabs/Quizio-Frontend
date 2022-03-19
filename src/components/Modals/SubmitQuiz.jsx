@@ -76,7 +76,7 @@ const data = [
         <div className="py-6 px-8">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-lg font-semibold">Submit Quiz</h1>
-                <CrossIcon />
+                <CrossIcon className="cursor-pointer" onClick={() => { setShowModal(false); }} />
             </div>
             <Banner endTime="January 22, 2022 21:00:00" submitted />
             <div className="flex mt-6 items-center">

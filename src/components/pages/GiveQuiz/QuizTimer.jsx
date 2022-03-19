@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import _ from 'lodash';
-import { io } from 'socket.io-client';
-import { timerURL } from '@config/config';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 
 const QuizTimer = () => {
-  const { quizID } = useParams();
-
+  const { quiz } = useGiveQuizStore();
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [seconds, setSeconds] = useState('');
+  const period = useRef();
+  const startCountdownTimer = () => {
+    const endTime = new Date(quiz?.endTime).getTime();
+    const now = new Date().getTime();
 
-  useEffect(() => {
-    const getHours = (time) => Math.floor(time / 3600).toString();
-    const getMinutes = (time) => Math.floor(time / 60).toString();
-    const getSeconds = (time) => (time - getMinutes(time) * 60).toString();
-
-    const socket = io(timerURL);
-
-    socket.on('quizTimer', (quizzes) => {
-      const { time } = _.find(quizzes, (quiz) => quiz.quizioID === quizID);
-
-      setSeconds(getSeconds(time).padStart(2, '0'));
-      setMinutes(getMinutes(time).padStart(2, '0'));
-      setHours(getHours(time).padStart(2, '0'));
-
-      if (time === 0) {
-        socket?.disconnect();
-      }
-    });
-  }, [quizID]);
+    period.current = setInterval(() => {
+        const duration = endTime - now;
+        const pseconds = Math.floor((duration / 1000) % 60);
+        const pminutes = Math.floor((duration / 1000 / 60) % 60);
+        const phours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        console.log(pseconds, pminutes, phours);
+        if (duration < 0) {
+            clearInterval(period.current);
+        } else {
+          setHours(phours);
+          setMinutes(pminutes);
+          setSeconds(pseconds);
+        }
+    }, 1000);
+};
+useEffect(() => {
+  startCountdownTimer();
+  return () => {
+      clearInterval(period.current);
+  };
+});
 
   return (
       <div>

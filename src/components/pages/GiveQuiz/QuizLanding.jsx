@@ -15,9 +15,14 @@ const QuizLanding = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            log({ sections: data.quiz.sections });
+            log({ quizData: data });
             setQuiz({
-                name: data.quiz.name, description: data.quiz.description, sections: data.quiz.sections, quizioID: quizID,
+                name: data.quiz.name,
+                description: data.quiz.description,
+                sections: data.quiz.sections,
+                quizioID: quizID,
+                startTime: data.quiz.startTime,
+                endTime: data.quiz.endTime,
             });
             /*
             let totalQuestions = 0;
