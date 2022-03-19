@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable no-nested-ternary */
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import '@styles/pages/give_quiz/sidenav.scss';
 import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
@@ -9,27 +9,35 @@ import QuestionBubble from '@components/Visual/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useParams, useHistory } from 'react-router-dom';
 import { useGetMultipleSections } from '@api/quizzes/useSections';
+import SubmitQuiz from '@components/Modals/SubmitQuiz';
+import ModalWrapper from '@components/Modals/ModalWrapper';
 
 const SideNav = () => {
   const { quiz } = useGiveQuizStore();
+  const [showModal, setshowModal] = useState(false);
   console.log(quiz, 'name');
   const history = useHistory();
   const { sectionID } = useParams();
 
   return (
-      <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
-          <p className="primary-text py-8 px-10">{quiz.name}</p>
-          <p
-            className={`side-nav-item${!sectionID ? '-active' : ''}`}
-            onClick={() => history.push(`/quiz/attempt/${quiz.quizioID}`)}
-          >
-              Instructions
-          </p>
-          <AllSections />
-          <div className="fixed bottom-0 px-10 pt-1 pb-6 w-72 z-10 bg-white border-r border-grey-N4">
-              <SecondaryCTA text="Submit Quiz" />
+      <>
+          <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
+              <p className="primary-text py-8 px-10">{quiz.name}</p>
+              <p
+                className={`side-nav-item${!sectionID ? '-active' : ''}`}
+                onClick={() => history.push(`/quiz/attempt/${quiz.quizioID}`)}
+              >
+                  Instructions
+              </p>
+              <AllSections />
+              <div className="fixed bottom-0 px-10 pt-1 pb-6 w-72 z-10 bg-white border-r border-grey-N4">
+                  <SecondaryCTA text="Submit Quiz" onClick={() => { setshowModal(true); }} />
+              </div>
+
           </div>
-      </div>
+          <ModalWrapper showModal={showModal} setShowModal={setshowModal}><SubmitQuiz setShowModal={setshowModal} /></ModalWrapper>
+      </>
+
   );
 };
 

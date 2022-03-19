@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import timerIcon from '@icons/timerIcon.svg';
@@ -7,29 +8,7 @@ import { PropTypes } from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { PieChart } from 'react-minimal-pie-chart';
-
-const dummyData = [
-    {
-        title: 'Not visited',
-        value: 20,
-        color: '#AD9EC9',
-    },
-    {
-        title: 'Answered questions',
-        value: 40,
-        color: '#27A624',
-    },
-    {
-        title: 'Marked for review',
-        value: 10,
-        color: '#FF8900',
-    },
-    {
-        title: 'Answered and marked for review',
-        value: 30,
-        color: '#604195',
-    },
-];
+import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 
 const Banner = ({ endTime, submitted }) => {
     if (submitted || new Date(endTime) < new Date()) {
@@ -67,56 +46,83 @@ const Banner = ({ endTime, submitted }) => {
     );
 };
 
-const SubmitQuiz = () => (
-    <div className="py-6 px-8">
-        <div className="flex justify-between items-center mb-6">
-            <h1 className="text-lg font-semibold">Submit Quiz</h1>
-            <CrossIcon />
-        </div>
-        <Banner endTime="January 22, 2022 21:00:00" submitted={false} />
-        <div className="flex mt-6 items-center">
-            <div className="w-6/12">
-                <div className="w-52 mx-auto">
-                    <PieChart
-                      data={dummyData}
-                      radius={PieChart.defaultProps.radius - 2}
-                      segmentsShift={1}
-                    />
+const SubmitQuiz = ({ setShowModal }) => {
+    const {
+ totalQuestions, answeredQuestions, markedQuestions, markedAnsweredQuestions,
+} = useGiveQuizStore();
+const data = [
+    {
+        title: 'Not visited',
+        value: totalQuestions - (answeredQuestions?.length || 0) - (markedQuestions?.length || 0) - (markedAnsweredQuestions?.length || 0),
+        color: '#AD9EC9',
+    },
+    {
+        title: 'Answered questions',
+        value: answeredQuestions?.length || 0,
+        color: '#27A624',
+    },
+    {
+        title: 'Marked for review',
+        value: markedQuestions?.length || 0,
+        color: '#FF8900',
+    },
+    {
+        title: 'Answered and marked for review',
+        value: markedAnsweredQuestions?.length || 0,
+        color: '#604195',
+    },
+];
+    return (
+        <div className="py-6 px-8">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-lg font-semibold">Submit Quiz</h1>
+                <CrossIcon />
+            </div>
+            <Banner endTime="January 22, 2022 21:00:00" submitted />
+            <div className="flex mt-6 items-center">
+                <div className="w-6/12">
+                    <div className="w-52 mx-auto">
+                        <PieChart
+                          data={data}
+                          radius={PieChart.defaultProps.radius - 2}
+                          segmentsShift={1}
+                        />
+                    </div>
+                </div>
+                <div className="flex-grow">
+                    <p className="text-lg mb-6">
+                        Total number of questions:
+                        {' '}
+                        <span className="font-semibold">{totalQuestions}</span>
+                    </p>
+                    <div>
+                        {data.map(({ title, value, color }) => (
+                            <div key={title} className="flex my-3">
+                                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="19" height="19" rx="4" fill={color} />
+                                </svg>
+                                <p className="text-sm ml-3">
+                                    {title}
+                                    :
+                                    {' '}
+                                    <span className="font-semibold">{value}</span>
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-            <div className="flex-grow">
-                <p className="text-lg mb-6">
-                    Total number of questions:
-                    {' '}
-                    <span className="font-semibold">100</span>
-                </p>
-                <div>
-                    {dummyData.map(({ title, value, color }) => (
-                        <div key={title} className="flex my-3">
-                            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="19" height="19" rx="4" fill={color} />
-                            </svg>
-                            <p className="text-sm ml-3">
-                                {title}
-                                :
-                                {' '}
-                                <span className="font-semibold">{value}</span>
-                            </p>
-                        </div>
-                    ))}
+            <div className="flex justify-end mt-10">
+                <div className="w-24">
+                    <SecondaryCTA text="Cancel" onClick={() => { setShowModal(false); }} />
+                </div>
+                <div className="w-24 ml-4">
+                    <PrimaryCTA text="Submit" />
                 </div>
             </div>
         </div>
-        <div className="flex justify-end mt-10">
-            <div className="w-24">
-                <SecondaryCTA text="Cancel" />
-            </div>
-            <div className="w-24 ml-4">
-                <PrimaryCTA text="Submit" />
-            </div>
-        </div>
-    </div>
-);
+    );
+};
 
 Banner.propTypes = {
     endTime: PropTypes.string.isRequired,
