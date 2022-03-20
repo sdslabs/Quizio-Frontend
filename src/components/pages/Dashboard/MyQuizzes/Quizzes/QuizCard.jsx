@@ -11,6 +11,7 @@ import {
 } from '@api/register/useRegister';
 import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
+import dayjs from 'dayjs';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
 
@@ -125,7 +126,13 @@ const QuizCard = ({ data }) => {
             ) : (
                 <>
                     {registered ? (
+                        <>
+                            {dayjs(data.startTime) > dayjs() ? (
+                                <div className="registered">Registered</div>
+                    ) : (
                         <PrimaryCTA text="Start Quiz" onClick={handleStart} />
+                    )}
+                        </>
                 ) : (
                     <PrimaryCTA
                       text={isLoading ? 'Registering' : 'Register'}
