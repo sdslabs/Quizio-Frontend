@@ -38,6 +38,15 @@ export const updateQuizByID = async ({ quizID, body }) => {
 	}
 };
 
+export const submitQuizByID = async ({ quizID }) => {
+	try {
+		const res = await axiosInstance.put(`/submit/${quizID}`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
 export const deleteQuizByID = async ({ quizID }) => {
 	try {
 		const res = await axiosInstance.delete(`/quizzes/${quizID}`);

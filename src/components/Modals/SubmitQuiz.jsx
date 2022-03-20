@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import timerIcon from '@icons/timerIcon.svg';
 import timerGreen from '@icons/timerGreenIcon.svg';
@@ -9,6 +9,8 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { PieChart } from 'react-minimal-pie-chart';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
+import { useSubmitQuiz } from '@api/quizzes/useQuizzes';
+import { useParams } from 'react-router';
 
 const Banner = ({ endTime, submitted }) => {
     if (submitted || new Date(endTime) < new Date()) {
@@ -50,6 +52,23 @@ const SubmitQuiz = ({ setShowModal }) => {
     const {
  totalQuestions, answeredQuestions, markedQuestions, markedAnsweredQuestions, quiz,
 } = useGiveQuizStore();
+const { quizID } = useParams();
+const {
+    mutate: submitQuiz,
+    isSuccess: submitSucess,
+  } = useSubmitQuiz();
+
+  useEffect(() => {
+    if (submitSucess) {
+        console.log('Quiz submitted');
+        // TO DO : redirect to required page
+    }
+  }, [submitSucess]);
+
+const handleSubmit = () => {
+    console.log(quizID, 'lll');
+    submitQuiz({ quizID });
+};
 const data = [
     {
         title: 'Not visited',
@@ -117,7 +136,7 @@ const data = [
                     <SecondaryCTA text="Cancel" onClick={() => { setShowModal(false); }} />
                 </div>
                 <div className="w-24 ml-4">
-                    <PrimaryCTA text="Submit" />
+                    <PrimaryCTA text="Submit" onClick={handleSubmit} />
                 </div>
             </div>
         </div>
