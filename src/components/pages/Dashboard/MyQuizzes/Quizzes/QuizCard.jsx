@@ -11,17 +11,21 @@ import {
 } from '@api/register/useRegister';
 import log from '@utils/log';
 import { useHistory } from 'react-router-dom';
+import ModalWrapper from '@components/Modals/ModalWrapper';
+import UserQuizRegistration from './Modals/QuizRegistrationModal';
 
 const QuizCard = ({ data }) => {
   const history = useHistory();
   const [registered, setRegistered] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   const {
-    mutate,
     isLoading,
     isSuccess: RegisterSuccess,
     isError,
     error,
+    mutate: mutateRegisterParticipant,
+    data: RegisterData,
   } = useRegisterParticipant();
 
   const {
@@ -31,10 +35,7 @@ const QuizCard = ({ data }) => {
   } = useCheckIfUserIsRegisteredForQuiz(data.quizioID);
 
   const handleRegister = () => {
-    const body = {
-      quizID: data.quizioID,
-    };
-    mutate({ body });
+    setShowRegisterModal(true);
   };
 
   const handleStart = () => {
@@ -56,16 +57,40 @@ const QuizCard = ({ data }) => {
 
   useEffect(() => {
     if (isRegisterCheckSuccess) {
-      log({
-        quiz: data.name,
-        isRegistered: isRegisteredData?.data?.data?.registered,
-      });
+      log(
+        {
+          quiz: data.name,
+          isRegistered: isRegisteredData?.data?.data?.registered,
+        },
+        false,
+      );
+
       setRegistered(isRegisteredData?.data?.data?.registered);
     }
   }, [isRegisterCheckSuccess]);
 
+  useEffect(() => {
+    if (RegisterSuccess) {
+      log('registered!', { RegisterData });
+      setShowRegisterModal(false);
+    }
+  }, [RegisterSuccess, RegisterData]);
+
   return (
       <div className="quiz-card">
+          {data && showRegisterModal && (
+          <ModalWrapper
+            setShowModal={setShowRegisterModal}
+            showModal={showRegisterModal}
+          >
+              <UserQuizRegistration
+                quizID={data.quizioID || ''}
+                setShowModal={setShowRegisterModal}
+                mutateRegisterParticipant={mutateRegisterParticipant}
+              />
+          </ModalWrapper>
+      )}
+
           <div className="banner-container">
               <QuizName />
               <h3 className="name">
