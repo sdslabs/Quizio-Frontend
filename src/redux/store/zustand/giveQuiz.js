@@ -25,6 +25,9 @@ const useGiveQuizStore = create((set) => ({
     setCurrentSection: (currentSection) => set(() => ({ currentSection })),
     /* Open a question */
     setTotalQuestions: (totalQuestions) => set(() => ({ totalQuestions })),
+    setAnsweredQuestions: (answeredQuestions) => set(() => ({ answeredQuestions })),
+    setMarkedQuestions: (markedQuestions) => set(() => ({ markedQuestions })),
+    setMarkedAnsweredQuestions: (markedAnsweredQuestions) => set(() => ({ markedAnsweredQuestions })),
     /* Open a question */
     addAnsweredQuestion: (question) => set((state) => {
         log('{zustand} addAnsweredQuestion', { question, answeredquestions: state.answeredQuestions });

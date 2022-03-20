@@ -4,6 +4,8 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import log from '@utils/log';
+import { useSelector } from 'react-redux';
+import { useGetStatus } from '@api/quizzes/useResponse';
 
 const QuizLanding = () => {
     const { quizID } = useParams();
@@ -11,8 +13,21 @@ const QuizLanding = () => {
  data, isLoading, isSuccess, sections,
 } = useGetQuiz(quizID);
     const history = useHistory();
-    const { setQuiz } = useGiveQuizStore();
-
+    const {
+ setQuiz, setAnsweredQuestions, setMarkedAnsweredQuestions, setMarkedQuestions,
+} = useGiveQuizStore();
+    const userID = useSelector((state) => state.auth.user.userID);
+    const { data: statusData, isSuccess: statusIsSuccess } = useGetStatus(userID, quizID);
+    useEffect(() => {
+        if (statusIsSuccess) {
+            const answeredQuestions = statusData.data.data.filter((val) => val.status === 'answered').map((val) => val.questionID);
+            const markedAnsweredQuestions = statusData.data.data.filter((val) => val.status === 'marked-answered').map((val) => val.questionID);
+            const markedQuestions = statusData.data.data.filter((val) => val.status === 'marked').map((val) => val.questionID);
+            setAnsweredQuestions(answeredQuestions);
+            setMarkedAnsweredQuestions(markedAnsweredQuestions);
+            setMarkedQuestions(markedQuestions);
+        }
+    }, [statusIsSuccess]);
     useEffect(() => {
         if (isSuccess) {
             log({ quizData: data });

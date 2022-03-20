@@ -158,44 +158,45 @@ const Question = () => {
   };
 
   const markForReview = () => {
-    switch (questionData.type) {
-      case 'mcq':
-        if (choice) {
-          updateResponse({
-            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked-answered' },
-          });
-          removeAnsweredQuestion(currentQuestion);
-          addMarkedAnsweredQuestion(currentQuestion);
-        } else {
-          updateResponse({
-            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked' },
-          });
-          addMarkedQuestion(currentQuestion);
-        }
+    let status = 'marked';
+    if (answeredQuestions.includes(currentQuestion)) {
+      status = 'marked-answered';
+    } else if (markedQuestions.includes(currentQuestion)) {
+      status = 'unanswered';
+    } else if (markedAnsweredQuestions.includes(currentQuestion)) {
+      status = 'answered';
+    }
+    switch (status) {
+      case 'marked':
+        addMarkedQuestion(currentQuestion);
         break;
-      case 'subjective':
-        if (answer !== '') {
-          updateResponse({ body: { questionID: currentQuestion, answer }, status: 'marked-answered' });
-          removeAnsweredQuestion(currentQuestion);
-          addMarkedAnsweredQuestion(currentQuestion);
-        } else {
-          updateResponse({ body: { questionID: currentQuestion, answer }, status: 'marked' });
-          addMarkedQuestion(currentQuestion);
-        }
+      case 'marked-answered':
+        removeAnsweredQuestion(currentQuestion);
+        addMarkedAnsweredQuestion(currentQuestion);
+        break;
+      case 'unanswered':
+        removeMarkedQuestion(currentQuestion);
+        break;
+      case 'answered':
+        removeMarkedAnsweredQuestion(currentQuestion);
+        addAnsweredQuestion(currentQuestion);
         break;
       default:
-        if (choice) {
-          updateResponse({
-            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked-answered' },
-          });
-          removeAnsweredQuestion(currentQuestion);
-          addMarkedAnsweredQuestion(currentQuestion);
-        } else {
-          updateResponse({
-            body: { questionID: currentQuestion, answerChoices: [choice], status: 'marked' },
-          });
-          addMarkedQuestion(currentQuestion);
-        }
+        removeMarkedQuestion(currentQuestion);
+    }
+    switch (questionData.type) {
+      case 'mcq':
+        updateResponse({
+          body: { questionID: currentQuestion, answerChoices: [choice], status },
+        });
+        break;
+      case 'subjective':
+        updateResponse({ body: { questionID: currentQuestion, answer }, status });
+        break;
+      default:
+        updateResponse({
+          body: { questionID: currentQuestion, answerChoices: [choice], status },
+        });
         break;
     }
     // removeAnsweredQuestion(currentQuestion);
@@ -205,7 +206,7 @@ const Question = () => {
   if (isLoading) {
     return <>Loading...</>;
   }
-
+  const isMarked = markedAnsweredQuestions.includes(currentQuestion) || markedQuestions.includes(currentQuestion);
   return (
       <div>
           <div className="flex flex-row justify-between items-center py-4">
@@ -247,7 +248,7 @@ const Question = () => {
 
           <div className="flex flex-row justify-end mt-8">
               <span className="w-100 mr-8">
-                  <SecondaryCTA text="Mark for Review" onClick={markForReview} />
+                  <SecondaryCTA text={isMarked ? 'Unmark Question' : 'Mark for Review'} onClick={markForReview} />
               </span>
               <span className="w-100">
                   <PrimaryCTA text="Save and next" onClick={saveAndNext} />

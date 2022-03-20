@@ -11,7 +11,6 @@ const QuizBanner = () => {
     markedAnsweredQuestions,
     totalQuestions,
   } = useGiveQuizStore();
-
   const QuestionBubbles = [
     {
       type: 'unanswered',
