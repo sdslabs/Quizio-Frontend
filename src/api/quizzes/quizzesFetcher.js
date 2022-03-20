@@ -40,7 +40,7 @@ export const updateQuizByID = async ({ quizID, body }) => {
 
 export const submitQuizByID = async ({ quizID }) => {
 	try {
-		const res = await axiosInstance.put(`/submit/${quizID}`);
+		const res = await axiosInstance.post(`/submit/${quizID}`);
 		return res.data;
 	} catch (e) {
 		return e.response.data;

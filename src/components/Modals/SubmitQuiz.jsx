@@ -10,7 +10,7 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { PieChart } from 'react-minimal-pie-chart';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSubmitQuiz } from '@api/quizzes/useQuizzes';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Banner = ({ endTime, submitted }) => {
     if (submitted || new Date(endTime) < new Date()) {
@@ -58,10 +58,11 @@ const {
     isSuccess: submitSucess,
   } = useSubmitQuiz();
 
+  const history = useHistory();
   useEffect(() => {
     if (submitSucess) {
         console.log('Quiz submitted');
-        // TO DO : redirect to required page
+        history.push('/');
     }
   }, [submitSucess]);
 
