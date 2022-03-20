@@ -191,7 +191,7 @@ const Question = () => {
         });
         break;
       case 'subjective':
-        updateResponse({ body: { questionID: currentQuestion, answer }, status });
+        updateResponse({ body: { questionID: currentQuestion, answer, status } });
         break;
       default:
         updateResponse({
