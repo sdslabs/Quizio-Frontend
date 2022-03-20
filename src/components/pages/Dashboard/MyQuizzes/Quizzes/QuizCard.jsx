@@ -10,14 +10,14 @@ import {
   useRegisterParticipant,
 } from '@api/register/useRegister';
 import log from '@utils/log';
-import { useHistory } from 'react-router-dom';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
+import StartQuizModal from './Modals/StartQuizModal';
 
 const QuizCard = ({ data }) => {
-  const history = useHistory();
   const [registered, setRegistered] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showStartModal, setshowStartModal] = useState(false);
 
   const {
     isLoading,
@@ -39,7 +39,7 @@ const QuizCard = ({ data }) => {
   };
 
   const handleStart = () => {
-    history.push(`/quiz/attempt/${data.quizioID}`);
+    setshowStartModal(true);
   };
 
   useEffect(() => {
@@ -88,6 +88,14 @@ const QuizCard = ({ data }) => {
                 setShowModal={setShowRegisterModal}
                 mutateRegisterParticipant={mutateRegisterParticipant}
               />
+          </ModalWrapper>
+      )}
+          {data && showStartModal && (
+          <ModalWrapper
+            setShowModal={setshowStartModal}
+            showModal={showStartModal}
+          >
+              <StartQuizModal quizID={data.quizioID || ''} />
           </ModalWrapper>
       )}
 

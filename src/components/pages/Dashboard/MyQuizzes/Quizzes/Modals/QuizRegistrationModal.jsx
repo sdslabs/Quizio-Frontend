@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useRegisterParticipant } from '@api/register/useRegister';
 import TextField from '@components/Input/TextField';
 import { REGEX } from '@constants/constants';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
@@ -11,7 +10,6 @@ import '@pagestyles/register/user_quiz_registration.scss';
 
 const UserQuizRegistration = ({
   quizID,
-  setShowModal,
   mutateRegisterParticipant,
 }) => {
   // quiz data getter query
@@ -20,11 +18,6 @@ const UserQuizRegistration = ({
     isSuccess: quizDataSuccess,
     isFetching: isFetchingQuizData,
   } = useGetQuiz(quizID);
-  // quiz registration mutation
-  const {
-    isSuccess: registerSuccess,
-    data: registerData,
-  } = useRegisterParticipant();
 
   // Local States
   const [firstName, setFirstName] = useState('');
@@ -84,13 +77,6 @@ const UserQuizRegistration = ({
       setDetail3(quizData?.quiz?.detail3);
     }
   }, [quizDataSuccess, quizData]);
-
-  useEffect(() => {
-    if (registerSuccess) {
-      log('registered!', { registerData });
-      setShowModal(false);
-    }
-  }, [registerSuccess, registerData]);
 
   useEffect(() => {
     setEmail(userEmail || '');
@@ -244,7 +230,6 @@ const UserQuizRegistration = ({
 };
 UserQuizRegistration.propTypes = {
   quizID: PropTypes.string.isRequired,
-  setShowModal: PropTypes.func.isRequired,
   mutateRegisterParticipant: PropTypes.func.isRequired,
 };
 export default UserQuizRegistration;
