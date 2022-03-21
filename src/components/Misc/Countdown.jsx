@@ -35,7 +35,16 @@ const Countdown = ({ time }) => {
     return () => clearInterval(period.current);
   });
 
-  return <span>{`${countHours} : ${countMinutes} : ${countSeconds}`}</span>;
+  return (
+      <span>
+          {`${countHours
+      .toString()
+      .padStart(2, '0')} : ${countMinutes
+      .toString()
+      .padStart(2, '0')} : ${countSeconds.toString().padStart(2, '0')}`}
+
+      </span>
+  );
 };
 
 Countdown.propTypes = {
