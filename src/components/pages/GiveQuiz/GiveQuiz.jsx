@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import QuizLanding from '@pages/GiveQuiz/QuizLanding';
-import SectionLanding from '@pages/GiveQuiz//SectionLanding';
-import GiveQuizWrapper from './GiveQuizWrapper';
+import QuizLanding from '@components/pages/GiveQuiz/Landing/QuizLanding';
+import SectionLanding from '@pages/GiveQuiz/Landing/SectionLanding';
+import Wrapper from './Wrapper';
 
 const GiveQuiz = () => (
     <Switch>
@@ -10,18 +10,18 @@ const GiveQuiz = () => (
           exact
           path="/quiz/attempt/:quizID"
           render={() => (
-              <GiveQuizWrapper>
+              <Wrapper>
                   <QuizLanding />
-              </GiveQuizWrapper>
+              </Wrapper>
       )}
         />
         <Route
           exact
           path="/quiz/attempt/:quizID/:sectionID"
           render={() => (
-              <GiveQuizWrapper>
+              <Wrapper>
                   <SectionLanding />
-              </GiveQuizWrapper>
+              </Wrapper>
       )}
         />
     </Switch>

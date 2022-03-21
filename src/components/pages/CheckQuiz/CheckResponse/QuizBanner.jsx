@@ -1,7 +1,7 @@
 import React from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
-import QuizTimer from '@pages/GiveQuiz/QuizTimer';
+import QuizTimer from '@components/pages/GiveQuiz/Wrapper/QuizTimer';
 
 const QuestionBubbles = [
   {
