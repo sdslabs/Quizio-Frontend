@@ -40,7 +40,8 @@ const Section = ({ index, section }) => {
 
   return (
       <>
-          <p
+          <button
+            type="button"
             className={`side-nav-item${
           isActive ? '-active' : ''
         } flex justify-between`}
@@ -48,9 +49,12 @@ const Section = ({ index, section }) => {
           >
               {section.title || `Section ${index + 1}`}
               <DropdownArrowDownIcon />
-          </p>
+          </button>
           <div>
-              <QuestionBubbles questions={section.questions} isActive={isBubblesActive} />
+              <QuestionBubbles
+                questions={section.questions}
+                isActive={isBubblesActive}
+              />
           </div>
       </>
   );

@@ -109,7 +109,8 @@ const AllSections = () => {
       <>
           {sections.map(({ title, questions, quizioID }) => (
               <div key={quizioID}>
-                  <p
+                  <button
+                    type="button"
                     className={`side-nav-item${
               sectionID === quizioID ? '-active' : ''
             } flex justify-between`}
@@ -117,7 +118,7 @@ const AllSections = () => {
                   >
                       {title}
                       <img src={DropDownIcon} alt="" className="side-nav-toggle" />
-                  </p>
+                  </button>
                   <div
                     className={`side-nav-questions${
               sectionID === quizioID ? '-active' : ''

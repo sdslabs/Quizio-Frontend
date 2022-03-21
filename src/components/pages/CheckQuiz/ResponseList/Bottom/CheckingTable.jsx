@@ -56,22 +56,22 @@ const CheckingTable = ({ data, quizID }) => {
               </tbody>
           </table>
           <div className="page-cta-flex">
-              <span
-                role="button"
+              <button
+                type="button"
                 tabIndex={0}
                 className="page-cta"
                 onClick={decrementPageNum}
               >
                   Previous
-              </span>
-              <span
-                role="button"
+              </button>
+              <button
+                type="button"
                 tabIndex={0}
                 className="page-cta"
                 onClick={incrementPageNum}
               >
                   Next
-              </span>
+              </button>
           </div>
       </div>
   );
