@@ -2,12 +2,28 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import QuizLanding from '@pages/GiveQuiz/QuizLanding';
 import SectionLanding from '@pages/GiveQuiz//SectionLanding';
-import MasterWrapper from './MasterWrapper';
+import GiveQuizWrapper from './GiveQuizWrapper';
 
 const GiveQuiz = () => (
     <Switch>
-        <Route exact path="/quiz/attempt/:quizID" render={() => <MasterWrapper><QuizLanding /></MasterWrapper>} />
-        <Route exact path="/quiz/attempt/:quizID/:sectionID" render={() => <MasterWrapper><SectionLanding /></MasterWrapper>} />
+        <Route
+          exact
+          path="/quiz/attempt/:quizID"
+          render={() => (
+              <GiveQuizWrapper>
+                  <QuizLanding />
+              </GiveQuizWrapper>
+      )}
+        />
+        <Route
+          exact
+          path="/quiz/attempt/:quizID/:sectionID"
+          render={() => (
+              <GiveQuizWrapper>
+                  <SectionLanding />
+              </GiveQuizWrapper>
+      )}
+        />
     </Switch>
 );
 

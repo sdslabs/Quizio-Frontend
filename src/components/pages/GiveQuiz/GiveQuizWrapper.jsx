@@ -4,7 +4,7 @@ import SideNav from '@components/pages/GiveQuiz/SideNav';
 import QuizBanner from '@components/pages/GiveQuiz/QuizBanner';
 import { PropTypes } from 'prop-types';
 
-const MasterWrapper = ({ children }) => (
+const GiveQuizWrapper = ({ children }) => (
     <>
         <Navbar />
         <div className="mt-14 fixed top-0 flex w-screen h-screen">
@@ -19,8 +19,8 @@ const MasterWrapper = ({ children }) => (
     </>
 );
 
-MasterWrapper.propTypes = {
+GiveQuizWrapper.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default MasterWrapper;
+export default GiveQuizWrapper;
