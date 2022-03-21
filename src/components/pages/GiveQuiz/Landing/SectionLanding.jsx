@@ -6,7 +6,7 @@ import ModalWrapper from '@components/Modals/ModalWrapper';
 import SubmitQuiz from '@components/Modals/SubmitQuiz';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import log from '@utils/log';
-import QuestionsWrapper from './Questions';
+import QuestionsWrapper from './QuestionsWrapper';
 
 const SectionLanding = () => {
   const { sectionID, quizID } = useParams();
@@ -43,6 +43,7 @@ const SectionLanding = () => {
           <div className="ml-auto mt-16 w-40">
               <PrimaryCTA text="Start Answering" onClick={handleStartAnswering} />
           </div>
+          {showModal && (
           <ModalWrapper
             showModal={showModal}
             setShowModal={setShowModal}
@@ -50,6 +51,7 @@ const SectionLanding = () => {
           >
               <SubmitQuiz />
           </ModalWrapper>
+      )}
       </>
   );
 };

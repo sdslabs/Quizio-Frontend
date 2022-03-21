@@ -1,20 +1,21 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
+import dayjs from 'dayjs';
+import { PropTypes } from 'prop-types';
+import { useParams, useHistory } from 'react-router-dom';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import timerIcon from '@icons/timerIcon.svg';
 import timerGreen from '@icons/timerGreenIcon.svg';
 import Countdown from '@components/Misc/Countdown';
-import { PropTypes } from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { PieChart } from 'react-minimal-pie-chart';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSubmitQuiz } from '@api/quizzes/useQuizzes';
-import { useParams, useHistory } from 'react-router-dom';
 import log from '@utils/log';
 
 const Banner = ({ endTime, submitted }) => {
-  if (submitted || new Date(endTime) < new Date()) {
+  if (submitted || dayjs(endTime) < dayjs()) {
     return (
         <div className="py-6 px-8 bg-green-1 bg-opacity-10 rounded flex">
             <img src={timerGreen} alt="" className="h-14 w-14 mr-6" />
@@ -47,6 +48,16 @@ const Banner = ({ endTime, submitted }) => {
           </div>
       </div>
   );
+};
+
+Banner.propTypes = {
+  endTime: PropTypes.string,
+  submitted: PropTypes.bool,
+};
+
+Banner.defaultProps = {
+  endTime: '',
+  submitted: false,
 };
 
 const SubmitQuiz = ({ setShowModal }) => {
@@ -165,11 +176,6 @@ const SubmitQuiz = ({ setShowModal }) => {
           </div>
       </div>
   );
-};
-
-Banner.propTypes = {
-  endTime: PropTypes.string.isRequired,
-  submitted: PropTypes.bool.isRequired,
 };
 
 export default SubmitQuiz;

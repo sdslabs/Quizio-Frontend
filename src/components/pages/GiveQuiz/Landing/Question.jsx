@@ -1,48 +1,19 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-import { useGetQuiz } from '@api/quizzes/useQuizzes';
-import { useGetScore, useUpdateScore } from '@api/quizzes/useScore';
-import { PropTypes } from 'prop-types';
-import RadioButton from '@components/Input/RadioGroup/RadioButton';
-import TextField from '@components/Input/TextField';
-import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 import { useGetQuestion } from '@api/quizzes/useQuestions';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
-import { findIndex } from 'lodash';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import Descriptive from './Descriptive';
 import MCQ from './MCQ';
-
-const QuestionsWrapper = () => {
-  const { currentQuestion, currentSection } = useGiveQuizStore();
-
-  if (!currentQuestion) {
-    return (
-        <>
-            <h1 className="text-3xl font-bold">
-                Select a question to start checking.
-            </h1>
-        </>
-    );
-  }
-  return (
-      <>
-          <h1 className="text-3xl font-bold">{currentSection}</h1>
-          <Question />
-      </>
-  );
-};
 
 const Question = () => {
   const {
     currentQuestion,
     currentQuestionIndex,
-    currentSection,
     addAnsweredQuestion,
     removeAnsweredQuestion,
     addMarkedAnsweredQuestion,
@@ -50,14 +21,11 @@ const Question = () => {
     addMarkedQuestion,
     removeMarkedQuestion,
     switchToNextQuestion,
-    quiz,
-    sections,
     answeredQuestions,
     markedAnsweredQuestions,
     markedQuestions,
   } = useGiveQuizStore();
-  const history = useHistory();
-  const { participantID, sectionID } = useParams();
+  const { sectionID } = useParams();
   const [questionData, setQuestionData] = useState({});
   const [choice, setChoice] = useState(null);
   const [answer, setAnswer] = useState('');
@@ -67,15 +35,13 @@ const Question = () => {
 
   const {
     mutate: updateResponse,
-    isLoading: responseLoading,
     isSuccess: responseSucess,
   } = useUpdateResponse();
 
-  const {
-    data: responseData,
-    isSuccess: getResponseSuccess,
-    isLoading: getResponseLoading,
-  } = useGetResponse(userID, currentQuestion);
+  const { data: responseData, isSuccess: getResponseSuccess } = useGetResponse(
+    userID,
+    currentQuestion,
+  );
 
   log({ userID });
   log({ currentQuestion });
@@ -101,7 +67,10 @@ const Question = () => {
     if (choice !== null || answer !== '') {
       status = 'answered';
     }
-    if (markedQuestions.includes(currentQuestion) || markedAnsweredQuestions.includes(currentQuestion)) {
+    if (
+      markedQuestions.includes(currentQuestion)
+      || markedAnsweredQuestions.includes(currentQuestion)
+    ) {
       if (status === 'answered') {
         status = 'marked-answered';
       } else {
@@ -131,15 +100,25 @@ const Question = () => {
       case 'mcq':
         console.log(choice, 'choice');
         updateResponse({
-          body: { questionID: currentQuestion, answerChoices: [choice], status },
+          body: {
+            questionID: currentQuestion,
+            answerChoices: [choice],
+            status,
+          },
         });
         break;
       case 'subjective':
-        updateResponse({ body: { questionID: currentQuestion, answer, status } });
+        updateResponse({
+          body: { questionID: currentQuestion, answer, status },
+        });
         break;
       default:
         updateResponse({
-          body: { questionID: currentQuestion, answerChoices: [choice], status },
+          body: {
+            questionID: currentQuestion,
+            answerChoices: [choice],
+            status,
+          },
         });
         break;
     }
@@ -187,15 +166,25 @@ const Question = () => {
     switch (questionData.type) {
       case 'mcq':
         updateResponse({
-          body: { questionID: currentQuestion, answerChoices: [choice], status },
+          body: {
+            questionID: currentQuestion,
+            answerChoices: [choice],
+            status,
+          },
         });
         break;
       case 'subjective':
-        updateResponse({ body: { questionID: currentQuestion, answer, status } });
+        updateResponse({
+          body: { questionID: currentQuestion, answer, status },
+        });
         break;
       default:
         updateResponse({
-          body: { questionID: currentQuestion, answerChoices: [choice], status },
+          body: {
+            questionID: currentQuestion,
+            answerChoices: [choice],
+            status,
+          },
         });
         break;
     }
@@ -206,7 +195,8 @@ const Question = () => {
   if (isLoading) {
     return <>Loading...</>;
   }
-  const isMarked = markedAnsweredQuestions.includes(currentQuestion) || markedQuestions.includes(currentQuestion);
+  const isMarked = markedAnsweredQuestions.includes(currentQuestion)
+    || markedQuestions.includes(currentQuestion);
   return (
       <div>
           <div className="flex flex-row justify-between items-center py-4">
@@ -248,7 +238,10 @@ const Question = () => {
 
           <div className="flex flex-row justify-end mt-8">
               <span className="w-100 mr-8">
-                  <SecondaryCTA text={isMarked ? 'Unmark Question' : 'Mark for Review'} onClick={markForReview} />
+                  <SecondaryCTA
+                    text={isMarked ? 'Unmark Question' : 'Mark for Review'}
+                    onClick={markForReview}
+                  />
               </span>
               <span className="w-100">
                   <PrimaryCTA text="Save and next" onClick={saveAndNext} />
@@ -258,4 +251,4 @@ const Question = () => {
   );
 };
 
-export default QuestionsWrapper;
+export default Question;
