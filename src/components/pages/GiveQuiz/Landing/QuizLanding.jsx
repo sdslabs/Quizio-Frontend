@@ -1,21 +1,31 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import PrimaryCTA from '@components/Buttons/PrimaryCTA';
-import { useGetQuiz } from '@api/quizzes/useQuizzes';
-import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
-import log from '@utils/log';
 import { useSelector } from 'react-redux';
-import { useGetStatus } from '@api/quizzes/useResponse';
+import { useParams, useHistory } from 'react-router-dom';
+import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
+import { useGetQuiz } from '@api/quizzes/useQuizzes';
+import { useGetResponseStatus } from '@api/quizzes/useResponse';
+import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import log from '@utils/log';
 
 const QuizLanding = () => {
   const history = useHistory();
   const { quizID } = useParams();
   const userID = useSelector((state) => state.auth.user.userID);
 
+  // Get Quiz Query
   const {
- data, isLoading, isSuccess, sections,
-} = useGetQuiz(quizID);
+    data: quizData,
+    isLoading: isQuizDataLoading,
+    isSuccess: isQuizDataSuccess,
+  } = useGetQuiz(quizID);
 
+  // Get Response Status Query
+  const {
+    data: responseStatusData,
+    isSuccess: isResponseStatusSuccess,
+  } = useGetResponseStatus(userID, quizID);
+
+  // Give quiz Store
   const {
     setQuiz,
     setAnsweredQuestions,
@@ -23,38 +33,33 @@ const QuizLanding = () => {
     setMarkedQuestions,
   } = useGiveQuizStore();
 
-  const { data: statusData, isSuccess: statusIsSuccess } = useGetStatus(
-    userID,
-    quizID,
-  );
-
   useEffect(() => {
-    if (statusIsSuccess) {
-      const answeredQuestions = statusData.data.data
+    if (isResponseStatusSuccess) {
+      const answeredQuestions = responseStatusData.data.data
         .filter((val) => val.status === 'answered')
         .map((val) => val.questionID);
-      const markedAnsweredQuestions = statusData.data.data
+      const markedAnsweredQuestions = responseStatusData.data.data
         .filter((val) => val.status === 'marked-answered')
         .map((val) => val.questionID);
-      const markedQuestions = statusData.data.data
+      const markedQuestions = responseStatusData.data.data
         .filter((val) => val.status === 'marked')
         .map((val) => val.questionID);
       setAnsweredQuestions(answeredQuestions);
       setMarkedAnsweredQuestions(markedAnsweredQuestions);
       setMarkedQuestions(markedQuestions);
     }
-  }, [statusIsSuccess]);
+  }, [isResponseStatusSuccess]);
 
   useEffect(() => {
-    if (isSuccess) {
-      log({ quizData: data });
+    if (isQuizDataSuccess) {
+      log('fetched quiz data:', { quizData });
       setQuiz({
-        name: data.quiz.name,
-        description: data.quiz.description,
-        sections: data.quiz.sections,
+        name: quizData?.quiz?.name,
+        description: quizData?.quiz?.description,
+        sections: quizData?.quiz?.sections,
         quizioID: quizID,
-        startTime: data.quiz.startTime,
-        endTime: data.quiz.endTime,
+        startTime: quizData?.quiz?.startTime,
+        endTime: quizData?.quiz?.endTime,
       });
       /*
             let totalQuestions = 0;
@@ -64,26 +69,25 @@ const QuizLanding = () => {
             });
             setTotalQuestions(totalQuestions); */
     }
-  }, [isSuccess]);
+  }, [isQuizDataSuccess]);
 
   useEffect(() => {
     log('quizlanding', { quizID });
   }, [quizID]);
 
   const handleContinue = () => {
-    log(sections);
-    history.push(`/quiz/attempt/${quizID}/${data?.quiz?.sections[0]}`);
+    history.push(`/quiz/attempt/${quizID}/${quizData?.quiz?.sections[0]}`);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isQuizDataLoading) return <div>Loading...</div>;
 
   return (
       <>
-          <h1 className="text-3xl font-bold">{data.quiz.name}</h1>
-          <p className="text-grey-N6 mt-6">{data.quiz.description}</p>
+          <h1 className="text-3xl font-bold">{quizData?.quiz?.name}</h1>
+          <p className="text-grey-N6 mt-6">{quizData?.quiz?.description}</p>
           <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
           <p className="text-grey-N6 mt-6">
-              {data.quiz.instruction || 'No instructions available'}
+              {quizData?.quiz?.instructions || 'No instructions available'}
           </p>
           <div className="ml-auto mt-16 w-28">
               <PrimaryCTA text="Continue" onClick={handleContinue} />
