@@ -7,10 +7,12 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import '@pagestyles/register/user_quiz_registration.scss';
+import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 
 const UserQuizRegistration = ({
   quizID,
   mutateRegisterParticipant,
+  setShowModal,
 }) => {
   // quiz data getter query
   const {
@@ -91,7 +93,15 @@ const UserQuizRegistration = ({
               <div>Fetching Quiz Details...</div>
       ) : (
           <>
-              <div className="user-quiz-registration-title">Registration Form</div>
+              <div className="flex justify-between items-center mb-6">
+                  <div className="user-quiz-registration-title">Registration Form</div>
+                  <CrossIcon
+                    className="cursor-pointer"
+                    onClick={() => {
+                    setShowModal(false);
+                }}
+                  />
+              </div>
               <div className="user-quiz-registration-basic-details">
                   <div className="user-quiz-registration-name">
                       <div
@@ -231,5 +241,6 @@ const UserQuizRegistration = ({
 UserQuizRegistration.propTypes = {
   quizID: PropTypes.string.isRequired,
   mutateRegisterParticipant: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 export default UserQuizRegistration;
