@@ -25,7 +25,7 @@ const TextField = ({
   };
 
   useEffect(() => {
-    setCurrentLen(val.length);
+    setCurrentLen(val ? val.length : 0);
   }, [val]);
 
   return (

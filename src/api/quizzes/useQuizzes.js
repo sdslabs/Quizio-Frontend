@@ -11,4 +11,8 @@ export const useUpdateQuiz = () => useMutation(fetchers.updateQuizByID);
 
 export const useDeleteQuiz = () => useMutation(fetchers.deleteQuizByID);
 
+export const useSubmitQuiz = () => useMutation(fetchers.submitQuizByID);
+
 export const useGetRankList = (quizID) => useQuery(['getQuizRankList', quizID], fetchers.getQuizRankList);
+
+export const useGetQuizzesCreatedByUser = () => useQuery(['getQuizzesCreatedByUser'], fetchers.getQuizzesCreatedByUser);

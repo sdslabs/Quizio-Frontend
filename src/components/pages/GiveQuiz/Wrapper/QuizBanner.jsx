@@ -1,34 +1,44 @@
 import React from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
-import Countdown from '@components/Misc/Countdown';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
-
-const QuestionBubbles = [
-  {
-    type: 'unattempted',
-    number: 0,
-    label: 'Unattempted',
-  },
-  {
-    type: 'visited-unchecked',
-    number: 0,
-    label: 'Unchecked',
-  },
-  {
-    type: 'checked',
-    number: 0,
-    label: 'Checked',
-  },
-  {
-    type: 'autochecked',
-    number: 0,
-    label: 'Autochecked',
-  },
-];
+import Countdown from '@components/Misc/Countdown';
 
 const QuizBanner = () => {
-  const { quiz } = useGiveQuizStore();
+  const {
+    quiz,
+    answeredQuestions,
+    markedQuestions,
+    markedAnsweredQuestions,
+    totalQuestions,
+  } = useGiveQuizStore();
+
+  const QuestionBubbles = [
+    {
+      type: 'unanswered',
+      number:
+        totalQuestions
+        - (markedQuestions?.length || 0)
+        - (answeredQuestions?.length || 0)
+        - (markedAnsweredQuestions?.length || 0),
+      label: 'Unanswered',
+    },
+    {
+      type: 'marked',
+      number: markedQuestions?.length || 0,
+      label: 'Marked for review',
+    },
+    {
+      type: 'answered',
+      number: answeredQuestions?.length || 0,
+      label: 'Answered',
+    },
+    {
+      type: 'marked-answered',
+      number: markedAnsweredQuestions?.length || 0,
+      label: 'Answered & Marked for review',
+    },
+  ];
 
   return (
       <div className="border-b border-grey-N4 pl-10 flex items-stretch">
@@ -42,11 +52,12 @@ const QuizBanner = () => {
           </div>
           <div className="py-4 px-8 bg-purple-V1 flex items-center">
               <img src={TimerIcon} alt="" className="mr-2" />
-              <div className="text-purple-V6 whitespace-nowrap">
+              <p className="text-purple-V6 whitespace-nowrap">
                   <Countdown time={quiz?.endTime} />
-              </div>
+              </p>
           </div>
       </div>
   );
 };
+
 export default QuizBanner;

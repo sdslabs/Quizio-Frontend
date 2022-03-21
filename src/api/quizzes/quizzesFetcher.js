@@ -1,4 +1,5 @@
 import axiosInstance from '@api/axiosInstance';
+import log from '@utils/log';
 
 export const createNewQuiz = async () => {
 	try {
@@ -20,6 +21,7 @@ export const getAllQuizzes = async () => {
 
 export const getQuizByID = async ({ queryKey }) => {
 	try {
+		log('fetching Quiz', { quizID: queryKey[1] });
 		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
 		return res.data.data;
 	} catch (e) {
@@ -36,6 +38,15 @@ export const updateQuizByID = async ({ quizID, body }) => {
 	}
 };
 
+export const submitQuizByID = async ({ quizID }) => {
+	try {
+		const res = await axiosInstance.post(`/submit/${quizID}`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
 export const deleteQuizByID = async ({ quizID }) => {
 	try {
 		const res = await axiosInstance.delete(`/quizzes/${quizID}`);
@@ -45,7 +56,7 @@ export const deleteQuizByID = async ({ quizID }) => {
 	}
 };
 
-export const getAllQuizzesForUser = async () => {
+export const getQuizzesCreatedByUser = async () => {
 	try {
 		const res = await axiosInstance.get('/users/quizzes/owned');
 		return res.data;

@@ -57,6 +57,7 @@ const DateTimeInput = ({
       if (!isValid) {
         setIsDateTimeValid(false);
       } else {
+        setIsDateTimeValid(true);
         let totalSeconds = endDayJS.diff(startDayJS, 'seconds');
         let hours = Math.floor(totalSeconds / 3600);
         totalSeconds %= 3600;
