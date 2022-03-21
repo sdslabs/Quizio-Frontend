@@ -39,6 +39,7 @@ const QuizDetails = () => {
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
 
   const handleSubmit = () => {
+    log(isDateTimeValid);
     if (!isDateTimeValid) {
       log('Error with quiz time');
       return;
@@ -75,6 +76,11 @@ const QuizDetails = () => {
     setQuizInst(data?.quiz?.instructions);
     setImageURL(data?.quiz?.bannerURL);
   }, [data]);
+
+  useEffect(async () => {
+    log('isDateTimeValid has changed!');
+    log(isDateTimeValid);
+  }, [isDateTimeValid]);
 
   return (
       <div className="quiz-details">
