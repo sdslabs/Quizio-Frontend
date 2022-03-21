@@ -20,7 +20,7 @@ const Banner = ({ endTime, submitted }) => {
             <img src={timerGreen} alt="" className="h-14 w-14 mr-6" />
             <div>
                 <p className="text-xl text-green-1 font-semibold opacity-90">
-                    {submitted ? 'Yay!' : 'Time’s up!'}
+                    {submitted ? 'Yay!' : "Time's up!"}
                 </p>
                 <p className="text-green-1 mt-1">
                     Your quiz has been

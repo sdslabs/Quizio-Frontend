@@ -38,11 +38,10 @@ const Countdown = ({ time }) => {
   return (
       <span>
           {`${countHours
-      .toString()
-      .padStart(2, '0')} : ${countMinutes
-      .toString()
-      .padStart(2, '0')} : ${countSeconds.toString().padStart(2, '0')}`}
-
+        .toString()
+        .padStart(2, '0')} : ${countMinutes
+        .toString()
+        .padStart(2, '0')} : ${countSeconds.toString().padStart(2, '0')}`}
       </span>
   );
 };
