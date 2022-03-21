@@ -10,7 +10,7 @@ import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import { PieChart } from 'react-minimal-pie-chart';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSubmitQuiz } from '@api/quizzes/useQuizzes';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router-dom';
 import log from '@utils/log';
 
 const Banner = ({ endTime, submitted }) => {
@@ -60,10 +60,11 @@ const SubmitQuiz = ({ setShowModal }) => {
   const { quizID } = useParams();
   const { mutate: submitQuiz, isSuccess: submitSucess } = useSubmitQuiz();
 
+  const history = useHistory();
   useEffect(() => {
     if (submitSucess) {
-      log('Quiz submitted, TODO : redirect to required page');
-      // TODO : redirect to required page
+      log('Quiz submitted!');
+      history.push('/');
     }
   }, [submitSucess]);
 
