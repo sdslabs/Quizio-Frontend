@@ -48,7 +48,7 @@ const SideNav = () => {
                     </p>
                 </div>
             </div> */}
-          <div className="mx-6 pt-4 pb-8 flex flex-row items-center justify-begin hidden">
+          <div className="mx-6 pt-4 pb-8 flex-row items-center justify-begin hidden">
               <input
                 type="checkbox"
                 className="border-purple-V6 rounded"
@@ -109,7 +109,8 @@ const AllSections = () => {
       <>
           {sections.map(({ title, questions, quizioID }) => (
               <div key={quizioID}>
-                  <p
+                  <button
+                    type="button"
                     className={`side-nav-item${
               sectionID === quizioID ? '-active' : ''
             } flex justify-between`}
@@ -117,7 +118,7 @@ const AllSections = () => {
                   >
                       {title}
                       <img src={DropDownIcon} alt="" className="side-nav-toggle" />
-                  </p>
+                  </button>
                   <div
                     className={`side-nav-questions${
               sectionID === quizioID ? '-active' : ''

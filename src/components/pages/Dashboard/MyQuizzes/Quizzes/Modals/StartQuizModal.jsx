@@ -13,7 +13,7 @@ const StartQuizModal = ({ quizID }) => {
   const [accessCodeInput, setAccessCodeInput] = useState('');
   //   const [accessCode, setAccessCode] = useState('');
   //   const [quiz, setQuiz] = useState([]);
-  //   const [loading, setLoading] = useState(true);
+    const [isLoading] = useState(false);
 
   useEffect(async () => {
     setShowAccessCode(false);
@@ -45,7 +45,7 @@ const StartQuizModal = ({ quizID }) => {
 
   return (
       <div className="start-quiz">
-          {false ? (
+          {isLoading ? (
               <div>Fetching quiz</div>
       ) : (
           <>
