@@ -6,6 +6,7 @@ import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
+import Fetching from '@components/Misc/Fetching';
 
 const QuizLanding = () => {
   const history = useHistory();
@@ -33,26 +34,33 @@ const QuizLanding = () => {
     setMarkedQuestions,
   } = useGiveQuizStore();
 
+  const handleContinue = () => {
+    history.push(`/quiz/attempt/${quizID}/${quizData?.quiz?.sections[0]}`);
+  };
+
+  // handle response status
   useEffect(() => {
     if (isResponseStatusSuccess) {
-      const answeredQuestions = responseStatusData.data.data
+      const answeredQuestions = responseStatusData?.data?.data
         .filter((val) => val.status === 'answered')
         .map((val) => val.questionID);
-      const markedAnsweredQuestions = responseStatusData.data.data
+      const markedAnsweredQuestions = responseStatusData?.data?.data
         .filter((val) => val.status === 'marked-answered')
         .map((val) => val.questionID);
-      const markedQuestions = responseStatusData.data.data
+      const markedQuestions = responseStatusData?.data?.data
         .filter((val) => val.status === 'marked')
         .map((val) => val.questionID);
+
       setAnsweredQuestions(answeredQuestions);
       setMarkedAnsweredQuestions(markedAnsweredQuestions);
       setMarkedQuestions(markedQuestions);
     }
   }, [isResponseStatusSuccess]);
 
+  // handle quiz data fetch
   useEffect(() => {
     if (isQuizDataSuccess) {
-      log('fetched quiz data:', { quizData });
+      log('Fetched Quiz Data:', { quizData });
       setQuiz({
         name: quizData?.quiz?.name,
         description: quizData?.quiz?.description,
@@ -61,30 +69,24 @@ const QuizLanding = () => {
         startTime: quizData?.quiz?.startTime,
         endTime: quizData?.quiz?.endTime,
       });
-      /*
-            let totalQuestions = 0;
-            console.log(data);
-            data.quiz.sections.forEach((section) => {
-                section.questions.forEach(() => { totalQuestions += 1; });
-            });
-            setTotalQuestions(totalQuestions); */
     }
   }, [isQuizDataSuccess]);
 
+  // DEBUG
   useEffect(() => {
-    log('quizlanding', { quizID });
+    log('QuizLanding', { quizID }, false);
   }, [quizID]);
 
-  const handleContinue = () => {
-    history.push(`/quiz/attempt/${quizID}/${quizData?.quiz?.sections[0]}`);
-  };
-
-  if (isQuizDataLoading) return <div>Loading...</div>;
+  if (isQuizDataLoading) return <Fetching />;
 
   return (
       <>
-          <h1 className="text-3xl font-bold">{quizData?.quiz?.name}</h1>
-          <p className="text-grey-N6 mt-6">{quizData?.quiz?.description}</p>
+          <h1 className="text-3xl font-bold">
+              {quizData?.quiz?.name || 'Quiz Name not provided'}
+          </h1>
+          <p className="text-grey-N6 mt-6">
+              {quizData?.quiz?.description || 'No description available'}
+          </p>
           <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
           <p className="text-grey-N6 mt-6">
               {quizData?.quiz?.instructions || 'No instructions available'}
