@@ -7,7 +7,8 @@ import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
 import SecondaryCTA from '@components/Buttons/SecondaryCTA';
-import Descriptive from './Descriptive';
+import Fetching from '@components/Misc/Fetching';
+import Subjective from './Subjective';
 import MCQ from './MCQ';
 
 const Question = () => {
@@ -192,11 +193,11 @@ const Question = () => {
     // addAnsweredQuestion(currentQuestion);
   };
 
-  if (isLoading) {
-    return <>Loading...</>;
-  }
+  if (isLoading) return <Fetching />;
+
   const isMarked = markedAnsweredQuestions.includes(currentQuestion)
     || markedQuestions.includes(currentQuestion);
+
   return (
       <div>
           <div className="flex flex-row justify-between items-center py-4">
@@ -219,7 +220,7 @@ const Question = () => {
                 setChoice={setChoice}
               />
       ) : (
-          <Descriptive
+          <Subjective
             questionText={questionData.question}
             answer={answer}
             setAnswer={setAnswer}
