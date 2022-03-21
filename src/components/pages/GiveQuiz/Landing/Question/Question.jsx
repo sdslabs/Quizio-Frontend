@@ -12,6 +12,18 @@ import Subjective from './Subjective';
 import MCQ from './MCQ';
 
 const Question = () => {
+  // Section ID from params
+  const { sectionID } = useParams(); // TODO: move to global store
+
+  // User ID from redux
+  const userID = useSelector((state) => state.auth.user.userID);
+
+  // Local states
+  const [questionData, setQuestionData] = useState({});
+  const [choice, setChoice] = useState(null); // MCQ Choice
+  const [answer, setAnswer] = useState(''); // Subjective Answer
+
+  // Global give quiz store
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -26,13 +38,8 @@ const Question = () => {
     markedAnsweredQuestions,
     markedQuestions,
   } = useGiveQuizStore();
-  const { sectionID } = useParams();
-  const [questionData, setQuestionData] = useState({});
-  const [choice, setChoice] = useState(null);
-  const [answer, setAnswer] = useState('');
-  const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
 
-  const userID = useSelector((state) => state.auth.user.userID);
+  const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
 
   const {
     mutate: updateResponse,
@@ -193,11 +200,20 @@ const Question = () => {
     // addAnsweredQuestion(currentQuestion);
   };
 
-  if (isLoading) return <Fetching />;
+  const getQuestionMarks = () => {
+    if (questionData) {
+      if (questionData.type === 'mcq') {
+        return questionData?.choices.find((c) => c.marks !== 0).marks;
+      }
+      return questionData.maxMarks;
+    }
+    return null;
+  };
 
   const isMarked = markedAnsweredQuestions.includes(currentQuestion)
     || markedQuestions.includes(currentQuestion);
 
+  if (isLoading) return <Fetching />;
   return (
       <div>
           <div className="flex flex-row justify-between items-center py-4">
@@ -206,11 +222,13 @@ const Question = () => {
                   {' '}
                   {currentQuestionIndex}
               </p>
+              {questionData && (
               <p className="text-purple-V6 font-semibold">
                   Marks :
                   {' '}
-                  {questionData?.maxMarks || 0}
+                  {getQuestionMarks()}
               </p>
+        )}
           </div>
           {questionData.type === 'mcq' ? (
               <MCQ
