@@ -16,7 +16,6 @@ const QuizTimer = () => {
         const pseconds = Math.floor((duration / 1000) % 60);
         const pminutes = Math.floor((duration / 1000 / 60) % 60);
         const phours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-        console.log(pseconds, pminutes, phours);
         if (duration < 0) {
             clearInterval(period.current);
         } else {
