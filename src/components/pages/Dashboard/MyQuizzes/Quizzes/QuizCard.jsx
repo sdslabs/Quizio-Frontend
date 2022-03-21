@@ -96,7 +96,7 @@ const QuizCard = ({ data }) => {
             setShowModal={setshowStartModal}
             showModal={showStartModal}
           >
-              <StartQuizModal quizID={data.quizioID || ''} />
+              <StartQuizModal quizID={data.quizioID || ''} setShowModal={setshowStartModal} />
           </ModalWrapper>
       )}
 
