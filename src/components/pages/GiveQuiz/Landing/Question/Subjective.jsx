@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import TextField from '@components/Input/TextField';
 
 const Subjective = ({ questionText, answer, setAnswer }) => (

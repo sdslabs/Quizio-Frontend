@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { useGetQuestion } from '@api/quizzes/useQuestions';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
-import SecondaryCTA from '@components/Buttons/SecondaryCTA';
 import Fetching from '@components/Misc/Fetching';
-import Subjective from './Subjective';
-import MCQ from './MCQ';
+import ClearResponses from './ClearResponses';
+import QuestionMain from './QuestionMain';
+import MarkForReview from './MarkForReview';
+import SaveAndNext from './SaveAndNext';
 
 const Question = () => {
-  // Section ID from params
-  const { sectionID } = useParams(); // TODO: move to global store
-
   // User ID from redux
   const userID = useSelector((state) => state.auth.user.userID);
 
@@ -24,181 +20,41 @@ const Question = () => {
   const [answer, setAnswer] = useState(''); // Subjective Answer
 
   // Global give quiz store
-  const {
-    currentQuestion,
-    currentQuestionIndex,
-    addAnsweredQuestion,
-    removeAnsweredQuestion,
-    addMarkedAnsweredQuestion,
-    removeMarkedAnsweredQuestion,
-    addMarkedQuestion,
-    removeMarkedQuestion,
-    switchToNextQuestion,
-    answeredQuestions,
-    markedAnsweredQuestions,
-    markedQuestions,
-  } = useGiveQuizStore();
+  const { currentQuestion, currentQuestionIndex } = useGiveQuizStore();
 
+  // Get question query
   const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
 
+  // update response mutation
+  const { isSuccess: responseSucess } = useUpdateResponse();
+
+  // get original response query
   const {
-    mutate: updateResponse,
-    isSuccess: responseSucess,
-  } = useUpdateResponse();
-
-  const { data: responseData, isSuccess: getResponseSuccess } = useGetResponse(
-    userID,
-    currentQuestion,
-  );
-
-  log({ userID });
-  log({ currentQuestion });
+    data: originalResponseData,
+    isSuccess: isGetOriginalResponseSuccess,
+  } = useGetResponse(userID, currentQuestion);
 
   useEffect(() => {
     if (responseSucess) {
-      log('response Successful');
+      log('response Successfully saved');
     }
   }, [responseSucess]);
 
   useEffect(() => {
-    if (getResponseSuccess) {
-      if (responseData.data.data.answerChoices) {
-        log({ answerChoice: responseData.data.data.answerChoices[0] });
-        setChoice(responseData.data.data.answerChoices[0]);
+    if (isGetOriginalResponseSuccess) {
+      if (originalResponseData.data.data.answerChoices) {
+        log({ answerChoice: originalResponseData.data.data.answerChoices[0] });
+        setChoice(originalResponseData.data.data.answerChoices[0]);
       }
-      setAnswer(responseData.data.data.answer);
+      setAnswer(originalResponseData.data.data.answer);
     }
-  }, [getResponseSuccess, responseData]);
-
-  const saveAndNext = () => {
-    let status = 'unanswered';
-    if (choice !== null || answer !== '') {
-      status = 'answered';
-    }
-    if (
-      markedQuestions.includes(currentQuestion)
-      || markedAnsweredQuestions.includes(currentQuestion)
-    ) {
-      if (status === 'answered') {
-        status = 'marked-answered';
-      } else {
-        status = 'marked';
-      }
-    }
-    switch (status) {
-      case 'unanswered':
-        removeAnsweredQuestion(currentQuestion);
-        break;
-      case 'answered':
-        addAnsweredQuestion(currentQuestion);
-        break;
-      case 'marked':
-        addMarkedQuestion(currentQuestion);
-        removeMarkedAnsweredQuestion(currentQuestion);
-        break;
-      case 'marked-answered':
-        addMarkedAnsweredQuestion(currentQuestion);
-        removeMarkedQuestion(currentQuestion);
-        break;
-      default:
-        removeAnsweredQuestion(currentQuestion);
-        break;
-    }
-    switch (questionData.type) {
-      case 'mcq':
-        console.log(choice, 'choice');
-        updateResponse({
-          body: {
-            questionID: currentQuestion,
-            answerChoices: [choice],
-            status,
-          },
-        });
-        break;
-      case 'subjective':
-        updateResponse({
-          body: { questionID: currentQuestion, answer, status },
-        });
-        break;
-      default:
-        updateResponse({
-          body: {
-            questionID: currentQuestion,
-            answerChoices: [choice],
-            status,
-          },
-        });
-        break;
-    }
-    switchToNextQuestion(sectionID);
-  };
+  }, [isGetOriginalResponseSuccess, originalResponseData]);
 
   useEffect(() => {
     if (isSuccess) {
-      setQuestionData(data.data.data.question);
+      setQuestionData(data?.data?.data?.question);
     }
   }, [isSuccess, isLoading, data]);
-
-  const handleClear = () => {
-    setAnswer('');
-    setChoice(null);
-  };
-
-  const markForReview = () => {
-    let status = 'marked';
-    if (answeredQuestions.includes(currentQuestion)) {
-      status = 'marked-answered';
-    } else if (markedQuestions.includes(currentQuestion)) {
-      status = 'unanswered';
-    } else if (markedAnsweredQuestions.includes(currentQuestion)) {
-      status = 'answered';
-    }
-    switch (status) {
-      case 'marked':
-        addMarkedQuestion(currentQuestion);
-        break;
-      case 'marked-answered':
-        removeAnsweredQuestion(currentQuestion);
-        addMarkedAnsweredQuestion(currentQuestion);
-        break;
-      case 'unanswered':
-        removeMarkedQuestion(currentQuestion);
-        break;
-      case 'answered':
-        removeMarkedAnsweredQuestion(currentQuestion);
-        addAnsweredQuestion(currentQuestion);
-        break;
-      default:
-        removeMarkedQuestion(currentQuestion);
-    }
-    switch (questionData.type) {
-      case 'mcq':
-        updateResponse({
-          body: {
-            questionID: currentQuestion,
-            answerChoices: [choice],
-            status,
-          },
-        });
-        break;
-      case 'subjective':
-        updateResponse({
-          body: { questionID: currentQuestion, answer, status },
-        });
-        break;
-      default:
-        updateResponse({
-          body: {
-            questionID: currentQuestion,
-            answerChoices: [choice],
-            status,
-          },
-        });
-        break;
-    }
-    // removeAnsweredQuestion(currentQuestion);
-    // addAnsweredQuestion(currentQuestion);
-  };
 
   const getQuestionMarks = () => {
     if (questionData) {
@@ -209,9 +65,6 @@ const Question = () => {
     }
     return null;
   };
-
-  const isMarked = markedAnsweredQuestions.includes(currentQuestion)
-    || markedQuestions.includes(currentQuestion);
 
   if (isLoading) return <Fetching />;
   return (
@@ -230,41 +83,28 @@ const Question = () => {
               </p>
         )}
           </div>
-          {questionData.type === 'mcq' ? (
-              <MCQ
-                questionText={questionData.question}
-                options={questionData.choices}
-                selected={choice}
-                setChoice={setChoice}
-              />
-      ) : (
-          <Subjective
-            questionText={questionData.question}
+
+          <QuestionMain
+            questionData={questionData}
+            choice={choice}
+            setChoice={setChoice}
             answer={answer}
             setAnswer={setAnswer}
           />
-      )}
+
+          <ClearResponses setAnswer={setAnswer} setChoice={setChoice} />
 
           <div className="flex flex-row justify-end mt-8">
-              <button
-                className="w-100 text-purple cursor-pointer"
-                onClick={handleClear}
-                type="button"
-              >
-                  Clear Responses
-              </button>
-          </div>
-
-          <div className="flex flex-row justify-end mt-8">
-              <span className="w-100 mr-8">
-                  <SecondaryCTA
-                    text={isMarked ? 'Unmark Question' : 'Mark for Review'}
-                    onClick={markForReview}
-                  />
-              </span>
-              <span className="w-100">
-                  <PrimaryCTA text="Save and next" onClick={saveAndNext} />
-              </span>
+              <MarkForReview
+                questionData={questionData}
+                choice={choice}
+                answer={answer}
+              />
+              <SaveAndNext
+                questionData={questionData}
+                choice={choice}
+                answer={answer}
+              />
           </div>
       </div>
   );
