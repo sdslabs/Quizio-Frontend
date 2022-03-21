@@ -9,6 +9,7 @@ import ClearResponses from './ClearResponses';
 import QuestionMain from './QuestionMain';
 import MarkForReview from './MarkForReview';
 import SaveAndNext from './SaveAndNext';
+import QuestionMarks from './QuestionMarks';
 
 const Question = () => {
   // User ID from redux
@@ -56,16 +57,6 @@ const Question = () => {
     }
   }, [isSuccess, isLoading, data]);
 
-  const getQuestionMarks = () => {
-    if (questionData) {
-      if (questionData.type === 'mcq') {
-        return questionData?.choices.find((c) => c.marks !== 0).marks;
-      }
-      return questionData.maxMarks;
-    }
-    return null;
-  };
-
   if (isLoading) return <Fetching />;
   return (
       <div>
@@ -75,13 +66,7 @@ const Question = () => {
                   {' '}
                   {currentQuestionIndex}
               </p>
-              {questionData && (
-              <p className="text-purple-V6 font-semibold">
-                  Marks :
-                  {' '}
-                  {getQuestionMarks()}
-              </p>
-        )}
+              {questionData && <QuestionMarks questionData={questionData} />}
           </div>
 
           <QuestionMain
