@@ -17,12 +17,13 @@ import QuestionInputArea from './QuestionInputArea';
 const Question = () => {
   // Local states
   const [questionText, setQuestionText] = useState('');
-  const [questionType, setQuestionType] = useState('mcq');
+  const [questionType, setQuestionType] = useState();
   const [checkerNotes, setCheckersNotes] = useState('');
   const [marks, setMarks] = useState(0);
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [choices, setChoices] = useState([]);
+  const [isSaveChangesDisabled] = useState(false);
 
   // Question types
   const questionTypeOptions = [
@@ -32,35 +33,19 @@ const Question = () => {
 
   // Global create quiz store
   const {
-    questions,
-    sections,
-    activeSectionIndex,
-    activeQuestion,
-    addQuestion,
-    updateQuestion,
-  } = useCreateQuizStore();
+ questions, sections, activeSectionIndex, activeQuestion, addQuestion, updateQuestion,
+} = useCreateQuizStore();
 
   // Question update mutation
   const {
-    isLoading: isUpdateLoading,
-    isSuccess: isUpdateSuccess,
-    mutate: mutateQuestion,
-    data: mutatedQuestionData,
-  } = useUpdateQuestion();
+ isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, mutate: mutateQuestion, data: mutatedQuestionData,
+} = useUpdateQuestion();
 
   // Question toggle mutation
-  const {
-    isLoading: isToggleLoading,
-    isSuccess: isToggleSuccess,
-    mutate: mutateToggleQuestion,
-  } = useToggleQuestionType();
+  const { isLoading: isToggleLoading, isSuccess: isToggleSuccess, mutate: mutateToggleQuestion } = useToggleQuestionType();
 
   // Get question query
-  const {
-    isSuccess: fetchSuccess,
-    isFetching: isFetchingQuestion,
-    data: questionData,
-  } = useGetQuestion(currentQuestionID);
+  const { isSuccess: fetchSuccess, isFetching: isFetchingQuestion, data: questionData } = useGetQuestion(currentQuestionID);
   // Add choice to question
   const {
     // data: AddChoiceToQuestionData,
@@ -90,18 +75,25 @@ const Question = () => {
       body,
     });
 
-    if (questionType === 'mcq') {
+    if (questionType?.value === 'mcq') {
       log('MCQ Type save!', { choices });
       log('deleting all old choices');
       DeleteChoicesInQuestion({ questionID: currentQuestionID });
     }
   };
+  const setQuestionTypeWrapper = (type) => {
+    if (type === 'mcq') {
+      setQuestionType({ value: 'mcq', label: 'Multiple Choice' });
+    } else if (type === 'subjective') {
+      setQuestionType({ value: 'subjective', label: 'Subjective' });
+    }
+  };
 
   const handleQuestionType = async (selectedOption) => {
     log('toggle:', { questionType, newType: selectedOption.value });
-    if (questionType !== selectedOption.value) {
+    if (questionType?.value !== selectedOption.value) {
       mutateToggleQuestion({ questionID: currentQuestionID });
-      setQuestionType(selectedOption.value);
+      setQuestionTypeWrapper(selectedOption.value);
     }
   };
 
@@ -136,7 +128,7 @@ const Question = () => {
         originalQuestion: questionData?.data?.data?.question,
       });
       setQuestionText(originalQuestion);
-      setQuestionType(originalType);
+      setQuestionTypeWrapper(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks || 0);
       setChoices(originalChoices);
@@ -147,11 +139,7 @@ const Question = () => {
   }, [fetchSuccess]);
 
   useEffect(() => {
-    log(
-      'sections update!',
-      { sections, section: sections[activeSectionIndex] },
-      false,
-    );
+    log('sections update!', { sections, section: sections[activeSectionIndex] }, false);
     setCurrentSection(sections[activeSectionIndex]);
   }, [sections]);
 
@@ -182,7 +170,7 @@ const Question = () => {
         originalQuestion: questionData?.data?.data?.question,
       });
       setQuestionText(originalQuestion);
-      setQuestionType(originalType);
+      setQuestionTypeWrapper(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks || 0);
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
@@ -194,16 +182,14 @@ const Question = () => {
   }, []);
 
   useEffect(() => {
-    const currentQuestionData = questions.find(
-      (q) => q.quizioID === currentQuestionID,
-    );
+    const currentQuestionData = questions.find((q) => q.quizioID === currentQuestionID);
     log('update current questionID:', {
       currentQuestionID,
       currentQuestionData,
     });
     if (currentQuestionData) {
       setQuestionText(currentQuestionData.question);
-      setQuestionType(currentQuestionData.type);
+      setQuestionTypeWrapper(currentQuestionData.type);
       setCheckersNotes(currentQuestionData.checkerNotes);
       setMarks(currentQuestionData.marks || 0);
     }
@@ -221,28 +207,17 @@ const Question = () => {
                     <Title activeQuestion={activeQuestion} />
                     <div className="flex items-center">
                         Change question type (choose):
-                        <Select
-                          options={questionTypeOptions}
-                          onChange={handleQuestionType}
-                          val={questionType}
-                          defaultValue="mcq"
-                          className="text-sm p-5 w-200"
-                        />
+                        <Select options={questionTypeOptions} onChange={handleQuestionType} value={questionType} className="text-sm p-5 w-200" />
                     </div>
                 </div>
-                <MarkdownTextField
-                  id="question-description"
-                  val={questionText || ''}
-                  placeholder="Enter question here"
-                  setVal={setQuestionText}
-                />
+                <MarkdownTextField id="question-description" val={questionText || ''} placeholder="Enter question here" setVal={setQuestionText} />
                 {isToggleLoading ? (
                     <div>Toggling question type...</div>
             ) : (
                 <QuestionInputArea
                   choices={choices}
                   setChoices={setChoices}
-                  questionType={questionType}
+                  questionType={questionType?.value}
                   marks={marks.toString()}
                   setMarks={setMarks}
                   checkerNotes={checkerNotes}
@@ -253,7 +228,7 @@ const Question = () => {
                     {isUpdateLoading ? (
                         <PrimaryCTA text="Saving..." onClick={() => {}} disabled />
               ) : (
-                  <PrimaryCTA text="Save Changes" onClick={handleSave} />
+                  <PrimaryCTA text="Save Changes" onClick={handleSave} disabled={isSaveChangesDisabled} />
               )}
                 </div>
             </>
