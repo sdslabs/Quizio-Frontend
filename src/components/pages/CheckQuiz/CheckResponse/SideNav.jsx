@@ -48,7 +48,7 @@ const SideNav = () => {
                     </p>
                 </div>
             </div> */}
-          <div className="mx-6 pt-4 pb-8 flex flex-row items-center justify-begin hidden">
+          <div className="mx-6 pt-4 pb-8 flex-row items-center justify-begin hidden">
               <input
                 type="checkbox"
                 className="border-purple-V6 rounded"

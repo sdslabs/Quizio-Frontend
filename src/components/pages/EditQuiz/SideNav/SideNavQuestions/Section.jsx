@@ -42,7 +42,7 @@ const Section = ({ index, section }) => {
       <>
           <button
             type="button"
-            className={`side-nav-item${
+            className={`w-full m-0 side-nav-item${
           isActive ? '-active' : ''
         } flex justify-between`}
             onClick={handleSwitchSection}

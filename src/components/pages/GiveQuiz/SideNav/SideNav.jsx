@@ -19,10 +19,10 @@ const SideNav = () => {
   return (
       <>
           <div className="w-72 bg-grey-2 h-screen border-r border-grey-N4 flex-shrink-0 overflow-auto fixed pb-36">
-              <p className="primary-text py-8 px-10">{quiz.name}</p>
+              <p className="primary-text py-8 px-10 w-full">{quiz.name}</p>
               <button
                 type="button"
-                className={`side-nav-item${!sectionID ? '-active' : ''}`}
+                className={`w-full m-0 text-left side-nav-item${!sectionID ? '-active' : ''}`}
                 onClick={handleInstructions}
               >
                   Instructions

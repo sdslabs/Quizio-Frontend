@@ -81,7 +81,7 @@ const AllSections = () => {
               <Fragment key={quizioID}>
                   <button
                     type="button"
-                    className={`side-nav-item${
+                    className={`w-full text-left m-0 side-nav-item${
               sectionID === quizioID ? '-active' : ''
             } flex justify-between`}
                     onClick={() => handleSectionTabClick(quizioID)}

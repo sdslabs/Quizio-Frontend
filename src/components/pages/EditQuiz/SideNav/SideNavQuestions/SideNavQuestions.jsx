@@ -72,7 +72,7 @@ const SideNavQuestions = () => {
           <button
             type="button"
             onClick={setActiveNav}
-            className={`create-quiz-sidenav-option${isActive ? '-selected' : ''}`}
+            className={`w-full create-quiz-sidenav-option${isActive ? '-selected' : ''}`}
           >
               <div className="create-quiz-sidenav-option-icon">
                   {isActive ? <QuestionsSelectedIcon /> : <QuestionsIcon />}
