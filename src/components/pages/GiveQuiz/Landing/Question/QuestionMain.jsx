@@ -31,7 +31,7 @@ const QuestionMain = ({
 
 QuestionMain.propTypes = {
   questionData: PropTypes.object,
-  choice: PropTypes.object,
+  choice: PropTypes.string,
   setChoice: PropTypes.func,
   answer: PropTypes.string,
   setAnswer: PropTypes.func,

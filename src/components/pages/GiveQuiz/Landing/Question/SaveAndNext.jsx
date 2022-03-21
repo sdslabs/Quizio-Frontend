@@ -101,7 +101,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
 SaveAndNext.propTypes = {
   questionData: PropTypes.object,
   answer: PropTypes.string,
-  choice: PropTypes.object,
+  choice: PropTypes.string,
 };
 
 SaveAndNext.defaultProps = {

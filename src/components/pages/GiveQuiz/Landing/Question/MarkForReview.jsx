@@ -98,7 +98,7 @@ const MarkForReview = ({ questionData, answer, choice }) => {
 MarkForReview.propTypes = {
   questionData: PropTypes.object,
   answer: PropTypes.string,
-  choice: PropTypes.object,
+  choice: PropTypes.string,
 };
 
 MarkForReview.defaultProps = {

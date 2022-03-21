@@ -8,7 +8,7 @@ const Subjective = ({ questionText, answer, setAnswer }) => (
         <TextField
           id="DescriptiveAnswer"
           placeholder="Your answer here"
-          val={answer}
+          val={answer || ''}
           setVal={setAnswer}
         />
     </div>
@@ -16,12 +16,13 @@ const Subjective = ({ questionText, answer, setAnswer }) => (
 
 Subjective.propTypes = {
   questionText: PropTypes.string,
-  answer: PropTypes.string.isRequired,
+  answer: PropTypes.string,
   setAnswer: PropTypes.func.isRequired,
 };
 
 Subjective.defaultProps = {
   questionText: '',
+  answer: '',
 };
 
 export default Subjective;
