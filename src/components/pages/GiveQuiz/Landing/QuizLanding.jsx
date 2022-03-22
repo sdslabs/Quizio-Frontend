@@ -89,7 +89,7 @@ const QuizLanding = () => {
 
           <div className="mt-6">
               {/* eslint-disable-next-line react/no-children-prop */}
-              <ReactMarkdown children={quizData?.quiz?.description || 'No description available'} escapeHtml={false} />
+              <ReactMarkdown children={quizData?.quiz?.description || 'No description available'} />
           </div>
           <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
           {/* <p className="text-grey-N6 mt-6">
@@ -97,7 +97,7 @@ const QuizLanding = () => {
           </p> */}
           <div className="mt-6">
               {/* eslint-disable-next-line react/no-children-prop */}
-              <ReactMarkdown children={quizData?.quiz?.instructions || 'No instructions available'} escapeHtml={false} />
+              <ReactMarkdown children={quizData?.quiz?.instructions || 'No instructions available'} />
           </div>
           <div className="ml-auto mt-16 w-28">
               <PrimaryCTA text="Continue" onClick={handleContinue} />

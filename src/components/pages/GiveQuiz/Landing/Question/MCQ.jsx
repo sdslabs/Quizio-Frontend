@@ -13,7 +13,7 @@ const MCQ = ({
           {/* <div className="bg-purple-V1 p-2 my-2">{questionText}</div> */}
           <div className="bg-purple-V1 p-2 my-2">
               {/* eslint-disable-next-line react/no-children-prop */}
-              <ReactMarkdown children={questionText} escapeHtml={false} />
+              <ReactMarkdown children={questionText} />
           </div>
           {options.map((choice) => (
               <div key={choice.quizioID}>

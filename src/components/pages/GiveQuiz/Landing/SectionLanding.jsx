@@ -43,7 +43,7 @@ const SectionLanding = () => {
           </p> */}
           <div className="text-grey-N6 mt-6">
               {/* eslint-disable-next-line react/no-children-prop */}
-              <ReactMarkdown children={description || 'No description available'} escapeHtml={false} />
+              <ReactMarkdown children={description || 'No description available'} />
           </div>
           <div className="ml-auto mt-16 w-40">
               <PrimaryCTA text="Start Answering" onClick={handleStartAnswering} />

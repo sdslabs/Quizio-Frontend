@@ -9,7 +9,7 @@ const Subjective = ({ questionText, answer, setAnswer }) => (
         {/* eslint-disable-next-line react/no-children-prop */}
         <div className="bg-purple-V1 p-2 my-2">
             {/* eslint-disable-next-line react/no-children-prop */}
-            <ReactMarkdown children={questionText} escapeHtml={false} />
+            <ReactMarkdown children={questionText} />
         </div>
         <TextField
           id="DescriptiveAnswer"
