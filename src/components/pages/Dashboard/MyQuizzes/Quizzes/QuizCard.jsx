@@ -108,7 +108,7 @@ const QuizCard = ({ data }) => {
           </div>
           <div className="quiz-details">
               <div className="quiz-title">{data.name ? data.name : 'Quiz Name'}</div>
-              <div className="quiz-desc">
+              <div className="quiz-desc truncate">
                   {data.description ? data.description : 'Quiz Description'}
               </div>
               <div className="quiz-startTime">
