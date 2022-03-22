@@ -1,19 +1,24 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useUpdateResponse } from '@api/quizzes/useResponse';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import { findIndex } from 'lodash';
 import log from '@utils/log';
 
 const SaveAndNext = ({ questionData, answer, choice }) => {
   // Section ID from params
   const { sectionID } = useParams(); // TODO: move to global store
-
+  const { quizID } = useParams();
+  const history = useHistory();
   // Global give quiz store
   const {
     currentQuestion,
+    sections,
+    setCurrentQuestion,
+    setCurrentQuestionIndex,
     addAnsweredQuestion,
     removeAnsweredQuestion,
     addMarkedAnsweredQuestion,
@@ -22,12 +27,12 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
     removeMarkedQuestion,
     markedAnsweredQuestions,
     markedQuestions,
+    currentQuestionIndex,
     switchToNextQuestion,
   } = useGiveQuizStore();
 
   // update response mutation
   const { mutate: updateResponse } = useUpdateResponse();
-
   const saveAndNext = () => {
     let status = 'unanswered';
     if (choice !== null || answer !== '') {
@@ -88,7 +93,19 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
         });
         break;
     }
-    switchToNextQuestion(sectionID);
+
+    const currentSectionIndex = findIndex(sections, { quizioID: sectionID });
+    if (currentQuestionIndex === sections[currentSectionIndex].questions.length) {
+      if (currentSectionIndex === sections.length - 1) {
+          history.push(`/quiz/attempt/${quizID}`);
+      } else {
+        history.push(`/quiz/attempt/${quizID}/${sections[currentSectionIndex + 1].quizioID}`);
+        setCurrentQuestion(null);
+        setCurrentQuestionIndex(0);
+      }
+    } else {
+      switchToNextQuestion(sectionID);
+    }
   };
 
   return (
