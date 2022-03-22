@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import RadioButton from '@components/Input/RadioGroup/RadioButton';
+import ReactMarkdown from 'react-markdown';
 
 const MCQ = ({
  questionText, options, selected, setChoice,
@@ -9,7 +10,11 @@ const MCQ = ({
 
   return (
       <div>
-          <div className="bg-purple-V1 p-2 my-2">{questionText}</div>
+          {/* <div className="bg-purple-V1 p-2 my-2">{questionText}</div> */}
+          <div className="bg-purple-V1 p-2 my-2">
+              {/* eslint-disable-next-line react/no-children-prop */}
+              <ReactMarkdown children={questionText} escapeHtml={false} />
+          </div>
           {options.map((choice) => (
               <div key={choice.quizioID}>
                   <RadioButton

@@ -7,6 +7,7 @@ import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 import Fetching from '@components/Misc/Fetching';
+import ReactMarkdown from 'react-markdown';
 
 const QuizLanding = () => {
   const history = useHistory();
@@ -84,13 +85,20 @@ const QuizLanding = () => {
           <h1 className="text-3xl font-bold">
               {quizData?.quiz?.name || 'Quiz Name not provided'}
           </h1>
-          <p className="text-grey-N6 mt-6">
-              {quizData?.quiz?.description || 'No description available'}
-          </p>
+          {/* {quizData?.quiz?.description || 'No description available'} */}
+
+          <div className="mt-6">
+              {/* eslint-disable-next-line react/no-children-prop */}
+              <ReactMarkdown children={quizData?.quiz?.description || 'No description available'} escapeHtml={false} />
+          </div>
           <h2 className="mt-8 text-2xl font-semibold">Instructions</h2>
-          <p className="text-grey-N6 mt-6">
+          {/* <p className="text-grey-N6 mt-6">
               {quizData?.quiz?.instructions || 'No instructions available'}
-          </p>
+          </p> */}
+          <div className="mt-6">
+              {/* eslint-disable-next-line react/no-children-prop */}
+              <ReactMarkdown children={quizData?.quiz?.instructions || 'No instructions available'} escapeHtml={false} />
+          </div>
           <div className="ml-auto mt-16 w-28">
               <PrimaryCTA text="Continue" onClick={handleContinue} />
           </div>
