@@ -12,11 +12,13 @@ import {
 import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
+import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
 
 const QuizCard = ({ data }) => {
   const [registered, setRegistered] = useState(false);
+  const [submitted, setSubmitted] = useState(true);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showStartModal, setshowStartModal] = useState(false);
 
@@ -35,6 +37,12 @@ const QuizCard = ({ data }) => {
     isSuccess: isRegisterCheckSuccess,
   } = useCheckIfUserIsRegisteredForQuiz(data.quizioID);
 
+  const {
+    data: isSubmittedData,
+    isLoading: isSubmittedLoading,
+    isSuccess: isSubmittedCheckSuccess,
+  } = useCheckIfQuizIsSubmitted(data.quizioID);
+
   const handleRegister = () => {
     setShowRegisterModal(true);
   };
@@ -52,9 +60,21 @@ const QuizCard = ({ data }) => {
 
   useEffect(() => {
     if (isError) {
-      log({ error: error.response.data.errors[0] });
+      log({ error: error.response.data.errors[0] }, false, false);
     }
   }, [isError]);
+
+  useEffect(() => {
+    if (isSubmittedCheckSuccess) {
+      log({
+        quiz: data.name,
+        quizioID: data.quizioID,
+        isSubmitted: !!isSubmittedData.success,
+      });
+
+      setSubmitted(!!isSubmittedData.success);
+    }
+  }, [isSubmittedCheckSuccess]);
 
   useEffect(() => {
     if (isRegisterCheckSuccess) {
@@ -64,6 +84,7 @@ const QuizCard = ({ data }) => {
           isRegistered: isRegisteredData?.data?.data?.registered,
         },
         false,
+        false,
       );
 
       setRegistered(isRegisteredData?.data?.data?.registered);
@@ -72,7 +93,7 @@ const QuizCard = ({ data }) => {
 
   useEffect(() => {
     if (RegisterSuccess) {
-      log('registered!', { RegisterData });
+      log('registered!', { RegisterData }, false);
       setShowRegisterModal(false);
     }
   }, [RegisterSuccess, RegisterData]);
@@ -96,7 +117,10 @@ const QuizCard = ({ data }) => {
             setShowModal={setshowStartModal}
             showModal={showStartModal}
           >
-              <StartQuizModal quizID={data.quizioID || ''} setShowModal={setshowStartModal} />
+              <StartQuizModal
+                quizID={data.quizioID || ''}
+                setShowModal={setshowStartModal}
+              />
           </ModalWrapper>
       )}
 
@@ -121,24 +145,30 @@ const QuizCard = ({ data }) => {
               </div>
               <div className="register-container">
                   <div className="register-button">
-                      {isRegistrationLoading ? (
-                          <div>Loading registration info...</div>
+                      {isRegistrationLoading || isSubmittedLoading ? (
+                          <div>Loading Quiz info...</div>
             ) : (
                 <>
-                    {registered ? (
-                        <>
-                            {dayjs(data.startTime) > dayjs() ? (
-                                <div className="registered">Registered</div>
-                    ) : (
-                        <PrimaryCTA text="Start Quiz" onClick={handleStart} />
-                    )}
-                        </>
+                    {submitted ? (
+                        <div className="registered">Submitted</div>
                 ) : (
-                    <PrimaryCTA
-                      text={isLoading ? 'Registering' : 'Register'}
-                      onClick={handleRegister}
-                      disabled={RegisterSuccess}
-                    />
+                    <>
+                        {registered ? (
+                            <>
+                                {dayjs(data.startTime) > dayjs() ? (
+                                    <div className="registered">Registered</div>
+                        ) : (
+                            <PrimaryCTA text="Start Quiz" onClick={handleStart} />
+                        )}
+                            </>
+                    ) : (
+                        <PrimaryCTA
+                          text={isLoading ? 'Registering' : 'Register'}
+                          onClick={handleRegister}
+                          disabled={RegisterSuccess}
+                        />
+                    )}
+                    </>
                 )}
                 </>
             )}

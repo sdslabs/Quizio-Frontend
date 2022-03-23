@@ -13,6 +13,12 @@ export const useDeleteQuiz = () => useMutation(fetchers.deleteQuizByID);
 
 export const useSubmitQuiz = () => useMutation(fetchers.submitQuizByID);
 
+export const useCheckIfQuizIsSubmitted = (quizID) => useQuery(
+	[`isSubmittedQuiz-${quizID}`, quizID],
+	fetchers.checkIfQuizIsSubmitted,
+	{ enabled: !!quizID },
+);
+
 export const useGetRankList = (quizID) => useQuery(['getQuizRankList', quizID], fetchers.getQuizRankList);
 
 export const useGetQuizzesCreatedByUser = () => useQuery(['getQuizzesCreatedByUser'], fetchers.getQuizzesCreatedByUser);
