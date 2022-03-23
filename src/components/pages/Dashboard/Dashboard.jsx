@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Navbar from '@components/Navbar';
 import LoadingPage from '@pages/Loading';
 import { useCreateQuiz } from '@api/quizzes/useQuizzes';
@@ -8,8 +8,15 @@ import log from '@utils/log';
 import MyQuizzes from './MyQuizzes';
 import '@pagestyles/dashboard/index.scss';
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 const Dashboard = () => {
   const history = useHistory();
+  const query = useQuery();
   const {
  mutate, data, isLoading, isSuccess,
 } = useCreateQuiz();
@@ -27,6 +34,14 @@ const Dashboard = () => {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    log('DASHBOARD', query.get('submitted'));
+    if (query.get('submitted')) {
+      history.push('/');
+      window.location.reload(false);
+    }
+  }, [query]);
+
   return (
       <>
           {isLoading ? (
@@ -34,9 +49,7 @@ const Dashboard = () => {
       ) : (
           <div className="dashboard">
               <Navbar type="dashboard" handleHostQuiz={handleHostQuiz} />
-              <div className="top">
-                  {/* <Status /> */}
-              </div>
+              <div className="top">{/* <Status /> */}</div>
               <div className="bottom">
                   <MyQuizzes />
               </div>

@@ -75,7 +75,7 @@ const SubmitQuiz = ({ setShowModal }) => {
   useEffect(() => {
     if (submitSucess) {
       log('Quiz submitted!');
-      history.push('/');
+      history.push(`/?submitted=${quizID}`);
     }
   }, [submitSucess]);
 
