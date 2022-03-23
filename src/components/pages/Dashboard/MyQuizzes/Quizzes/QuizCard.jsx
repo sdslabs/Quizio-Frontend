@@ -154,10 +154,18 @@ const QuizCard = ({ data }) => {
       )}
 
           <div className="banner-container">
-              <QuizName />
+              {data.bannerURL ? (
+                  <div className="">
+                      <img src={data.bannerURL} alt={data.name} />
+                  </div>
+        ) : (
+            <QuizName />
+        )}
+              {!data.bannerURL && (
               <h3 className="name">
                   {data.name ? truncateQuizName(data.name) : 'Quiz Name'}
               </h3>
+        )}
           </div>
           <div className="quiz-details">
               <div className="quiz-title">{data.name ? data.name : 'Quiz Name'}</div>
