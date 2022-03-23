@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import { ReactComponent as QuizName } from '@icons/quizname.svg';
 import { truncateQuizName } from '@utils/truncate';
 import { getDateTime } from '@utils/date';
@@ -16,7 +17,14 @@ import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 const QuizCard = ({ data }) => {
+  const query = useQuery();
+  // const history = useHistory();
   const [registered, setRegistered] = useState(false);
   const [submitted, setSubmitted] = useState(true);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -48,11 +56,15 @@ const QuizCard = ({ data }) => {
   };
 
   const handleStart = () => {
-    setshowStartModal(true);
+    if (!submitted) {
+      if (data.quizioID !== query.get('submitted')) {
+        setshowStartModal(true);
+      }
+    }
   };
 
   useEffect(() => {
-    log({ RegisterSuccess });
+    log({ RegisterSuccess }, false, false);
     if (RegisterSuccess) {
       setRegistered(true);
     }
@@ -65,12 +77,29 @@ const QuizCard = ({ data }) => {
   }, [isError]);
 
   useEffect(() => {
+    log(
+      { submittedQuiz: query.get('submitted'), quizioID: data.quizioID },
+      false,
+      false,
+    );
+    if (data.quizioID === query.get('submitted')) {
+      log('match!', data.quizioID);
+      setSubmitted(true);
+      // history.push('/');
+    }
+  }, [query]);
+
+  useEffect(() => {
     if (isSubmittedCheckSuccess) {
-      log({
-        quiz: data.name,
-        quizioID: data.quizioID,
-        isSubmitted: !!isSubmittedData.success,
-      });
+      log(
+        {
+          quiz: data.name,
+          quizioID: data.quizioID,
+          isSubmitted: !!isSubmittedData.success,
+        },
+        false,
+        false,
+      );
 
       setSubmitted(!!isSubmittedData.success);
     }
