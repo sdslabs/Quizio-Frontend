@@ -101,6 +101,7 @@ const AllSections = () => {
                 }}
                             key={question || quesIDx}
                             type="button"
+                            className="p-1"
                           >
                               <QuestionBubble
                                 number={quesIDx + 1}

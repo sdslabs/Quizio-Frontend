@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -8,7 +8,7 @@ import Dashboard from '@pages/Dashboard';
 import EditQuiz from '@pages/EditQuiz';
 import GiveQuiz from '@pages/GiveQuiz';
 import CheckQuiz from '@pages/CheckQuiz';
-import Components from '@pages/Components';
+// import Components from '@pages/Components';
 import Page404 from '@pages/404';
 import LoadingPage from '@pages/Loading';
 
@@ -20,6 +20,7 @@ import './index.css';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const user = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -63,13 +64,19 @@ const App = () => {
               {/* Dashboard page */}
               <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
               {/* Create or edit a quiz */}
-              <Route path="/quiz/edit/:quizID" component={EditQuiz} />
+              <Route
+                path="/quiz/edit/:quizID"
+                component={user.role === 'superadmin' ? EditQuiz : Page404}
+              />
               {/* Check a quiz */}
-              <Route path="/quiz/check/:quizID" component={CheckQuiz} />
+              <Route
+                path="/quiz/check/:quizID"
+                component={user.role === 'superadmin' ? CheckQuiz : Page404}
+              />
               {/* Attempt a quiz */}
               <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
               {/* Demo page for components */}
-              <Route exact path="/components" component={Components} />
+              {/* <Route exact path="/components" component={Components} /> */}
               {/* 404 Page */}
               <Route path="" component={Page404} />
           </Switch>

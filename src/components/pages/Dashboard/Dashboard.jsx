@@ -4,7 +4,7 @@ import Navbar from '@components/Navbar';
 import LoadingPage from '@pages/Loading';
 import { useCreateQuiz } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
-import Status from './Status';
+// import Status from './Status';
 import MyQuizzes from './MyQuizzes';
 import '@pagestyles/dashboard/index.scss';
 
@@ -35,7 +35,7 @@ const Dashboard = () => {
           <div className="dashboard">
               <Navbar type="dashboard" handleHostQuiz={handleHostQuiz} />
               <div className="top">
-                  <Status />
+                  {/* <Status /> */}
               </div>
               <div className="bottom">
                   <MyQuizzes />

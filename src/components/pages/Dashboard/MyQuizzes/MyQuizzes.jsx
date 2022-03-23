@@ -6,9 +6,9 @@ import '@pagestyles/dashboard/bottom.scss';
 const index = () => {
   const [showCreated, setShowCreated] = useState(false);
 
-  const handleShowCreated = () => {
-    setShowCreated(true);
-  };
+  // const handleShowCreated = () => {
+  //   setShowCreated(true);
+  // };
 
   const handleShowQuizzes = () => {
     setShowCreated(false);
@@ -24,13 +24,13 @@ const index = () => {
               >
                   Quizzes
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={handleShowCreated}
                 className={`created-quizzes ${showCreated && 'active'}`}
               >
                   Created Quizzes
-              </button>
+              </button> */}
               <div className="pagination-border" />
           </div>
           <div className="main">

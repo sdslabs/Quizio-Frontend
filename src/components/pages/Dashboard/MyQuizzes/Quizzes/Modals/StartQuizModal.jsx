@@ -7,7 +7,7 @@ import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import PropTypes from 'prop-types';
 // import { getQuizById } from '@api/quizzes/quizzesFetcher';
 
-const StartQuizModal = ({ quizID }) => {
+const StartQuizModal = ({ quizID, setShowModal }) => {
   const history = useHistory();
   const [showAccessCode, setShowAccessCode] = useState(false);
   const [accessCodeInput, setAccessCodeInput] = useState('');
@@ -51,7 +51,7 @@ const StartQuizModal = ({ quizID }) => {
           <>
               <div className="start-quiz-title">
                   Start Quiz
-                  <CrossIcon />
+                  <CrossIcon className="cursor-pointer" onClick={() => { setShowModal(false); }} />
               </div>
               <div className="start-quiz-container">
                   <div className="start-quiz-container-text">
@@ -87,6 +87,7 @@ const StartQuizModal = ({ quizID }) => {
 StartQuizModal.propTypes = {
   // showAccessCode: PropTypes.bool.isRequired,
   quizID: PropTypes.string.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 
 export default StartQuizModal;
