@@ -95,13 +95,13 @@ const QuizCard = ({ data }) => {
         {
           quiz: data.name,
           quizioID: data.quizioID,
-          isSubmitted: !!isSubmittedData.success,
+          isSubmitted: isSubmittedData.data.submitted,
         },
         false,
         false,
       );
 
-      setSubmitted(!!isSubmittedData.success);
+      setSubmitted(!!isSubmittedData.data.submitted);
     }
   }, [isSubmittedCheckSuccess]);
 
