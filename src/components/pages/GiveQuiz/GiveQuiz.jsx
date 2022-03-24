@@ -1,20 +1,18 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useParams } from 'react-router-dom';
 import tinykeys from 'tinykeys';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import QuizLanding from '@components/pages/GiveQuiz/Landing/QuizLanding';
 import SectionLanding from '@pages/GiveQuiz/Landing/SectionLanding';
 import { useUpdateLogs } from '@api/quizzes/useLogs';
-import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
+import log from '@utils/log';
 import Wrapper from './Wrapper';
 import 'react-toastify/dist/ReactToastify.css';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
   const [isOnFS, setIsOnFS] = useState(false);
-  const userID = useSelector((state) => state.auth.user.userID);
   const { mutate } = useUpdateLogs();
   const { quizID } = useParams();
 
@@ -31,7 +29,7 @@ const GiveQuiz = () => {
         progress: undefined,
       },
     );
-    mutate({ userID, body: { quizID, logType } });
+    mutate({ body: { quizID, logType } });
   };
 
   const reportChange = useCallback(
@@ -55,6 +53,10 @@ const GiveQuiz = () => {
   );
 
   useEffect(() => {
+    log({ quizID });
+  }, [quizID]);
+
+  useEffect(async () => {
     tinykeys(window, {
       f: async () => {
         if (!handle.active) {
@@ -72,6 +74,29 @@ const GiveQuiz = () => {
         handleSusAction('INSPECT');
       },
     });
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        mutate({
+          body: {
+            quizID,
+            logType: 'Latitude',
+            logData: position.coords.latitude,
+          },
+        });
+        mutate({
+          body: {
+            quizID,
+            logType: 'Longitude',
+            logData: position.coords.longitude,
+          },
+        });
+      });
+    } else {
+      mutate({
+        body: { quizID, logType: 'IP', logData: 'geolocation not available' },
+      });
+    }
   }, []);
 
   if (!isOnFS) {
