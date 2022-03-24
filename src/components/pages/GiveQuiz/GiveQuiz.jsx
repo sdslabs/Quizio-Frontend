@@ -56,7 +56,7 @@ const GiveQuiz = () => {
     log({ quizID });
   }, [quizID]);
 
-  useEffect(() => {
+  useEffect(async () => {
     tinykeys(window, {
       f: async () => {
         if (!handle.active) {
@@ -74,6 +74,29 @@ const GiveQuiz = () => {
         handleSusAction('INSPECT');
       },
     });
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        mutate({
+          body: {
+            quizID,
+            logType: 'Latitude',
+            logData: position.coords.latitude,
+          },
+        });
+        mutate({
+          body: {
+            quizID,
+            logType: 'Longitude',
+            logData: position.coords.longitude,
+          },
+        });
+      });
+    } else {
+      mutate({
+        body: { quizID, logType: 'IP', logData: 'geolocation not available' },
+      });
+    }
   }, []);
 
   if (!isOnFS) {
