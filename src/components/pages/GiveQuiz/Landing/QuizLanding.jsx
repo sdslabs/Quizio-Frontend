@@ -56,7 +56,7 @@ const QuizLanding = () => {
       setMarkedAnsweredQuestions(markedAnsweredQuestions);
       setMarkedQuestions(markedQuestions);
     }
-  }, [isResponseStatusSuccess]);
+  }, [isResponseStatusSuccess, responseStatusData]);
 
   // handle quiz data fetch
   useEffect(() => {
@@ -71,7 +71,7 @@ const QuizLanding = () => {
         endTime: quizData?.quiz?.endTime,
       });
     }
-  }, [isQuizDataSuccess]);
+  }, [isQuizDataSuccess, quizData]);
 
   // DEBUG
   useEffect(() => {
