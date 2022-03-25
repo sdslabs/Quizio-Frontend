@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
-import '@styles/common/navbar.scss';
+import DefaultAvatarImg from '@images/DefaultAvatar.png';
 import { setUser } from '@redux/actions/auth';
+import '@styles/common/navbar.scss';
 
 const Navbar = ({ type, handleHostQuiz }) => {
   const user = useSelector((state) => state.auth.user);
@@ -26,9 +27,7 @@ const Navbar = ({ type, handleHostQuiz }) => {
     } else if (user.githubAvatar) {
       setProfilePic(user.githubAvatar);
     } else {
-      setProfilePic(
-        'https://img.apmcdn.org/768cb350c59023919f564341090e3eea4970388c/square/72dd92-20180309-rick-astley.jpg',
-      );
+      setProfilePic(DefaultAvatarImg);
     }
   }, [user]);
   return (
