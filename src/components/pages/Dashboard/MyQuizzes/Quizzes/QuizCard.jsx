@@ -6,16 +6,15 @@ import { truncateQuizName } from '@utils/truncate';
 import { getDateTime } from '@utils/date';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/dashboard/quiz_card.scss';
-import {
-  useCheckIfUserIsRegisteredForQuiz,
-  useRegisterParticipant,
-} from '@api/register/useRegister';
+import { useCheckIfUserIsRegisteredForQuiz, useRegisterParticipant } from '@api/register/useRegister';
 import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
 import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
+import { ToastContainer, toast } from 'react-toastify';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
+import 'react-toastify/dist/ReactToastify.css';
 
 function useQuery() {
   const { search } = useLocation();
@@ -25,18 +24,13 @@ function useQuery() {
 const QuizCard = ({ data }) => {
   const query = useQuery();
   // const history = useHistory();
-  const [registered, setRegistered] = useState(false);
+  const [registered, setRegistered] = useState();
   const [submitted, setSubmitted] = useState(true);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showStartModal, setshowStartModal] = useState(false);
 
   const {
-    isLoading,
-    isSuccess: RegisterSuccess,
-    isError,
-    error,
-    mutate: mutateRegisterParticipant,
-    data: RegisterData,
+    isLoading, isSuccess: RegisterSuccess, isError, error, mutate: mutateRegisterParticipant, data: RegisterData,
   } = useRegisterParticipant();
 
   const {
@@ -45,11 +39,7 @@ const QuizCard = ({ data }) => {
     isSuccess: isRegisterCheckSuccess,
   } = useCheckIfUserIsRegisteredForQuiz(data.quizioID);
 
-  const {
-    data: isSubmittedData,
-    isLoading: isSubmittedLoading,
-    isSuccess: isSubmittedCheckSuccess,
-  } = useCheckIfQuizIsSubmitted(data.quizioID);
+  const { data: isSubmittedData, isLoading: isSubmittedLoading, isSuccess: isSubmittedCheckSuccess } = useCheckIfQuizIsSubmitted(data.quizioID);
 
   const handleRegister = () => {
     setShowRegisterModal(true);
@@ -67,6 +57,15 @@ const QuizCard = ({ data }) => {
     log({ RegisterSuccess }, false, false);
     if (RegisterSuccess) {
       setRegistered(true);
+      toast.success('User registered successfully!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }, [RegisterSuccess]);
 
@@ -77,11 +76,7 @@ const QuizCard = ({ data }) => {
   }, [isError]);
 
   useEffect(() => {
-    log(
-      { submittedQuiz: query.get('submitted'), quizioID: data.quizioID },
-      false,
-      false,
-    );
+    log({ submittedQuiz: query.get('submitted'), quizioID: data.quizioID }, false, false);
     if (data.quizioID === query.get('submitted')) {
       log('match!', data.quizioID);
       setSubmitted(true);
@@ -129,11 +124,9 @@ const QuizCard = ({ data }) => {
 
   return (
       <div className="quiz-card">
+          <ToastContainer />
           {data && showRegisterModal && (
-          <ModalWrapper
-            setShowModal={setShowRegisterModal}
-            showModal={showRegisterModal}
-          >
+          <ModalWrapper setShowModal={setShowRegisterModal} showModal={showRegisterModal}>
               <UserQuizRegistration
                 quizID={data.quizioID || ''}
                 setShowModal={setShowRegisterModal}
@@ -142,14 +135,8 @@ const QuizCard = ({ data }) => {
           </ModalWrapper>
       )}
           {data && showStartModal && (
-          <ModalWrapper
-            setShowModal={setshowStartModal}
-            showModal={showStartModal}
-          >
-              <StartQuizModal
-                quizID={data.quizioID || ''}
-                setShowModal={setshowStartModal}
-              />
+          <ModalWrapper setShowModal={setshowStartModal} showModal={showStartModal}>
+              <StartQuizModal quizID={data.quizioID || ''} setShowModal={setshowStartModal} />
           </ModalWrapper>
       )}
 
@@ -161,24 +148,14 @@ const QuizCard = ({ data }) => {
         ) : (
             <QuizName />
         )}
-              {!data.bannerURL && (
-              <h3 className="name">
-                  {data.name ? truncateQuizName(data.name) : 'Quiz Name'}
-              </h3>
-        )}
+              {!data.bannerURL && <h3 className="name">{data.name ? truncateQuizName(data.name) : 'Quiz Name'}</h3>}
           </div>
           <div className="quiz-details">
               <div className="quiz-title">{data.name ? data.name : 'Quiz Name'}</div>
-              <div className="quiz-desc truncate">
-                  {data.description ? data.description : 'Quiz Description'}
-              </div>
+              <div className="quiz-desc truncate">{data.description ? data.description : 'Quiz Description'}</div>
               <div className="quiz-startTime">
                   <div className="scheduled">Scheduled:</div>
-                  <div className="time">
-                      {data.startTime
-              ? getDateTime(data.startTime)
-              : 'Not yet scheduled!'}
-                  </div>
+                  <div className="time">{data.startTime ? getDateTime(data.startTime) : 'Not yet scheduled!'}</div>
               </div>
               <div className="register-container">
                   <div className="register-button">
@@ -199,11 +176,7 @@ const QuizCard = ({ data }) => {
                         )}
                             </>
                     ) : (
-                        <PrimaryCTA
-                          text={isLoading ? 'Registering' : 'Register'}
-                          onClick={handleRegister}
-                          disabled={RegisterSuccess}
-                        />
+                        <PrimaryCTA text={isLoading ? 'Registering' : 'Register'} onClick={handleRegister} disabled={RegisterSuccess} />
                     )}
                     </>
                 )}

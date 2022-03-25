@@ -9,17 +9,9 @@ import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import '@pagestyles/register/user_quiz_registration.scss';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 
-const UserQuizRegistration = ({
-  quizID,
-  mutateRegisterParticipant,
-  setShowModal,
-}) => {
+const UserQuizRegistration = ({ quizID, mutateRegisterParticipant, setShowModal }) => {
   // quiz data getter query
-  const {
-    data: quizData,
-    isSuccess: quizDataSuccess,
-    isFetching: isFetchingQuizData,
-  } = useGetQuiz(quizID);
+  const { data: quizData, isSuccess: quizDataSuccess, isFetching: isFetchingQuizData } = useGetQuiz(quizID);
 
   // Local States
   const [firstName, setFirstName] = useState('');
@@ -98,17 +90,13 @@ const UserQuizRegistration = ({
                   <CrossIcon
                     className="cursor-pointer"
                     onClick={() => {
-                    setShowModal(false);
-                }}
+                setShowModal(false);
+              }}
                   />
               </div>
               <div className="user-quiz-registration-basic-details">
                   <div className="user-quiz-registration-name">
-                      <div
-                        className={`user-quiz-registration-first-name ${
-                  userFirstName ? '' : 'hidden'
-                }`}
-                      >
+                      <div className={`user-quiz-registration-first-name ${userFirstName ? '' : 'hidden'}`}>
                           <TextField
                             id="First name"
                             placeholder="Enter First Name"
@@ -118,43 +106,15 @@ const UserQuizRegistration = ({
                             setVal={setFirstName}
                           />
                       </div>
-                      <div
-                        className={`user-quiz-registration-last-name ${
-                  userLastName ? '' : 'hidden'
-                }`}
-                      >
-                          <TextField
-                            id="Last name"
-                            placeholder="Enter Last Name"
-                            label="Last Name"
-                            error=""
-                            val={lastName}
-                            setVal={setLastName}
-                          />
+                      <div className={`user-quiz-registration-last-name ${userLastName ? '' : 'hidden'}`}>
+                          <TextField id="Last name" placeholder="Enter Last Name" label="Last Name" error="" val={lastName} setVal={setLastName} />
                       </div>
                   </div>
-                  <div
-                    className={`user-quiz-registration-contact ${
-                userEmail ? '' : 'hidden'
-              }`}
-                  >
+                  <div className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'}`}>
                       <div className="user-quiz-registration-contact-email">
-                          <TextField
-                            id="Email"
-                            placeholder=""
-                            label="Email"
-                            error=""
-                            val={email}
-                            setVal={setEmail}
-                            disabled
-                            pattern={REGEX.email}
-                          />
+                          <TextField id="Email" placeholder="" label="Email" error="" val={email} setVal={setEmail} disabled pattern={REGEX.email} />
                       </div>
-                      <div
-                        className={`user-quiz-registration-contact-contactno ${
-                  userPhoneNumber ? '' : 'hidden'
-                }`}
-                      >
+                      <div className={`user-quiz-registration-contact-contactno ${userPhoneNumber ? '' : 'hidden'}`}>
                           <TextField
                             id="Contact No."
                             placeholder="Candidate&#39;s contact number"
@@ -177,60 +137,29 @@ const UserQuizRegistration = ({
                       />
                   </div>
               </div>
-              <div className="user-quiz-registration-additional-details-title">
-                  Additional Details
-              </div>
+              <div className="user-quiz-registration-additional-details-title">Additional Details</div>
               {detail1.key && (
-              <div
-                className={`user-quiz-registration-field-input ${
-                detail1.key ? '' : 'hidden'
-              }`}
-              >
-                  <TextField
-                    id="detail1"
-                    placeholder={detail1.value}
-                    label={detail1.key}
-                    error=""
-                    val={detail1Value}
-                    setVal={setDetail1Value}
-                  />
+              <div className={`user-quiz-registration-field-input ${detail1.key ? '' : 'hidden'}`}>
+                  <TextField id="detail1" placeholder={detail1.value} label={detail1.key} error="" val={detail1Value} setVal={setDetail1Value} />
               </div>
           )}
               {detail2.key && (
-              <div
-                className={`user-quiz-registration-field-input ${
-                detail2.key ? '' : 'hidden'
-              }`}
-              >
-                  <TextField
-                    id="detail2"
-                    placeholder={detail2.value}
-                    label={detail2.key}
-                    error=""
-                    val={detail2Value}
-                    setVal={setDetail2Value}
-                  />
+              <div className={`user-quiz-registration-field-input ${detail2.key ? '' : 'hidden'}`}>
+                  <TextField id="detail2" placeholder={detail2.value} label={detail2.key} error="" val={detail2Value} setVal={setDetail2Value} />
               </div>
           )}
               {detail3.key && (
-              <div
-                className={`user-quiz-registration-field-input ${
-                detail3.key ? '' : 'hidden'
-              }`}
-              >
-                  <TextField
-                    id="detail3"
-                    placeholder={detail3.value}
-                    label={detail3.key}
-                    error=""
-                    val={detail3Value}
-                    setVal={setDetail3Value}
-                  />
+              <div className={`user-quiz-registration-field-input ${detail3.key ? '' : 'hidden'}`}>
+                  <TextField id="detail3" placeholder={detail3.value} label={detail3.key} error="" val={detail3Value} setVal={setDetail3Value} />
               </div>
           )}
               <div className="user-quiz-registration-register-container">
                   <div>
-                      <PrimaryCTA text="Register" onClick={handleRegisterParticipant} />
+                      <PrimaryCTA
+                        text="Register"
+                        onClick={handleRegisterParticipant}
+                        disabled={!(firstName && lastName && email && contactNo && orgName)}
+                      />
                   </div>
               </div>
           </>
