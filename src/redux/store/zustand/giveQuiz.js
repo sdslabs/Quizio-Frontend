@@ -62,7 +62,7 @@ const useGiveQuizStore = create((set) => ({
     /* opens the first question of the current section */
     startAnsweringSection: (section) => set((state) => {
         const currentSection = find(state.sections, { quizioID: section });
-        return { currentQuestion: currentSection?.questions[0], currentQuestionIndex: 1 };
+        return { currentQuestion: currentSection?.questions[0], currentQuestionIndex: 1, currentSection: currentSection?.title };
     }),
     switchToNextQuestion: (section) => set((state) => {
         const currentSection = find(state.sections, { quizioID: section });

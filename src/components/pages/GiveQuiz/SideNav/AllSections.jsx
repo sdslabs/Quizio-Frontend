@@ -30,8 +30,9 @@ const AllSections = () => {
 
   const history = useHistory();
 
-  const handleSectionTabClick = (id) => {
+  const handleSectionTabClick = (id, title) => {
     setCurrentQuestion(null);
+    setCurrentSection(title);
     history.push(`/quiz/attempt/${quiz.quizioID}/${id}`);
   };
 
@@ -84,7 +85,7 @@ const AllSections = () => {
                     className={`w-full text-left m-0 side-nav-item${
               sectionID === quizioID ? '-active' : ''
             } flex justify-between`}
-                    onClick={() => handleSectionTabClick(quizioID)}
+                    onClick={() => handleSectionTabClick(quizioID, title)}
                   >
                       {title}
                       <img src={DropDownIcon} alt="" className="side-nav-toggle" />
