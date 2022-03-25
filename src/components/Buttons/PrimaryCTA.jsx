@@ -5,7 +5,12 @@ import '@styles/base/buttons.scss';
 const PrimaryCTA = ({
  text, onClick, additionalClassName, disabled,
 }) => (
-    <button disabled={disabled} type="button" className={`primary-cta-button ${additionalClassName}`} onClick={onClick}>
+    <button
+      disabled={disabled}
+      type="button"
+      className={`primary-cta-button ${additionalClassName}`}
+      onClick={onClick}
+    >
         {text}
     </button>
 );
