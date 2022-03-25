@@ -81,15 +81,38 @@ const UserQuizRegistration = () => {
                   />
               </div>
           </div>
-          <div className="user-quiz-registration-additional-details-title">Additional Details</div>
-          <div className="user-quiz-registration-field-input">
-              <TextField id="Field Name" placeholder="Field Label" label="Field Name" error="" val={fieldInput1} setVal={setfieldInput1} />
+          <div className="user-quiz-registration-additional-details-title">
+              Additional Details
           </div>
           <div className="user-quiz-registration-field-input">
-              <TextField id="Field Name" placeholder="Field Label" label="Field Name" error="" val={fieldInput2} setVal={setfieldInput2} />
+              <TextField
+                id="Field Name"
+                placeholder="Field Label"
+                label="Field Name"
+                error=""
+                val={fieldInput1}
+                setVal={setfieldInput1}
+              />
           </div>
           <div className="user-quiz-registration-field-input">
-              <TextField id="Field Name" placeholder="Field Label" label="Field Name" error="" val={fieldInput3} setVal={setfieldInput3} />
+              <TextField
+                id="Field Name"
+                placeholder="Field Label"
+                label="Field Name"
+                error=""
+                val={fieldInput2}
+                setVal={setfieldInput2}
+              />
+          </div>
+          <div className="user-quiz-registration-field-input">
+              <TextField
+                id="Field Name"
+                placeholder="Field Label"
+                label="Field Name"
+                error=""
+                val={fieldInput3}
+                setVal={setfieldInput3}
+              />
           </div>
           <div className="user-quiz-registration-register-container">
               <div>
