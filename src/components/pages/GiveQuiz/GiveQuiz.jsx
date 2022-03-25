@@ -85,7 +85,6 @@ const GiveQuiz = () => {
           setIsOnFS(true);
         }
       },
-      '$mod+KeyF': async (event) => event.preventDefault(),
       '$mod+KeyC': () => {
         handleSusAction('COPY');
       },
@@ -95,6 +94,20 @@ const GiveQuiz = () => {
       'Control+Shift+KeyI': () => {
         handleSusAction('INSPECT');
       },
+      '$mod+KeyF': async (event) => event.preventDefault(),
+
+      F1: async (event) => event.preventDefault(),
+      F2: async (event) => event.preventDefault(),
+      F3: async (event) => event.preventDefault(),
+      F4: async (event) => event.preventDefault(),
+      F5: async (event) => event.preventDefault(),
+      F6: async (event) => event.preventDefault(),
+      F7: async (event) => event.preventDefault(),
+      F8: async (event) => event.preventDefault(),
+      F9: async (event) => event.preventDefault(),
+      F10: async (event) => event.preventDefault(),
+      F11: async (event) => event.preventDefault(),
+      F12: async (event) => event.preventDefault(),
     });
 
     if ('geolocation' in navigator) {
