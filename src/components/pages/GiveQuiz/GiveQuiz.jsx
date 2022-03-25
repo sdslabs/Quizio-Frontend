@@ -47,6 +47,8 @@ const GiveQuiz = () => {
             progress: undefined,
           },
         );
+      } else {
+        toast.dismiss();
       }
     },
     [handle],
