@@ -97,9 +97,10 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
     const currentSectionIndex = findIndex(sections, { quizioID: sectionID });
     if (currentQuestionIndex === sections[currentSectionIndex].questions.length) {
       if (currentSectionIndex === sections.length - 1) {
+        // Last question
         setCurrentQuestion(null);
         setCurrentQuestionIndex(0);
-          history.push(`/quiz/attempt/${quizID}`);
+          history.push(`/quiz/attempt/${quizID}?submit=true`);
       } else {
         history.push(`/quiz/attempt/${quizID}/${sections[currentSectionIndex + 1].quizioID}`);
         setCurrentQuestion(null);
