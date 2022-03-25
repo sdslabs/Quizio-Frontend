@@ -19,6 +19,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
     sections,
     setCurrentQuestion,
     setCurrentQuestionIndex,
+    setCurrentSection,
     addAnsweredQuestion,
     removeAnsweredQuestion,
     addMarkedAnsweredQuestion,
@@ -105,6 +106,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
         history.push(`/quiz/attempt/${quizID}/${sections[currentSectionIndex + 1].quizioID}`);
         setCurrentQuestion(null);
         setCurrentQuestionIndex(0);
+        setCurrentSection(sections[currentSectionIndex + 1].title);
       }
     } else {
       switchToNextQuestion(sectionID);

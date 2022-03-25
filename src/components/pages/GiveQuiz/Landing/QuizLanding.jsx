@@ -43,10 +43,13 @@ const QuizLanding = () => {
     setAnsweredQuestions,
     setMarkedAnsweredQuestions,
     setMarkedQuestions,
+    setCurrentSection,
+    sections,
   } = useGiveQuizStore();
 
   const handleContinue = () => {
     history.push(`/quiz/attempt/${quizID}/${quizData?.quiz?.sections[0]}`);
+    setCurrentSection(sections[0].title);
   };
 
   useEffect(() => {
