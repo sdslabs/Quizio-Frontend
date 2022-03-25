@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { Switch, Route, useParams } from 'react-router-dom';
+import {
+ Switch, Route, useParams, useHistory,
+} from 'react-router-dom';
 import tinykeys from 'tinykeys';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import LoadingPage from '@components/pages/Loading';
 import QuizLanding from '@components/pages/GiveQuiz/Landing/QuizLanding';
+import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import SectionLanding from '@pages/GiveQuiz/Landing/SectionLanding';
 import { useUpdateLogs } from '@api/quizzes/useLogs';
 import log from '@utils/log';
@@ -12,9 +16,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
+  const history = useHistory();
   const [isOnFS, setIsOnFS] = useState(false);
   const { mutate } = useUpdateLogs();
   const { quizID } = useParams();
+  const {
+    data: isSubmittedData,
+    isLoading: isSubmittedLoading,
+    isSuccess: isSubmittedCheckSuccess,
+  } = useCheckIfQuizIsSubmitted(quizID);
 
   const handleSusAction = (logType) => {
     toast.warn(
@@ -53,6 +63,14 @@ const GiveQuiz = () => {
     },
     [handle],
   );
+
+  useEffect(() => {
+    if (isSubmittedCheckSuccess) {
+      if (isSubmittedData?.data?.submitted) {
+        history.push('/');
+      }
+    }
+  }, [isSubmittedCheckSuccess]);
 
   useEffect(() => {
     log({ quizID });
@@ -100,6 +118,8 @@ const GiveQuiz = () => {
       });
     }
   }, []);
+
+  if (isSubmittedLoading) return <LoadingPage />;
 
   if (!isOnFS) {
     return (
