@@ -47,7 +47,7 @@ const GiveQuiz = () => {
       if (state === false) {
         setIsOnFS(false);
         toast.dark(
-          'Quiz must be given on full Screen! Press `Ctrl + F` to go to fullscreen',
+          'Quiz must be given on full Screen! Press `Shift + F` to go to fullscreen',
           {
             position: 'top-center',
             autoClose: false,
@@ -78,7 +78,7 @@ const GiveQuiz = () => {
 
   useEffect(async () => {
     tinykeys(window, {
-      'Control+KeyF': async () => {
+      'Shift+KeyF': async () => {
         if (!handle.active) {
           await handle.enter();
           setIsOnFS(true);
