@@ -8,12 +8,13 @@ const PrimaryCTA = ({
     <button
       disabled={disabled}
       type="button"
-      className={`primary-cta-button ${additionalClassName} `}
+      className={`primary-cta-button ${additionalClassName}`}
       onClick={onClick}
     >
         {text}
     </button>
 );
+
 PrimaryCTA.propTypes = {
   onClick: PropTypes.func,
   text: PropTypes.string,

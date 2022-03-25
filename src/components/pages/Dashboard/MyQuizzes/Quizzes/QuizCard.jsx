@@ -14,8 +14,10 @@ import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
 import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
+import { ToastContainer, toast } from 'react-toastify';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
+import 'react-toastify/dist/ReactToastify.css';
 
 function useQuery() {
   const { search } = useLocation();
@@ -24,7 +26,6 @@ function useQuery() {
 }
 const QuizCard = ({ data }) => {
   const query = useQuery();
-  // const history = useHistory();
   const [registered, setRegistered] = useState(false);
   const [submitted, setSubmitted] = useState(true);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -67,6 +68,15 @@ const QuizCard = ({ data }) => {
     log({ RegisterSuccess }, false, false);
     if (RegisterSuccess) {
       setRegistered(true);
+      toast.success('User registered successfully!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }, [RegisterSuccess]);
 
@@ -85,7 +95,6 @@ const QuizCard = ({ data }) => {
     if (data.quizioID === query.get('submitted')) {
       log('match!', data.quizioID);
       setSubmitted(true);
-      // history.push('/');
     }
   }, [query]);
 
@@ -129,6 +138,7 @@ const QuizCard = ({ data }) => {
 
   return (
       <div className="quiz-card">
+          <ToastContainer />
           {data && showRegisterModal && (
           <ModalWrapper
             setShowModal={setShowRegisterModal}
