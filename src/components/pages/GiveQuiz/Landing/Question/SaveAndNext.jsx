@@ -19,6 +19,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
     sections,
     setCurrentQuestion,
     setCurrentQuestionIndex,
+    setCurrentSection,
     addAnsweredQuestion,
     removeAnsweredQuestion,
     addMarkedAnsweredQuestion,
@@ -35,7 +36,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
   const { mutate: updateResponse } = useUpdateResponse();
   const saveAndNext = () => {
     let status = 'unanswered';
-    if (choice !== null || answer !== '') {
+    if ((choice !== undefined && choice !== null) || (answer !== '' && answer !== undefined && answer !== null)) {
       status = 'answered';
     }
     if (
@@ -97,11 +98,15 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
     const currentSectionIndex = findIndex(sections, { quizioID: sectionID });
     if (currentQuestionIndex === sections[currentSectionIndex].questions.length) {
       if (currentSectionIndex === sections.length - 1) {
-          history.push(`/quiz/attempt/${quizID}`);
+        // Last question
+        setCurrentQuestion(null);
+        setCurrentQuestionIndex(0);
+          history.push(`/quiz/attempt/${quizID}?submit=true`);
       } else {
         history.push(`/quiz/attempt/${quizID}/${sections[currentSectionIndex + 1].quizioID}`);
         setCurrentQuestion(null);
         setCurrentQuestionIndex(0);
+        setCurrentSection(sections[currentSectionIndex + 1].title);
       }
     } else {
       switchToNextQuestion(sectionID);

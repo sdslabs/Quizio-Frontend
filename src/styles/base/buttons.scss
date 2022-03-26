@@ -1,5 +1,8 @@
 .primary-cta-button {
   @apply bg-purple-V6 text-white font-normal text-sm rounded px-6 py-3 w-full h-full flex items-center justify-center;
+  &:disabled {
+    @apply bg-grey;
+  }
 }
 
 .secondary-cta-button {
@@ -28,5 +31,5 @@
 }
 
 .radio-button-text {
-  @apply hover:bg-purple-V1 focus:bg-white border-opacity-0
+  @apply hover:bg-purple-V1 focus:bg-white border-opacity-0;
 }

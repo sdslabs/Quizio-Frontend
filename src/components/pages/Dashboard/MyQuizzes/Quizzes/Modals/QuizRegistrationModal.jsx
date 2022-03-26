@@ -34,6 +34,8 @@ const UserQuizRegistration = ({
   const [detail2Value, setDetail2Value] = useState('');
   const [detail3Value, setDetail3Value] = useState('');
 
+  const [areDetailsFilled, setAreDetailsFilled] = useState(false);
+
   // Old data
   const userEmail = useSelector((state) => state.auth.user?.email);
   const userFirstName = useSelector((state) => state.auth.user?.firstName);
@@ -74,9 +76,9 @@ const UserQuizRegistration = ({
     if (quizDataSuccess) {
       log({ quiz: quizData?.quiz });
       log({ detail1: quizData?.quiz?.detail1 });
-      setDetail1(quizData?.quiz?.detail1);
-      setDetail2(quizData?.quiz?.detail2);
-      setDetail3(quizData?.quiz?.detail3);
+      setDetail1(quizData?.quiz?.detail1 || false);
+      setDetail2(quizData?.quiz?.detail2 || false);
+      setDetail3(quizData?.quiz?.detail3 || false);
     }
   }, [quizDataSuccess, quizData]);
 
@@ -87,6 +89,39 @@ const UserQuizRegistration = ({
     setContactNo(userPhoneNumber || '');
   }, [userEmail, userFirstName, userLastName, userPhoneNumber]);
 
+  useEffect(() => {
+    log('truthy', {
+      firstName: !!firstName,
+      lastName: !!lastName,
+      email: !!email,
+      contactNo: !!contactNo,
+      orgName: !!orgName,
+      detail1: !!(detail1.key ? !!detail1Value : true),
+      detail2: !!(detail2.key ? !!detail2Value : true),
+      detail3: !!(detail3.key ? !!detail3Value : true),
+    });
+
+    setAreDetailsFilled(
+      !!firstName
+        && !!lastName
+        && !!email
+        && !!contactNo
+        && !!orgName
+        && !!(detail1.key ? !!detail1Value : true)
+        && !!(detail2.key ? !!detail2Value : true)
+        && !!(detail3.key ? !!detail3Value : true),
+    );
+  }, [
+    firstName,
+    lastName,
+    email,
+    contactNo,
+    orgName,
+    detail1Value,
+    detail2Value,
+    detail3Value,
+  ]);
+
   return (
       <div className="user-quiz-registration">
           {isFetchingQuizData ? (
@@ -94,12 +129,14 @@ const UserQuizRegistration = ({
       ) : (
           <>
               <div className="flex justify-between items-center mb-6">
-                  <div className="user-quiz-registration-title">Registration Form</div>
+                  <div className="user-quiz-registration-title">
+                      Registration Form
+                  </div>
                   <CrossIcon
                     className="cursor-pointer"
                     onClick={() => {
-                    setShowModal(false);
-                }}
+                setShowModal(false);
+              }}
                   />
               </div>
               <div className="user-quiz-registration-basic-details">
@@ -230,7 +267,11 @@ const UserQuizRegistration = ({
           )}
               <div className="user-quiz-registration-register-container">
                   <div>
-                      <PrimaryCTA text="Register" onClick={handleRegisterParticipant} />
+                      <PrimaryCTA
+                        text="Register"
+                        onClick={handleRegisterParticipant}
+                        disabled={!areDetailsFilled}
+                      />
                   </div>
               </div>
           </>
