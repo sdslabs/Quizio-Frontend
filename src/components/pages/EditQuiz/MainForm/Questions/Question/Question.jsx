@@ -63,7 +63,7 @@ const Question = () => {
   const handleSave = async () => {
     const body = {
       question: questionText,
-      type: questionType,
+      type: questionType.value,
       checkerNotes,
       maxMarks: marks,
       minMarks: '0',
@@ -135,8 +135,13 @@ const Question = () => {
       addQuestion(questionData?.data?.data?.question);
     } else {
       log('Failed to fetch question :(', { currentQuestionID });
+      setQuestionText('');
+      setQuestionType();
+      setCheckersNotes('');
+      setMarks(0);
+      setChoices([]);
     }
-  }, [fetchSuccess]);
+  }, [fetchSuccess, questionData]);
 
   useEffect(() => {
     log('sections update!', { sections, section: sections[activeSectionIndex] }, false);
@@ -175,7 +180,7 @@ const Question = () => {
       setMarks(originalMarks || 0);
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, mutatedQuestionData]);
 
   useEffect(() => {
     log('first load...');

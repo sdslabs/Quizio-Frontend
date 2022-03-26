@@ -81,7 +81,7 @@ const SectionDescription = () => {
           <div className="quiz-details-name">
               <TextField
                 label="Section Name"
-                limit={10}
+                limit={50}
                 val={currentSection?.title || ''}
                 setVal={setSectionTitle}
                 placeholder="Enter Section Name"
