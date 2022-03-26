@@ -59,7 +59,7 @@ const Quizzes = () => {
   return (
       <div className="dashboard-quizzes">
           <div className="ongoing-quizzes">
-              <div className="title">Ongoing Quizzes</div>
+              <div className="title">Ongoing and Past Quizzes</div>
               <div className="quiz-list hide-scrollbar">
                   {isQuizzesFetching && !isQuizzesRefetching && (
                   <div>Fetching ongoing quizzes...</div>
