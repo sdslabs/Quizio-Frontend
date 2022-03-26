@@ -86,6 +86,9 @@ const Question = () => {
         setChoice(originalResponseData.data.data.answerChoices[0]);
       }
       setAnswer(originalResponseData.data.data.answer);
+    } else {
+      setChoice(null);
+      setAnswer('');
     }
   }, [isGetOriginalResponseSuccess, originalResponseData]);
 
@@ -108,6 +111,9 @@ const Question = () => {
       const originalChecker = marksData?.data?.data?.checkBy;
       setMarks(originalMarks.toString());
       setCheckBy(originalChecker);
+    } else {
+      setMarks('0');
+      setCheckBy(null);
     }
   }, [marksSuccess, marksData]);
 
@@ -150,7 +156,7 @@ const Question = () => {
                   <p className="align-middle mr-2">
                       Marks(out of
                       {' '}
-                      {questionData.defaultMarks ? questionData.defaultMarks : 0}
+                      {questionData.maxMarks ? questionData.maxMarks : 0}
                       )
                   </p>
                   <span>
