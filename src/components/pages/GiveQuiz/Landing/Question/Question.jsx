@@ -48,6 +48,9 @@ const Question = () => {
         setChoice(originalResponseData.data.data.answerChoices[0]);
       }
       setAnswer(originalResponseData.data.data.answer);
+    } else {
+      setChoice(null);
+      setAnswer('');
     }
   }, [isGetOriginalResponseSuccess, originalResponseData]);
 
