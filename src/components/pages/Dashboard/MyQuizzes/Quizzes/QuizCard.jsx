@@ -10,7 +10,6 @@ import { useRegisterParticipant } from '@api/register/useRegister';
 import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
-import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import { ToastContainer, toast } from 'react-toastify';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
