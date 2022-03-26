@@ -10,6 +10,7 @@ import useCheckQuizStore from '@redux/store/zustand/checkQuiz';
 import { useGetQuestion } from '@api/quizzes/useQuestions';
 import log from '@utils/log';
 import { useGetUserPublicProfile } from '@api/users/useUsers';
+import { useGetResponse } from '@api/quizzes/useResponse';
 
 const QuestionsWrapper = () => {
   const { quizID } = useParams();
@@ -55,6 +56,8 @@ const Question = () => {
   const [marks, setMarks] = useState(0);
   const [checkBy, setCheckBy] = useState('');
   const [checkByName, setCheckByName] = useState('');
+  const [choice, setChoice] = useState(null); // MCQ Choice
+  const [answer, setAnswer] = useState(''); // Subjective Answer
 
   const { data: CheckerData } = useGetUserPublicProfile(checkBy);
 
@@ -71,6 +74,20 @@ const Question = () => {
     currentQuestion,
     registrantID,
   );
+  const {
+    data: originalResponseData,
+    isSuccess: isGetOriginalResponseSuccess,
+  } = useGetResponse(registrantID, currentQuestion);
+
+  useEffect(() => {
+    if (isGetOriginalResponseSuccess) {
+      if (originalResponseData.data.data.answerChoices) {
+        log({ answerChoice: originalResponseData.data.data.answerChoices[0] });
+        setChoice(originalResponseData.data.data.answerChoices[0]);
+      }
+      setAnswer(originalResponseData.data.data.answer);
+    }
+  }, [isGetOriginalResponseSuccess, originalResponseData]);
 
   useEffect(() => {
     if (CheckerData) {
@@ -92,7 +109,7 @@ const Question = () => {
       setMarks(originalMarks.toString());
       setCheckBy(originalChecker);
     }
-  }, [marksSuccess]);
+  }, [marksSuccess, marksData]);
 
   if (isLoading) {
     return <>Loading...</>;
@@ -119,12 +136,12 @@ const Question = () => {
               <MCQ
                 questionText={questionData.question}
                 options={questionData.choices}
-                selected={0}
+                selected={choice}
               />
       ) : (
           <Descriptive
             questionText={questionData.question || ''}
-            answer={questionData.answer || ''}
+            answer={answer || ''}
           />
       )}
 
@@ -177,7 +194,7 @@ const Question = () => {
 const MCQ = ({ questionText, options, selected }) => (
     <div>
         <div className="bg-purple-V1 p-2 my-2">{questionText}</div>
-        {options.map((choice, index) => (
+        {options?.map((choice, index) => (
             <div key={choice.quizioID}>
                 <RadioButton
                   text={choice.choice}
