@@ -13,6 +13,7 @@ import { useUpdateLogs } from '@api/quizzes/useLogs';
 import log from '@utils/log';
 import Wrapper from './Wrapper';
 import 'react-toastify/dist/ReactToastify.css';
+import Camera from './Camera';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
@@ -150,6 +151,7 @@ const GiveQuiz = () => {
           {/* I dont know why, but adding this toast container here is important */}
           <ToastContainer />
           <FullScreen handle={handle} onChange={reportChange} className="bg-white">
+              <Camera />
               <Switch>
                   <Route
                     exact
