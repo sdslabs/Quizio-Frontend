@@ -6,14 +6,10 @@ import { truncateQuizName } from '@utils/truncate';
 import { getDateTime } from '@utils/date';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import '@pagestyles/dashboard/quiz_card.scss';
-import {
-  useCheckIfUserIsRegisteredForQuiz,
-  useRegisterParticipant,
-} from '@api/register/useRegister';
+import { useRegisterParticipant } from '@api/register/useRegister';
 import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
-import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import { ToastContainer, toast } from 'react-toastify';
 import { useGetCurrentServerTime } from '@api/misc/useTime';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
@@ -92,6 +88,7 @@ const QuizCard = ({ data }) => {
   }, [isError]);
 
   useEffect(() => {
+    // Set submitted from query params
     log(
       { submittedQuiz: query.get('submitted'), quizioID: data.quizioID },
       false,
@@ -104,40 +101,12 @@ const QuizCard = ({ data }) => {
   }, [query]);
 
   useEffect(() => {
-    if (isSubmittedCheckSuccess) {
-      log(
-        {
-          quiz: data.name,
-          quizioID: data.quizioID,
-          isSubmitted: isSubmittedData.data.submitted,
-        },
-        false,
-        false,
-      );
-
-      setSubmitted(!!isSubmittedData.data.submitted);
-    }
-  }, [isSubmittedCheckSuccess]);
-
-  useEffect(() => {
-    if (isRegisterCheckSuccess) {
-      log(
-        {
-          quiz: data.name,
-          isRegistered: isRegisteredData?.data?.data?.registered,
-        },
-        false,
-        false,
-      );
-
-      setRegistered(isRegisteredData?.data?.data?.registered);
-    }
-  }, [isRegisterCheckSuccess]);
-
-  useEffect(() => {
+    log({ RegisterSuccess }, false, false);
     if (RegisterSuccess) {
-      log('registered!', { RegisterData }, false);
+      log('registered (from modal)!', { RegisterData }, false);
       setShowRegisterModal(false);
+      // Set registered from registration modal
+      setRegistered(true);
     }
   }, [RegisterSuccess, RegisterData]);
 
@@ -147,6 +116,12 @@ const QuizCard = ({ data }) => {
       setServerTime(dayjs(serverTimeData?.data?.data?.serverTime));
     }
   }, [isServerTimeSuccess]);
+
+  useEffect(() => {
+    // set submitted and registered from get all quizzes data
+    setSubmitted(data.submitted);
+    setRegistered(data.registered);
+  }, [data]);
 
   return (
       <div className="quiz-card">
@@ -204,33 +179,29 @@ const QuizCard = ({ data }) => {
               </div>
               <div className="register-container">
                   <div className="register-button">
-                      {isRegistrationLoading || isSubmittedLoading ? (
-                          <div>Loading Quiz info...</div>
-            ) : (
-                <>
-                    {submitted ? (
-                        <div className="registered">Submitted</div>
-                ) : (
-                    <>
-                        {registered ? (
-                            <>
-                                {dayjs(data.startTime) > serverTime ? (
-                                    <div className="registered">Registered</div>
-                        ) : (
-                            <PrimaryCTA text="Start Quiz" onClick={handleStart} />
-                        )}
-                            </>
-                    ) : (
-                        <PrimaryCTA
-                          text={isLoading ? 'Registering' : 'Register'}
-                          onClick={handleRegister}
-                          disabled={RegisterSuccess}
-                        />
-                    )}
-                    </>
-                )}
-                </>
-            )}
+                      <>
+                          {submitted ? (
+                              <div className="registered">Submitted</div>
+              ) : (
+                  <>
+                      {registered ? (
+                          <>
+                              {dayjs(data.startTime) > serverTime ? (
+                                  <div className="registered">Registered</div>
+                      ) : (
+                          <PrimaryCTA text="Start Quiz" onClick={handleStart} />
+                      )}
+                          </>
+                  ) : (
+                      <PrimaryCTA
+                        text={isLoading ? 'Registering' : 'Register'}
+                        onClick={handleRegister}
+                        disabled={RegisterSuccess}
+                      />
+                  )}
+                  </>
+              )}
+                      </>
                   </div>
               </div>
           </div>
