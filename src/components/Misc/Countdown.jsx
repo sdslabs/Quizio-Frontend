@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import log from '@utils/log';
 
 // Make sure time - now < 24hrs
-const Countdown = ({ time }) => {
+const Countdown = ({ time, offset }) => {
   const period = useRef();
 
   const [countHours, setCountHours] = useState('00');
@@ -11,11 +13,12 @@ const Countdown = ({ time }) => {
 
   const startCountdownTimer = () => {
     // TODO: use dayjs
-    const endTime = new Date(time).getTime();
-    const now = new Date().getTime();
+    const endTime = dayjs(time);
+    const now = dayjs().subtract(offset);
 
     period.current = setInterval(() => {
       const duration = endTime - now;
+      log({ duration });
       const seconds = Math.floor((duration / 1000) % 60);
       const minutes = Math.floor((duration / 1000 / 60) % 60);
       const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
@@ -48,6 +51,7 @@ const Countdown = ({ time }) => {
 
 Countdown.propTypes = {
   time: PropTypes.string,
+  offset: PropTypes.number.isRequired,
 };
 
 Countdown.defaultProps = {
