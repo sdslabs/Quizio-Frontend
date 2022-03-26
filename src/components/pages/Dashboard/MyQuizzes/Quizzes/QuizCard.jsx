@@ -14,6 +14,7 @@ import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
 import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
+import { useGetCurrentServerTime } from '@api/misc/useTime';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
 
@@ -127,6 +128,18 @@ const QuizCard = ({ data }) => {
     }
   }, [RegisterSuccess, RegisterData]);
 
+  const { data: timeData, isSuccess: timeIsSuccess } = useGetCurrentServerTime();
+  const [offset, setOffset] = React.useState(0);
+
+  useEffect(() => {
+    if (timeIsSuccess) {
+      log(timeData.data.data.serverTime);
+      const timeOffset = dayjs() - dayjs(timeData.data.data.serverTime);
+      log(timeOffset);
+      setOffset(timeOffset);
+    }
+  }, [timeIsSuccess]);
+
   return (
       <div className="quiz-card">
           {data && showRegisterModal && (
@@ -192,7 +205,7 @@ const QuizCard = ({ data }) => {
                     <>
                         {registered ? (
                             <>
-                                {dayjs(data.startTime) > dayjs() ? (
+                                {dayjs(data.startTime) > dayjs() - offset ? (
                                     <div className="registered">Registered</div>
                         ) : (
                             <PrimaryCTA text="Start Quiz" onClick={handleStart} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import { getAllQuizzes } from '@api/quizzes/quizzesFetcher';
 import { useGetAllQuizzes } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
+import dayjs from 'dayjs';
 import QuizCard from './QuizCard';
 import '@pagestyles/dashboard/quizzes.scss';
 
@@ -12,16 +13,19 @@ const Quizzes = () => {
 
   const [onGoingQuizzes, setOnGoingQuizzes] = useState(null);
   const [upComingQuizzes, setUpcomingQuizzes] = useState(null);
+  const [offset, setOffset] = React.useState(0);
 
   useEffect(async () => {
     if (isSuccess) {
       log({ quizData: data });
+      const timeOffset = dayjs() - dayjs(data.data.data.serverTime);
+      setOffset(timeOffset);
     }
 
     const upcomingFilter = (quiz) => {
       if (quiz.startTime) {
         const quizStartTime = new Date(quiz.startTime);
-        return quizStartTime > Date.now();
+        return quizStartTime > dayjs() - offset;
       }
       return true;
     };
