@@ -39,18 +39,6 @@ const QuizCard = ({ data }) => {
   } = useRegisterParticipant();
 
   const {
-    data: isRegisteredData,
-    isLoading: isRegistrationLoading,
-    isSuccess: isRegisterCheckSuccess,
-  } = useCheckIfUserIsRegisteredForQuiz(data.quizioID);
-
-  const {
-    data: isSubmittedData,
-    isLoading: isSubmittedLoading,
-    isSuccess: isSubmittedCheckSuccess,
-  } = useCheckIfQuizIsSubmitted(data.quizioID);
-
-  const {
     data: serverTimeData,
     isSuccess: isServerTimeSuccess,
   } = useGetCurrentServerTime();
