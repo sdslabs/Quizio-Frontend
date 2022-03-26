@@ -31,6 +31,7 @@ const QuizCard = ({ data }) => {
   const [submitted, setSubmitted] = useState(true);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showStartModal, setshowStartModal] = useState(false);
+  const [serverTime, setServerTime] = useState(dayjs());
 
   const {
     isLoading,
@@ -53,9 +54,12 @@ const QuizCard = ({ data }) => {
     isSuccess: isSubmittedCheckSuccess,
   } = useCheckIfQuizIsSubmitted(data.quizioID);
 
-  const handleRegister = () => {
-    setShowRegisterModal(true);
-  };
+  const {
+    data: serverTimeData,
+    isSuccess: isServerTimeSuccess,
+  } = useGetCurrentServerTime();
+
+  const handleRegister = () => setShowRegisterModal(true);
 
   const handleStart = () => {
     if (!submitted) {
@@ -137,17 +141,12 @@ const QuizCard = ({ data }) => {
     }
   }, [RegisterSuccess, RegisterData]);
 
-  const { data: timeData, isSuccess: timeIsSuccess } = useGetCurrentServerTime();
-  const [offset, setOffset] = React.useState(0);
-
   useEffect(() => {
-    if (timeIsSuccess) {
-      log(timeData.data.data.serverTime);
-      const timeOffset = dayjs() - dayjs(timeData.data.data.serverTime);
-      log(timeOffset);
-      setOffset(timeOffset);
+    // todo: convert to a hook
+    if (isServerTimeSuccess) {
+      setServerTime(dayjs(serverTimeData?.data?.data?.serverTime));
     }
-  }, [timeIsSuccess]);
+  }, [isServerTimeSuccess]);
 
   return (
       <div className="quiz-card">
@@ -215,7 +214,7 @@ const QuizCard = ({ data }) => {
                     <>
                         {registered ? (
                             <>
-                                {dayjs(data.startTime) > dayjs() - offset ? (
+                                {dayjs(data.startTime) > serverTime ? (
                                     <div className="registered">Registered</div>
                         ) : (
                             <PrimaryCTA text="Start Quiz" onClick={handleStart} />
