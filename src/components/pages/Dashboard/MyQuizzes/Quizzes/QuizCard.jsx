@@ -11,6 +11,7 @@ import log from '@utils/log';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import dayjs from 'dayjs';
 import { ToastContainer, toast } from 'react-toastify';
+import { useGetCurrentServerTime } from '@api/misc/useTime';
 import UserQuizRegistration from './Modals/QuizRegistrationModal';
 import StartQuizModal from './Modals/StartQuizModal';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,6 +27,7 @@ const QuizCard = ({ data }) => {
   const [submitted, setSubmitted] = useState(true);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showStartModal, setshowStartModal] = useState(false);
+  const [serverTime, setServerTime] = useState(dayjs());
 
   const {
     isLoading,
@@ -35,6 +37,11 @@ const QuizCard = ({ data }) => {
     mutate: mutateRegisterParticipant,
     data: RegisterData,
   } = useRegisterParticipant();
+
+  const {
+    data: serverTimeData,
+    isSuccess: isServerTimeSuccess,
+  } = useGetCurrentServerTime();
 
   const handleRegister = () => setShowRegisterModal(true);
 
@@ -90,6 +97,13 @@ const QuizCard = ({ data }) => {
       setRegistered(true);
     }
   }, [RegisterSuccess, RegisterData]);
+
+  useEffect(() => {
+    // todo: convert to a hook
+    if (isServerTimeSuccess) {
+      setServerTime(dayjs(serverTimeData?.data?.data?.serverTime));
+    }
+  }, [isServerTimeSuccess]);
 
   useEffect(() => {
     // set submitted and registered from get all quizzes data
@@ -160,7 +174,7 @@ const QuizCard = ({ data }) => {
                   <>
                       {registered ? (
                           <>
-                              {dayjs(data.startTime) > dayjs() ? (
+                              {dayjs(data.startTime) > serverTime ? (
                                   <div className="registered">Registered</div>
                       ) : (
                           <PrimaryCTA text="Start Quiz" onClick={handleStart} />
