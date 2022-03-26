@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@components/Input/TextField';
 import ReactMarkdown from 'react-markdown';
+import MarkdownTextField from '@components/Input/MarkdownTextField';
 
 const Subjective = ({ questionText, answer, setAnswer }) => (
     <div>
@@ -11,7 +11,7 @@ const Subjective = ({ questionText, answer, setAnswer }) => (
             {/* eslint-disable-next-line react/no-children-prop */}
             <ReactMarkdown children={questionText} />
         </div>
-        <TextField
+        <MarkdownTextField
           id="DescriptiveAnswer"
           placeholder="Your answer here"
           val={answer || ''}
