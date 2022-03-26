@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import Countdown from '@components/Misc/Countdown';
 import { useGetCurrentServerTime } from '@api/misc/useTime';
 import dayjs from 'dayjs';
-import log from '@utils/log';
 
 const QuizBanner = () => {
+  const [timeOffset, setTimeOffset] = useState(0);
+
   const {
     quiz,
     answeredQuestions,
@@ -15,6 +16,11 @@ const QuizBanner = () => {
     markedAnsweredQuestions,
     totalQuestions,
   } = useGiveQuizStore();
+
+  const {
+    data: serverTimeData,
+    isSuccess: isServerTimeSuccess,
+  } = useGetCurrentServerTime();
 
   const QuestionBubbles = [
     {
@@ -42,17 +48,12 @@ const QuizBanner = () => {
       label: 'Answered & Marked for review',
     },
   ];
-  const { data, isSuccess } = useGetCurrentServerTime();
-  const [offset, setOffset] = React.useState(0);
 
   useEffect(() => {
-    if (isSuccess) {
-      log(data.data.data.serverTime);
-      const timeOffset = dayjs() - dayjs(data.data.data.serverTime);
-      log(timeOffset);
-      setOffset(timeOffset);
+    if (isServerTimeSuccess) {
+      setTimeOffset(dayjs() - dayjs(serverTimeData?.data?.data?.serverTime));
     }
-  }, [isSuccess]);
+  }, [isServerTimeSuccess]);
   return (
       <div className="border-b border-grey-N4 pl-10 flex items-stretch">
           <div className="flex flex-wrap flex-grow justify-center disable-hover">
@@ -66,7 +67,7 @@ const QuizBanner = () => {
           <div className="py-4 px-8 bg-purple-V1 flex items-center">
               <img src={TimerIcon} alt="" className="mr-2" />
               <p className="text-purple-V6 whitespace-nowrap">
-                  <Countdown time={quiz?.endTime} offset={offset} />
+                  <Countdown time={quiz?.endTime} offset={timeOffset} />
               </p>
           </div>
       </div>
