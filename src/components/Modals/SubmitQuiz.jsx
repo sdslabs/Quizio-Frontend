@@ -13,9 +13,23 @@ import { PieChart } from 'react-minimal-pie-chart';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSubmitQuiz } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
+import { useGetCurrentServerTime } from '@api/misc/useTime';
 
 const Banner = ({ endTime, submitted }) => {
-  if (submitted || dayjs(endTime) < dayjs()) {
+  const {
+    data: serverTimeData,
+    isSuccess: isServerTimeSuccess,
+  } = useGetCurrentServerTime();
+
+  const [offset, setOffset] = React.useState(0);
+
+  useEffect(() => {
+    if (isServerTimeSuccess) {
+      setOffset(dayjs() - dayjs(serverTimeData?.data?.data?.serverTime));
+    }
+  }, [isServerTimeSuccess]);
+
+  if (submitted || dayjs(endTime) < dayjs() - offset) {
     return (
         <div className="py-6 px-8 bg-green-1 bg-opacity-10 rounded flex">
             <img src={timerGreen} alt="" className="h-14 w-14 mr-6" />
@@ -40,7 +54,7 @@ const Banner = ({ endTime, submitted }) => {
               <p className="text-xl text-purple font-semibold opacity-90">
                   You still have
                   {' '}
-                  <Countdown time={endTime} />
+                  <Countdown time={endTime} offset={offset} />
                   {' '}
                   left
               </p>
