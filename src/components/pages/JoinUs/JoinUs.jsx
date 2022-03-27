@@ -27,7 +27,6 @@ const JoinUs = () => {
             showModal={showModal}
             setShowModal={setShowModal}
             hideOnOverlayClick
-            maxWidth="md"
           >
               <OAuthModal setShowModal={setShowModal} />
           </ModalWrapper>
