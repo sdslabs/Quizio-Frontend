@@ -20,7 +20,7 @@ const GiveQuiz = () => {
   const history = useHistory();
   const [isOnFS, setIsOnFS] = useState(false);
   const [isMediaPermission, setIsMediaPermission] = useState(false);
-  const { mutate } = useUpdateLogs();
+  const { mutate: updateLogs } = useUpdateLogs();
   const { quizID } = useParams();
   const {
     data: isSubmittedData,
@@ -41,7 +41,7 @@ const GiveQuiz = () => {
         progress: undefined,
       },
     );
-    mutate({ body: { quizID, logType } });
+    updateLogs({ body: { quizID, logType } });
   };
 
   const reportChange = useCallback(
@@ -49,7 +49,7 @@ const GiveQuiz = () => {
       if (state === false) {
         setIsOnFS(false);
         toast.dark(
-          'Quiz must be given on full Screen! Press `Ctrl + F` to go to fullscreen',
+          'Quiz must be given on Full Screen. Press `Ctrl + F` to go to Fullscreen',
           {
             position: 'top-center',
             autoClose: false,
@@ -95,12 +95,12 @@ const GiveQuiz = () => {
       );
     } else {
       toast.dismiss('mediaToast');
-      toast.info('Audio and Video Permission detected!', {
+      toast.info('Audio and Video Permission detected. You may start the quiz!', {
         position: 'top-right',
-        autoClose: true,
+        autoClose: false,
         hideProgressBar: false,
         closeOnClick: false,
-        closeButton: true,
+        closeButton: false,
         progress: undefined,
       });
     }
@@ -142,14 +142,14 @@ const GiveQuiz = () => {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        mutate({
+        updateLogs({
           body: {
             quizID,
             logType: 'Latitude',
             logData: position.coords.latitude,
           },
         });
-        mutate({
+        updateLogs({
           body: {
             quizID,
             logType: 'Longitude',
@@ -158,7 +158,7 @@ const GiveQuiz = () => {
         });
       });
     } else {
-      mutate({
+      updateLogs({
         body: { quizID, logType: 'IP', logData: 'geolocation not available' },
       });
     }
