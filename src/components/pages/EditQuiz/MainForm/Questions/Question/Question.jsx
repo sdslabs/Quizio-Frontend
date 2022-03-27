@@ -33,19 +33,35 @@ const Question = () => {
 
   // Global create quiz store
   const {
- questions, sections, activeSectionIndex, activeQuestion, addQuestion, updateQuestion,
-} = useCreateQuizStore();
+    questions,
+    sections,
+    activeSectionIndex,
+    activeQuestion,
+    addQuestion,
+    updateQuestion,
+  } = useCreateQuizStore();
 
   // Question update mutation
   const {
- isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, mutate: mutateQuestion, data: mutatedQuestionData,
-} = useUpdateQuestion();
+    isLoading: isUpdateLoading,
+    isSuccess: isUpdateSuccess,
+    mutate: mutateQuestion,
+    data: mutatedQuestionData,
+  } = useUpdateQuestion();
 
   // Question toggle mutation
-  const { isLoading: isToggleLoading, isSuccess: isToggleSuccess, mutate: mutateToggleQuestion } = useToggleQuestionType();
+  const {
+    isLoading: isToggleLoading,
+    isSuccess: isToggleSuccess,
+    mutate: mutateToggleQuestion,
+  } = useToggleQuestionType();
 
   // Get question query
-  const { isSuccess: fetchSuccess, isFetching: isFetchingQuestion, data: questionData } = useGetQuestion(currentQuestionID);
+  const {
+    isSuccess: fetchSuccess,
+    isFetching: isFetchingQuestion,
+    data: questionData,
+  } = useGetQuestion(currentQuestionID);
   // Add choice to question
   const {
     // data: AddChoiceToQuestionData,
@@ -144,7 +160,11 @@ const Question = () => {
   }, [fetchSuccess, questionData]);
 
   useEffect(() => {
-    log('sections update!', { sections, section: sections[activeSectionIndex] }, false);
+    log(
+      'sections update!',
+      { sections, section: sections[activeSectionIndex] },
+      false,
+    );
     setCurrentSection(sections[activeSectionIndex]);
   }, [sections]);
 
@@ -187,7 +207,9 @@ const Question = () => {
   }, []);
 
   useEffect(() => {
-    const currentQuestionData = questions.find((q) => q.quizioID === currentQuestionID);
+    const currentQuestionData = questions.find(
+      (q) => q.quizioID === currentQuestionID,
+    );
     log('update current questionID:', {
       currentQuestionID,
       currentQuestionData,
@@ -212,10 +234,20 @@ const Question = () => {
                     <Title activeQuestion={activeQuestion} />
                     <div className="flex items-center">
                         Change question type (choose):
-                        <Select options={questionTypeOptions} onChange={handleQuestionType} value={questionType} className="text-sm p-5 w-200" />
+                        <Select
+                          options={questionTypeOptions}
+                          onChange={handleQuestionType}
+                          value={questionType}
+                          className="text-sm p-5 w-200"
+                        />
                     </div>
                 </div>
-                <MarkdownTextField id="question-description" val={questionText || ''} placeholder="Enter question here" setVal={setQuestionText} />
+                <MarkdownTextField
+                  id="question-description"
+                  val={questionText || ''}
+                  placeholder="Enter question here"
+                  setVal={setQuestionText}
+                />
                 {isToggleLoading ? (
                     <div>Toggling question type...</div>
             ) : (
@@ -233,7 +265,11 @@ const Question = () => {
                     {isUpdateLoading ? (
                         <PrimaryCTA text="Saving..." onClick={() => {}} disabled />
               ) : (
-                  <PrimaryCTA text="Save Changes" onClick={handleSave} disabled={isSaveChangesDisabled} />
+                  <PrimaryCTA
+                    text="Save Changes"
+                    onClick={handleSave}
+                    disabled={isSaveChangesDisabled}
+                  />
               )}
                 </div>
             </>

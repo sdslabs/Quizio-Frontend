@@ -33,8 +33,8 @@ const OwnersInput = ({ owners, setOwners }) => {
         }
       }
     } else if (e.target.value === '') {
-        setEmailError('');
-      }
+      setEmailError('');
+    }
   };
 
   const handleSetOwner = (value) => {
@@ -60,7 +60,11 @@ const OwnersInput = ({ owners, setOwners }) => {
               {owners.map((currOwner, i) => (
                   <div key={currOwner} className="quiz-details-owner">
                       <div className="quiz-details-owner-title">{currOwner}</div>
-                      <button type="button" onClick={() => handleRemoveOwner(i)} className="quiz-details-owner-remove">
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveOwner(i)}
+                        className="quiz-details-owner-remove"
+                      >
                           <CrossIcon />
                       </button>
                   </div>
