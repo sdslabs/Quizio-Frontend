@@ -23,7 +23,6 @@ const Question = () => {
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [choices, setChoices] = useState([]);
-  const [isSaveChangesDisabled] = useState(false);
 
   // Question types
   const questionTypeOptions = [
@@ -265,11 +264,7 @@ const Question = () => {
                     {isUpdateLoading ? (
                         <PrimaryCTA text="Saving..." onClick={() => {}} disabled />
               ) : (
-                  <PrimaryCTA
-                    text="Save Changes"
-                    onClick={handleSave}
-                    disabled={isSaveChangesDisabled}
-                  />
+                  <PrimaryCTA text="Save Changes" onClick={handleSave} />
               )}
                 </div>
             </>

@@ -40,7 +40,7 @@ const QuizDetails = () => {
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
 
   const handleSubmit = () => {
-    log(isDateTimeValid);
+    log({ isDateTimeValid });
     if (!isDateTimeValid) {
       toast.error(
         'Quiz Time is invalid',
@@ -89,11 +89,6 @@ const QuizDetails = () => {
     setQuizInst(data?.quiz?.instructions);
     setImageURL(data?.quiz?.bannerURL);
   }, [data]);
-
-  useEffect(async () => {
-    log('isDateTimeValid has changed!');
-    log(isDateTimeValid);
-  }, [isDateTimeValid]);
 
   return (
       <div className="quiz-details">
