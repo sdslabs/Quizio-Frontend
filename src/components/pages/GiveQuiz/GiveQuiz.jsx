@@ -170,7 +170,7 @@ const GiveQuiz = () => {
     return (
         <>
             <ToastContainer />
-            <MediaAccess setIsMediaPermission={setIsMediaPermission} />
+            <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden={false} />
             <FullScreen handle={handle} onChange={reportChange} />
         </>
     );
@@ -180,7 +180,7 @@ const GiveQuiz = () => {
     return (
         <>
             <ToastContainer />
-            <MediaAccess setIsMediaPermission={setIsMediaPermission} />
+            <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden={false} />
         </>
     );
   }
@@ -189,7 +189,7 @@ const GiveQuiz = () => {
       <>
           {/* I dont know why, but adding this toast container here is important */}
           <ToastContainer />
-          <MediaAccess setIsMediaPermission={setIsMediaPermission} />
+          <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden />
           <FullScreen handle={handle} onChange={reportChange} className="bg-white">
               <Switch>
                   <Route
