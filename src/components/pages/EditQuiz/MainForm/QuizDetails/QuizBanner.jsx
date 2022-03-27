@@ -6,7 +6,7 @@ import FileUploader from './FileUploader';
 const QuizBanner = ({ imageURL, setImageURL }) => {
   const handleFile = async (file) => {
     const image = new FormData();
-    image.append('image', file);
+    image.append('image', file, file.name);
     const fileURL = await uploadImage(image);
     if (fileURL.success) {
       setImageURL(fileURL.data.url);
