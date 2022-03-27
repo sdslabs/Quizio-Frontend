@@ -54,7 +54,6 @@ const DateTimeInput = ({
       const nowDayJS = dayjs(now);
 
       const isValid = startDayJS.isAfter(nowDayJS) && endDayJS.isAfter(startDayJS);
-      log({ isValid });
       if (!isValid) {
         setIsDateTimeValid(false);
       } else {

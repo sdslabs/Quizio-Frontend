@@ -3,7 +3,6 @@ import { useGetQuiz, useUpdateQuiz } from '@api/quizzes/useQuizzes';
 import useCreateQuizStore from '@store/zustand/createQuiz';
 import log from '@utils/log';
 
-import { ToastContainer, toast } from 'react-toastify';
 import Submit from './Submit';
 import AccessCodeInput from './AccessCodeInput';
 import QuizNameInput from './QuizNameInput';
@@ -40,21 +39,8 @@ const QuizDetails = () => {
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
 
   const handleSubmit = () => {
-    log({ isDateTimeValid });
     if (!isDateTimeValid) {
-      toast.error(
-        'Quiz Time is invalid',
-        {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        },
-
-      );
+      log('Error with quiz time');
       return;
     }
     const quizID = currentID;
@@ -92,7 +78,6 @@ const QuizDetails = () => {
 
   return (
       <div className="quiz-details">
-          <ToastContainer />
           <div className="top">
               <div className="details">
                   <div className="quiz-details-title">Quiz Details</div>
