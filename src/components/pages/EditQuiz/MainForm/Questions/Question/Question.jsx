@@ -232,7 +232,7 @@ const Question = () => {
                 <div className="question-type-dropdown flex w-full justify-between">
                     <Title activeQuestion={activeQuestion} />
                     <div className="flex items-center">
-                        Change question type (choose):
+                        Change question type:
                         <Select
                           options={questionTypeOptions}
                           onChange={handleQuestionType}
