@@ -11,9 +11,12 @@ import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import SectionLanding from '@pages/GiveQuiz/Landing/SectionLanding';
 import { useUpdateLogs } from '@api/quizzes/useLogs';
 import log from '@utils/log';
+import 'react-toastify/dist/ReactToastify.css';
+import { useGetResponseStatus } from '@api/quizzes/useResponse';
+import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
+import { useSelector } from 'react-redux';
 import Wrapper from './Wrapper';
 import MediaAccess from './MediaAccess';
-import 'react-toastify/dist/ReactToastify.css';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
@@ -27,6 +30,39 @@ const GiveQuiz = () => {
     isLoading: isSubmittedLoading,
     isSuccess: isSubmittedCheckSuccess,
   } = useCheckIfQuizIsSubmitted(quizID);
+  const userID = useSelector((state) => state.auth.user.userID);
+
+  // Give quiz Store
+  const {
+    setAnsweredQuestions,
+    setMarkedAnsweredQuestions,
+    setMarkedQuestions,
+  } = useGiveQuizStore();
+
+  // Get Response Status Query
+  const {
+    data: responseStatusData,
+    isSuccess: isResponseStatusSuccess,
+  } = useGetResponseStatus(userID, quizID);
+
+  // handle response status
+  useEffect(() => {
+    if (isResponseStatusSuccess) {
+      const answeredQuestions = responseStatusData?.data?.data
+        .filter((val) => val.status === 'answered')
+        .map((val) => val.questionID);
+      const markedAnsweredQuestions = responseStatusData?.data?.data
+        .filter((val) => val.status === 'marked-answered')
+        .map((val) => val.questionID);
+      const markedQuestions = responseStatusData?.data?.data
+        .filter((val) => val.status === 'marked')
+        .map((val) => val.questionID);
+
+      setAnsweredQuestions(answeredQuestions);
+      setMarkedAnsweredQuestions(markedAnsweredQuestions);
+      setMarkedQuestions(markedQuestions);
+    }
+  }, [isResponseStatusSuccess, responseStatusData]);
 
   const handleSusAction = (logType) => {
     toast.warn(
@@ -95,14 +131,17 @@ const GiveQuiz = () => {
       );
     } else {
       toast.dismiss('mediaToast');
-      toast.info('Audio and Video Permission detected. You may start the quiz!', {
-        position: 'top-right',
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: false,
-        closeButton: false,
-        progress: undefined,
-      });
+      toast.info(
+        'Audio and Video Permission detected. You may start the quiz!',
+        {
+          position: 'top-right',
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: false,
+          closeButton: false,
+          progress: undefined,
+        },
+      );
     }
   }, [isMediaPermission]);
 
@@ -170,7 +209,10 @@ const GiveQuiz = () => {
     return (
         <>
             <ToastContainer />
-            <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden={false} />
+            <MediaAccess
+              setIsMediaPermission={setIsMediaPermission}
+              hidden={false}
+            />
             <FullScreen handle={handle} onChange={reportChange} />
         </>
     );
@@ -180,7 +222,10 @@ const GiveQuiz = () => {
     return (
         <>
             <ToastContainer />
-            <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden={false} />
+            <MediaAccess
+              setIsMediaPermission={setIsMediaPermission}
+              hidden={false}
+            />
         </>
     );
   }
