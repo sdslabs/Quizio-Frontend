@@ -1,10 +1,8 @@
 /* eslint-disable react/no-children-prop */
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
-import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 import Fetching from '@components/Misc/Fetching';
@@ -22,7 +20,6 @@ const QuizLanding = () => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const { quizID } = useParams();
-  const userID = useSelector((state) => state.auth.user.userID);
 
   // Get Quiz Query
   const {
@@ -31,18 +28,9 @@ const QuizLanding = () => {
     isSuccess: isQuizDataSuccess,
   } = useGetQuiz(quizID);
 
-  // Get Response Status Query
-  const {
-    data: responseStatusData,
-    isSuccess: isResponseStatusSuccess,
-  } = useGetResponseStatus(userID, quizID);
-
   // Give quiz Store
   const {
     setQuiz,
-    setAnsweredQuestions,
-    setMarkedAnsweredQuestions,
-    setMarkedQuestions,
     setCurrentSection,
     sections,
   } = useGiveQuizStore();
@@ -58,25 +46,6 @@ const QuizLanding = () => {
       setShowModal(true);
     }
   }, [query]);
-
-  // handle response status
-  useEffect(() => {
-    if (isResponseStatusSuccess) {
-      const answeredQuestions = responseStatusData?.data?.data
-        .filter((val) => val.status === 'answered')
-        .map((val) => val.questionID);
-      const markedAnsweredQuestions = responseStatusData?.data?.data
-        .filter((val) => val.status === 'marked-answered')
-        .map((val) => val.questionID);
-      const markedQuestions = responseStatusData?.data?.data
-        .filter((val) => val.status === 'marked')
-        .map((val) => val.questionID);
-
-      setAnsweredQuestions(answeredQuestions);
-      setMarkedAnsweredQuestions(markedAnsweredQuestions);
-      setMarkedQuestions(markedQuestions);
-    }
-  }, [isResponseStatusSuccess, responseStatusData]);
 
   // handle quiz data fetch
   useEffect(() => {
