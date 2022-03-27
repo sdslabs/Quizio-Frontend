@@ -26,15 +26,20 @@ const OwnersInput = ({ owners, setOwners }) => {
         newOwners.push(owner);
         const isEmailValid = await checkIfEmailExists(owner);
         if (isEmailValid.success) {
+          setOwner('');
           setOwners([...newOwners]);
         } else {
           setEmailError('Email not found!');
         }
       }
+    } else if (e.target.value === '') {
+      setEmailError('');
     }
   };
 
-  const handleSetOwner = (value) => setOwner(value?.trim());
+  const handleSetOwner = (value) => {
+    setOwner(value?.trim());
+  };
 
   return (
       <div className="quiz-details-owners">
@@ -46,7 +51,10 @@ const OwnersInput = ({ owners, setOwners }) => {
             helperText="Invalid email"
             val={owner}
             setVal={handleSetOwner}
-            onKeyDown={handleAddOwner}
+            onKeyUp={handleAddOwner}
+            onBlur={() => {
+          setEmailError('');
+        }}
           />
           <div className="quiz-details-owners-list">
               {owners.map((currOwner, i) => (

@@ -17,7 +17,7 @@ import QuestionInputArea from './QuestionInputArea';
 const Question = () => {
   // Local states
   const [questionText, setQuestionText] = useState('');
-  const [questionType, setQuestionType] = useState('mcq');
+  const [questionType, setQuestionType] = useState();
   const [checkerNotes, setCheckersNotes] = useState('');
   const [marks, setMarks] = useState(0);
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
@@ -78,7 +78,7 @@ const Question = () => {
   const handleSave = async () => {
     const body = {
       question: questionText,
-      type: questionType,
+      type: questionType.value,
       checkerNotes,
       maxMarks: marks,
       minMarks: '0',
@@ -90,18 +90,25 @@ const Question = () => {
       body,
     });
 
-    if (questionType === 'mcq') {
+    if (questionType?.value === 'mcq') {
       log('MCQ Type save!', { choices });
       log('deleting all old choices');
       DeleteChoicesInQuestion({ questionID: currentQuestionID });
     }
   };
+  const setQuestionTypeWrapper = (type) => {
+    if (type === 'mcq') {
+      setQuestionType({ value: 'mcq', label: 'Multiple Choice' });
+    } else if (type === 'subjective') {
+      setQuestionType({ value: 'subjective', label: 'Subjective' });
+    }
+  };
 
   const handleQuestionType = async (selectedOption) => {
     log('toggle:', { questionType, newType: selectedOption.value });
-    if (questionType !== selectedOption.value) {
+    if (questionType?.value !== selectedOption.value) {
       mutateToggleQuestion({ questionID: currentQuestionID });
-      setQuestionType(selectedOption.value);
+      setQuestionTypeWrapper(selectedOption.value);
     }
   };
 
@@ -136,15 +143,20 @@ const Question = () => {
         originalQuestion: questionData?.data?.data?.question,
       });
       setQuestionText(originalQuestion);
-      setQuestionType(originalType);
+      setQuestionTypeWrapper(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks || 0);
       setChoices(originalChoices);
       addQuestion(questionData?.data?.data?.question);
     } else {
       log('Failed to fetch question :(', { currentQuestionID });
+      setQuestionText('');
+      setQuestionType();
+      setCheckersNotes('');
+      setMarks(0);
+      setChoices([]);
     }
-  }, [fetchSuccess]);
+  }, [fetchSuccess, questionData]);
 
   useEffect(() => {
     log(
@@ -182,12 +194,12 @@ const Question = () => {
         originalQuestion: questionData?.data?.data?.question,
       });
       setQuestionText(originalQuestion);
-      setQuestionType(originalType);
+      setQuestionTypeWrapper(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks || 0);
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, mutatedQuestionData]);
 
   useEffect(() => {
     log('first load...');
@@ -203,7 +215,7 @@ const Question = () => {
     });
     if (currentQuestionData) {
       setQuestionText(currentQuestionData.question);
-      setQuestionType(currentQuestionData.type);
+      setQuestionTypeWrapper(currentQuestionData.type);
       setCheckersNotes(currentQuestionData.checkerNotes);
       setMarks(currentQuestionData.marks || 0);
     }
@@ -220,12 +232,11 @@ const Question = () => {
                 <div className="question-type-dropdown flex w-full justify-between">
                     <Title activeQuestion={activeQuestion} />
                     <div className="flex items-center">
-                        Change question type (choose):
+                        Change question type:
                         <Select
                           options={questionTypeOptions}
                           onChange={handleQuestionType}
-                          val={questionType}
-                          defaultValue="mcq"
+                          value={questionType}
                           className="text-sm p-5 w-200"
                         />
                     </div>
@@ -242,7 +253,7 @@ const Question = () => {
                 <QuestionInputArea
                   choices={choices}
                   setChoices={setChoices}
-                  questionType={questionType}
+                  questionType={questionType?.value}
                   marks={marks.toString()}
                   setMarks={setMarks}
                   checkerNotes={checkerNotes}
