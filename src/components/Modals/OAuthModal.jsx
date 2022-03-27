@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
-import LoginWithGithub from '@components/Buttons/LoginWithGithub';
+// import LoginWithGithub from '@components/Buttons/LoginWithGithub';
 import LoginWithGoogle from '@components/Buttons/LoginWithGoogle';
 import { PropTypes } from 'prop-types';
 
@@ -12,7 +12,7 @@ const OAuthModal = ({ setShowModal }) => (
         </div>
         <div className="font-normal text-m pl-10 pr-10">To begin this journey, tell us via which platform you want to log in !</div>
         <div className="">
-            <LoginWithGithub />
+            {/* <LoginWithGithub /> */}
             <LoginWithGoogle />
         </div>
     </div>

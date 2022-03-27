@@ -16,12 +16,14 @@ import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSelector } from 'react-redux';
 import Wrapper from './Wrapper';
+import MediaAccess from './MediaAccess';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
   const history = useHistory();
   const [isOnFS, setIsOnFS] = useState(false);
-  const { mutate } = useUpdateLogs();
+  const [isMediaPermission, setIsMediaPermission] = useState(false);
+  const { mutate: updateLogs } = useUpdateLogs();
   const { quizID } = useParams();
   const {
     data: isSubmittedData,
@@ -75,7 +77,7 @@ const GiveQuiz = () => {
         progress: undefined,
       },
     );
-    mutate({ body: { quizID, logType } });
+    updateLogs({ body: { quizID, logType } });
   };
 
   const reportChange = useCallback(
@@ -83,7 +85,7 @@ const GiveQuiz = () => {
       if (state === false) {
         setIsOnFS(false);
         toast.dark(
-          'Quiz must be given on full Screen! Press `Ctrl + F` to go to fullscreen',
+          'Quiz must be given on Full Screen. Press `Ctrl + F` to go to Fullscreen',
           {
             position: 'top-center',
             autoClose: false,
@@ -91,10 +93,11 @@ const GiveQuiz = () => {
             closeOnClick: false,
             closeButton: false,
             progress: undefined,
+            toastId: 'fsToast',
           },
         );
       } else {
-        toast.dismiss();
+        toast.dismiss('fsToast');
       }
     },
     [handle],
@@ -111,6 +114,33 @@ const GiveQuiz = () => {
   useEffect(() => {
     log({ quizID });
   }, [quizID]);
+
+  useEffect(() => {
+    if (!isMediaPermission) {
+      toast.error(
+        'Please allow microphone and camera access for the quiz to start',
+        {
+          position: 'top-right',
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: false,
+          closeButton: false,
+          progress: undefined,
+          toastId: 'mediaToast',
+        },
+      );
+    } else {
+      toast.dismiss('mediaToast');
+      toast.info('Audio and Video Permission detected. You may start the quiz!', {
+        position: 'top-right',
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: false,
+        closeButton: false,
+        progress: undefined,
+      });
+    }
+  }, [isMediaPermission]);
 
   useEffect(async () => {
     tinykeys(window, {
@@ -148,14 +178,14 @@ const GiveQuiz = () => {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        mutate({
+        updateLogs({
           body: {
             quizID,
             logType: 'Latitude',
             logData: position.coords.latitude,
           },
         });
-        mutate({
+        updateLogs({
           body: {
             quizID,
             logType: 'Longitude',
@@ -164,7 +194,7 @@ const GiveQuiz = () => {
         });
       });
     } else {
-      mutate({
+      updateLogs({
         body: { quizID, logType: 'IP', logData: 'geolocation not available' },
       });
     }
@@ -176,7 +206,17 @@ const GiveQuiz = () => {
     return (
         <>
             <ToastContainer />
+            <MediaAccess setIsMediaPermission={setIsMediaPermission} />
             <FullScreen handle={handle} onChange={reportChange} />
+        </>
+    );
+  }
+
+  if (!isMediaPermission) {
+    return (
+        <>
+            <ToastContainer />
+            <MediaAccess setIsMediaPermission={setIsMediaPermission} />
         </>
     );
   }
@@ -185,6 +225,7 @@ const GiveQuiz = () => {
       <>
           {/* I dont know why, but adding this toast container here is important */}
           <ToastContainer />
+          <MediaAccess setIsMediaPermission={setIsMediaPermission} />
           <FullScreen handle={handle} onChange={reportChange} className="bg-white">
               <Switch>
                   <Route

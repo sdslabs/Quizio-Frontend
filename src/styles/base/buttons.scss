@@ -10,7 +10,11 @@
 }
 
 .o-auth-button-div {
-  @apply flex justify-between m-7 text-black-1 text-base font-normal rounded p-8 hover:bg-purple-V1 border border-purple border-opacity-0 hover:border-opacity-100 shadow;
+  @apply flex justify-start m-7 text-black-1 text-base font-normal rounded p-8 hover:bg-purple-V1 border border-purple border-opacity-0 hover:border-opacity-100 shadow;
+
+  .o-auth-button {
+    @apply pl-8;
+  }
 }
 
 .radio-button {

@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { AiOutlineArrowRight } from 'react-icons/ai';
 // import { BsGithub } from 'react-icons/bs';
-// import { FcGoogle } from 'react-icons/fc';
-import sdslabsIcon from '@icons/sdslabsIcon.png'; // TODO: Use SVG
+import { ReactComponent as GoogleIcon } from '@icons/GoogleIcon.svg';
 import '@styles/base/buttons.scss';
 
 const OAuthButton = ({ label, id, additionalClassName }) => (
     <div className="o-auth-button-div">
         {/* {id === 'github' ? <BsGithub className="o-auth-icon" size={28} /> : <></>} */}
-        {/* {id === 'google' ? <FcGoogle className="o-auth-icon" size={28} /> : <></>} */}
-        {id === 'sdslabs' ? <img src={sdslabsIcon} alt="Logo" className="w-9" /> : <></>}
+        {id === 'google' ? <GoogleIcon size={28} /> : <></>}
         <button type="button" className={`o-auth-button ${additionalClassName} `}>
             {label}
         </button>
