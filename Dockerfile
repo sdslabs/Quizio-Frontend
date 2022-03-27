@@ -5,7 +5,7 @@ WORKDIR /usr/app
 
 # copies all the app's files from host into the container folder which 
 # might include the node_modules dir if npm install executed in the host
-COPY . /usr/app
+COPY . .
 
 # npm ci is used to install all exact version dependencies or devDependencies 
 # from a package-lock.json file. If a node_modules is already present, it will 
@@ -15,10 +15,22 @@ RUN npm ci
 # build the app
 RUN npm run build
 
-FROM nginx:1.19-alpine AS server
+#Stage 2
+#######################################
+# Pull the official nginx:1.21.6-alpine base image
+FROM nginx:1.21.6-alpine
 
-# copy server.conf file from host into the container
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# Set working directory to nginx resources directory
+WORKDIR /var/www
 
-# copy build folder
-COPY --from=builder /usr/app/build /usr/share/nginx/html
+# Remove default nginx static resources
+RUN rm -rf ./*
+
+# Copy static resources from builder stage
+COPY --from=builder /usr/app/build .
+
+# Copy nginx conf from docker/ folder
+COPY ./docker/nginx/nginx.conf  /etc/nginx/nginx.conf
+
+# Change permission of the current directory and everything within
+RUN chown nginx:nginx ./*
