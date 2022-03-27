@@ -33,6 +33,7 @@ const Question = () => {
   const {
     data: originalResponseData,
     isSuccess: isGetOriginalResponseSuccess,
+    isError: isGetOriginalResponseError,
   } = useGetResponse(userID, currentQuestion);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const Question = () => {
       setChoice(null);
       setAnswer('');
     }
-  }, [isGetOriginalResponseSuccess, originalResponseData]);
+  }, [isGetOriginalResponseSuccess, originalResponseData, isGetOriginalResponseError]);
 
   useEffect(() => {
     if (isSuccess) {
