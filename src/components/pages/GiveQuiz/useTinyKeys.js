@@ -1,0 +1,59 @@
+import { useEffect } from 'react';
+import tinykeys from 'tinykeys';
+
+const useTinyKeys = ({
+	toast, updateLogs, quizID, handle, setIsOnFS,
+}) => {
+	const handleSusAction = (logType) => {
+		toast.warn(
+			'Action logged, avoid using suspicious key presses during quiz.',
+			{
+				position: 'top-center',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			},
+		);
+		updateLogs({ body: { quizID, logType } });
+	};
+
+	useEffect(() => {
+		tinykeys(window, {
+			'Control+KeyF': async (event) => {
+				event.preventDefault();
+				if (!handle.active) {
+					await handle.enter();
+					setIsOnFS(true);
+				}
+			},
+			'$mod+KeyC': () => {
+				handleSusAction('COPY');
+			},
+			'$mod+KeyV': () => {
+				handleSusAction('PASTE');
+			},
+			'Control+Shift+KeyI': () => {
+				handleSusAction('INSPECT');
+			},
+			'$mod+KeyF': async (event) => event.preventDefault(),
+
+			F1: async (event) => event.preventDefault(),
+			F2: async (event) => event.preventDefault(),
+			F3: async (event) => event.preventDefault(),
+			F4: async (event) => event.preventDefault(),
+			F5: async (event) => event.preventDefault(),
+			F6: async (event) => event.preventDefault(),
+			F7: async (event) => event.preventDefault(),
+			F8: async (event) => event.preventDefault(),
+			F9: async (event) => event.preventDefault(),
+			F10: async (event) => event.preventDefault(),
+			F11: async (event) => event.preventDefault(),
+			F12: async (event) => event.preventDefault(),
+		});
+	}, []);
+};
+
+export default useTinyKeys;
