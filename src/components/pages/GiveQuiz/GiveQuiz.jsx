@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 import Wrapper from './Wrapper';
 import MediaAccess from './MediaAccess';
 import WindowFocus from './WindowFocus';
-import useTinyKeys from './useTinyKeys';
+import useKeyLogging from './useKeyLogging';
 import useLocationAccess from './useLocationAccess';
 
 const GiveQuiz = () => {
@@ -39,8 +39,8 @@ const GiveQuiz = () => {
     toast,
   });
 
-  // Key loggin
-  useTinyKeys({
+  // Key logging
+  useKeyLogging({
     toast,
     updateLogs,
     quizID,
@@ -89,7 +89,7 @@ const GiveQuiz = () => {
 
   const handleBlurred = () => {
     toast.warn(
-      'Action logged, avoid using any other tab/window/program during quiz.',
+      'Action logged (TAB CHANGE), avoid using any other tab/window/program during quiz.',
       {
         position: 'top-center',
         autoClose: 5000,
