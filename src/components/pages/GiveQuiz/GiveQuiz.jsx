@@ -3,7 +3,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import {
  Switch, Route, useParams, useHistory,
 } from 'react-router-dom';
-import tinykeys from 'tinykeys';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import LoadingPage from '@components/pages/Loading';
 import QuizLanding from '@components/pages/GiveQuiz/Landing/QuizLanding';
@@ -18,20 +17,43 @@ import { useSelector } from 'react-redux';
 import Wrapper from './Wrapper';
 import MediaAccess from './MediaAccess';
 import WindowFocus from './WindowFocus';
+import useTinyKeys from './useTinyKeys';
+import useLocationAccess from './useLocationAccess';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
   const history = useHistory();
+  const { quizID } = useParams();
+
+  const userID = useSelector((state) => state.auth.user.userID);
   const [isOnFS, setIsOnFS] = useState(false);
   const [isMediaPermission, setIsMediaPermission] = useState(false);
+
+  // Update logs mutation
   const { mutate: updateLogs } = useUpdateLogs();
-  const { quizID } = useParams();
+
+  // location access
+  const [hasLocationAccess] = useLocationAccess({
+    updateLogs,
+    quizID,
+    toast,
+  });
+
+  // Key loggin
+  useTinyKeys({
+    toast,
+    updateLogs,
+    quizID,
+    handle,
+    setIsOnFS,
+  });
+
+  // Quiz check submit query
   const {
     data: isSubmittedData,
     isLoading: isSubmittedLoading,
     isSuccess: isSubmittedCheckSuccess,
   } = useCheckIfQuizIsSubmitted(quizID);
-  const userID = useSelector((state) => state.auth.user.userID);
 
   // Give quiz Store
   const {
@@ -64,22 +86,6 @@ const GiveQuiz = () => {
       setMarkedQuestions(markedQuestions);
     }
   }, [isResponseStatusSuccess, responseStatusData]);
-
-  const handleSusAction = (logType) => {
-    toast.warn(
-      'Action logged, avoid using suspicious key presses during quiz.',
-      {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      },
-    );
-    updateLogs({ body: { quizID, logType } });
-  };
 
   const handleBlurred = () => {
     toast.warn(
@@ -148,10 +154,24 @@ const GiveQuiz = () => {
       );
     } else {
       toast.dismiss('mediaToast');
+      toast.info('Microphone and Camera access detected!', {
+        position: 'top-right',
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: false,
+        closeButton: false,
+        progress: undefined,
+      });
+    }
+  }, [isMediaPermission]);
+
+  useEffect(() => {
+    log({ hasLocationAccess });
+    if (hasLocationAccess) {
       toast.info(
-        'Audio and Video Permission detected. You may start the quiz!',
+        'Location access detected!',
         {
-          position: 'top-right',
+          position: 'top-left',
           autoClose: false,
           hideProgressBar: false,
           closeOnClick: false,
@@ -160,65 +180,7 @@ const GiveQuiz = () => {
         },
       );
     }
-  }, [isMediaPermission]);
-
-  useEffect(async () => {
-    tinykeys(window, {
-      'Control+KeyF': async (event) => {
-        event.preventDefault();
-        if (!handle.active) {
-          await handle.enter();
-          setIsOnFS(true);
-        }
-      },
-      '$mod+KeyC': () => {
-        handleSusAction('COPY');
-      },
-      '$mod+KeyV': () => {
-        handleSusAction('PASTE');
-      },
-      'Control+Shift+KeyI': () => {
-        handleSusAction('INSPECT');
-      },
-      '$mod+KeyF': async (event) => event.preventDefault(),
-
-      F1: async (event) => event.preventDefault(),
-      F2: async (event) => event.preventDefault(),
-      F3: async (event) => event.preventDefault(),
-      F4: async (event) => event.preventDefault(),
-      F5: async (event) => event.preventDefault(),
-      F6: async (event) => event.preventDefault(),
-      F7: async (event) => event.preventDefault(),
-      F8: async (event) => event.preventDefault(),
-      F9: async (event) => event.preventDefault(),
-      F10: async (event) => event.preventDefault(),
-      F11: async (event) => event.preventDefault(),
-      F12: async (event) => event.preventDefault(),
-    });
-
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        updateLogs({
-          body: {
-            quizID,
-            logType: 'Latitude',
-            logData: position.coords.latitude,
-          },
-        });
-        updateLogs({
-          body: {
-            quizID,
-            logType: 'Longitude',
-            logData: position.coords.longitude,
-          },
-        });
-      });
-    } else {
-      updateLogs({
-        body: { quizID, logType: 'IP', logData: 'geolocation not available' },
-      });
-    }
-  }, []);
+  }, [hasLocationAccess]);
 
   if (isSubmittedLoading) return <LoadingPage />;
 
@@ -236,6 +198,18 @@ const GiveQuiz = () => {
   }
 
   if (!isMediaPermission) {
+    return (
+        <>
+            <ToastContainer />
+            <MediaAccess
+              setIsMediaPermission={setIsMediaPermission}
+              hidden={false}
+            />
+        </>
+    );
+  }
+
+  if (!hasLocationAccess) {
     return (
         <>
             <ToastContainer />
