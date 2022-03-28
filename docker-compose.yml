@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
-      - .env.production
+      - .env
     ports:
       - ${QUIZIO_UI_PORT:-3006}:80
 
