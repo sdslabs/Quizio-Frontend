@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import tinykeys from 'tinykeys';
 
-const useTinyKeys = ({
+const useKeyLogging = ({
 	toast, updateLogs, quizID, handle, setIsOnFS,
 }) => {
 	const handleSusAction = (logType) => {
 		toast.warn(
-			'Action logged, avoid using suspicious key presses during quiz.',
+			`Action logged (${logType}), avoid using suspicious key presses during quiz.`,
 			{
 				position: 'top-center',
 				autoClose: 5000,
@@ -18,6 +18,23 @@ const useTinyKeys = ({
 			},
 		);
 		updateLogs({ body: { quizID, logType } });
+	};
+
+	const handleContextMenu = (e) => {
+		e.preventDefault();
+		toast.warn(
+			'Action logged (RIGHT CLICK), avoid using right click during quiz.',
+			{
+				position: 'top-center',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			},
+		);
+		updateLogs({ body: { quizID, logType: 'RIGHTCLICK' } });
 	};
 
 	useEffect(() => {
@@ -53,7 +70,11 @@ const useTinyKeys = ({
 			F11: async (event) => event.preventDefault(),
 			F12: async (event) => event.preventDefault(),
 		});
+		document.addEventListener('contextmenu', handleContextMenu);
+		return () => {
+			document.removeEventListener('contextmenu', handleContextMenu);
+		};
 	}, []);
 };
 
-export default useTinyKeys;
+export default useKeyLogging;
