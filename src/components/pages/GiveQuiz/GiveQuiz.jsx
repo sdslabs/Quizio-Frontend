@@ -17,6 +17,7 @@ import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSelector } from 'react-redux';
 import Wrapper from './Wrapper';
 import MediaAccess from './MediaAccess';
+import WindowFocus from './WindowFocus';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
@@ -78,6 +79,22 @@ const GiveQuiz = () => {
       },
     );
     updateLogs({ body: { quizID, logType } });
+  };
+
+  const handleBlurred = () => {
+    toast.warn(
+      'Action logged, avoid using any other tab/window/program during quiz.',
+      {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      },
+    );
+    updateLogs({ body: { quizID, logType: 'TABCHANGE' } });
   };
 
   const reportChange = useCallback(
@@ -243,6 +260,7 @@ const GiveQuiz = () => {
                     render={() => (
                         <Wrapper>
                             <ToastContainer />
+                            <WindowFocus handleBlurred={handleBlurred} />
                             <QuizLanding />
                         </Wrapper>
             )}
@@ -253,6 +271,7 @@ const GiveQuiz = () => {
                     render={() => (
                         <Wrapper>
                             <ToastContainer />
+                            <WindowFocus handleBlurred={handleBlurred} />
                             <SectionLanding />
                         </Wrapper>
             )}
