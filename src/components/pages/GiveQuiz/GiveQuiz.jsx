@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSelector } from 'react-redux';
+import publicIp from 'react-public-ip';
 import Wrapper from './Wrapper';
 import MediaAccess from './MediaAccess';
 import WindowFocus from './WindowFocus';
@@ -134,8 +135,10 @@ const GiveQuiz = () => {
     }
   }, [isSubmittedCheckSuccess]);
 
-  useEffect(() => {
+  useEffect(async () => {
     log({ quizID });
+    const publicIP = await publicIp.v4();
+    updateLogs({ body: { quizID, logType: 'IP', logData: publicIP } });
   }, [quizID]);
 
   useEffect(() => {
