@@ -53,6 +53,7 @@ const Dashboard = () => {
               <div className="bottom">
                   <MyQuizzes />
               </div>
+
           </div>
       )}
       </>

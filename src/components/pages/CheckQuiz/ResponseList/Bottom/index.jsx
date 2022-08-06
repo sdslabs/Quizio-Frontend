@@ -27,24 +27,26 @@ const Bottom = () => {
 
   const {
     mutate: mutateGenerateRanklist,
+    isSuccess: isGenerateSuccess,
   } = useGenerateRanks();
 
   const handleRefresh = () => {
-    log('hello');
     mutateGenerateRanklist({ quizID });
+    window.location.reload(false);
   };
 
   const {
     data: registrantsData,
     isLoading: isRegistrantsLoading,
     isSuccess: isRegistrantsSuccess,
+    refetch,
   } = useGetRankList(quizID);
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
       log({ registrantsData });
       setTableData(
-        registrantsData.data.data.rankList.rankList
+        registrantsData.data.data.rankList
           .map((val, index) => ({
             sr_num: index + 1,
             name: val.name,
@@ -58,6 +60,12 @@ const Bottom = () => {
       );
     }
   }, [isRegistrantsSuccess]);
+
+  useEffect(() => {
+    if (isGenerateSuccess) {
+      refetch();
+    }
+  }, [isGenerateSuccess]);
 
   const sortTableData = (sortByval) => {
     switch (sortByval) {
