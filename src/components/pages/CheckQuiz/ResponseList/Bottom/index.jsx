@@ -32,15 +32,14 @@ const Bottom = () => {
 
   const handleRefresh = () => {
     mutateGenerateRanklist({ quizID });
-    window.location.reload(false);
   };
 
   const {
     data: registrantsData,
+    refetch,
     isLoading: isRegistrantsLoading,
     isSuccess: isRegistrantsSuccess,
-    refetch,
-  } = useGetRankList(quizID);
+} = useGetRankList(quizID, { cacheTime: 0, staleTime: 0, refetchInterval: 0 });
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
@@ -58,12 +57,13 @@ const Bottom = () => {
           .sort((val1, val2) => val1.progress - val2.progress)
           .map((val, index) => ({ ...val, sr_num: index + 1 })),
       );
+      log('registration data effect');
     }
-  }, [isRegistrantsSuccess]);
+  }, [isRegistrantsLoading, registrantsData, isRegistrantsSuccess]);
 
   useEffect(() => {
     if (isGenerateSuccess) {
-      refetch();
+      refetch(quizID);
     }
   }, [isGenerateSuccess]);
 
