@@ -43,6 +43,7 @@ const Bottom = () => {
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
+      log('hi');
       log({ registrantsData });
       setTableData(
         registrantsData.data.data.rankList
@@ -57,7 +58,6 @@ const Bottom = () => {
           .sort((val1, val2) => val1.progress - val2.progress)
           .map((val, index) => ({ ...val, sr_num: index + 1 })),
       );
-      log('registration data effect');
     }
   }, [isRegistrantsLoading, registrantsData, isRegistrantsSuccess]);
 
