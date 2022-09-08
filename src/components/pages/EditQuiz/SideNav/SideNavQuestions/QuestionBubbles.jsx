@@ -39,7 +39,7 @@ const QuestionBubbles = ({ isActive, questions }) => {
     if (isAddedSuccessQuestion) {
       const response = addQuestionData.data?.data?.question;
       if (response) {
-        addQuestionToSection(response.id);
+        addQuestionToSection(response.quizioID);
         addQuestion(response);
       }
     }
