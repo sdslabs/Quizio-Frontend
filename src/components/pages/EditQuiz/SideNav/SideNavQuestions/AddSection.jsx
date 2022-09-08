@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useCreateQuizStore from '@redux/store/zustand/createQuiz';
+import useCreateQuizStore from '@redux/store/zustand/createQuiz'; //eslint-disable-line
 import log from '@utils/log';
 
 const AddSection = ({ mutate }) => {

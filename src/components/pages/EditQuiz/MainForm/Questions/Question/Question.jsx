@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
-import useCreateQuizStore from '@redux/store/zustand/createQuiz';
+import useCreateQuizStore from '@redux/store/zustand/createQuiz'; //eslint-disable-line
 import {
   useAddChoiceToQuestion,
   useDeleteAllChoicesInQuestion,
@@ -123,7 +123,6 @@ const Question = () => {
   }, [isToggleSuccess]);
 
   useEffect(() => {
-    log('fetched question!');
     if (fetchSuccess) {
       const {
         question: originalQuestion,
@@ -144,7 +143,7 @@ const Question = () => {
     } else {
       log('Failed to fetch question :(', { currentQuestionID });
     }
-  }, [fetchSuccess]);
+  }, [fetchSuccess, isFetchingQuestion]);
 
   useEffect(() => {
     log(

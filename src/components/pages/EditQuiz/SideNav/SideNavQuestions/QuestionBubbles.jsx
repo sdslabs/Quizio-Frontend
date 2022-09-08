@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import QuestionBubble from '@components/Visual/QuestionBubble';
 import { ReactComponent as PlusIcon } from '@icons/plusIcon.svg';
 import { PropTypes } from 'prop-types';
-import useCreateQuizStore from '@store/zustand/createQuiz';
+import useCreateQuizStore from '@store/zustand/createQuiz'; //eslint-disable-line
 import { useAddQuestion } from '@api/quizzes/useQuestions';
 import log from '@utils/log';
 
@@ -39,7 +39,7 @@ const QuestionBubbles = ({ isActive, questions }) => {
     if (isAddedSuccessQuestion) {
       const response = addQuestionData.data?.data?.question;
       if (response) {
-        addQuestionToSection(response.id);
+        addQuestionToSection(response.quizioID);
         addQuestion(response);
       }
     }
