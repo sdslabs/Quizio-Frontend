@@ -12,3 +12,10 @@ export const useCheckIfUserIsRegisteredForQuiz = (quizID) => useQuery(
 	fetchers.checkIfUserIsRegisteredForQuiz,
 	{ enabled: !!quizID },
 );
+
+// find better file
+export const useCheckAccessCode = (quizID, accessCode) => useQuery(
+	[`isAccessCodeCorrect-${quizID}`, quizID, accessCode],
+	fetchers.checkAccessCode,
+	{ enabled: !!quizID },
+);
