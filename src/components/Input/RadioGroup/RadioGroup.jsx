@@ -12,6 +12,7 @@ const RadioGroup = ({
   editable,
   setMcqCount,
   mcqCount,
+  error,
 }) => {
   const handleChange = (e) => {
     // consolelog('handle change:', e.target.value, choices.find((choice) => choice.quizioID === e.target.value));
@@ -30,6 +31,7 @@ const RadioGroup = ({
                         setChoices={setChoices}
                         mcqCount={mcqCount}
                         choices={choices}
+                        error={error}
                         checked={selected === choice.quizioID}
                         onChange={(e) => handleChange(e)}
                       />
@@ -55,14 +57,16 @@ RadioGroup.propTypes = {
   mcqCount: PropTypes.number,
   editable: PropTypes.bool,
   setChoices: PropTypes.func,
+  error: PropTypes.string,
 };
 
 RadioGroup.defaultProps = {
   selected: '',
-  setChoices: () => {},
-  setMcqCount: () => {},
-  setSelected: () => {},
+  setChoices: () => { },
+  setMcqCount: () => { },
+  setSelected: () => { },
   editable: false,
   mcqCount: 0,
+  error: '',
 };
 export default RadioGroup;
