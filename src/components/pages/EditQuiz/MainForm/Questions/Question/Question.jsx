@@ -165,7 +165,7 @@ const Question = () => {
       setQuestionText(originalQuestion);
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
-      setMarks(originalMarks || 0);
+      setMarks(originalMarks);
       setChoices(originalChoices);
       addQuestion(questionData?.data?.data?.question);
     } else {
@@ -208,10 +208,12 @@ const Question = () => {
       log('Fetched question :)', {
         originalQuestion: questionData?.data?.data?.question,
       });
+      console.log('og', originalMarks);
       setQuestionText(originalQuestion);
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
-      setMarks(originalMarks || 0);
+      setMarks(originalMarks);
+      log(mutatedQuestionData);
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
     }
   }, [isUpdateSuccess]);
@@ -232,7 +234,7 @@ const Question = () => {
       setQuestionText(currentQuestionData.question);
       setQuestionType(currentQuestionData.type);
       setCheckersNotes(currentQuestionData.checkerNotes);
-      setMarks(currentQuestionData.marks || 0);
+      setMarks(currentQuestionData.maxMarks);
     }
   }, [currentQuestionID]);
 
@@ -271,7 +273,7 @@ const Question = () => {
                   choices={choices}
                   setChoices={setChoices}
                   questionType={questionType}
-                  marks={marks.toString()}
+                  marks={marks ? marks.toString() : ' '}
                   setMarks={setMarks}
                   checkerNotes={checkerNotes}
                   setCheckersNotes={setCheckersNotes}
