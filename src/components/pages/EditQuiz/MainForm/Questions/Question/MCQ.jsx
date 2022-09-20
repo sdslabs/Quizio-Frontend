@@ -8,7 +8,7 @@ import RadioGroup from '@components/Input/RadioGroup';
 import log from '@utils/log';
 
 const MCQ = ({
- marks, setMarks, choices, setChoices,
+  marks, setMarks, choices, setChoices, marksError, choicesError,
 }) => {
   const [mcqCount, setMcqCount] = useState(0); // checks to see max no. of options is less than 4
   const [answer, setAnswer] = useState('');
@@ -30,8 +30,8 @@ const MCQ = ({
     const answerID = e.value;
     setChoices(
       choices.map((choice) => (choice.quizioID === answerID
-          ? { ...choice, marks: marks.toString() }
-          : { ...choice, marks: '0' })),
+        ? { ...choice, marks: marks.toString() }
+        : { ...choice, marks: '0' })),
     );
   };
 
@@ -51,6 +51,7 @@ const MCQ = ({
                 mcqCount={mcqCount}
                 setAnswer={setAnswer}
                 answer={answer}
+                error={choicesError}
               />
               <div className="w-1/6 pb-6 pt-5">
                   {mcqCount < 4 && (
@@ -67,6 +68,7 @@ const MCQ = ({
                     placeholder="0"
                     setVal={setMarks}
                     val={marks.toString()}
+                    error={marksError}
                   />
               </div>
 
@@ -94,13 +96,17 @@ MCQ.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   choices: PropTypes.array,
   setChoices: PropTypes.func,
+  marksError: PropTypes.string,
+  choicesError: PropTypes.string,
 };
 
 MCQ.defaultProps = {
   marks: '0',
-  setMarks: () => {},
+  setMarks: () => { },
   choices: [],
-  setChoices: () => {},
+  setChoices: () => { },
+  marksError: '',
+  choicesError: '',
 };
 
 export default MCQ;

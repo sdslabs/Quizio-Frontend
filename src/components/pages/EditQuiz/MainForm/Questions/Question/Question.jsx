@@ -16,13 +16,16 @@ import QuestionInputArea from './QuestionInputArea';
 
 const Question = () => {
   // Local states
-  const [questionText, setQuestionText] = useState('');
+  const [questionText, setQuestionText] = useState(null);
+  const [questionTextError, setQuestionTextError] = useState(null);
   const [questionType, setQuestionType] = useState('mcq');
   const [checkerNotes, setCheckersNotes] = useState('');
   const [marks, setMarks] = useState(0);
+  const [marksError, setMarksError] = useState(null);
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [choices, setChoices] = useState([]);
+  const [choicesError, setChoicesError] = useState(null);
 
   // Question types
   const questionTypeOptions = [
@@ -75,7 +78,28 @@ const Question = () => {
     mutate: DeleteChoicesInQuestion,
   } = useDeleteAllChoicesInQuestion();
 
+  // discuss this design with stuti
+  const validateQuestionData = async () => {
+    if (questionText === null) {
+      setQuestionTextError('Please enter the question details');
+    } else {
+      setQuestionTextError('');
+    }
+    if (marks === 0) {
+      setMarksError('Please enter the marks');
+    } else {
+      setMarksError('');
+    }
+    if (choices === []) {
+      setChoicesError('Please fill atleast one choice');
+    } else {
+      setChoicesError('');
+    }
+    return (!questionText === '' && !marks === 0 && !choices === []);
+  };
+
   const handleSave = async () => {
+    const isError = validateQuestionData();
     const body = {
       question: questionText,
       type: questionType,
@@ -83,12 +107,15 @@ const Question = () => {
       maxMarks: marks,
       minMarks: '0',
     };
-
+    console.log(isError, 'printing is error');
     log('Handle save!', { body });
+    // if (!isError) {
+    console.log('in mutate question');
     mutateQuestion({
       questionID: currentQuestionID,
       body,
     });
+    // }
 
     if (questionType === 'mcq') {
       log('MCQ Type save!', { choices });
@@ -235,6 +262,7 @@ const Question = () => {
                   val={questionText || ''}
                   placeholder="Enter question here"
                   setVal={setQuestionText}
+                  error={questionTextError}
                 />
                 {isToggleLoading ? (
                     <div>Toggling question type...</div>
@@ -247,13 +275,15 @@ const Question = () => {
                   setMarks={setMarks}
                   checkerNotes={checkerNotes}
                   setCheckersNotes={setCheckersNotes}
+                  marksError={marksError}
+                  choicesError={choicesError}
                 />
             )}
                 <div className="w-40 ml-auto mt-8">
                     {isUpdateLoading ? (
-                        <PrimaryCTA text="Saving..." onClick={() => {}} disabled />
+                        <PrimaryCTA text="Saving..." onClick={() => { }} disabled />
               ) : (
-                  <PrimaryCTA text="Save Changes" onClick={handleSave} />
+                  <PrimaryCTA text="Save Question" onClick={handleSave} />
               )}
                 </div>
             </>

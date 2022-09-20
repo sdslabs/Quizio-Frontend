@@ -54,21 +54,20 @@ const MarkdownTextField = ({
 
           <>
               {navState === 'write' ? (
-                  <div className="relative pt-2 w-full">
+                  <div className="relative pt-4 w-full">
                       <textarea
                         value={val}
                         onChange={handleChange}
                         onKeyDown={onKeyDown}
                         placeholder={placeholder}
                         id={id}
-                        className={`h-32 resize-none mt-1 p-4 border border-${
-                error ? 'red-error' : 'grey-N4'
-              } rounded
+                        className={`h-32 resize-none mt-1 p-4 border border-${error ? 'red-error' : 'grey-N4'
+                } rounded
                     w-full text-sm placeholder-grey-N4::placeholder
                     focus:outline-none focus:border-purple`}
                       />
                       {error && (
-                      <span className="text-sm text-red-error absolute right-0 top-0">
+                      <span className="text-sm text-red-error absolute right-0 top-0 mb-1">
                           {error}
                       </span>
             )}
@@ -88,8 +87,8 @@ const MarkdownTextField = ({
                       remarkPlugins={[remarkGfm]}
                       components={{
                   code({
- node, inline, className, children, ...props
-}) {
+                    node, inline, className, children, ...props
+                  }) {
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline && match ? (
                         <SyntaxHighlighter
@@ -128,7 +127,7 @@ MarkdownTextField.propTypes = {
 MarkdownTextField.defaultProps = {
   error: '',
   limit: 0,
-  onKeyDown: () => {},
+  onKeyDown: () => { },
 };
 
 export default MarkdownTextField;
