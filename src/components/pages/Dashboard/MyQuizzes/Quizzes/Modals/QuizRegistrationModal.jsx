@@ -36,6 +36,9 @@ const UserQuizRegistration = ({
   const [contactNoError, setContactNoError] = useState(null);
   const [emailError, setEmailError] = useState(null);
   const [areDetailsFilled, setAreDetailsFilled] = useState(false);
+  const [detail1Error, setDetail1Error] = useState(null);
+  const [detail2Error, setDetail2Error] = useState(null);
+  const [detail3Error, setDetail3Error] = useState(null);
 
   // Old data
   const userEmail = useSelector((state) => state.auth.user?.email);
@@ -43,9 +46,14 @@ const UserQuizRegistration = ({
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
 
+  const handleReqField = () => {
+    console.log('quiz data dekhlo', quizData);
+  };
+
   const handleDataValidation = () => {
     const contactNoFormat = /^\d{10}$/;
-    const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
+    const gsuiteEmailFormat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z]+\.iitr\.ac\.in*)/;
     // change this to allow gsuite ids
 
     if (!contactNo.match(contactNoFormat)) {
@@ -59,7 +67,7 @@ const UserQuizRegistration = ({
       console.log(contactNoError, 'in else');
     }
 
-    if (!email.match(emailFormat)) {
+    if (!email.match(emailFormat || gsuiteEmailFormat)) {
       console.log('handle email');
       setEmailError('Invalid email format');
       console.log(emailError);
@@ -68,6 +76,22 @@ const UserQuizRegistration = ({
         console.log(emailError);
       });
       console.log(emailError);
+    }
+
+    if (detail1Value === null && detail1.isRequired) {
+      setDetail1Error('This is a mandatory field');
+    } else {
+      setDetail1Error(null);
+    }
+    if (detail2Value === null && detail2.isRequired) {
+      setDetail2Error('This is a mandatory field');
+    } else {
+      setDetail2Error(null);
+    }
+    if (detail3Value === null && detail3.isRequired) {
+      setDetail3Error('This is a mandatory field');
+    } else {
+      setDetail3Error(null);
     }
   };
 
@@ -95,7 +119,7 @@ const UserQuizRegistration = ({
       },
     };
     log({ body });
-    if (contactNoError === null) {
+    if (contactNoError === null || emailError === null) {
       console.log('idhar nahi aana', contactNoError);
       mutateRegisterParticipant({ body });
     }
@@ -246,9 +270,10 @@ const UserQuizRegistration = ({
                     id="detail1"
                     placeholder={detail1.value}
                     label={detail1.key}
-                    error=""
+                    error={detail1Error}
                     val={detail1Value}
                     setVal={setDetail1Value}
+                    isReq={detail1.isRequired}
                   />
               </div>
           )}
@@ -261,9 +286,10 @@ const UserQuizRegistration = ({
                     id="detail2"
                     placeholder={detail2.value}
                     label={detail2.key}
-                    error=""
+                    error={detail2Error}
                     val={detail2Value}
                     setVal={setDetail2Value}
+                    isReq={detail2.isRequired}
                   />
               </div>
           )}
@@ -276,9 +302,10 @@ const UserQuizRegistration = ({
                     id="detail3"
                     placeholder={detail3.value}
                     label={detail3.key}
-                    error=""
+                    error={detail3Error}
                     val={detail3Value}
                     setVal={setDetail3Value}
+                    isReq={detail3.isRequired}
                   />
               </div>
           )}
@@ -288,6 +315,14 @@ const UserQuizRegistration = ({
                         text="Register"
                         onClick={handleRegisterParticipant}
                         disabled={!areDetailsFilled}
+                      />
+                  </div>
+              </div>
+              <div className="user-quiz-registration-register-container">
+                  <div>
+                      <PrimaryCTA
+                        text="checking"
+                        onClick={handleReqField}
                       />
                   </div>
               </div>

@@ -46,6 +46,9 @@
     @apply flex justify-end pt-10 ;
   }
   .user-quiz-registration-field-input {
-    @apply mt-4 ;
+    @apply flex flex-row mt-4 ;
+  }
+  .user-quiz-registration-required-field {
+    @extend .required-field-input;
   }
 }
