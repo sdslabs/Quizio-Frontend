@@ -41,11 +41,10 @@ const TextField = ({
             id={id}
             disabled={disabled}
             pattern={pattern}
-            className={`mt-1 p-4 border border-${
-          error ? 'red-error' : 'grey-N4'
-        } rounded ${additionalClassName}
-          w-full text-sm placeholder-grey-N4::placeholder
-          focus:outline-none focus:border-purple`}
+            className={`h-32 resize-none mt-1 p-4 border border-${error ? 'red-error' : 'grey-N4'
+                } rounded
+                    w-full text-sm placeholder-grey-N4::placeholder
+                    focus:outline-none focus:border-purple`}
           />
           {error && (
           <span className="text-sm text-red-error absolute right-0 top-0">

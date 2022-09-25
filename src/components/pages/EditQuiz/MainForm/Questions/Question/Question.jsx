@@ -87,7 +87,9 @@ const Question = () => {
     }
     if (marks === 0) {
       setMarksError('Please enter the marks');
-    } else {
+    } else if (isNaN(marks)) {
+      setMarksError('Marks cannot be string');
+    } else{
       setMarksError('');
     }
     if (choices === []) {
