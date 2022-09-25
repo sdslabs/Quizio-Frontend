@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, Route } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import SubmitQuiz from '@components/Modals/SubmitQuiz';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import log from '@utils/log';
 import ReactMarkdown from 'react-markdown';
+import Page404 from '@pages/404';
+import { useCheckAccessCode } from '@api/register/useRegister';
 import QuestionsWrapper from './QuestionsWrapper';
 
 const SectionLanding = () => {
-  const { sectionID, quizID } = useParams();
+  const { sectionID, quizID, accessCode } = useParams();
+  const [isAccessCodeCorrect, setIsAccessCodeCorrect] = useState(false);
+
   // Local states
   const [showModal, setShowModal] = useState(false);
+
+  // check access code
+  const {
+    data: accessCodeData,
+    isSuccess: accessCodeDataSuccess,
+  } = useCheckAccessCode(quizID, accessCode);
+
   // Global quiz store
   const {
     sections,
@@ -30,7 +41,17 @@ const SectionLanding = () => {
     log('Section Landing: ', { sectionID, quizID }, false);
   }, [sectionID, quizID]);
 
-  if (!quiz.quizioID) return <Redirect to={`/quiz/attempt/${quizID}`} />;
+  useEffect(() => {
+    if (accessCodeDataSuccess) {
+      if (accessCodeData?.data?.data?.correct) {
+        setIsAccessCodeCorrect(true);
+      }
+    }
+  }, [accessCodeDataSuccess]);
+
+  if (!quiz.quizioID) return <Redirect to={`/quiz/attempt/${quizID}/${accessCode}`} />;
+
+  if (!isAccessCodeCorrect) return <Route component={Page404} />;
 
   if (currentQuestion) return <QuestionsWrapper />;
 

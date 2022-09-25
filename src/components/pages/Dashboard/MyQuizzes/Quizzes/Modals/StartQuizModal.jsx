@@ -42,7 +42,7 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
 
   const handleStartQuiz = () => {
     if (!showAccessCode) {
-      history.push(`/quiz/attempt/${quizID}`);
+      history.push(`/quiz/attempt/${quizID}`); // doubt in handling this case, ok use some default acc code
     } else {
       console.log('in else');
       refetch({ quizID, accessCodeInput });
@@ -51,7 +51,7 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
         console.log(accessCodeData.data.data.correct);
         if (accessCodeData.data.data.correct) {
           setAccessCodeError(null);
-          history.push(`/quiz/attempt/${quizID}`);
+          history.push(`/quiz/attempt/${quizID}/${accessCodeInput}`);
         } else {
           setAccessCodeError('Invalid access code');
         }

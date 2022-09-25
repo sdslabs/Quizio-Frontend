@@ -12,9 +12,12 @@ const useGiveQuizStore = create((set) => ({
     answeredQuestions: [],
     markedQuestions: [],
     markedAnsweredQuestions: [],
+  //  isAccessCodeCorrect: false,  // is this method better
 
     /* Quiz Id */
     setQuiz: (quiz) => set(() => ({ quiz })),
+    /* AccessCode */
+  //  setIsAccessCodeCorrect: (isAccessCodeCorrect) => set(() => ({ isAccessCodeCorrect })),
     /* Add new section */
     setSections: (sections) => set(() => ({ sections })),
     /* Open a question */
