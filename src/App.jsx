@@ -74,7 +74,10 @@ const App = () => {
                 component={user.role === 'superadmin' ? CheckQuiz : Page404}
               />
               {/* Attempt a quiz */}
-              <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
+              <Route path="/quiz/attempt/:quizID/:accessCode" component={GiveQuiz} />
+              {/* <Route path="/quiz/attempt/:quizID" component={GiveQuiz} /> */}
+              {' '}
+              {/* hardcode it */}
               {/* Demo page for components */}
               {/* <Route exact path="/components" component={Components} /> */}
               {/* 404 Page */}

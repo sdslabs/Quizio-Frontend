@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import {
- Switch, Route, useParams, useHistory,
+  Switch, Route, useParams, useHistory,
 } from 'react-router-dom';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import LoadingPage from '@components/pages/Loading';
@@ -15,6 +15,8 @@ import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSelector } from 'react-redux';
 import publicIp from 'react-public-ip';
+import Page404 from '@pages/404';
+import { useCheckAccessCode } from '@api/register/useRegister';
 import Wrapper from './Wrapper';
 import MediaAccess from './MediaAccess';
 import WindowFocus from './WindowFocus';
@@ -24,11 +26,12 @@ import useLocationAccess from './useLocationAccess';
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
   const history = useHistory();
-  const { quizID } = useParams();
+  const { quizID, accessCode } = useParams();
 
   const userID = useSelector((state) => state.auth.user.userID);
   const [isOnFS, setIsOnFS] = useState(false);
   const [isMediaPermission, setIsMediaPermission] = useState(false);
+  const [isAccessCodeCorrect, setIsAccessCodeCorrect] = useState(false);
 
   // Update logs mutation
   const { mutate: updateLogs } = useUpdateLogs();
@@ -39,6 +42,12 @@ const GiveQuiz = () => {
     quizID,
     toast,
   });
+
+  // check access code
+  const {
+    data: accessCodeData,
+    isSuccess: accessCodeDataSuccess,
+  } = useCheckAccessCode(quizID, accessCode);
 
   // Key logging
   useKeyLogging({
@@ -61,6 +70,7 @@ const GiveQuiz = () => {
     setAnsweredQuestions,
     setMarkedAnsweredQuestions,
     setMarkedQuestions,
+    //    setIsAccessCodeCorrect,
   } = useGiveQuizStore();
 
   // Get Response Status Query
@@ -134,6 +144,14 @@ const GiveQuiz = () => {
       }
     }
   }, [isSubmittedCheckSuccess]);
+
+  useEffect(() => {
+    if (accessCodeDataSuccess) {
+      if (accessCodeData?.data?.data?.correct) {
+        setIsAccessCodeCorrect(true);
+      }
+    }
+  }, [accessCodeDataSuccess]);
 
   useEffect(async () => {
     log({ quizID });
@@ -224,6 +242,18 @@ const GiveQuiz = () => {
     );
   }
 
+  if (!isAccessCodeCorrect) {
+    return (
+        <>
+            <ToastContainer />
+            <Route
+              exact // ?
+              component={Page404}
+            />
+        </>
+    );
+  }
+
   return (
       <>
           {/* I dont know why, but adding this toast container here is important */}
@@ -233,7 +263,7 @@ const GiveQuiz = () => {
               <Switch>
                   <Route
                     exact
-                    path="/quiz/attempt/:quizID"
+                    path="/quiz/attempt/:quizID/:accessCode"
                     render={() => (
                         <Wrapper>
                             <ToastContainer />
@@ -244,7 +274,7 @@ const GiveQuiz = () => {
                   />
                   <Route
                     exact
-                    path="/quiz/attempt/:quizID/:sectionID"
+                    path="/quiz/attempt/:quizID/:accessCode/:sectionID"
                     render={() => (
                         <Wrapper>
                             <ToastContainer />

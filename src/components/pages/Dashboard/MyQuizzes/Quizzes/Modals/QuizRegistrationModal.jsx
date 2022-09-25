@@ -45,7 +45,6 @@ const UserQuizRegistration = ({
   const handleRegisterParticipant = () => {
     const body = {
       quizID,
-      accessCode: 'SDSLabs', // TODO: remove hardcoding after test
       firstName,
       lastName,
       email,

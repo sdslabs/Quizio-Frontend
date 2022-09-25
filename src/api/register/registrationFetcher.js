@@ -7,3 +7,5 @@ export const registerParticipant = ({ body }) => axiosInstance.post('/register/q
 export const unregisterParticipant = ({ quizID, username }) => axiosInstance.delete(`/api/v2/register/quizzes/${quizID}/${username}`);
 
 export const checkIfUserIsRegisteredForQuiz = ({ queryKey }) => axiosInstance.get(`/register/quizzes/${queryKey[1]}`);
+
+export const checkAccessCode = ({ queryKey }) => axiosInstance.get(`/register/quizzes/${queryKey[1]}/${queryKey[2]}`);
