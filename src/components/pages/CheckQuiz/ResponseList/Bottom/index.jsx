@@ -43,6 +43,7 @@ const Bottom = () => {
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
+      log('hi');
       log({ registrantsData });
       setTableData(
         registrantsData.data.data.rankList
