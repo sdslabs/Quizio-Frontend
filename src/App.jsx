@@ -75,7 +75,7 @@ const App = () => {
               />
               {/* Attempt a quiz */}
               <Route path="/quiz/attempt/:quizID/:accessCode" component={GiveQuiz} />
-              <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
+              {/* <Route path="/quiz/attempt/:quizID" component={GiveQuiz} /> */}
               {' '}
               {/* hardcode it */}
               {/* Demo page for components */}

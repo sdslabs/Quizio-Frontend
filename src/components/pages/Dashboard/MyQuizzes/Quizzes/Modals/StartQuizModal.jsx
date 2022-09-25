@@ -33,7 +33,7 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
     setShowAccessCode(false);
     console.log(quizData?.quiz);
     if (quizDataSuccess) {
-      if (quizData?.quiz?.accessCode) {
+      if (quizData?.quiz?.accessCode !== 'quizio') {
         setShowAccessCode(true);
       }
     }
@@ -42,7 +42,7 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
 
   const handleStartQuiz = () => {
     if (!showAccessCode) {
-      history.push(`/quiz/attempt/${quizID}`); // doubt in handling this case, ok use some default acc code
+      history.push(`/quiz/attempt/${quizID}/quizio`); // kya usko as a variable daalna padega?
     } else {
       console.log('in else');
       refetch({ quizID, accessCodeInput });

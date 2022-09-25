@@ -19,14 +19,14 @@ const QuizLanding = () => {
   const query = useQuery();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
-  const { quizID } = useParams();
+  const { quizID, accessCode } = useParams();
 
   // Get Quiz Query
   const {
     data: quizData,
     isLoading: isQuizDataLoading,
     isSuccess: isQuizDataSuccess,
-  } = useGetQuiz(quizID);
+  } = useGetQuiz(quizID, accessCode);
 
   // Give quiz Store
   const {
@@ -36,7 +36,7 @@ const QuizLanding = () => {
   } = useGiveQuizStore();
 
   const handleContinue = () => {
-    history.push(`/quiz/attempt/${quizID}/${quizData?.quiz?.sections[0]}`);
+    history.push(`/quiz/attempt/${quizID}/${accessCode}/${quizData?.quiz?.sections[0]}`);
     setCurrentSection(sections[0].title);
   };
 

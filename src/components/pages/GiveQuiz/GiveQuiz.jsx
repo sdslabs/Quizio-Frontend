@@ -32,7 +32,6 @@ const GiveQuiz = () => {
   const [isOnFS, setIsOnFS] = useState(false);
   const [isMediaPermission, setIsMediaPermission] = useState(false);
   const [isAccessCodeCorrect, setIsAccessCodeCorrect] = useState(false);
-  //  const [isAccessCodeRequired, setIsAccessCodeRequired] = useState(false);
 
   // Update logs mutation
   const { mutate: updateLogs } = useUpdateLogs();

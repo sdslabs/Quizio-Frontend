@@ -3,7 +3,7 @@ import * as fetchers from './sectionFetcher';
 
 export const useAddSection = () => useMutation(fetchers.addSectionToQuiz);
 
-export const useGetSectionDetails = (sectionID) => useQuery([`getSection-${sectionID}`, sectionID],
+export const useGetSectionDetails = (sectionID, accessCode) => useQuery([`getSection-${sectionID}`, sectionID, accessCode],
 	fetchers.getSectionDetails, { enabled: !!sectionID });
 
 export const useUpdateSection = () => useMutation(fetchers.updateSectionDetails);
