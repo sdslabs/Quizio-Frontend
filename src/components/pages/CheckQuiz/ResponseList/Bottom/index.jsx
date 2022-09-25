@@ -8,7 +8,7 @@ import CheckingTable from '@components/pages/CheckQuiz/ResponseList/Bottom/Check
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import AutoCheckModal from '@components/Modals/AutoCheck';
 import PublishResultsModal from '@components/Modals/PublishResults';
-import { useGetRankList, useGenerateRanks } from '@api/quizzes/useQuizzes';
+import { useGetRankList } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
 
 const SORT_TYPES = {
@@ -24,15 +24,6 @@ const Bottom = () => {
   const [sortBy, setSortBy] = useState(0);
   const [showAutoCheckModal, setShowAutoCheckModal] = useState(false);
   const [showPublishQuizModal, setShowPublishQuizModal] = useState(false);
-
-  const {
-    mutate: mutateGenerateRanklist,
-  } = useGenerateRanks();
-
-  const handleRefresh = () => {
-    log('hello');
-    mutateGenerateRanklist({ quizID });
-  };
 
   const {
     data: registrantsData,
@@ -140,9 +131,6 @@ const Bottom = () => {
                     additionalClassName="quiz-check-button"
                     onClick={handlePublish}
                   />
-              </div>
-              <div className="refresh">
-                  <PrimaryCTA text="Refresh" onClick={handleRefresh} />
               </div>
           </div>
           <CheckingTable data={tableData} quizID={quizID} />

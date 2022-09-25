@@ -74,13 +74,4 @@ export const getQuizzesCreatedByUser = async () => {
 	}
 };
 
-export const getQuizRankList = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[1]}/getRanklist`);
-// export const getRanks = ({ queryKey }) => axiosInstance.post(`/quizzes/${queryKey[1]}/getRanklist`);
-export const generateRanklist = async ({ quizID }) => {
-	try {
-		const res = await axiosInstance.post(`/quizzes/${quizID}/ranklist`);
-		return res.data;
-	} catch (e) {
-		return e.response.data;
-	}
-};
+export const getQuizRankList = ({ queryKey }) => axiosInstance.post(`/quizzes/${queryKey[1]}/ranklist`);
