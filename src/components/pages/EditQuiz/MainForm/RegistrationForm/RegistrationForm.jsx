@@ -60,6 +60,7 @@ const RegistrationForm = () => {
               <div className="w-50 flex justify-center pr-4">
                   <PrimaryCTA text="Start Adding Questions" onClick={handleSubmit} />
               </div>
+
           </div>
 
       </div>
