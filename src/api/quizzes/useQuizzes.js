@@ -20,6 +20,6 @@ export const useCheckIfQuizIsSubmitted = (quizID) => useQuery(
 );
 
 export const useGetRankList = (quizID) => useQuery(['getQuizRankList', quizID], fetchers.getQuizRankList);
-export const useGenerateRanks = (quizID) => useMutation(['getRanks', quizID], fetchers.generateRanklist);
+export const useGenerateRanks = (quizID) => useMutation(['getRanks', quizID], fetchers.generateRanklist); // my change
 
 export const useGetQuizzesCreatedByUser = () => useQuery(['getQuizzesCreatedByUser'], fetchers.getQuizzesCreatedByUser);
