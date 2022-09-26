@@ -33,8 +33,12 @@ const UserQuizRegistration = ({
   const [detail1Value, setDetail1Value] = useState('');
   const [detail2Value, setDetail2Value] = useState('');
   const [detail3Value, setDetail3Value] = useState('');
-
+  const [contactNoError, setContactNoError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
   const [areDetailsFilled, setAreDetailsFilled] = useState(false);
+  const [detail1Error, setDetail1Error] = useState(null);
+  const [detail2Error, setDetail2Error] = useState(null);
+  const [detail3Error, setDetail3Error] = useState(null);
 
   // Old data
   const userEmail = useSelector((state) => state.auth.user?.email);
@@ -42,7 +46,57 @@ const UserQuizRegistration = ({
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
 
+  const handleReqField = () => {
+    console.log('quiz data dekhlo', quizData);
+  };
+
+  const handleDataValidation = () => {
+    const contactNoFormat = /^\d{10}$/;
+    const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
+    const gsuiteEmailFormat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z]+\.iitr\.ac\.in*)/;
+    // change this to allow gsuite ids
+
+    if (!contactNo.match(contactNoFormat)) {
+      console.log('handle contact number');
+      setContactNoError('Invalid number format');
+      console.log(contactNoError);
+    } else {
+      setContactNoError(null, () => {
+        console.log(contactNoError);
+      });
+      console.log(contactNoError, 'in else');
+    }
+
+    if (!email.match(emailFormat || gsuiteEmailFormat)) {
+      console.log('handle email');
+      setEmailError('Invalid email format');
+      console.log(emailError);
+    } else {
+      setContactNoError(null, () => {
+        console.log(emailError);
+      });
+      console.log(emailError);
+    }
+
+    if (detail1Value === null && detail1.isRequired) {
+      setDetail1Error('This is a mandatory field');
+    } else {
+      setDetail1Error(null);
+    }
+    if (detail2Value === null && detail2.isRequired) {
+      setDetail2Error('This is a mandatory field');
+    } else {
+      setDetail2Error(null);
+    }
+    if (detail3Value === null && detail3.isRequired) {
+      setDetail3Error('This is a mandatory field');
+    } else {
+      setDetail3Error(null);
+    }
+  };
+
   const handleRegisterParticipant = () => {
+    handleDataValidation();
     const body = {
       quizID,
       accessCode: 'SDSLabs', // TODO: remove hardcoding after test
@@ -65,7 +119,10 @@ const UserQuizRegistration = ({
       },
     };
     log({ body });
-    mutateRegisterParticipant({ body });
+    if (contactNoError === null || emailError === null) {
+      console.log('idhar nahi aana', contactNoError);
+      mutateRegisterParticipant({ body });
+    }
   };
 
   useEffect(() => {
@@ -90,26 +147,15 @@ const UserQuizRegistration = ({
   }, [userEmail, userFirstName, userLastName, userPhoneNumber]);
 
   useEffect(() => {
-    log('truthy', {
-      firstName: !!firstName,
-      lastName: !!lastName,
-      email: !!email,
-      contactNo: !!contactNo,
-      orgName: !!orgName,
-      detail1: !!(detail1.key ? !!detail1Value : true),
-      detail2: !!(detail2.key ? !!detail2Value : true),
-      detail3: !!(detail3.key ? !!detail3Value : true),
-    });
-
     setAreDetailsFilled(
       !!firstName
-        && !!lastName
-        && !!email
-        && !!contactNo
-        && !!orgName
-        && !!(detail1.key ? !!detail1Value : true)
-        && !!(detail2.key ? !!detail2Value : true)
-        && !!(detail3.key ? !!detail3Value : true),
+      && !!lastName
+      && !!email
+      && !!contactNo
+      && !!orgName
+      && !!(detail1.key ? !!detail1Value : true)
+      && !!(detail2.key ? !!detail2Value : true)
+      && !!(detail3.key ? !!detail3Value : true),
     );
   }, [
     firstName,
@@ -142,9 +188,8 @@ const UserQuizRegistration = ({
               <div className="user-quiz-registration-basic-details">
                   <div className="user-quiz-registration-name">
                       <div
-                        className={`user-quiz-registration-first-name ${
-                  userFirstName ? '' : 'hidden'
-                }`}
+                        className={`user-quiz-registration-first-name ${userFirstName ? '' : 'hidden'
+                  }`}
                       >
                           <TextField
                             id="First name"
@@ -156,9 +201,8 @@ const UserQuizRegistration = ({
                           />
                       </div>
                       <div
-                        className={`user-quiz-registration-last-name ${
-                  userLastName ? '' : 'hidden'
-                }`}
+                        className={`user-quiz-registration-last-name ${userLastName ? '' : 'hidden'
+                  }`}
                       >
                           <TextField
                             id="Last name"
@@ -171,16 +215,15 @@ const UserQuizRegistration = ({
                       </div>
                   </div>
                   <div
-                    className={`user-quiz-registration-contact ${
-                userEmail ? '' : 'hidden'
-              }`}
+                    className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'
+                }`}
                   >
                       <div className="user-quiz-registration-contact-email">
                           <TextField
                             id="Email"
                             placeholder=""
                             label="Email"
-                            error=""
+                            error={setEmailError}
                             val={email}
                             setVal={setEmail}
                             disabled
@@ -188,15 +231,14 @@ const UserQuizRegistration = ({
                           />
                       </div>
                       <div
-                        className={`user-quiz-registration-contact-contactno ${
-                  userPhoneNumber ? '' : 'hidden'
-                }`}
+                        className={`user-quiz-registration-contact-contactno ${userPhoneNumber ? '' : 'hidden'
+                  }`}
                       >
                           <TextField
                             id="Contact No."
                             placeholder="Candidate&#39;s contact number"
                             label="Contact No."
-                            error=""
+                            error={contactNoError}
                             val={contactNo}
                             setVal={setContactNo}
                             pattern={REGEX.contact}
@@ -214,54 +256,56 @@ const UserQuizRegistration = ({
                       />
                   </div>
               </div>
-              <div className="user-quiz-registration-additional-details-title">
+              <div className={`user-quiz-registration-additional-details-title ${detail1.key || detail2.key || detail3.key ? '' : 'hidden'
+            }`}
+              >
                   Additional Details
               </div>
               {detail1.key && (
               <div
-                className={`user-quiz-registration-field-input ${
-                detail1.key ? '' : 'hidden'
-              }`}
+                className={`user-quiz-registration-field-input ${detail1.key ? '' : 'hidden'
+                }`}
               >
                   <TextField
                     id="detail1"
                     placeholder={detail1.value}
                     label={detail1.key}
-                    error=""
+                    error={detail1Error}
                     val={detail1Value}
                     setVal={setDetail1Value}
+                    isReq={detail1.isRequired}
                   />
               </div>
           )}
               {detail2.key && (
               <div
-                className={`user-quiz-registration-field-input ${
-                detail2.key ? '' : 'hidden'
-              }`}
+                className={`user-quiz-registration-field-input ${detail2.key ? '' : 'hidden'
+                }`}
               >
                   <TextField
                     id="detail2"
                     placeholder={detail2.value}
                     label={detail2.key}
-                    error=""
+                    error={detail2Error}
                     val={detail2Value}
                     setVal={setDetail2Value}
+                    isReq={detail2.isRequired}
                   />
               </div>
           )}
               {detail3.key && (
               <div
-                className={`user-quiz-registration-field-input ${
-                detail3.key ? '' : 'hidden'
-              }`}
+                className={`user-quiz-registration-field-input ${detail3.key ? '' : 'hidden'
+                }`}
               >
                   <TextField
                     id="detail3"
                     placeholder={detail3.value}
                     label={detail3.key}
-                    error=""
+                    error={detail3Error}
                     val={detail3Value}
                     setVal={setDetail3Value}
+                    isReq={detail3.isRequired}
                   />
               </div>
           )}
@@ -271,6 +315,14 @@ const UserQuizRegistration = ({
                         text="Register"
                         onClick={handleRegisterParticipant}
                         disabled={!areDetailsFilled}
+                      />
+                  </div>
+              </div>
+              <div className="user-quiz-registration-register-container">
+                  <div>
+                      <PrimaryCTA
+                        text="checking"
+                        onClick={handleReqField}
                       />
                   </div>
               </div>

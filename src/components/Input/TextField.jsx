@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '@pagestyles/register/user_quiz_registration.scss';
 
 const TextField = ({
   id,
@@ -13,6 +14,7 @@ const TextField = ({
   additionalClassName,
   disabled,
   pattern,
+  isReq,
 }) => {
   const [currentLen, setCurrentLen] = useState(0);
 
@@ -30,9 +32,19 @@ const TextField = ({
 
   return (
       <div className="relative pt-5 w-full">
-          <label htmlFor={id} className="absolute top-0 text-sm text-grey-N6">
-              {label}
-          </label>
+          <div className="flex flex-row">
+              <div>
+                  <label htmlFor={id} className="absolute top-0 text-sm text-grey-N6">
+                      {label}
+                  </label>
+              </div>
+              <div
+                className={`user-quiz-registration-required-field ${isReq ? '' : 'hidden'
+            }`}
+              >
+                  <p>*</p>
+              </div>
+          </div>
           <input
             value={val}
             onChange={handleChange}
@@ -41,9 +53,8 @@ const TextField = ({
             id={id}
             disabled={disabled}
             pattern={pattern}
-            className={`mt-1 p-4 border border-${
-          error ? 'red-error' : 'grey-N4'
-        } rounded ${additionalClassName}
+            className={`mt-1 p-4 border border-${error ? 'red-error' : 'grey-N4'
+          } rounded ${additionalClassName}
           w-full text-sm placeholder-grey-N4::placeholder
           focus:outline-none focus:border-purple`}
           />
@@ -75,17 +86,19 @@ TextField.propTypes = {
   additionalClassName: PropTypes.string,
   disabled: PropTypes.bool,
   pattern: PropTypes.string,
+  isReq: PropTypes.bool,
 };
 
 TextField.defaultProps = {
   error: '',
   label: '',
   limit: 0,
-  onKeyDown: () => {},
+  onKeyDown: () => { },
   additionalClassName: 'bg-white',
   disabled: false,
   pattern: '',
-  setVal: () => {},
+  setVal: () => { },
+  isReq: false,
 };
 
 export default TextField;

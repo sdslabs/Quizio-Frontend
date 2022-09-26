@@ -60,37 +60,39 @@ const Quizzes = () => {
       <div className="dashboard-quizzes">
           <div className="ongoing-quizzes">
               <div className="title">Ongoing and Past Quizzes</div>
-              <div className="quiz-list hide-scrollbar">
+              <div className="quiz-list">
                   {isQuizzesFetching && !isQuizzesRefetching && (
                   <div>Fetching ongoing quizzes...</div>
           )}
-                  {onGoingQuizzes && onGoingQuizzes.length !== 0 ? (
-            onGoingQuizzes.map((quiz) => (
-                <div className="quiz-list-item" key={quiz.quizioID}>
-                    <QuizCard data={quiz} />
-                </div>
-            ))
-          ) : (
-              <div className="ml-5">No upcoming quizzes...</div>
-          )}
+                  {isQuizzesSuccess && (
+            onGoingQuizzes && onGoingQuizzes.length !== 0 ? (
+              onGoingQuizzes.map((quiz) => (
+                  <div className="quiz-list-item" key={quiz.quizioID}>
+                      <QuizCard data={quiz} />
+                  </div>
+              ))
+            ) : (
+                <div className="ml-5">No ongoing quizzes...</div>
+            ))}
               </div>
           </div>
 
           <div className="upcoming-quizzes">
               <div className="title">Upcoming Quizzes</div>
-              <div className="quiz-list hide-scrollbar">
+              <div className="quiz-list">
                   {isQuizzesFetching && !isQuizzesRefetching && (
                   <div>Fetching upcoming quizzes...</div>
           )}
-                  {upComingQuizzes && upComingQuizzes.length !== 0 ? (
-            upComingQuizzes.map((quiz) => (
-                <div className="quiz-list-item" key={quiz.quizioID}>
-                    <QuizCard data={quiz} />
-                </div>
-            ))
-          ) : (
-              <div className="ml-5">No upcoming quizzes...</div>
-          )}
+                  {isQuizzesSuccess && (
+            upComingQuizzes && upComingQuizzes.length !== 0 ? (
+              upComingQuizzes.map((quiz) => (
+                  <div className="quiz-list-item" key={quiz.quizioID}>
+                      <QuizCard data={quiz} />
+                  </div>
+              ))
+            ) : (
+                <div className="ml-5">No upcoming quizzes...</div>
+            ))}
               </div>
           </div>
       </div>
