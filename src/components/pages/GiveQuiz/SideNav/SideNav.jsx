@@ -9,12 +9,12 @@ import AllSections from './AllSections';
 
 const SideNav = () => {
   const history = useHistory();
-  const { sectionID } = useParams();
+  const { sectionID, accessCode } = useParams();
   // Local States
   const [showModal, setshowModal] = useState(false);
   const { quiz } = useGiveQuizStore();
 
-  const handleInstructions = () => history.push(`/quiz/attempt/${quiz.quizioID}`);
+  const handleInstructions = () => history.push(`/quiz/attempt/${quiz.quizioID}/${accessCode}`);
 
   return (
       <>

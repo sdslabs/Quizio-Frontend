@@ -21,8 +21,8 @@ export const getAllQuizzes = async () => {
 
 export const getQuizByID = async ({ queryKey }) => {
 	try {
-		log('fetching Quiz', { quizID: queryKey[1] }, { accessCode: queryKey[2] });
-		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}/${queryKey[2]}`);
+		log('fetching Quiz', { quizID: queryKey[1] });
+		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
 		return res.data.data;
 	} catch (e) {
 		return e.response.data;
@@ -69,6 +69,16 @@ export const getQuizzesCreatedByUser = async () => {
 	try {
 		const res = await axiosInstance.get('/users/quizzes/owned');
 		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
+export const getQuizByIDWithAccessCode = async ({ queryKey }) => {
+	try {
+		log('fetching Quiz with access code', { quizID: queryKey[1] }, { accessCode: queryKey[2] });
+		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}/${queryKey[2]}`);
+		return res.data.data;
 	} catch (e) {
 		return e.response.data;
 	}

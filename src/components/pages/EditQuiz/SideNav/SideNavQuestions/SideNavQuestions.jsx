@@ -78,9 +78,8 @@ const SideNavQuestions = () => {
                   {isActive ? <QuestionsSelectedIcon /> : <QuestionsIcon />}
               </div>
               <div
-                className={`create-quiz-sidenav-option-text${
-            isActive ? '-selected' : ''
-          }`}
+                className={`create-quiz-sidenav-option-text${isActive ? '-selected' : ''
+            }`}
               >
                   {TAB_NAME}
               </div>

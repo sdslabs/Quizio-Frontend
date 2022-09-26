@@ -3,8 +3,10 @@ import * as fetchers from './questionFetcher';
 
 export const useAddQuestion = () => useMutation(fetchers.addQuestionToSection);
 
-export const useGetQuestion = (questionID, accessCode) => useQuery(['getQuestionByID', questionID,
- accessCode], fetchers.getQuestionByID, { enabled: !!questionID });
+export const useGetQuestion = (questionID) => useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, { enabled: !!questionID });
+
+export const useGetQuestionWithAccessCode = (questionID, accessCode) => useQuery(['getQuestionByID', questionID,
+accessCode], fetchers.getQuestionByIDWithAccessCode, { enabled: !!questionID });
 
 export const useUpdateQuestion = () => useMutation(fetchers.updateQuestionByID);
 

@@ -42,9 +42,8 @@ const Section = ({ index, section }) => {
       <>
           <button
             type="button"
-            className={`w-full m-0 side-nav-item${
-          isActive ? '-active' : ''
-        } flex justify-between`}
+            className={`w-full m-0 side-nav-item${isActive ? '-active' : ''
+          } flex justify-between`}
             onClick={handleSwitchSection}
           >
               {section.title || `Section ${index + 1}`}

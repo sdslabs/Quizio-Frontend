@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useGetQuestion } from '@api/quizzes/useQuestions';
+import { useGetQuestionWithAccessCode } from '@api/quizzes/useQuestions';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
 import Fetching from '@components/Misc/Fetching';
+import { useParams } from 'react-router';
 import ClearResponses from './ClearResponses';
 import QuestionMain from './QuestionMain';
 import MarkForReview from './MarkForReview';
@@ -15,6 +16,8 @@ const Question = () => {
   // User ID from redux
   const userID = useSelector((state) => state.auth.user.userID);
 
+  const { accessCode } = useParams();
+
   // Local states
   const [questionData, setQuestionData] = useState({});
   const [choice, setChoice] = useState(null); // MCQ Choice
@@ -24,7 +27,7 @@ const Question = () => {
   const { currentQuestion, currentQuestionIndex } = useGiveQuizStore();
 
   // Get question query
-  const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion);
+  const { data, isLoading, isSuccess } = useGetQuestionWithAccessCode(currentQuestion, accessCode);
 
   // update response mutation
   const { isSuccess: responseSucess } = useUpdateResponse();

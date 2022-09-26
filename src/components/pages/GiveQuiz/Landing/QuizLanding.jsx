@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
-import { useGetQuiz } from '@api/quizzes/useQuizzes';
+import { useGetQuizWithAccessCode } from '@api/quizzes/useQuizzes';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 import Fetching from '@components/Misc/Fetching';
@@ -26,7 +26,7 @@ const QuizLanding = () => {
     data: quizData,
     isLoading: isQuizDataLoading,
     isSuccess: isQuizDataSuccess,
-  } = useGetQuiz(quizID, accessCode);
+  } = useGetQuizWithAccessCode(quizID, accessCode);
 
   // Give quiz Store
   const {

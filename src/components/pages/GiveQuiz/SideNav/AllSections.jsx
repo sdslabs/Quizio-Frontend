@@ -3,7 +3,7 @@ import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useParams, useHistory } from 'react-router-dom';
-import { useGetMultipleSections } from '@api/quizzes/useSections';
+import { useGetMultipleSectionsWithAccessCode } from '@api/quizzes/useSections';
 import '@styles/pages/give_quiz/sidenav.scss';
 import log from '@utils/log';
 
@@ -22,18 +22,18 @@ const AllSections = () => {
     setTotalQuestions,
   } = useGiveQuizStore();
 
-  const result = useGetMultipleSections(quiz?.sections || []);
+  const { sectionID, accessCode } = useParams();
+
+  const result = useGetMultipleSectionsWithAccessCode(quiz?.sections || [], accessCode);
 
   const isSuccess = result.every((data) => !data.isLoading);
-
-  const { sectionID } = useParams();
 
   const history = useHistory();
 
   const handleSectionTabClick = (id, title) => {
     setCurrentQuestion(null);
     setCurrentSection(title);
-    history.push(`/quiz/attempt/${quiz.quizioID}/${id}`);
+    history.push(`/quiz/attempt/${quiz.quizioID}/${accessCode}/${id}`);
   };
 
   const handleBubbleClick = (questionID, title, questionIndex) => {
@@ -82,18 +82,16 @@ const AllSections = () => {
               <Fragment key={quizioID}>
                   <button
                     type="button"
-                    className={`w-full text-left m-0 side-nav-item${
-              sectionID === quizioID ? '-active' : ''
-            } flex justify-between`}
+                    className={`w-full text-left m-0 side-nav-item${sectionID === quizioID ? '-active' : ''
+              } flex justify-between`}
                     onClick={() => handleSectionTabClick(quizioID, title)}
                   >
                       {title}
                       <img src={DropDownIcon} alt="" className="side-nav-toggle" />
                   </button>
                   <div
-                    className={`side-nav-questions${
-              sectionID === quizioID ? '-active' : ''
-            }`}
+                    className={`side-nav-questions${sectionID === quizioID ? '-active' : ''
+              }`}
                   >
                       {questions.map((question, quesIDx) => (
                           <button

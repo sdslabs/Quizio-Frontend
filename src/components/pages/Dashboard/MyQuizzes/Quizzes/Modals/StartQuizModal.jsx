@@ -11,7 +11,7 @@ import { useCheckAccessCode } from '@api/register/useRegister';
 const StartQuizModal = ({ quizID, setShowModal }) => {
   const history = useHistory();
   const [showAccessCode, setShowAccessCode] = useState(false);
-  const [accessCodeInput, setAccessCodeInput] = useState('');
+  const [accessCodeInput, setAccessCodeInput] = useState('quizio');
   const [accessCodeError, setAccessCodeError] = useState('');
 
   // apis
@@ -26,7 +26,6 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
     isSuccess: accessCodeDataSuccess,
     refetch,
   } = useCheckAccessCode(quizID, accessCodeInput, { cacheTime: 0, staleTime: 0, refetchInterval: 0 });
-
   const [isLoading, setLoading] = useState(false);
 
   useEffect(async () => {
