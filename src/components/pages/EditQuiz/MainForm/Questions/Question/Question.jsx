@@ -235,6 +235,7 @@ const Question = () => {
       setQuestionType(currentQuestionData.type);
       setCheckersNotes(currentQuestionData.checkerNotes);
       setMarks(currentQuestionData.maxMarks);
+      setChoices(currentQuestionData.choices);
     }
   }, [currentQuestionID]);
 
