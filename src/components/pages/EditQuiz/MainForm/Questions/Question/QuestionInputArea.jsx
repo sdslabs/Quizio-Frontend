@@ -12,6 +12,8 @@ const QuestionInputArea = ({
   setCheckersNotes,
   choices,
   setChoices,
+  marksError,
+  choicesError,
 }) => (
     <>
         {questionType === 'subjective' ? (
@@ -20,6 +22,7 @@ const QuestionInputArea = ({
               setMarks={setMarks}
               checkerNotes={checkerNotes}
               setCheckersNotes={setCheckersNotes}
+              marksError={marksError}
             />
     ) : (
         <MCQ
@@ -29,6 +32,8 @@ const QuestionInputArea = ({
           setMarks={setMarks}
           checkerNotes={checkerNotes}
           setCheckersNotes={setCheckersNotes}
+          marksError={marksError}
+          choicesError={choicesError}
         />
     )}
     </>
@@ -36,22 +41,26 @@ const QuestionInputArea = ({
 
 QuestionInputArea.propTypes = {
   questionType: PropTypes.string,
+  marksError: PropTypes.string,
   marks: PropTypes.string,
   setMarks: PropTypes.func,
   checkerNotes: PropTypes.string,
   setCheckersNotes: PropTypes.func,
   choices: PropTypes.array,
   setChoices: PropTypes.func,
+  choicesError: PropTypes.string,
 };
 
 QuestionInputArea.defaultProps = {
   questionType: 'mcq',
+  marksError: '',
   marks: '0',
-  setMarks: () => {},
+  setMarks: () => { },
   checkerNotes: '',
-  setCheckersNotes: () => {},
+  setCheckersNotes: () => { },
   choices: [],
-  setChoices: () => {},
+  setChoices: () => { },
+  choicesError: '',
 };
 
 export default QuestionInputArea;

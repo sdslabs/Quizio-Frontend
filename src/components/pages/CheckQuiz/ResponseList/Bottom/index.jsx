@@ -8,7 +8,7 @@ import CheckingTable from '@components/pages/CheckQuiz/ResponseList/Bottom/Check
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import AutoCheckModal from '@components/Modals/AutoCheck';
 import PublishResultsModal from '@components/Modals/PublishResults';
-import { useGetRankList } from '@api/quizzes/useQuizzes';
+import { useGetRankList, useGenerateRanks } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
 
 const SORT_TYPES = {
@@ -26,16 +26,26 @@ const Bottom = () => {
   const [showPublishQuizModal, setShowPublishQuizModal] = useState(false);
 
   const {
+    mutate: mutateGenerateRanklist,
+    isSuccess: isGenerateSuccess,
+  } = useGenerateRanks();
+
+  const handleRefresh = () => {
+    mutateGenerateRanklist({ quizID });
+  };
+
+  const {
     data: registrantsData,
+    refetch,
     isLoading: isRegistrantsLoading,
     isSuccess: isRegistrantsSuccess,
-  } = useGetRankList(quizID);
+} = useGetRankList(quizID, { cacheTime: 0, staleTime: 0, refetchInterval: 0 });
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
       log({ registrantsData });
       setTableData(
-        registrantsData.data.data.rankList.rankList
+        registrantsData.data.data.rankList
           .map((val, index) => ({
             sr_num: index + 1,
             name: val.name,
@@ -48,7 +58,13 @@ const Bottom = () => {
           .map((val, index) => ({ ...val, sr_num: index + 1 })),
       );
     }
-  }, [isRegistrantsSuccess]);
+  }, [isRegistrantsLoading, registrantsData, isRegistrantsSuccess]);
+
+  useEffect(() => {
+    if (isGenerateSuccess) {
+      refetch(quizID);
+    }
+  }, [isGenerateSuccess]);
 
   const sortTableData = (sortByval) => {
     switch (sortByval) {
@@ -131,6 +147,9 @@ const Bottom = () => {
                     additionalClassName="quiz-check-button"
                     onClick={handlePublish}
                   />
+              </div>
+              <div className="refresh">
+                  <PrimaryCTA text="Refresh" onClick={handleRefresh} />
               </div>
           </div>
           <CheckingTable data={tableData} quizID={quizID} />

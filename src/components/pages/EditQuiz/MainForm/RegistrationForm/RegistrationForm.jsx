@@ -61,6 +61,7 @@ const RegistrationForm = () => {
                   <PrimaryCTA text="Start Adding Questions" onClick={handleSubmit} />
               </div>
           </div>
+
       </div>
   );
 };
