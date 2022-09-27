@@ -265,7 +265,7 @@ const GiveQuiz = () => {
                     exact
                     path="/quiz/attempt/:quizID/:accessCode"
                     render={() => (
-                        <Wrapper accessCode={accessCode}>
+                        <Wrapper>
                             <ToastContainer />
                             <WindowFocus handleBlurred={handleBlurred} />
                             <QuizLanding />

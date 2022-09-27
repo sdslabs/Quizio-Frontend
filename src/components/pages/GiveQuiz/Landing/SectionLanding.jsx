@@ -53,7 +53,7 @@ const SectionLanding = () => {
 
   if (!isAccessCodeCorrect) return <Route component={Page404} />;
 
-  if (currentQuestion) return <QuestionsWrapper />;
+  if (currentQuestion) return <QuestionsWrapper accessCode={accessCode} />;
 
   return (
       <>

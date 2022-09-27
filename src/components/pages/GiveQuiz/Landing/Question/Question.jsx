@@ -5,18 +5,16 @@ import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
 import log from '@utils/log';
 import Fetching from '@components/Misc/Fetching';
-import { useParams } from 'react-router';
+import PropTypes from 'prop-types';
 import ClearResponses from './ClearResponses';
 import QuestionMain from './QuestionMain';
 import MarkForReview from './MarkForReview';
 import SaveAndNext from './SaveAndNext';
 import QuestionMarks from './QuestionMarks';
 
-const Question = () => {
+const Question = ({ accessCode }) => {
   // User ID from redux
   const userID = useSelector((state) => state.auth.user.userID);
-
-  const { accessCode } = useParams();
 
   // Local states
   const [questionData, setQuestionData] = useState({});
@@ -100,6 +98,10 @@ const Question = () => {
           </div>
       </div>
   );
+};
+
+Question.propTypes = {
+  accessCode: PropTypes.string.isRequired,
 };
 
 export default Question;

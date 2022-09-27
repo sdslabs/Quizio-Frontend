@@ -18,4 +18,4 @@ export const deleteChoiceInQuestion = ({ questionID, choiceID }) => axiosInstanc
 export const deleteAllChoicesInQuestion = ({ questionID }) => axiosInstance
 	.delete(`/quizzes/sections/questions/${questionID}/choices`);
 
-export const getQuestionByIDWithAccessCode = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[2]}/sections/questions/${queryKey[1]}`);
+export const getQuestionByIDWithAccessCode = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/questions/${queryKey[1]}/${queryKey[2]}`);

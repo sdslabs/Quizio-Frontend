@@ -8,4 +8,4 @@ export const updateSectionDetails = ({ sectionID, body }) => axiosInstance.put(`
 
 export const deleteSection = ({ sectionID }) => axiosInstance.delete(`/quizzes/sections/${sectionID}`);
 
-export const getSectionDetailsWithAccessCode = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[2]}/sections/${queryKey[1]}`);
+export const getSectionDetailsWithAccessCode = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}/${queryKey[2]}`);
