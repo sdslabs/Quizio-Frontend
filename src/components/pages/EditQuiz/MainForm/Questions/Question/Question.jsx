@@ -3,7 +3,6 @@ import Select from 'react-select';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import {
   useAddChoiceToQuestion,
-  useDeleteAllChoicesInQuestion,
   useGetQuestion,
   useToggleQuestionType,
   useUpdateQuestion,
@@ -68,15 +67,9 @@ const Question = () => {
   const {
     // data: AddChoiceToQuestionData,
     // isSuccess: AddChoiceToQuestionSuccess,
+    // isLoading: AddChoiceToQuestionLoading,
     mutate: AddChoiceToQuestion,
   } = useAddChoiceToQuestion();
-
-  // Delete choice in question
-  const {
-    // data: DeleteChoicesInQuestionData,
-    isSuccess: DeleteChoicesInQuestionSuccess,
-    mutate: DeleteChoicesInQuestion,
-  } = useDeleteAllChoicesInQuestion();
 
   // discuss this design with stuti
   const validateQuestionData = async () => {
@@ -119,8 +112,10 @@ const Question = () => {
 
     if (questionType === 'mcq') {
       log('MCQ Type save!', { choices });
-      log('deleting all old choices');
-      DeleteChoicesInQuestion({ questionID: currentQuestionID });
+      AddChoiceToQuestion({
+        questionID: currentQuestionID,
+        body: choices,
+      });
     }
   };
 
@@ -131,19 +126,6 @@ const Question = () => {
       setQuestionType(selectedOption.value);
     }
   };
-
-  useEffect(() => {
-    log('choices deleted! Now saving the new choices!');
-    Promise.all(
-      choices.map((choice) => {
-        log({ questionID: currentQuestionID, body: choice });
-        return AddChoiceToQuestion({
-          questionID: currentQuestionID,
-          body: choice,
-        });
-      }),
-    );
-  }, [DeleteChoicesInQuestionSuccess]);
 
   useEffect(() => {
     log('successfully toggled!');
@@ -213,7 +195,7 @@ const Question = () => {
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks);
-      log(mutatedQuestionData);
+      log('changedquestion', mutatedQuestionData);
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
     }
   }, [isUpdateSuccess]);
