@@ -25,6 +25,8 @@ const QuestionBubbles = ({ isActive, questions }) => {
   } = useAddQuestion();
 
   const handleAddNewQuestion = () => {
+    console.log(sections[activeSectionIndex]);
+    console.log(questions);
     const sectionID = sections[activeSectionIndex]?.id;
     mutateAddQuestion({ sectionID });
   };
@@ -39,11 +41,11 @@ const QuestionBubbles = ({ isActive, questions }) => {
     if (isAddedSuccessQuestion) {
       const response = addQuestionData.data?.data?.question;
       if (response) {
-        addQuestionToSection(response.id);
+        addQuestionToSection(response.quizioID);
         addQuestion(response);
       }
     }
-  }, [isAddedSuccessQuestion, addQuestionData]);
+  }, [isAddedSuccessQuestion, addQuestionData, isAddingQuestion]);
 
   if (isAddingQuestion) return <div>Loading Questions...</div>;
 

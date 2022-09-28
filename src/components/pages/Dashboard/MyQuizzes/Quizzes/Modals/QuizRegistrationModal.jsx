@@ -7,10 +7,12 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import '@pagestyles/register/user_quiz_registration.scss';
+import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 
 const UserQuizRegistration = ({
   quizID,
   mutateRegisterParticipant,
+  setShowModal,
 }) => {
   // quiz data getter query
   const {
@@ -31,6 +33,8 @@ const UserQuizRegistration = ({
   const [detail1Value, setDetail1Value] = useState('');
   const [detail2Value, setDetail2Value] = useState('');
   const [detail3Value, setDetail3Value] = useState('');
+
+  const [areDetailsFilled, setAreDetailsFilled] = useState(false);
 
   // Old data
   const userEmail = useSelector((state) => state.auth.user?.email);
@@ -72,9 +76,9 @@ const UserQuizRegistration = ({
     if (quizDataSuccess) {
       log({ quiz: quizData?.quiz });
       log({ detail1: quizData?.quiz?.detail1 });
-      setDetail1(quizData?.quiz?.detail1);
-      setDetail2(quizData?.quiz?.detail2);
-      setDetail3(quizData?.quiz?.detail3);
+      setDetail1(quizData?.quiz?.detail1 || false);
+      setDetail2(quizData?.quiz?.detail2 || false);
+      setDetail3(quizData?.quiz?.detail3 || false);
     }
   }, [quizDataSuccess, quizData]);
 
@@ -85,13 +89,56 @@ const UserQuizRegistration = ({
     setContactNo(userPhoneNumber || '');
   }, [userEmail, userFirstName, userLastName, userPhoneNumber]);
 
+  useEffect(() => {
+    log('truthy', {
+      firstName: !!firstName,
+      lastName: !!lastName,
+      email: !!email,
+      contactNo: !!contactNo,
+      orgName: !!orgName,
+      detail1: !!(detail1.key ? !!detail1Value : true),
+      detail2: !!(detail2.key ? !!detail2Value : true),
+      detail3: !!(detail3.key ? !!detail3Value : true),
+    });
+
+    setAreDetailsFilled(
+      !!firstName
+        && !!lastName
+        && !!email
+        && !!contactNo
+        && !!orgName
+        && !!(detail1.key ? !!detail1Value : true)
+        && !!(detail2.key ? !!detail2Value : true)
+        && !!(detail3.key ? !!detail3Value : true),
+    );
+  }, [
+    firstName,
+    lastName,
+    email,
+    contactNo,
+    orgName,
+    detail1Value,
+    detail2Value,
+    detail3Value,
+  ]);
+
   return (
       <div className="user-quiz-registration">
           {isFetchingQuizData ? (
               <div>Fetching Quiz Details...</div>
       ) : (
           <>
-              <div className="user-quiz-registration-title">Registration Form</div>
+              <div className="flex justify-between items-center mb-6">
+                  <div className="user-quiz-registration-title">
+                      Registration Form
+                  </div>
+                  <CrossIcon
+                    className="cursor-pointer"
+                    onClick={() => {
+                setShowModal(false);
+              }}
+                  />
+              </div>
               <div className="user-quiz-registration-basic-details">
                   <div className="user-quiz-registration-name">
                       <div
@@ -220,7 +267,11 @@ const UserQuizRegistration = ({
           )}
               <div className="user-quiz-registration-register-container">
                   <div>
-                      <PrimaryCTA text="Register" onClick={handleRegisterParticipant} />
+                      <PrimaryCTA
+                        text="Register"
+                        onClick={handleRegisterParticipant}
+                        disabled={!areDetailsFilled}
+                      />
                   </div>
               </div>
           </>
@@ -231,5 +282,6 @@ const UserQuizRegistration = ({
 UserQuizRegistration.propTypes = {
   quizID: PropTypes.string.isRequired,
   mutateRegisterParticipant: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 export default UserQuizRegistration;

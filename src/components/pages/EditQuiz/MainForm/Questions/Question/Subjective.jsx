@@ -4,7 +4,7 @@ import TextField from '@components/Input/TextField';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 
 const Subjective = ({
- checkerNotes, setCheckersNotes, marks, setMarks,
+  checkerNotes, setCheckersNotes, marks, setMarks, marksError,
 }) => (
     <div className="subjective-render">
         <hr className="rounded" color="grey" />
@@ -16,6 +16,7 @@ const Subjective = ({
                   placeholder="0"
                   setVal={setMarks}
                   val={marks.toString()}
+                  error={marksError}
                 />
             </div>
         </div>
@@ -36,13 +37,15 @@ Subjective.propTypes = {
   setCheckersNotes: PropTypes.func,
   marks: PropTypes.string,
   setMarks: PropTypes.func,
+  marksError: PropTypes.string,
 };
 
 Subjective.defaultProps = {
   checkerNotes: '',
-  setCheckersNotes: () => {},
+  setCheckersNotes: () => { },
   marks: '0',
-  setMarks: () => {},
+  setMarks: () => { },
+  marksError: '',
 };
 
 export default Subjective;

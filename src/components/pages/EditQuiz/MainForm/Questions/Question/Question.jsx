@@ -3,7 +3,6 @@ import Select from 'react-select';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import {
   useAddChoiceToQuestion,
-  useDeleteAllChoicesInQuestion,
   useGetQuestion,
   useToggleQuestionType,
   useUpdateQuestion,
@@ -16,13 +15,16 @@ import QuestionInputArea from './QuestionInputArea';
 
 const Question = () => {
   // Local states
-  const [questionText, setQuestionText] = useState('');
+  const [questionText, setQuestionText] = useState(null);
+  const [questionTextError, setQuestionTextError] = useState(null);
   const [questionType, setQuestionType] = useState('mcq');
   const [checkerNotes, setCheckersNotes] = useState('');
   const [marks, setMarks] = useState(0);
+  const [marksError, setMarksError] = useState(null);
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [choices, setChoices] = useState([]);
+  const [choicesError, setChoicesError] = useState(null);
 
   // Question types
   const questionTypeOptions = [
@@ -65,17 +67,32 @@ const Question = () => {
   const {
     // data: AddChoiceToQuestionData,
     // isSuccess: AddChoiceToQuestionSuccess,
+    // isLoading: AddChoiceToQuestionLoading,
     mutate: AddChoiceToQuestion,
   } = useAddChoiceToQuestion();
 
-  // Delete choice in question
-  const {
-    // data: DeleteChoicesInQuestionData,
-    isSuccess: DeleteChoicesInQuestionSuccess,
-    mutate: DeleteChoicesInQuestion,
-  } = useDeleteAllChoicesInQuestion();
+  // discuss this design with stuti
+  const validateQuestionData = async () => {
+    if (questionText === null) {
+      setQuestionTextError('Please enter the question details');
+    } else {
+      setQuestionTextError('');
+    }
+    if (marks === 0) {
+      setMarksError('Please enter the marks');
+    } else {
+      setMarksError('');
+    }
+    if (choices === []) {
+      setChoicesError('Please fill atleast one choice');
+    } else {
+      setChoicesError('');
+    }
+    return (!questionText === '' && !marks === 0 && !choices === []);
+  };
 
   const handleSave = async () => {
+    const isError = validateQuestionData();
     const body = {
       question: questionText,
       type: questionType,
@@ -83,17 +100,22 @@ const Question = () => {
       maxMarks: marks,
       minMarks: '0',
     };
-
+    console.log(isError, 'printing is error');
     log('Handle save!', { body });
+    // if (!isError) {
+    console.log('in mutate question');
     mutateQuestion({
       questionID: currentQuestionID,
       body,
     });
+    // }
 
     if (questionType === 'mcq') {
       log('MCQ Type save!', { choices });
-      log('deleting all old choices');
-      DeleteChoicesInQuestion({ questionID: currentQuestionID });
+      AddChoiceToQuestion({
+        questionID: currentQuestionID,
+        body: choices,
+      });
     }
   };
 
@@ -104,19 +126,6 @@ const Question = () => {
       setQuestionType(selectedOption.value);
     }
   };
-
-  useEffect(() => {
-    log('choices deleted! Now saving the new choices!');
-    Promise.all(
-      choices.map((choice) => {
-        log({ questionID: currentQuestionID, body: choice });
-        return AddChoiceToQuestion({
-          questionID: currentQuestionID,
-          body: choice,
-        });
-      }),
-    );
-  }, [DeleteChoicesInQuestionSuccess]);
 
   useEffect(() => {
     log('successfully toggled!');
@@ -138,7 +147,7 @@ const Question = () => {
       setQuestionText(originalQuestion);
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
-      setMarks(originalMarks || 0);
+      setMarks(originalMarks);
       setChoices(originalChoices);
       addQuestion(questionData?.data?.data?.question);
     } else {
@@ -181,10 +190,12 @@ const Question = () => {
       log('Fetched question :)', {
         originalQuestion: questionData?.data?.data?.question,
       });
+      console.log('og', originalMarks);
       setQuestionText(originalQuestion);
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
-      setMarks(originalMarks || 0);
+      setMarks(originalMarks);
+      log('changedquestion', mutatedQuestionData);
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
     }
   }, [isUpdateSuccess]);
@@ -205,7 +216,8 @@ const Question = () => {
       setQuestionText(currentQuestionData.question);
       setQuestionType(currentQuestionData.type);
       setCheckersNotes(currentQuestionData.checkerNotes);
-      setMarks(currentQuestionData.marks || 0);
+      setMarks(currentQuestionData.maxMarks);
+      setChoices(currentQuestionData.choices);
     }
   }, [currentQuestionID]);
 
@@ -235,6 +247,7 @@ const Question = () => {
                   val={questionText || ''}
                   placeholder="Enter question here"
                   setVal={setQuestionText}
+                  error={questionTextError}
                 />
                 {isToggleLoading ? (
                     <div>Toggling question type...</div>
@@ -243,17 +256,19 @@ const Question = () => {
                   choices={choices}
                   setChoices={setChoices}
                   questionType={questionType}
-                  marks={marks.toString()}
+                  marks={marks ? marks.toString() : ' '}
                   setMarks={setMarks}
                   checkerNotes={checkerNotes}
                   setCheckersNotes={setCheckersNotes}
+                  marksError={marksError}
+                  choicesError={choicesError}
                 />
             )}
                 <div className="w-40 ml-auto mt-8">
                     {isUpdateLoading ? (
-                        <PrimaryCTA text="Saving..." onClick={() => {}} disabled />
+                        <PrimaryCTA text="Saving..." onClick={() => { }} disabled />
               ) : (
-                  <PrimaryCTA text="Save Changes" onClick={handleSave} />
+                  <PrimaryCTA text="Save Question" onClick={handleSave} />
               )}
                 </div>
             </>

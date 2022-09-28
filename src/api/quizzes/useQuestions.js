@@ -14,5 +14,3 @@ export const useToggleQuestionType = () => useMutation(fetchers.toggleQuestionTy
 export const useAddChoiceToQuestion = () => useMutation(fetchers.addChoiceToQuestion);
 
 export const useDeleteChoiceInQuestion = () => useMutation(fetchers.deleteChoiceInQuestion);
-
-export const useDeleteAllChoicesInQuestion = () => useMutation(fetchers.deleteAllChoicesInQuestion);

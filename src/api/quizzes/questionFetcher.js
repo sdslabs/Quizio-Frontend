@@ -14,6 +14,3 @@ export const addChoiceToQuestion = ({ questionID, body }) => axiosInstance.put(`
 
 export const deleteChoiceInQuestion = ({ questionID, choiceID }) => axiosInstance
 	.delete(`/quizzes/sections/questions/${questionID}/choices/${choiceID}`);
-
-export const deleteAllChoicesInQuestion = ({ questionID }) => axiosInstance
-	.delete(`/quizzes/sections/questions/${questionID}/choices`);
