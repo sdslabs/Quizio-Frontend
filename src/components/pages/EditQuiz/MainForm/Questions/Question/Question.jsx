@@ -207,10 +207,6 @@ const Question = () => {
       setQuestionType(originalType);
       setCheckersNotes(originalCheckerNotes);
       setMarks(originalMarks);
-<<<<<<< HEAD
-=======
-      log(mutatedQuestionData);
->>>>>>> bd867da... fix undefined marks bug
       updateQuestion(mutatedQuestionData?.data?.data?.updatedQuestion);
     }
   }, [isUpdateSuccess]);
