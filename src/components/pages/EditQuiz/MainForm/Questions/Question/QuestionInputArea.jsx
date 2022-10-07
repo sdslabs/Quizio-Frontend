@@ -13,7 +13,6 @@ const QuestionInputArea = ({
   choices,
   setChoices,
   marksError,
-  choicesError,
 }) => (
     <>
         {questionType === 'subjective' ? (
@@ -33,7 +32,6 @@ const QuestionInputArea = ({
           checkerNotes={checkerNotes}
           setCheckersNotes={setCheckersNotes}
           marksError={marksError}
-          choicesError={choicesError}
         />
     )}
     </>
@@ -48,7 +46,6 @@ QuestionInputArea.propTypes = {
   setCheckersNotes: PropTypes.func,
   choices: PropTypes.array,
   setChoices: PropTypes.func,
-  choicesError: PropTypes.string,
 };
 
 QuestionInputArea.defaultProps = {
@@ -60,7 +57,6 @@ QuestionInputArea.defaultProps = {
   setCheckersNotes: () => { },
   choices: [],
   setChoices: () => { },
-  choicesError: '',
 };
 
 export default QuestionInputArea;

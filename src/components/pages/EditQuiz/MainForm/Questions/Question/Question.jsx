@@ -25,7 +25,6 @@ const Question = () => {
   const [currentQuestionID, setCurrentQuestionID] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [choices, setChoices] = useState([]);
-  const [choicesError, setChoicesError] = useState(null);
 
   // Question types
   const questionTypeOptions = [
@@ -78,28 +77,25 @@ const Question = () => {
     mutate: DeleteChoicesInQuestion,
   } = useDeleteAllChoicesInQuestion();
 
-  // discuss this design with stuti
-  const validateQuestionData = async () => {
-    if (questionText === null) {
+  const validateQuestionData = () => {
+    if (questionText === null || questionText === '') {
       setQuestionTextError('Please enter the question details');
     } else {
       setQuestionTextError('');
     }
-    if (marks === 0) {
+    if (marks === 0 || marks === null || marks === '') {
       setMarksError('Please enter the marks');
     } else {
       setMarksError('');
     }
-    if (choices === []) {
-      setChoicesError('Please fill atleast one choice');
-    } else {
-      setChoicesError('');
-    }
-    return (!questionText === '' && !marks === 0 && !choices === []);
+    console.log('isQuestionText', !(questionText === ''), !(questionText === null));
+    console.log('isMarks', !(marks === ''), !(marks === null), !(marks === 0));
+    return (!(questionText === '') && !(questionText === null) && !(marks === 0)
+      && !(marks === null) && !(marks === ''));
   };
 
   const handleSave = async () => {
-    const isError = validateQuestionData();
+    const noError = await validateQuestionData();
     const body = {
       question: questionText,
       type: questionType,
@@ -107,15 +103,13 @@ const Question = () => {
       maxMarks: marks,
       minMarks: '0',
     };
-    console.log(isError, 'printing is error');
     log('Handle save!', { body });
-    // if (!isError) {
-    console.log('in mutate question');
-    mutateQuestion({
-      questionID: currentQuestionID,
-      body,
-    });
-    // }
+    if (noError) {
+      mutateQuestion({
+        questionID: currentQuestionID,
+        body,
+      });
+    }
 
     if (questionType === 'mcq') {
       log('MCQ Type save!', { choices });
@@ -276,7 +270,6 @@ const Question = () => {
                   checkerNotes={checkerNotes}
                   setCheckersNotes={setCheckersNotes}
                   marksError={marksError}
-                  choicesError={choicesError}
                 />
             )}
                 <div className="w-40 ml-auto mt-8">

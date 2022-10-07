@@ -8,7 +8,7 @@ import RadioGroup from '@components/Input/RadioGroup';
 import log from '@utils/log';
 
 const MCQ = ({
-  marks, setMarks, choices, setChoices, marksError, choicesError,
+  marks, setMarks, choices, setChoices, marksError,
 }) => {
   const [mcqCount, setMcqCount] = useState(0); // checks to see max no. of options is less than 4
   const [answer, setAnswer] = useState('');
@@ -51,7 +51,6 @@ const MCQ = ({
                 mcqCount={mcqCount}
                 setAnswer={setAnswer}
                 answer={answer}
-                error={choicesError}
               />
               <div className="w-1/6 pb-6 pt-5">
                   {mcqCount < 4 && (
@@ -97,7 +96,6 @@ MCQ.propTypes = {
   choices: PropTypes.array,
   setChoices: PropTypes.func,
   marksError: PropTypes.string,
-  choicesError: PropTypes.string,
 };
 
 MCQ.defaultProps = {
@@ -106,7 +104,6 @@ MCQ.defaultProps = {
   choices: [],
   setChoices: () => { },
   marksError: '',
-  choicesError: '',
 };
 
 export default MCQ;

@@ -10,7 +10,6 @@ const RadioButton = ({
   quizioID,
   choices,
   setChoices,
-  error,
   setMcqCount,
   mcqCount,
   checked,
@@ -46,7 +45,7 @@ const RadioButton = ({
             id={quizioID}
             checked={checked}
             onChange={onChange}
-            className={`radio-button-input border-${error ? 'red-error' : 'grey-N4'}`}
+            className="radio-button-input border-grey-N4"
           />
           <label htmlFor={quizioID} className="radio-button-label">
               <input
@@ -57,11 +56,6 @@ const RadioButton = ({
                 onChange={handleChange}
               />
           </label>
-          {error && (
-          <span className="text-sm text-red-error absolute right-0 top-0">
-              {error}
-          </span>
-      )}
           <button type="button" className="w-6 h-6 m-2" onClick={handleDelete}>
               <DeleteButton />
           </button>
@@ -76,7 +70,6 @@ RadioButton.propTypes = {
   choices: PropTypes.arrayOf(
     PropTypes.shape({ quizioID: PropTypes.string, choice: PropTypes.string }),
   ),
-  error: PropTypes.string,
   mcqCount: PropTypes.number.isRequired,
   setMcqCount: PropTypes.func.isRequired,
   onChange: PropTypes.func,
@@ -95,7 +88,6 @@ RadioButton.defaultProps = {
       quizioID: '',
     },
   ],
-  error: '',
 };
 
 export default RadioButton;
