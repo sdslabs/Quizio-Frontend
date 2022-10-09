@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGetQuestionWithAccessCode } from '@api/quizzes/useQuestions';
+import { useGetQuestion } from '@api/quizzes/useQuestions';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useGetResponse, useUpdateResponse } from '@api/quizzes/useResponse';
 import { useSelector } from 'react-redux';
@@ -25,7 +25,7 @@ const Question = ({ accessCode }) => {
   const { currentQuestion, currentQuestionIndex } = useGiveQuizStore();
 
   // Get question query
-  const { data, isLoading, isSuccess } = useGetQuestionWithAccessCode(currentQuestion, accessCode);
+  const { data, isLoading, isSuccess } = useGetQuestion(currentQuestion, accessCode);
 
   // update response mutation
   const { isSuccess: responseSucess } = useUpdateResponse();

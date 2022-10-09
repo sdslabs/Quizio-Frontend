@@ -2,10 +2,10 @@ import axiosInstance from '@api/axiosInstance';
 
 export const addSectionToQuiz = ({ quizID }) => axiosInstance.post(`/quizzes/${quizID}/sections`);
 
-export const getSectionDetails = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}`);
+export const getSectionDetails = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}/${queryKey[2]}`);
 
 export const updateSectionDetails = ({ sectionID, body }) => axiosInstance.put(`/quizzes/sections/${sectionID}`, body);
 
 export const deleteSection = ({ sectionID }) => axiosInstance.delete(`/quizzes/sections/${sectionID}`);
 
-export const getSectionDetailsWithAccessCode = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}/${queryKey[2]}`);
+// export const getSectionDetailsWithAccessCode = ({ queryKey }) => axiosInstance.get(`/quizzes/sections/${queryKey[1]}/${queryKey[2]}`);

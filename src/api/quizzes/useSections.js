@@ -10,12 +10,12 @@ export const useUpdateSection = () => useMutation(fetchers.updateSectionDetails)
 
 export const useDeleteSection = () => useMutation(fetchers.deleteSection);
 
-export const useGetMultipleSections = (sectionIDs) => useQueries(sectionIDs.map((ID) => ({
-	queryKey: [`getSection-${ID}`, ID],
+export const useGetMultipleSections = (sectionIDs, accessCode) => useQueries(sectionIDs.map((ID) => ({
+	queryKey: [`getSection-${ID}`, ID, accessCode],
 	queryFn: fetchers.getSectionDetails,
 })));
 
-export const useGetMultipleSectionsWithAccessCode = (sectionIDs, accessCode) => useQueries(sectionIDs.map((ID) => ({
-	queryKey: [`getSection-${ID}`, ID, accessCode],
-	queryFn: fetchers.getSectionDetailsWithAccessCode,
-})));
+// export const useGetMultipleSectionsWithAccessCode = (sectionIDs, accessCode) => useQueries(sectionIDs.map((ID) => ({
+// 	queryKey: [`getSection-${ID}`, ID, accessCode],
+// 	queryFn: fetchers.getSectionDetailsWithAccessCode,
+// })));

@@ -20,7 +20,7 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
     isSuccess: quizDataSuccess,
     isLoading: quizDataLoading,
   } = useGetQuiz(quizID);
-
+  // here we need to send the accesscode to get it correctly, so do we fetch it from backend?
   const {
     data: accessCodeData,
     isSuccess: accessCodeDataSuccess,

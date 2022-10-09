@@ -5,8 +5,8 @@ export const useCreateQuiz = () => useMutation(fetchers.createNewQuiz);
 
 export const useGetAllQuizzes = () => useQuery('getAllQuizzes', fetchers.getAllQuizzes);
 
-export const useGetQuiz = (quizID) => useQuery(['getQuizDetails', quizID], fetchers.getQuizByID,
- { enabled: !!quizID });
+export const useGetQuiz = (quizID, accessCode) => useQuery(['getQuizDetails', quizID, accessCode],
+fetchers.getQuizByID, { enabled: !!quizID });
 
 export const useUpdateQuiz = () => useMutation(fetchers.updateQuizByID);
 
@@ -24,5 +24,5 @@ export const useGetRankList = (quizID) => useQuery(['getQuizRankList', quizID], 
 
 export const useGetQuizzesCreatedByUser = () => useQuery(['getQuizzesCreatedByUser'], fetchers.getQuizzesCreatedByUser);
 
-export const useGetQuizWithAccessCode = (quizID, accessCode) => useQuery(['getQuizDetails', quizID, accessCode],
-fetchers.getQuizByIDWithAccessCode, { enabled: !!quizID });
+// export const useGetQuizWithAccessCode = (quizID, accessCode) => useQuery(['getQuizDetails', quizID, accessCode],
+// fetchers.getQuizByIDWithAccessCode, { enabled: !!quizID });

@@ -3,7 +3,7 @@ import DropDownIcon from '@icons/dropdownArrowDown.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useParams, useHistory } from 'react-router-dom';
-import { useGetMultipleSectionsWithAccessCode } from '@api/quizzes/useSections';
+import { useGetMultipleSections } from '@api/quizzes/useSections';
 import '@styles/pages/give_quiz/sidenav.scss';
 import log from '@utils/log';
 
@@ -24,7 +24,7 @@ const AllSections = () => {
 
   const { sectionID, accessCode } = useParams();
 
-  const result = useGetMultipleSectionsWithAccessCode(quiz?.sections || [], accessCode);
+  const result = useGetMultipleSections(quiz?.sections || [], accessCode);
 
   const isSuccess = result.every((data) => !data.isLoading);
 
