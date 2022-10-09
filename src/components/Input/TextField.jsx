@@ -36,14 +36,17 @@ const TextField = ({
               <div>
                   <label htmlFor={id} className="absolute top-0 text-sm text-grey-N6">
                       {label}
+                      {' '}
+                      {isReq && (
+                      <span className={`user-quiz-registration-required-field ${isReq ? '' : 'hidden'
+              }`}
+                      >
+                          *
+                      </span>
+)}
                   </label>
               </div>
-              <div
-                className={`user-quiz-registration-required-field ${isReq ? '' : 'hidden'
-            }`}
-              >
-                  <p>*</p>
-              </div>
+
           </div>
           <input
             value={val}

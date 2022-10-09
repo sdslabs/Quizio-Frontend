@@ -27,18 +27,21 @@ const UserQuizRegistration = ({
   const [email, setEmail] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [orgName, setOrgName] = useState('');
+  // details stand for additional details to be provided by the user
   const [detail1, setDetail1] = useState({});
   const [detail2, setDetail2] = useState({});
   const [detail3, setDetail3] = useState({});
   const [detail1Value, setDetail1Value] = useState('');
   const [detail2Value, setDetail2Value] = useState('');
   const [detail3Value, setDetail3Value] = useState('');
-  const [contactNoError, setContactNoError] = useState(null);
-  const [emailError, setEmailError] = useState(null);
-  const [areDetailsFilled, setAreDetailsFilled] = useState(false);
-  const [detail1Error, setDetail1Error] = useState(null);
-  const [detail2Error, setDetail2Error] = useState(null);
-  const [detail3Error, setDetail3Error] = useState(null);
+  // const [contactNoError, setContactNoError] = useState(null);
+  // const [emailError, setEmailError] = useState(null);
+  // const [areDetailsFilled, setAreDetailsFilled] = useState(false);
+  // const [detail1Error, setDetail1Error] = useState(null);
+  // const [detail2Error, setDetail2Error] = useState(null);
+  // const [detail3Error, setDetail3Error] = useState(null);
+  let contactError = null; let emailError = null; let detail1Error = null; let
+    detail2Error = null;
 
   // Old data
   const userEmail = useSelector((state) => state.auth.user?.email);
@@ -46,57 +49,44 @@ const UserQuizRegistration = ({
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
 
-  const handleReqField = () => {
-    console.log('quiz data dekhlo', quizData);
-  };
-
   const handleDataValidation = () => {
     const contactNoFormat = /^\d{10}$/;
     const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
-    const gsuiteEmailFormat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z]+\.iitr\.ac\.in*)/;
+    // const gsuiteEmailFormat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z]+\.iitr\.ac\.in*)/;
     // change this to allow gsuite ids
 
     if (!contactNo.match(contactNoFormat)) {
       console.log('handle contact number');
-      setContactNoError('Invalid number format');
-      console.log(contactNoError);
+      contactError = 'invalid contact number';
     } else {
-      setContactNoError(null, () => {
-        console.log(contactNoError);
-      });
-      console.log(contactNoError, 'in else');
+      contactError = '';
     }
 
-    if (!email.match(emailFormat || gsuiteEmailFormat)) {
+    if (!email.match(emailFormat)) {
       console.log('handle email');
-      setEmailError('Invalid email format');
-      console.log(emailError);
+      emailError = 'invalid email id';
     } else {
-      setContactNoError(null, () => {
-        console.log(emailError);
-      });
-      console.log(emailError);
+      emailError = '';
     }
 
-    if (detail1Value === null && detail1.isRequired) {
-      setDetail1Error('This is a mandatory field');
+    if (detail1Value === '' && detail1.isRequired) {
+      detail1Error = 'this is a required field';
+      console.log('detail1Error ', detail1Error);
     } else {
-      setDetail1Error(null);
+      detail1Error = '';
     }
-    if (detail2Value === null && detail2.isRequired) {
-      setDetail2Error('This is a mandatory field');
+    if (detail2Value === '' && detail2.isRequired) {
+      detail2Error = 'this is a required field';
+      console.log(detail2Error);
     } else {
-      setDetail2Error(null);
+      detail2Error = '';
     }
-    if (detail3Value === null && detail3.isRequired) {
-      setDetail3Error('This is a mandatory field');
-    } else {
-      setDetail3Error(null);
-    }
+    // console.log(contactError, emailError, detail1Error, detail2Error);
+    return ((contactError === '') && (emailError === '') && (detail1Error === '') && (detail2Error === ''));
   };
 
-  const handleRegisterParticipant = () => {
-    handleDataValidation();
+  const handleRegisterParticipant = async () => {
+    const isNoError = await handleDataValidation();
     const body = {
       quizID,
       accessCode: 'SDSLabs', // TODO: remove hardcoding after test
@@ -118,9 +108,9 @@ const UserQuizRegistration = ({
         value: detail3Value,
       },
     };
-    log({ body });
-    if (contactNoError === null || emailError === null) {
-      console.log('idhar nahi aana', contactNoError);
+    log({ isNoError });
+    if (isNoError) {
+      console.log('idhar nahi aana', body);
       mutateRegisterParticipant({ body });
     }
   };
@@ -146,27 +136,27 @@ const UserQuizRegistration = ({
     setContactNo(userPhoneNumber || '');
   }, [userEmail, userFirstName, userLastName, userPhoneNumber]);
 
-  useEffect(() => {
-    setAreDetailsFilled(
-      !!firstName
-      && !!lastName
-      && !!email
-      && !!contactNo
-      && !!orgName
-      && !!(detail1.key ? !!detail1Value : true)
-      && !!(detail2.key ? !!detail2Value : true)
-      && !!(detail3.key ? !!detail3Value : true),
-    );
-  }, [
-    firstName,
-    lastName,
-    email,
-    contactNo,
-    orgName,
-    detail1Value,
-    detail2Value,
-    detail3Value,
-  ]);
+  // useEffect(() => {
+  //   setAreDetailsFilled(
+  //     !!firstName
+  //     && !!lastName
+  //     && !!email
+  //     && !!contactNo
+  //     && !!orgName
+  //     && !!(detail1.key ? !!detail1Value : true)
+  //     && !!(detail2.key ? !!detail2Value : true)
+  //     && !!(detail3.key ? !!detail3Value : true),
+  //   );
+  // }, [
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   contactNo,
+  //   orgName,
+  //   detail1Value,
+  //   detail2Value,
+  //   detail3Value,
+  // ]);
 
   return (
       <div className="user-quiz-registration">
@@ -223,7 +213,7 @@ const UserQuizRegistration = ({
                             id="Email"
                             placeholder=""
                             label="Email"
-                            error={setEmailError}
+                  //  error={setEmailError}
                             val={email}
                             setVal={setEmail}
                             disabled
@@ -238,7 +228,7 @@ const UserQuizRegistration = ({
                             id="Contact No."
                             placeholder="Candidate&#39;s contact number"
                             label="Contact No."
-                            error={contactNoError}
+                            error={contactError}
                             val={contactNo}
                             setVal={setContactNo}
                             pattern={REGEX.contact}
@@ -302,7 +292,7 @@ const UserQuizRegistration = ({
                     id="detail3"
                     placeholder={detail3.value}
                     label={detail3.key}
-                    error={detail3Error}
+                // error={detail3Error}
                     val={detail3Value}
                     setVal={setDetail3Value}
                     isReq={detail3.isRequired}
@@ -314,15 +304,6 @@ const UserQuizRegistration = ({
                       <PrimaryCTA
                         text="Register"
                         onClick={handleRegisterParticipant}
-                        disabled={!areDetailsFilled}
-                      />
-                  </div>
-              </div>
-              <div className="user-quiz-registration-register-container">
-                  <div>
-                      <PrimaryCTA
-                        text="checking"
-                        onClick={handleReqField}
                       />
                   </div>
               </div>
