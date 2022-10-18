@@ -46,9 +46,59 @@ const UserQuizRegistration = ({
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
 
+  const updateValidationStates = () => {
+    const contactNoFormat = /^\d{10}$/;
+    if (!contactNo.match(contactNoFormat) || contactNo === '') {
+      console.log('handle contact number');
+      setContactNoError('Invalid contact number');
+    } else {
+      setContactNoError(null);
+    }
+
+    if (detail1Value === '' && detail1.isRequired) {
+      setDetail1Error('This is a required field');
+      console.log('detail1Error ', detail1Error);
+    } else {
+      setDetail1Error(null);
+    }
+
+    if (detail2Value === '' && detail2.isRequired) {
+      setDetail2Error('This is a required field');
+      console.log('detail2Error ', detail2Error);
+    } else {
+      setDetail2Error(null);
+    }
+
+    if (detail3Value === '' && detail3.isRequired) {
+      setDetail3Error('This is a required field');
+      console.log('detail3Error ', detail3Error);
+    } else {
+      setDetail3Error(null);
+    }
+
+    const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
+    // const gsuiteEmailFormat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z]+\.iitr\.ac\.in*)/;
+    // change this to allow gsuite ids
+    if (!email.match(emailFormat)) {
+      console.log('handle email');
+      setEmailError('Invalid email id');
+    } else {
+      setEmailError(null);
+    }
+  };
   const handleDataValidation = () => {
+    const contactNoFormat = /^\d{10}$/;
+    const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
+
+    if (!(detail1Value === '' && detail1.isRequired)
+      && !(detail2Value === '' && detail2.isRequired)
+      && !(detail3Value === '' && detail3.isRequired)
+      && !(!contactNo.match(contactNoFormat) || contactNo === '')
+      && !(!email.match(emailFormat))) return true;
+    updateValidationStates();
     console.log(contactNoError, emailError, detail1Error, detail2Error, detail3Error);
-    return ((contactNoError === null) && (emailError === null) && (detail1Error === null) && (detail2Error === null));
+    return false;
+    // return ((contactNoError === null) && (emailError === null) && (detail1Error === null) && (detail2Error === null));
   };
 
   const handleRegisterParticipant = async () => {
@@ -96,52 +146,21 @@ const UserQuizRegistration = ({
   }, [quizDataSuccess, quizData]);
 
   useEffect(() => {
-    const contactNoFormat = /^\d{10}$/;
-    if (!contactNo.match(contactNoFormat) || contactNo === '') {
-      console.log('handle contact number');
-      setContactNoError('Invalid contact number');
-    } else {
-      setContactNoError(null);
-    }
+
   }, [contactNo]);
 
   useEffect(() => {
-    if (detail1Value === '' && detail1.isRequired) {
-      setDetail1Error('This is a required field');
-      console.log('detail1Error ', detail1Error);
-    } else {
-      setDetail1Error(null);
-    }
+
   }, [detail1Value]);
 
   useEffect(() => {
-    if (detail2Value === '' && detail2.isRequired) {
-      setDetail2Error('This is a required field');
-      console.log('detail2Error ', detail2Error);
-    } else {
-      setDetail2Error(null);
-    }
   }, [detail2Value]);
 
   useEffect(() => {
-    if (detail3Value === '' && detail3.isRequired) {
-      setDetail3Error('This is a required field');
-      console.log('detail3Error ', detail3Error);
-    } else {
-      setDetail3Error(null);
-    }
   }, [detail3Value]);
 
   useEffect(() => {
-    const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
-    // const gsuiteEmailFormat = /^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z]+\.iitr\.ac\.in*)/;
-    // change this to allow gsuite ids
-    if (!email.match(emailFormat)) {
-      console.log('handle email');
-      setEmailError('Invalid email id');
-    } else {
-      setEmailError(null);
-    }
+
   }, [email]);
 
   useEffect(() => {
