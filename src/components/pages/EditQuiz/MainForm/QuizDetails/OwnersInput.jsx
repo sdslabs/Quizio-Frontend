@@ -22,11 +22,14 @@ const OwnersInput = ({ owners, setOwners }) => {
     if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 188) {
       if (owners.find((o) => o === owner)) {
         setEmailError('Already an owner!');
+        setOwner('');
       } else {
         newOwners.push(owner);
         const isEmailValid = await checkIfEmailExists(owner);
         if (isEmailValid.success) {
           setOwners([...newOwners]);
+          setOwner('');
+          setEmailError('');
         } else {
           setEmailError('Email not found!');
         }
@@ -73,7 +76,7 @@ OwnersInput.propTypes = {
 
 OwnersInput.defaultProps = {
   owners: [],
-  setOwners: () => {},
+  setOwners: () => { },
 };
 
 export default OwnersInput;

@@ -39,6 +39,7 @@ const QuizDetails = () => {
   const [isDateTimeValid, setIsDateTimeValid] = useState(true);
 
   const handleSubmit = () => {
+    console.log('is date time valid', isDateTimeValid);
     if (!isDateTimeValid) {
       log('Error with quiz time');
       return;

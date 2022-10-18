@@ -18,6 +18,7 @@ const DateTimeInput = ({
   const [endDate, setEndDate] = useState('');
   const [endTime, setEndTime] = useState('');
   const [examDuration, setExamDuration] = useState('');
+  const [dateTimeError, setDateTimeError] = useState('');
 
   const handleStartDate = (e) => setStartDate(e.target.value);
 
@@ -54,9 +55,14 @@ const DateTimeInput = ({
       const nowDayJS = dayjs(now);
 
       const isValid = startDayJS.isAfter(nowDayJS) && endDayJS.isAfter(startDayJS);
+      console.log('is valid', isValid);
       if (!isValid) {
+        console.log('setting datetime to false');
         setIsDateTimeValid(false);
+        setDateTimeError('Invalid Date');
       } else {
+        console.log('setting date time to true');
+        setDateTimeError(null);
         setIsDateTimeValid(true);
         let totalSeconds = endDayJS.diff(startDayJS, 'seconds');
         let hours = Math.floor(totalSeconds / 3600);
@@ -190,7 +196,7 @@ const DateTimeInput = ({
                     disabled
                     placeholder="Exam duration"
                     label="Exam Duration"
-                    error=""
+                    error={dateTimeError}
                     val={examDuration}
                   />
               </div>
@@ -208,9 +214,9 @@ DateTimeInput.propTypes = {
 };
 
 DateTimeInput.defaultProps = {
-  setIsDateTimeValid: () => {},
-  setStartDateTime: () => {},
-  setEndDateTime: () => {},
+  setIsDateTimeValid: () => { },
+  setStartDateTime: () => { },
+  setEndDateTime: () => { },
   defaultStartTime: '',
   defaultEndTime: '',
 };

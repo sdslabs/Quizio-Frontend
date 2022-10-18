@@ -18,7 +18,7 @@ const Question = () => {
   // Local states
   const [questionText, setQuestionText] = useState(null);
   const [questionTextError, setQuestionTextError] = useState(null);
-  const [questionType, setQuestionType] = useState('mcq');
+  const [questionType, setQuestionType] = useState('subjective');
   const [checkerNotes, setCheckersNotes] = useState('');
   const [marks, setMarks] = useState(0);
   const [marksError, setMarksError] = useState(null);
@@ -28,8 +28,8 @@ const Question = () => {
 
   // Question types
   const questionTypeOptions = [
-    { value: 'mcq', label: 'Multiple Choice' },
     { value: 'subjective', label: 'Subjective' },
+    { value: 'mcq', label: 'Multiple Choice' },
   ];
 
   // Global create quiz store
@@ -89,9 +89,9 @@ const Question = () => {
       setMarksError('');
     }
     console.log('isQuestionText', !(questionText === ''), !(questionText === null));
-    console.log('isMarks', !(marks === ''), !(marks === null), !(marks === 0));
+    console.log('isMarks', !(marks === ' '), !(marks === null), !(marks === 0));
     return (!(questionText === '') && !(questionText === null) && !(marks === 0)
-      && !(marks === null) && !(marks === ''));
+      && !(marks === null) && !(marks === '') && !(marks === ' '));
   };
 
   const handleSave = async () => {
@@ -105,6 +105,7 @@ const Question = () => {
     };
     log('Handle save!', { body });
     if (noError) {
+      console.log('saving');
       mutateQuestion({
         questionID: currentQuestionID,
         body,
@@ -247,7 +248,7 @@ const Question = () => {
                           options={questionTypeOptions}
                           onChange={handleQuestionType}
                           val={questionType}
-                          defaultValue="mcq"
+                          defaultValue="subjective"
                           className="text-sm p-5 w-200"
                         />
                     </div>
