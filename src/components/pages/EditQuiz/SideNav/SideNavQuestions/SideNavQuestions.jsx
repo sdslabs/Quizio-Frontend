@@ -26,7 +26,7 @@ const SideNavQuestions = () => {
     data: quizData,
     isLoading: isQuizLoading,
     isSuccess: isQuizLoaded,
-  } = useGetQuiz(quizID);
+  } = useGetQuiz(quizID, '');
 
   // Section Data updaters
   const {

@@ -17,13 +17,12 @@ import '@pagestyles/create_quiz/quiz_details.scss';
 const QuizDetails = () => {
   // Global Stores
   const { setCurrentStage, currentID } = useCreateQuizStore();
-
   // APIs
   const {
     isSuccess: isUpdateSuccess,
     mutate: mutateQuizDetails,
   } = useUpdateQuiz();
-  const { data } = useGetQuiz(currentID);
+  const { data } = useGetQuiz(currentID, '');
 
   // Form inputs
   const [quizName, setQuizName] = useState('');

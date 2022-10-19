@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import PropTypes from 'prop-types';
-import { useGetQuiz } from '@api/quizzes/useQuizzes';
+import { useGetAccessCode } from '@api/quizzes/useQuizzes';
 import { useCheckAccessCode } from '@api/register/useRegister';
 
 const StartQuizModal = ({ quizID, setShowModal }) => {
@@ -16,11 +16,11 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
 
   // apis
   const {
-    data: quizData,
-    isSuccess: quizDataSuccess,
-    isLoading: quizDataLoading,
-  } = useGetQuiz(quizID);
-  // here we need to send the accesscode to get it correctly, so do we fetch it from backend?
+    data: accessCodeReqData,
+    isSuccess: accessCodeReqDataSuccess,
+    isLoading: accessCodeReqDataLoading,
+  } = useGetAccessCode(quizID);
+
   const {
     data: accessCodeData,
     isSuccess: accessCodeDataSuccess,
@@ -30,14 +30,15 @@ const StartQuizModal = ({ quizID, setShowModal }) => {
 
   useEffect(async () => {
     setShowAccessCode(false);
-    console.log(quizData?.quiz);
-    if (quizDataSuccess) {
-      if (quizData?.quiz?.accessCode !== 'quizio') {
+    console.log(accessCodeReqData, 'accesscodereqdata');
+    if (accessCodeReqDataSuccess) {
+      console.log(accessCodeReqData, 'accesscodereqdata in if');
+      if (accessCodeReqData.data.data.isRequired) {
         setShowAccessCode(true);
       }
     }
     setLoading(false);
-  }, [quizDataSuccess, quizDataLoading]);
+  }, [accessCodeReqDataSuccess, accessCodeReqDataLoading]);
 
   const handleStartQuiz = () => {
     if (!showAccessCode) {

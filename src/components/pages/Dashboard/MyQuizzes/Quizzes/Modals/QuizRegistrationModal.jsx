@@ -19,7 +19,7 @@ const UserQuizRegistration = ({
     data: quizData,
     isSuccess: quizDataSuccess,
     isFetching: isFetchingQuizData,
-  } = useGetQuiz(quizID);
+  } = useGetQuiz(quizID, '');
 
   // Local States
   const [firstName, setFirstName] = useState('');
@@ -102,13 +102,13 @@ const UserQuizRegistration = ({
 
     setAreDetailsFilled(
       !!firstName
-        && !!lastName
-        && !!email
-        && !!contactNo
-        && !!orgName
-        && !!(detail1.key ? !!detail1Value : true)
-        && !!(detail2.key ? !!detail2Value : true)
-        && !!(detail3.key ? !!detail3Value : true),
+      && !!lastName
+      && !!email
+      && !!contactNo
+      && !!orgName
+      && !!(detail1.key ? !!detail1Value : true)
+      && !!(detail2.key ? !!detail2Value : true)
+      && !!(detail3.key ? !!detail3Value : true),
     );
   }, [
     firstName,
@@ -141,9 +141,8 @@ const UserQuizRegistration = ({
               <div className="user-quiz-registration-basic-details">
                   <div className="user-quiz-registration-name">
                       <div
-                        className={`user-quiz-registration-first-name ${
-                  userFirstName ? '' : 'hidden'
-                }`}
+                        className={`user-quiz-registration-first-name ${userFirstName ? '' : 'hidden'
+                  }`}
                       >
                           <TextField
                             id="First name"
@@ -155,9 +154,8 @@ const UserQuizRegistration = ({
                           />
                       </div>
                       <div
-                        className={`user-quiz-registration-last-name ${
-                  userLastName ? '' : 'hidden'
-                }`}
+                        className={`user-quiz-registration-last-name ${userLastName ? '' : 'hidden'
+                  }`}
                       >
                           <TextField
                             id="Last name"
@@ -170,9 +168,8 @@ const UserQuizRegistration = ({
                       </div>
                   </div>
                   <div
-                    className={`user-quiz-registration-contact ${
-                userEmail ? '' : 'hidden'
-              }`}
+                    className={`user-quiz-registration-contact ${userEmail ? '' : 'hidden'
+                }`}
                   >
                       <div className="user-quiz-registration-contact-email">
                           <TextField
@@ -187,9 +184,8 @@ const UserQuizRegistration = ({
                           />
                       </div>
                       <div
-                        className={`user-quiz-registration-contact-contactno ${
-                  userPhoneNumber ? '' : 'hidden'
-                }`}
+                        className={`user-quiz-registration-contact-contactno ${userPhoneNumber ? '' : 'hidden'
+                  }`}
                       >
                           <TextField
                             id="Contact No."
@@ -218,9 +214,8 @@ const UserQuizRegistration = ({
               </div>
               {detail1.key && (
               <div
-                className={`user-quiz-registration-field-input ${
-                detail1.key ? '' : 'hidden'
-              }`}
+                className={`user-quiz-registration-field-input ${detail1.key ? '' : 'hidden'
+                }`}
               >
                   <TextField
                     id="detail1"
@@ -234,9 +229,8 @@ const UserQuizRegistration = ({
           )}
               {detail2.key && (
               <div
-                className={`user-quiz-registration-field-input ${
-                detail2.key ? '' : 'hidden'
-              }`}
+                className={`user-quiz-registration-field-input ${detail2.key ? '' : 'hidden'
+                }`}
               >
                   <TextField
                     id="detail2"
@@ -250,9 +244,8 @@ const UserQuizRegistration = ({
           )}
               {detail3.key && (
               <div
-                className={`user-quiz-registration-field-input ${
-                detail3.key ? '' : 'hidden'
-              }`}
+                className={`user-quiz-registration-field-input ${detail3.key ? '' : 'hidden'
+                }`}
               >
                   <TextField
                     id="detail3"

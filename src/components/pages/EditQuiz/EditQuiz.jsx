@@ -10,30 +10,30 @@ import '@pagestyles/create_quiz/index.scss';
 import Loading from '../Loading';
 
 const EditQuiz = () => {
-  const { quizID } = useParams();
-  const { setCurrentID } = useCreateQuizStore();
-  const { isLoading } = useGetQuiz(quizID);
+    const { quizID } = useParams();
+    const { setCurrentID } = useCreateQuizStore();
+    const { isLoading } = useGetQuiz(quizID, '');
 
-  useEffect(() => {
-    log({ quizID });
-    setCurrentID(quizID);
-  }, [quizID]);
+    useEffect(() => {
+        log({ quizID });
+        setCurrentID(quizID);
+    }, [quizID]);
 
-  return (
-      <>
-          {isLoading ? (
-              <Loading />
-      ) : (
-          <div className="create-quiz">
-              <Navbar />
-              <div className="create-quiz-main">
-                  <SideNav />
-                  <MainForm />
-              </div>
-          </div>
-      )}
-      </>
-  );
+    return (
+        <>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <div className="create-quiz">
+                    <Navbar />
+                    <div className="create-quiz-main">
+                        <SideNav />
+                        <MainForm />
+                    </div>
+                </div>
+            )}
+        </>
+    );
 };
 
 export default EditQuiz;

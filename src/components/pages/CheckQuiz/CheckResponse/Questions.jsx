@@ -14,7 +14,7 @@ import { useGetResponse } from '@api/quizzes/useResponse';
 
 const QuestionsWrapper = () => {
   const { quizID } = useParams();
-  const { data, isSuccess } = useGetQuiz(quizID);
+  const { data, isSuccess } = useGetQuiz(quizID, '');
   const { setQuiz, currentQuestion, currentSection } = useCheckQuizStore();
 
   useEffect(() => {
@@ -191,7 +191,7 @@ const Question = () => {
             id="notes"
             placeholder="Write notes"
             val={questionData.checkerNotes || ''}
-            setVal={() => {}}
+            setVal={() => { }}
           />
       </div>
   );
@@ -204,7 +204,7 @@ const MCQ = ({ questionText, options, selected }) => (
             <div key={choice.quizioID}>
                 <RadioButton
                   text={choice.choice}
-                  onChange={() => {}}
+                  onChange={() => { }}
                   checked={selected === index}
                   quizioID={choice.quizioID}
                 />
@@ -226,7 +226,7 @@ const Descriptive = ({ questionText, answer }) => (
           id="DescriptiveAnswer"
           placeholder=""
           val={answer.toString() || ''}
-          setVal={() => {}}
+          setVal={() => { }}
         />
     </div>
 );

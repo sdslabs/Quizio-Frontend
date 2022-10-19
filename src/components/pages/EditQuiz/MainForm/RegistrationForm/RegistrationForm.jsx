@@ -13,7 +13,7 @@ const RegistrationForm = () => {
     isSuccess: isUpdateSuccess,
     mutate: mutateQuizDetails,
   } = useUpdateQuiz();
-  const { data } = useGetQuiz(currentID);
+  const { data } = useGetQuiz(currentID, '');
 
   const [fields, setFields] = useState({
     detail1: {

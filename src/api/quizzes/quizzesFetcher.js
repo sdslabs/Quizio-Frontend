@@ -21,8 +21,18 @@ export const getAllQuizzes = async () => {
 
 export const getQuizByID = async ({ queryKey }) => {
 	try {
-		log('fetching Quiz', { quizID: queryKey[1] });
-		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}`);
+		log('fetching Quiz', { quizID: queryKey[1] }, { accessCode: queryKey[2] });
+		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}/${queryKey[2]}`);
+		return res.data.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
+export const getAccessCode = async ({ queryKey }) => {
+	try {
+		log('fetching Access Code', { quizID: queryKey[1] });
+		const res = await axiosInstance.get(`/quizzes/${queryKey[1]}/accessCode`);
 		return res.data.data;
 	} catch (e) {
 		return e.response.data;

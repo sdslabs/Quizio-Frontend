@@ -8,6 +8,9 @@ export const useGetAllQuizzes = () => useQuery('getAllQuizzes', fetchers.getAllQ
 export const useGetQuiz = (quizID, accessCode) => useQuery(['getQuizDetails', quizID, accessCode],
 fetchers.getQuizByID, { enabled: !!quizID });
 
+export const useGetAccessCode = (quizID) => useQuery(['getQuizAccessCode', quizID],
+fetchers.getAccessCode, { enabled: !!quizID });
+
 export const useUpdateQuiz = () => useMutation(fetchers.updateQuizByID);
 
 export const useDeleteQuiz = () => useMutation(fetchers.deleteQuizByID);

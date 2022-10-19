@@ -18,7 +18,7 @@ const Top = () => {
     data: quizData,
     isLoading: isQuizLoading,
     isSuccess: isQuizSuccess,
-  } = useGetQuiz(quizID);
+  } = useGetQuiz(quizID, '');
   const {
     data: registrantsData,
     isLoading: isRegistrantsLoading,
