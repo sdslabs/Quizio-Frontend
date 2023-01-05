@@ -11,6 +11,7 @@ const UserQuizRegistration = () => {
   const [emailID, setEmailID] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [organisationName, setOrganisationName] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [fieldInput1, setfieldInput1] = useState('');
   const [fieldInput2, setfieldInput2] = useState('');
   const [fieldInput3, setfieldInput3] = useState('');
@@ -78,6 +79,16 @@ const UserQuizRegistration = () => {
                     val={organisationName}
                     setVal={setOrganisationName}
                     disabled
+                  />
+              </div>
+              <div className="user-quiz-registration-access-code">
+                  <TextField
+                    id="Access Code"
+                    placeholder="Enter access code"
+                    label="Access Code"
+                    error=""
+                    val={accessCode}
+                    setVal={setAccessCode}
                   />
               </div>
           </div>
