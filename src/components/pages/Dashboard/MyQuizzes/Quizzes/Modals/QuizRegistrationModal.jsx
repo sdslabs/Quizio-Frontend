@@ -216,6 +216,7 @@ const UserQuizRegistration = ({
                         setVal={setOrgName}
                       />
                   </div>
+                  { quizData.quiz.accessCode && (
                   <div className="user-quiz-registration-access-code">
                       <TextField
                         id="Access Code"
@@ -226,6 +227,7 @@ const UserQuizRegistration = ({
                         setVal={setAccessCode}
                       />
                   </div>
+              )}
               </div>
               <div className="user-quiz-registration-additional-details-title">
                   Additional Details
