@@ -1,39 +1,46 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Navbar from '@components/Navbar/Navbar';
-import useCreateQuizStore from '@redux/store/zustand/createQuiz';
-import { useGetQuiz } from '@api/quizzes/useQuizzes';
-import log from '@utils/log';
-import SideNav from './SideNav';
-import MainForm from './MainForm';
-import '@pagestyles/create_quiz/index.scss';
-import Loading from '../Loading';
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import Navbar from '@components/Navbar/Navbar'
+import useCreateQuizStore from '@redux/store/zustand/createQuiz'
+import { useGetQuiz } from '@api/quizzes/useQuizzes'
+import SideNav from './SideNav'
+import MainForm from './MainForm'
+import '@pagestyles/create_quiz/index.scss'
+import Loading from '../Loading'
+import { toast } from 'react-toastify'
 
 const EditQuiz = () => {
-  const { quizID } = useParams();
-  const { setCurrentID } = useCreateQuizStore();
-  const { isLoading } = useGetQuiz(quizID);
+  const { quizID } = useParams()
+  const setCurrentID = useCreateQuizStore((state) => state.setCurrentID)
+  const setQuizData = useCreateQuizStore((state) => state.setQuizData)
+
+  const { isSuccess, isLoading, data, isError } = useGetQuiz(quizID)
 
   useEffect(() => {
-    log({ quizID });
-    setCurrentID(quizID);
-  }, [quizID]);
+    if (isSuccess) {
+      setQuizData(data)
+    }
+    if (isError) {
+      toast.error('Error while fetching quiz')
+    }
+    setCurrentID(quizID)
+  }, [quizID, isSuccess, isError, data])
 
   return (
-      <>
-          {isLoading ? (
-              <Loading />
+    <>
+      {isLoading ? (
+        <Loading />
       ) : (
-          <div className="create-quiz">
-              <Navbar />
-              <div className="create-quiz-main">
-                  <SideNav />
-                  <MainForm />
-              </div>
+        <div className='create-quiz'>
+          <Navbar />
+          <div className='create-quiz-main'>
+            <SideNav />
+            <MainForm />
           </div>
+        </div>
       )}
-      </>
-  );
-};
+    </>
+  )
+}
 
-export default EditQuiz;
+export default EditQuiz

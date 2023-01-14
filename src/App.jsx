@@ -16,6 +16,7 @@ import { setUser } from '@actions/auth';
 import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
 import log from '@utils/log';
 import './index.css';
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -56,32 +57,33 @@ const App = () => {
   }, []);
 
   return (
-      <>
-          {loading ? (
-              <LoadingPage />
+    <>
+      <ToastContainer />
+      {loading ? (
+        <LoadingPage />
       ) : (
-          <Switch>
-              {/* Dashboard page */}
-              <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
-              {/* Create or edit a quiz */}
-              <Route
-                path="/quiz/edit/:quizID"
-                component={user.role === 'superadmin' ? EditQuiz : Page404}
-              />
-              {/* Check a quiz */}
-              <Route
-                path="/quiz/check/:quizID"
-                component={user.role === 'superadmin' ? CheckQuiz : Page404}
-              />
-              {/* Attempt a quiz */}
-              <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
-              {/* Demo page for components */}
-              {/* <Route exact path="/components" component={Components} /> */}
-              {/* 404 Page */}
-              <Route path="" component={Page404} />
-          </Switch>
+        <Switch>
+          {/* Dashboard page */}
+          <Route exact path='/' component={isLoggedIn ? Dashboard : JoinUs} />
+          {/* Create or edit a quiz */}
+          <Route
+            path='/quiz/edit/:quizID'
+            component={user.role === 'superadmin' ? EditQuiz : Page404}
+          />
+          {/* Check a quiz */}
+          <Route
+            path='/quiz/check/:quizID'
+            component={user.role === 'superadmin' ? CheckQuiz : Page404}
+          />
+          {/* Attempt a quiz */}
+          <Route path='/quiz/attempt/:quizID' component={GiveQuiz} />
+          {/* Demo page for components */}
+          {/* <Route exact path="/components" component={Components} /> */}
+          {/* 404 Page */}
+          <Route path='' component={Page404} />
+        </Switch>
       )}
-      </>
-  );
+    </>
+  )
 };
 export default App;

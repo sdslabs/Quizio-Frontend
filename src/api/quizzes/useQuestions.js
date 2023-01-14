@@ -3,7 +3,16 @@ import * as fetchers from './questionFetcher';
 
 export const useAddQuestion = () => useMutation(fetchers.addQuestionToSection);
 
-export const useGetQuestion = (questionID) => useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, { enabled: !!questionID });
+export const useGetQuestion = (questionID) =>
+  useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, {
+    enabled: !questionID,
+  })
+
+export const useGetQuestionWithoutCache = (questionID) =>
+  useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, {
+    skip: !questionID,
+    cacheTime: 0,
+  })
 
 export const useUpdateQuestion = () => useMutation(fetchers.updateQuestionByID);
 

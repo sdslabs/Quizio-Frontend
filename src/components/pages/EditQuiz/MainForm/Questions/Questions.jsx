@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
-import useCreateQuizStore from '@redux/store/zustand/createQuiz';
-import log from '@utils/log';
-import Question from './Question';
-import SectionDescription from './SectionDescription';
+import useCreateQuizStore from '@redux/store/zustand/createQuiz'
+import QuestionView from './Question/QuestionView'
+import SectionDescription from './SectionDescription'
 
 const Questions = () => {
-  const { showQuestion } = useCreateQuizStore();
+  const showQuestion = useCreateQuizStore((state) => state.showQuestion)
 
-  useEffect(() => {
-    log('Questions Page showQuestion update', { showQuestion });
-  }, [showQuestion]);
+  return showQuestion ? <QuestionView /> : <SectionDescription />
+}
 
-  return showQuestion ? <Question /> : <SectionDescription />;
-};
-
-export default Questions;
+export default Questions

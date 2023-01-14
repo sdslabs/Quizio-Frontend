@@ -5,7 +5,7 @@ import QuizDetails from './QuizDetails';
 import RegistrationForm from './RegistrationForm';
 
 const MainForm = () => {
-  const { currentStage } = useCreateQuizStore();
+  const currentStage = useCreateQuizStore((state) => state.currentStage)
 
   return (
       <div className="create-quiz-main-form">
@@ -18,7 +18,7 @@ const MainForm = () => {
           case 'Questions':
             return <Questions />;
           default:
-            return <QuizDetails />;
+            return null
         }
       })()}
       </div>
