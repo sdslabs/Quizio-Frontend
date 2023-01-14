@@ -3,6 +3,7 @@ import Title from './Title'
 import Select from 'react-select'
 import { useEffect, useState } from 'react'
 import { useToggleQuestionType } from '@api/quizzes/useQuestions'
+import { toast } from 'react-toastify'
 
 const questionTypeValueMap = {
   mcq: { value: 'mcq', label: 'Multiple Choice' },
@@ -17,7 +18,11 @@ const QuestionViewHeader = () => {
   const activeQuestionIdx = useCreateQuizStore((state) => state.activeQuestion)
   const [questionType, setQuestionType] = useState(null)
 
-  const { isLoading: isToggleLoading, mutate: mutateToggleQuestion } = useToggleQuestionType()
+  const {
+    isLoading: isToggleLoading,
+    mutate: mutateToggleQuestion,
+    isSuccess: isToggleSuccess,
+  } = useToggleQuestionType()
 
   const onToggleChange = (newType) => {
     if (questionType.value !== newType.value) {
@@ -26,6 +31,12 @@ const QuestionViewHeader = () => {
       setQuestionData({ ...question, type: newType.value })
     }
   }
+
+  useEffect(() => {
+    if (isToggleSuccess) {
+      toast.success('Question Type Switched successfully')
+    }
+  }, [isToggleSuccess])
 
   useEffect(() => {
     if (question?.type) {
