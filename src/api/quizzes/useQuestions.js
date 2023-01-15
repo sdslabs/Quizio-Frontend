@@ -5,12 +5,12 @@ export const useAddQuestion = () => useMutation(fetchers.addQuestionToSection);
 
 export const useGetQuestion = (questionID) =>
   useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, {
-    enabled: !questionID,
+    enabled: Boolean(questionID),
   })
 
 export const useGetQuestionWithoutCache = (questionID) =>
   useQuery(['getQuestionByID', questionID], fetchers.getQuestionByID, {
-    skip: !questionID,
+    enabled: Boolean(questionID),
     cacheTime: 0,
   })
 

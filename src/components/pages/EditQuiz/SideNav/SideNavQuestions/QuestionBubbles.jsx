@@ -11,9 +11,12 @@ const getStoreData = (state) => ({
   addQuestion: state.addQuestion,
   sections: state.sections,
   activeSectionIndex: state.activeSectionIndex,
+  activeQuestion: state.activeQuestion,
   addQuestionToSection: state.addQuestionToSection,
   toggleQuestionForm: state.toggleQuestionForm,
   setActiveQuestion: state.setActiveQuestion,
+  showQuestion: state.showQuestion,
+  questionLength: state.question?.length ?? 0,
 })
 
 const QuestionBubbles = ({ isActive, questions }) => {
@@ -24,6 +27,9 @@ const QuestionBubbles = ({ isActive, questions }) => {
     addQuestionToSection,
     toggleQuestionForm,
     setActiveQuestion,
+    activeQuestion,
+    showQuestion,
+    questionLength,
   } = useCreateQuizStore(getStoreData, shallow)
 
   const {
@@ -33,14 +39,15 @@ const QuestionBubbles = ({ isActive, questions }) => {
     mutate: mutateAddQuestion,
   } = useAddQuestion()
 
-  const handleAddNewQuestion = () => {
-    const sectionID = sections[activeSectionIndex]?.id
-    mutateAddQuestion({ sectionID })
-  }
-
   const handleBubbleClick = (quesIDx) => {
     setActiveQuestion(quesIDx)
     toggleQuestionForm(true)
+  }
+
+  const handleAddNewQuestion = () => {
+    const sectionID = sections[activeSectionIndex]?.id
+    mutateAddQuestion({ sectionID })
+    handleBubbleClick(questionLength)
   }
 
   useEffect(() => {
@@ -63,7 +70,10 @@ const QuestionBubbles = ({ isActive, questions }) => {
           key={question?.id || quesIDx}
           type='button'
         >
-          <QuestionBubble number={quesIDx + 1} type='not-visited' />
+          <QuestionBubble
+            number={quesIDx + 1}
+            type={activeQuestion === quesIDx && showQuestion ? 'active' : 'not-visited'}
+          />
         </button>
       ))}
       <button onClick={handleAddNewQuestion} type='button'>

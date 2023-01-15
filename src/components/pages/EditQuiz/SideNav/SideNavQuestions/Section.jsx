@@ -5,10 +5,24 @@ import useCreateQuizStore from '@store/zustand/createQuiz'
 import { useGetSectionDetails } from '@api/quizzes/useSections'
 import { ReactComponent as DropdownArrowDownIcon } from '@icons/dropdownArrowDown.svg'
 import QuestionBubbles from './QuestionBubbles'
+import shallow from 'zustand/shallow'
+
+const getCreateQuizStoreData = (state) => ({
+  activeSectionIndex: state.activeSectionIndex,
+  updateSection: state.updateSection,
+  setActiveSection: state.setActiveSection,
+  toggleQuestionForm: state.toggleQuestionForm,
+  setActiveQuestion: state.setActiveQuestion,
+})
 
 const Section = ({ index, section }) => {
-  const { activeSectionIndex, updateSection, setActiveSection, toggleQuestionForm } =
-    useCreateQuizStore()
+  const {
+    activeSectionIndex,
+    updateSection,
+    setActiveSection,
+    toggleQuestionForm,
+    setActiveQuestion,
+  } = useCreateQuizStore(getCreateQuizStoreData, shallow)
   const isActive = activeSectionIndex === index
 
   const { isLoading, isSuccess, data } = useGetSectionDetails(section?.id)
@@ -28,6 +42,7 @@ const Section = ({ index, section }) => {
   const handleSwitchSection = () => {
     setActiveSection(index)
     toggleQuestionForm(false)
+    setActiveQuestion(0)
   }
 
   if (isLoading) return <div>Loading Section...</div>
