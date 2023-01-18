@@ -27,6 +27,7 @@ const UserQuizRegistration = ({
   const [email, setEmail] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [orgName, setOrgName] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [detail1, setDetail1] = useState({});
   const [detail2, setDetail2] = useState({});
   const [detail3, setDetail3] = useState({});
@@ -45,12 +46,12 @@ const UserQuizRegistration = ({
   const handleRegisterParticipant = () => {
     const body = {
       quizID,
-      accessCode: 'SDSLabs', // TODO: remove hardcoding after test
       firstName,
       lastName,
       email,
       contactNo,
       orgName,
+      accessCode,
       detail1: {
         key: detail1?.key,
         value: detail1Value,
@@ -107,6 +108,7 @@ const UserQuizRegistration = ({
         && !!email
         && !!contactNo
         && !!orgName
+        && !!accessCode
         && !!(detail1.key ? !!detail1Value : true)
         && !!(detail2.key ? !!detail2Value : true)
         && !!(detail3.key ? !!detail3Value : true),
@@ -117,6 +119,7 @@ const UserQuizRegistration = ({
     email,
     contactNo,
     orgName,
+    accessCode,
     detail1Value,
     detail2Value,
     detail3Value,
@@ -213,6 +216,18 @@ const UserQuizRegistration = ({
                         setVal={setOrgName}
                       />
                   </div>
+                  { quizData.quiz.accessCode && (
+                  <div className="user-quiz-registration-access-code">
+                      <TextField
+                        id="Access Code"
+                        placeholder="Enter access code"
+                        label="Access Code"
+                        error=""
+                        val={accessCode}
+                        setVal={setAccessCode}
+                      />
+                  </div>
+              )}
               </div>
               <div className="user-quiz-registration-additional-details-title">
                   Additional Details
