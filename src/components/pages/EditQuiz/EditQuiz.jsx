@@ -27,7 +27,9 @@ const EditQuiz = () => {
           <div className="create-quiz">
               <Navbar />
               <div className="create-quiz-main">
-                  <SideNav />
+                  <SideNav
+                    quizID={quizID}
+                  />
                   <MainForm />
               </div>
           </div>
