@@ -229,9 +229,11 @@ const UserQuizRegistration = ({
                   </div>
               )}
               </div>
+              {detail1.key && (
               <div className="user-quiz-registration-additional-details-title">
                   Additional Details
               </div>
+              )}
               {detail1.key && (
               <div
                 className={`user-quiz-registration-field-input ${
