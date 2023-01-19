@@ -33,7 +33,6 @@ const QuizCard = ({ data }) => {
     isLoading,
     isSuccess: RegisterSuccess,
     isError,
-    error,
     mutate: mutateRegisterParticipant,
     data: RegisterData,
   } = useRegisterParticipant();
