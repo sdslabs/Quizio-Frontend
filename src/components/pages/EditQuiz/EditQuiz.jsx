@@ -31,12 +31,14 @@ const EditQuiz = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='create-quiz'>
+        <div className="create-quiz">
           <Navbar />
-          <div className='create-quiz-main'>
-            <SideNav />
-            <MainForm />
-          </div>
+            <div className="create-quiz-main">
+              <SideNav
+                quizID={quizID}
+              />
+              <MainForm />
+            </div>
         </div>
       )}
     </>
