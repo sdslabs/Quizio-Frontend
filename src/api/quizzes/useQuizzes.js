@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from 'react-query';
 import * as fetchers from './quizzesFetcher';
+import { publishQuiz } from './publishQuiz';
 
 export const useCreateQuiz = () => useMutation(fetchers.createNewQuiz);
 
@@ -23,3 +24,5 @@ export const useGetRankList = (quizID) => useQuery(['getQuizRankList', quizID], 
 export const useGenerateRanks = (quizID) => useMutation(['getRanks', quizID], fetchers.generateRanklist);
 
 export const useGetQuizzesCreatedByUser = () => useQuery(['getQuizzesCreatedByUser'], fetchers.getQuizzesCreatedByUser);
+
+export const usePublishQuiz = () => useMutation(publishQuiz);

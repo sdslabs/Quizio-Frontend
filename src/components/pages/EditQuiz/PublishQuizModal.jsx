@@ -4,12 +4,39 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import '@pagestyles/register/start_quiz_modal.scss';
 import { publishQuiz } from '@api/quizzes/publishQuiz';
+import log from '@utils/log';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { usePublishQuiz } from '@api/quizzes/useQuizzes';
 
 const PublishQuizModal = ({ quizID, setShowModal }) => {
-    const handlePublishQuiz = () => {
-        publishQuiz({ quizID });
-        // handle publishQuiz in case of successful publication or in case of error
+    const history = useHistory();
+
+    const handlePublishQuiz = () => {           //quiz publish success is handled
+      mutate({quizID :quizID});                 //error left cause design clarity needed
     };
+
+    const {
+      mutate, isSuccess,
+     } = usePublishQuiz();
+
+    useEffect(() => {
+      if(isSuccess){
+        history.push(`/`);
+        toast.success('Quiz Published Successfully!', {
+          position: 'top-center',
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }, [isSuccess]);
+
     return (
         <div className="start-quiz">
             <div className="start-quiz-title">
