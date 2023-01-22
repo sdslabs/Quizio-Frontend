@@ -6,6 +6,8 @@ export const useCreateQuiz = () => useMutation(fetchers.createNewQuiz);
 
 export const useGetAllQuizzes = () => useQuery('getAllQuizzes', fetchers.getAllQuizzes);
 
+export const useGetAllPublishedQuizzes = () => useQuery('getAllPublishedQuizzes', fetchers.getAllPublishedQuizzes);
+
 export const useGetQuiz = (quizID) => useQuery(['getQuizDetails', quizID], fetchers.getQuizByID, { enabled: !!quizID });
 
 export const useUpdateQuiz = () => useMutation(fetchers.updateQuizByID);

@@ -19,6 +19,15 @@ export const getAllQuizzes = async () => {
 	}
 };
 
+export const getAllPublishedQuizzes = async () => {
+	try {
+		const res = await axiosInstance.get('/quizzes/published');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
 export const getQuizByID = async ({ queryKey }) => {
 	try {
 		log('fetching Quiz', { quizID: queryKey[1] });

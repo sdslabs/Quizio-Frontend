@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { useGetAllQuizzes } from '@api/quizzes/useQuizzes';
+import { useGetAllPublishedQuizzes } from '@api/quizzes/useQuizzes';
 import { useGetCurrentServerTime } from '@api/misc/useTime';
 import log from '@utils/log';
 import QuizCard from './QuizCard';
@@ -12,7 +12,7 @@ const Quizzes = () => {
     isFetching: isQuizzesFetching,
     isSuccess: isQuizzesSuccess,
     isRefetching: isQuizzesRefetching,
-  } = useGetAllQuizzes();
+  } = useGetAllPublishedQuizzes();
 
   const {
     data: serverTimeData,
