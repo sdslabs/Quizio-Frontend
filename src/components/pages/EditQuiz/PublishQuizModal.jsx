@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 import '@pagestyles/register/start_quiz_modal.scss';
-import { publishQuiz } from '@api/quizzes/publishQuiz';
-import log from '@utils/log';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { usePublishQuiz } from '@api/quizzes/useQuizzes';
 
 const PublishQuizModal = ({ quizID, setShowModal }) => {
@@ -20,7 +17,7 @@ const PublishQuizModal = ({ quizID, setShowModal }) => {
 
     const {
       mutate, isSuccess, isError
-    } = usePublishQuiz();usePublishQuiz();
+    } = usePublishQuiz();
 
     useEffect(() => {
       if(isSuccess){
