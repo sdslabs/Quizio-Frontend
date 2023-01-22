@@ -14,13 +14,13 @@ import { usePublishQuiz } from '@api/quizzes/useQuizzes';
 const PublishQuizModal = ({ quizID, setShowModal }) => {
     const history = useHistory();
 
-    const handlePublishQuiz = () => {           //quiz publish success is handled
-      mutate({quizID :quizID});                 //error left cause design clarity needed
+    const handlePublishQuiz = () => {
+      mutate({quizID :quizID});           
     };
 
     const {
-      mutate, isSuccess,
-     } = usePublishQuiz();
+      mutate, isSuccess, isError
+    } = usePublishQuiz();usePublishQuiz();
 
     useEffect(() => {
       if(isSuccess){
@@ -35,7 +35,20 @@ const PublishQuizModal = ({ quizID, setShowModal }) => {
           progress: undefined,
         });
       }
-    }, [isSuccess]);
+      
+      if(isError){
+        setShowModal(false);
+        toast.error('Quiz Publish Failed!', {
+          position: 'top-center',
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    },[isSuccess, isError]);
 
     return (
         <div className="start-quiz">
