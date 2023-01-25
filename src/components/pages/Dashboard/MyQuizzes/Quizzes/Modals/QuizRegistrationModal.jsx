@@ -42,7 +42,6 @@ const UserQuizRegistration = ({
   const userFirstName = useSelector((state) => state.auth.user?.firstName);
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
-  const regexContact=REGEX.contact;
 
   const handleRegisterParticipant = () => {
     const body = {
@@ -101,8 +100,6 @@ const UserQuizRegistration = ({
       detail1: !!(detail1.key ? !!detail1Value : true),
       detail2: !!(detail2.key ? !!detail2Value : true),
       detail3: !!(detail3.key ? !!detail3Value : true),
-      regexTest: regexContact.test(contactNo),
-      accessCode: (!!accessCode ||  !quizData?.quiz?.accessCode),
     });
 
     setAreDetailsFilled(
@@ -111,11 +108,10 @@ const UserQuizRegistration = ({
         && !!email
         && !!contactNo
         && !!orgName
-        && (!!accessCode || !quizData?.quiz?.accessCode)
+        && !!accessCode
         && !!(detail1.key ? !!detail1Value : true)
         && !!(detail2.key ? !!detail2Value : true)
-        && !!(detail3.key ? !!detail3Value : true)
-        && regexContact.test(contactNo)
+        && !!(detail3.key ? !!detail3Value : true),
     );
   }, [
     firstName,
