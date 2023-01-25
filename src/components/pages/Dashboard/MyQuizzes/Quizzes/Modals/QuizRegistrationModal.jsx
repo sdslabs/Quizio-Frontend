@@ -112,9 +112,9 @@ const UserQuizRegistration = ({
         && !!contactNo
         && !!orgName
         && (!!accessCode || !quizData?.quiz?.accessCode)
-        && !!(detail1.key ? !!detail1Value : true)
-        && !!(detail2.key ? !!detail2Value : true)
-        && !!(detail3.key ? !!detail3Value : true)
+        && !!(detail1.key && detail1.isRequired ? !!detail1Value : true)
+        && !!(detail2.key && detail2.isRequired ? !!detail2Value : true)
+        && !!(detail3.key && detail3.isRequired ? !!detail3Value : true)
         && regexContact.test(contactNo)
     );
   }, [
