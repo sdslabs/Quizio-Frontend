@@ -6,6 +6,7 @@ import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import { ReactComponent as DeleteButton } from '@icons/delete_button.svg';
 import log from '@utils/log';
 
 const SectionDescription = () => {
@@ -72,10 +73,21 @@ const SectionDescription = () => {
     }
   }, [isQuestionAdded]);
 
+  // Todo: Add delete section functionality
+  const handleDeleteSection = () => {
+  }
+
   return (
       <div className="quiz-details">
-          <div className="quiz-details-title">
+          <div className="quiz-details-title" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center',}}>
+              <div>
               {currentSection ? 'Section Description' : 'Add New Section To Begin'}
+              </div>
+              <div>
+                  <button type='button' className='w-6 h-6 m-2' onClick={handleDeleteSection}>
+                    <DeleteButton />
+                  </button>
+              </div>
           </div>
           {currentSection && (
           <div className="quiz-details-name">

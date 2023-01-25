@@ -60,6 +60,7 @@ const QuestionEditBodyView = () => {
         val={questionText}
         placeholder='Enter question here'
         setVal={setQuestionText}
+        isQuestion={true}
       />
       <QuestionInputArea
         choices={choices}

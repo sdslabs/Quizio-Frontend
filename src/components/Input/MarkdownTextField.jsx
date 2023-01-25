@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { ReactComponent as DeleteButton } from '@icons/delete_button.svg';
 
 const MarkdownTextField = ({
   id,
@@ -15,6 +16,7 @@ const MarkdownTextField = ({
   val,
   setVal,
   onKeyDown,
+  isQuestion,
 }) => {
   const [navState, setNavState] = useState('write');
   const [currentLen, setCurrentLen] = useState(0);
@@ -27,30 +29,49 @@ const MarkdownTextField = ({
     setCurrentLen(newVal.length);
   };
 
+  // TODO: Add delete question functionality
+  const handleDeleteQuestion = () => {
+  };
+
   return (
       <div className="py-1">
-          <button
-            type="button"
-            onClick={() => setNavState('write')}
-            className={
-          navState === 'write'
-            ? 'px-4 py-0 border-b-2 border-purple-V6 text-purple-V6'
-            : 'px-4 py-0 border-b-2 border-grey-N6 text-grey-N6'
-        }
-          >
-              Write
-          </button>
-          <button
-            type="button"
-            onClick={() => setNavState('preview')}
-            className={
-          navState === 'preview'
-            ? 'px-4 py-0 border-purple-600 border-b-2 text-purple-600'
-            : 'px-4 py-0 border-b-2 border-grey-N6 text-grey-N6'
-        }
-          >
-              Preview
-          </button>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        }}>
+          <div>
+                <button
+                  type="button"
+                  onClick={() => setNavState('write')}
+                  className={
+                navState === 'write'
+                  ? 'px-4 py-0 border-b-2 border-purple-V6 text-purple-V6'
+                  : 'px-4 py-0 border-b-2 border-grey-N6 text-grey-N6'
+              }
+                >
+                    Write
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNavState('preview')}
+                  className={
+                navState === 'preview'
+                  ? 'px-4 py-0 border-purple-600 border-b-2 text-purple-600'
+                  : 'px-4 py-0 border-b-2 border-grey-N6 text-grey-N6'
+              }
+                >
+                    Preview
+                </button>
+          </div>
+
+          {isQuestion && (
+             <div>
+                <button type='button' className='w-6 h-6 m-2' onClick={handleDeleteQuestion}>
+                  <DeleteButton />
+                </button>
+             </div>
+           )
+          }
+        </div>
 
           <>
               {navState === 'write' ? (
