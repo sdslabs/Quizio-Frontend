@@ -60,12 +60,6 @@ const QuestionEditBodyView = () => {
     if (isQuestionDeleted) {
       toast.success('Question deleted')
       useCreateQuizStore.getState().deleteQuestion()
-      if (useCreateQuizStore.getState().getSectionQuestionCount() === 0) {
-        useCreateQuizStore.getState().toggleQuestionForm()
-      }
-      else {
-        useCreateQuizStore.getState().setActiveQuestion(0)
-      }
     } 
   }, [isQuestionDeleted]);
 
@@ -75,13 +69,10 @@ const QuestionEditBodyView = () => {
     history.go(0)
   }
 
-    // TODO: Add delete question functionality
   const handleDeleteQuestion = () => {
     log('Deleting question...')
-    log("############# Question ID: ", questionBody.id)
-    const qID = questionBody.id
     mutateDeleteQuestion({
-      questionID: qID,
+      questionID: questionBody.id,
     })
   };
 

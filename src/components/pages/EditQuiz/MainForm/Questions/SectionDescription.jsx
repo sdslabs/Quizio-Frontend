@@ -85,11 +85,9 @@ const SectionDescription = () => {
       log('Section deleted in backend, Redirecting to quiz details page.');
       useCreateQuizStore.getState().removeSection(activeSectionIndex);
       useCreateQuizStore.getState().setActiveSection(-1);
-      // navigate('/create-quiz/details');
     }
   }, [isSectionDeleted]);
 
-  // Todo: Add delete section functionality
   const handleDeleteSection = () => {
     log('Deleting section!');
     mutateDeleteSection({ sectionID: currentSection.id });
