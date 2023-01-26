@@ -93,6 +93,37 @@ const useCreateQuizStore = create((set) => ({
       stateCopy[oldQuestionID] = question
       return stateCopy
     }),
+
+  /* Remove section from quiz */
+  removeSection: (idx) => {
+    set((state) => {
+      const sectionIdx = idx
+      state.sections = [
+        ...state.sections.slice(0, sectionIdx),
+        ...state.sections.slice(sectionIdx + 1),
+      ]
+    })
+  },
+
+  /* Remove question from section */
+  deleteQuestion: () => {
+    set((state) => {
+      const activeSection = state.sections[state.activeSectionIndex]
+      const questionIdx = state.activeQuestion
+      state.sections = [
+        ...state.sections.slice(0, state.activeSectionIndex),
+        {
+          ...activeSection,
+          questions: [
+            ...activeSection.questions.slice(0, questionIdx),
+            ...activeSection.questions.slice(questionIdx + 1),
+          ],
+        },
+        ...state.sections.slice(state.activeSectionIndex + 1),
+      ]
+    })
+  },
+
   /* Toggle active question */
   setActiveQuestion: (index) => set(() => ({ activeQuestion: index })),
   /* Toggle activate question form */

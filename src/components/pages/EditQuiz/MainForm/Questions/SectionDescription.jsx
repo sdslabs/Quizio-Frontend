@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { useAddQuestion } from '@api/quizzes/useQuestions';
-import { useUpdateSection } from '@api/quizzes/useSections';
+import { useUpdateSection, useDeleteSection } from '@api/quizzes/useSections';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import TextField from '@components/Input/TextField';
@@ -34,6 +34,13 @@ const SectionDescription = () => {
     isLoading: isSectionUpdating,
     isSuccess: isSectionUpdated,
   } = useUpdateSection();
+
+  // Delete section
+  const {
+    mutate: mutateDeleteSection,
+    isLoading: isSectionDeleting,
+    isSuccess: isSectionDeleted,
+  } = useDeleteSection();
 
   const currentSection = sections[activeSectionIndex];
   const setSectionTitle = (title) => updateSection({ ...currentSection, title });
@@ -73,9 +80,20 @@ const SectionDescription = () => {
     }
   }, [isQuestionAdded]);
 
+  useEffect(() => {
+    if (isSectionDeleted) {
+      log('Section deleted in backend, Redirecting to quiz details page.');
+      useCreateQuizStore.getState().removeSection(activeSectionIndex);
+      useCreateQuizStore.getState().setActiveSection(-1);
+      // navigate('/create-quiz/details');
+    }
+  }, [isSectionDeleted]);
+
   // Todo: Add delete section functionality
   const handleDeleteSection = () => {
-  }
+    log('Deleting section!');
+    mutateDeleteSection({ sectionID: currentSection.id });
+  };
 
   return (
       <div className="quiz-details">

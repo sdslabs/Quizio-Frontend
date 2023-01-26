@@ -1,3 +1,4 @@
+import { useDeleteQuestion } from '@api/quizzes/useQuestions'
 import PrimaryCTA from '@components/Buttons/PrimaryCTA'
 import SecondaryCTA from '@components/Buttons/SecondaryCTA'
 import MarkdownTextField from '@components/Input/MarkdownTextField'
@@ -7,6 +8,7 @@ import { toast } from 'react-toastify'
 import QuestionInputArea from './QuestionInputArea'
 import useSaveQuestion from './utils/useSaveQuestion'
 import { useHistory } from 'react-router-dom'
+import log from '@utils/log';
 
 const QuestionEditBodyView = () => {
   const question = useCreateQuizStore((state) => state.currentQuestionData)
@@ -14,6 +16,12 @@ const QuestionEditBodyView = () => {
   const [choices, setChoices] = useState([])
   const [marks, setMarks] = useState(0)
   const [notes, setNotes] = useState('')
+
+  const {
+    mutate: mutateDeleteQuestion,
+    isLoading: isQuestionDeleting,
+    isSuccess: isQuestionDeleted,
+  } = useDeleteQuestion()
 
   useEffect(() => {
     if (question) {
@@ -48,10 +56,34 @@ const QuestionEditBodyView = () => {
     }
   }, [isSuccess])
 
+  useEffect(() => {
+    if (isQuestionDeleted) {
+      toast.success('Question deleted')
+      useCreateQuizStore.getState().deleteQuestion()
+      if (useCreateQuizStore.getState().getSectionQuestionCount() === 0) {
+        useCreateQuizStore.getState().toggleQuestionForm()
+      }
+      else {
+        useCreateQuizStore.getState().setActiveQuestion(0)
+      }
+    } 
+  }, [isQuestionDeleted]);
+
+
   const history = useHistory()
   const onDiscardChanges = () => {
     history.go(0)
   }
+
+    // TODO: Add delete question functionality
+  const handleDeleteQuestion = () => {
+    log('Deleting question...')
+    log("############# Question ID: ", questionBody.id)
+    const qID = questionBody.id
+    mutateDeleteQuestion({
+      questionID: qID,
+    })
+  };
 
   return (
     <>
@@ -61,6 +93,7 @@ const QuestionEditBodyView = () => {
         placeholder='Enter question here'
         setVal={setQuestionText}
         isQuestion={true}
+        onClickDelete={handleDeleteQuestion}
       />
       <QuestionInputArea
         choices={choices}

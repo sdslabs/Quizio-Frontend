@@ -17,6 +17,7 @@ const MarkdownTextField = ({
   setVal,
   onKeyDown,
   isQuestion,
+  onClickDelete,
 }) => {
   const [navState, setNavState] = useState('write');
   const [currentLen, setCurrentLen] = useState(0);
@@ -29,9 +30,6 @@ const MarkdownTextField = ({
     setCurrentLen(newVal.length);
   };
 
-  // TODO: Add delete question functionality
-  const handleDeleteQuestion = () => {
-  };
 
   return (
       <div className="py-1">
@@ -65,7 +63,7 @@ const MarkdownTextField = ({
 
           {isQuestion && (
              <div>
-                <button type='button' className='w-6 h-6 m-2' onClick={handleDeleteQuestion}>
+                <button type='button' className='w-6 h-6 m-2' onClick={onClickDelete}>
                   <DeleteButton />
                 </button>
              </div>
