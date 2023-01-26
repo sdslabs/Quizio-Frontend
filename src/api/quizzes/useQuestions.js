@@ -20,7 +20,7 @@ export const useDeleteQuestion = () => useMutation(fetchers.deleteQuestionByID);
 
 export const useToggleQuestionType = () => useMutation(fetchers.toggleQuestionType);
 
-export const useAddChoiceToQuestion = () => useMutation(fetchers.addChoiceToQuestion);
+export const useAddChoicesToQuestion = () => useMutation(fetchers.addChoicesToQuestion);
 
 export const useDeleteChoiceInQuestion = () => useMutation(fetchers.deleteChoiceInQuestion);
 
