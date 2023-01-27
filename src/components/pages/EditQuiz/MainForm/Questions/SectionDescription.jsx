@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { useAddQuestion } from '@api/quizzes/useQuestions';
-import { useUpdateSection } from '@api/quizzes/useSections';
+import { useUpdateSection, useDeleteSection } from '@api/quizzes/useSections';
 import useCreateQuizStore from '@redux/store/zustand/createQuiz';
 import MarkdownTextField from '@components/Input/MarkdownTextField';
 import TextField from '@components/Input/TextField';
 import PrimaryCTA from '@components/Buttons/PrimaryCTA';
+import { ReactComponent as DeleteButton } from '@icons/delete_button.svg';
 import log from '@utils/log';
 
 const SectionDescription = () => {
@@ -17,6 +18,8 @@ const SectionDescription = () => {
     addQuestionToSection,
     addQuestion,
     toggleQuestionForm,
+    removeSection,
+    setActiveSection,
   } = useCreateQuizStore();
 
   // Add question
@@ -33,6 +36,13 @@ const SectionDescription = () => {
     isLoading: isSectionUpdating,
     isSuccess: isSectionUpdated,
   } = useUpdateSection();
+
+  // Delete section
+  const {
+    mutate: mutateDeleteSection,
+    isLoading: isSectionDeleting,
+    isSuccess: isSectionDeleted,
+  } = useDeleteSection();
 
   const currentSection = sections[activeSectionIndex];
   const setSectionTitle = (title) => updateSection({ ...currentSection, title });
@@ -72,10 +82,29 @@ const SectionDescription = () => {
     }
   }, [isQuestionAdded]);
 
+  useEffect(() => {
+    if (isSectionDeleted) {
+      removeSection(activeSectionIndex);
+      setActiveSection(- 1);
+    }
+  }, [isSectionDeleted]);
+
+  const handleDeleteSection = () => {
+    log('Deleting section: ', currentSection.id)
+    mutateDeleteSection({ sectionID: currentSection.id });
+  };
+
   return (
       <div className="quiz-details">
-          <div className="quiz-details-title">
+          <div className="quiz-details-title" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center',}}>
+              <div>
               {currentSection ? 'Section Description' : 'Add New Section To Begin'}
+              </div>
+              <div>
+                  <button type='button' className='w-6 h-6 m-2' onClick={handleDeleteSection}>
+                    <DeleteButton />
+                  </button>
+              </div>
           </div>
           {currentSection && (
           <div className="quiz-details-name">

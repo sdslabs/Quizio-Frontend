@@ -1,3 +1,4 @@
+import { useDeleteQuestion } from '@api/quizzes/useQuestions'
 import PrimaryCTA from '@components/Buttons/PrimaryCTA'
 import SecondaryCTA from '@components/Buttons/SecondaryCTA'
 import MarkdownTextField from '@components/Input/MarkdownTextField'
@@ -7,13 +8,21 @@ import { toast } from 'react-toastify'
 import QuestionInputArea from './QuestionInputArea'
 import useSaveQuestion from './utils/useSaveQuestion'
 import { useHistory } from 'react-router-dom'
+import log from '@utils/log';
 
 const QuestionEditBodyView = () => {
   const question = useCreateQuizStore((state) => state.currentQuestionData)
+  const deleteQuestion = useCreateQuizStore((state) => state.deleteQuestion)
   const [questionText, setQuestionText] = useState('')
   const [choices, setChoices] = useState([])
   const [marks, setMarks] = useState(0)
   const [notes, setNotes] = useState('')
+
+  const {
+    mutate: mutateDeleteQuestion,
+    isLoading: isQuestionDeleting,
+    isSuccess: isQuestionDeleted,
+  } = useDeleteQuestion()
 
   useEffect(() => {
     if (question) {
@@ -48,10 +57,24 @@ const QuestionEditBodyView = () => {
     }
   }, [isSuccess])
 
+  useEffect(() => {
+    if (isQuestionDeleted) {
+      toast.success('Question deleted')
+      deleteQuestion()
+    } 
+  }, [isQuestionDeleted]);
+
+
   const history = useHistory()
   const onDiscardChanges = () => {
     history.go(0)
   }
+
+  const handleDeleteQuestion = () => {
+    mutateDeleteQuestion({
+      questionID: questionBody.id,
+    })
+  };
 
   return (
     <>
@@ -60,6 +83,8 @@ const QuestionEditBodyView = () => {
         val={questionText}
         placeholder='Enter question here'
         setVal={setQuestionText}
+        isQuestion
+        onClickDelete={handleDeleteQuestion}
       />
       <QuestionInputArea
         choices={choices}
