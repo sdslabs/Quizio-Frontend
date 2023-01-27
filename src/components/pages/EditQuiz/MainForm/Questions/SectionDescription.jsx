@@ -18,6 +18,8 @@ const SectionDescription = () => {
     addQuestionToSection,
     addQuestion,
     toggleQuestionForm,
+    removeSection,
+    setActiveSection,
   } = useCreateQuizStore();
 
   // Add question
@@ -82,14 +84,13 @@ const SectionDescription = () => {
 
   useEffect(() => {
     if (isSectionDeleted) {
-      log('Section deleted in backend, Redirecting to quiz details page.');
-      useCreateQuizStore.getState().removeSection(activeSectionIndex);
-      useCreateQuizStore.getState().setActiveSection(-1);
+      removeSection(activeSectionIndex);
+      setActiveSection(- 1);
     }
   }, [isSectionDeleted]);
 
   const handleDeleteSection = () => {
-    log('Deleting section!');
+    log('Deleting section: ', currentSection.id)
     mutateDeleteSection({ sectionID: currentSection.id });
   };
 

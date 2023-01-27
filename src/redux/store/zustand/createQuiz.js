@@ -96,15 +96,14 @@ const useCreateQuizStore = create((set) => ({
 
   /* Remove section from quiz */
   removeSection: (idx) => {
-    set((state) => {
-      return {
+    set((state) => ({
         sections: [
           ...state.sections.slice(0, idx),
           ...state.sections.slice(idx + 1),
         ],
         currentStage: 'Quiz Details',
       }
-    })
+    ))
   },
 
   /* Remove question from section */

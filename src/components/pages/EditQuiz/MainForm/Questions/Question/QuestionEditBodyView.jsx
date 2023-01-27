@@ -12,6 +12,7 @@ import log from '@utils/log';
 
 const QuestionEditBodyView = () => {
   const question = useCreateQuizStore((state) => state.currentQuestionData)
+  const deleteQuestion = useCreateQuizStore((state) => state.deleteQuestion)
   const [questionText, setQuestionText] = useState('')
   const [choices, setChoices] = useState([])
   const [marks, setMarks] = useState(0)
@@ -59,7 +60,7 @@ const QuestionEditBodyView = () => {
   useEffect(() => {
     if (isQuestionDeleted) {
       toast.success('Question deleted')
-      useCreateQuizStore.getState().deleteQuestion()
+      deleteQuestion()
     } 
   }, [isQuestionDeleted]);
 
@@ -70,7 +71,6 @@ const QuestionEditBodyView = () => {
   }
 
   const handleDeleteQuestion = () => {
-    log('Deleting question...')
     mutateDeleteQuestion({
       questionID: questionBody.id,
     })
@@ -83,7 +83,7 @@ const QuestionEditBodyView = () => {
         val={questionText}
         placeholder='Enter question here'
         setVal={setQuestionText}
-        isQuestion={true}
+        isQuestion
         onClickDelete={handleDeleteQuestion}
       />
       <QuestionInputArea
