@@ -17,10 +17,12 @@ const useSaveQuestion = (newQues) => {
       body: omit(newQues, ['id', 'choices']),
     })
 
-    addChoicesToQuestion({
-      questionID: newQues.id,
-      body: newQues.choices,
-    })
+    if (newQues.type === 'mcq'){
+      addChoicesToQuestion({
+        questionID: newQues.id,
+        body: newQues.choices,
+      })
+    }
   }
 
 
