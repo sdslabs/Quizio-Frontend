@@ -10,7 +10,7 @@ export const deleteQuestionByID = ({ questionID }) => axiosInstance.delete(`/qui
 
 export const toggleQuestionType = ({ questionID }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/toggle`);
 
-export const addChoiceToQuestion = ({ questionID, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/choices`, body);
+export const addChoicesToQuestion = ({ questionID, body }) => axiosInstance.put(`/quizzes/sections/questions/${questionID}/choices`, body);
 
 export const deleteChoiceInQuestion = ({ questionID, choiceID }) => axiosInstance
 	.delete(`/quizzes/sections/questions/${questionID}/choices/${choiceID}`);

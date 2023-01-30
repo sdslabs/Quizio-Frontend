@@ -1,5 +1,5 @@
 import {
-  useAddChoiceToQuestion,
+  useAddChoicesToQuestion,
   useDeleteAllChoicesInQuestion,
   useUpdateQuestion,
 } from '@api/quizzes/useQuestions'
@@ -9,10 +9,7 @@ import { useEffect } from 'react'
 const useSaveQuestion = (newQues) => {
   const { isLoading, isSuccess, mutate: mutateQuestion } = useUpdateQuestion()
 
-  const { mutate: addChoiceToQuestion } = useAddChoiceToQuestion()
-
-  const { isSuccess: deleteChoicesInQuestionSuccess, mutate: deleteChoicesInQuestion } =
-    useDeleteAllChoicesInQuestion()
+  const { mutate: addChoicesToQuestion } = useAddChoicesToQuestion()
 
   const onSave = () => {
     mutateQuestion({
@@ -20,21 +17,14 @@ const useSaveQuestion = (newQues) => {
       body: omit(newQues, ['id', 'choices']),
     })
 
-    if (newQues.type === 'mcq') {
-      deleteChoicesInQuestion({ questionID: newQues.id })
+    if (newQues.type === 'mcq'){
+      addChoicesToQuestion({
+        questionID: newQues.id,
+        body: newQues.choices,
+      })
     }
   }
 
-  useEffect(() => {
-    if (deleteChoicesInQuestionSuccess) {
-      newQues.choices.map((choice) =>
-        addChoiceToQuestion({
-          questionID: newQues.id,
-          body: choice,
-        }),
-      )
-    }
-  }, [deleteChoicesInQuestionSuccess])
 
   return {
     onSave,
