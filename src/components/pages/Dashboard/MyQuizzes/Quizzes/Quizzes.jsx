@@ -24,27 +24,24 @@ const Quizzes = () => {
 
   useEffect(async () => {
     if (isQuizzesSuccess && isServerTimeSuccess) {
-      const serverTime = dayjs(serverTimeData?.data?.data?.serverTime);
+      const serverTime = dayjs(serverTimeData?.data?.data?.serverTime)
 
       const upcomingFilter = (quiz) => {
-        if (quiz.startTime) {
-          const quizStartTime = dayjs(quiz.startTime);
-          return quizStartTime > serverTime;
-        }
-        return true;
-      };
+          const quizStartTime = dayjs(quiz.startTime)
+          return quizStartTime > serverTime
+      }
 
       setUpcomingQuizzes(
-        quizzesData?.data?.quizzes?.filter(
+        quizzesData?.data?.quizzesPublishedByUser?.filter(
           (quiz) => quiz.startTime && upcomingFilter(quiz),
         ),
-      );
+      )
 
       setOnGoingQuizzes(
-        quizzesData?.data?.quizzes?.filter(
+        quizzesData?.data?.quizzesPublishedByUser?.filter(
           (quiz) => quiz.startTime && !upcomingFilter(quiz),
         ),
-      );
+      )
     }
   }, [isQuizzesSuccess, isServerTimeSuccess]);
 
