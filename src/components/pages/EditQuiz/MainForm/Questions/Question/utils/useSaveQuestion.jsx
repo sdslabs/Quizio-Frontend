@@ -1,10 +1,5 @@
-import {
-  useAddChoicesToQuestion,
-  useDeleteAllChoicesInQuestion,
-  useUpdateQuestion,
-} from '@api/quizzes/useQuestions'
+import { useAddChoicesToQuestion, useUpdateQuestion } from '@api/quizzes/useQuestions'
 import { omit } from 'lodash'
-import { useEffect } from 'react'
 
 const useSaveQuestion = (newQues) => {
   const { isLoading, isSuccess, mutate: mutateQuestion } = useUpdateQuestion()

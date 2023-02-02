@@ -38,11 +38,7 @@ const SectionDescription = () => {
   } = useUpdateSection();
 
   // Delete section
-  const {
-    mutate: mutateDeleteSection,
-    isLoading: isSectionDeleting,
-    isSuccess: isSectionDeleted,
-  } = useDeleteSection();
+  const { mutate: mutateDeleteSection, isSuccess: isSectionDeleted } = useDeleteSection()
 
   const currentSection = sections[activeSectionIndex];
   const setSectionTitle = (title) => updateSection({ ...currentSection, title });
