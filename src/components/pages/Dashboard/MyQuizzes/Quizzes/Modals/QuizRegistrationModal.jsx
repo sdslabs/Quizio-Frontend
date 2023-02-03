@@ -7,10 +7,12 @@ import PrimaryCTA from '@components/Buttons/PrimaryCTA';
 import log from '@utils/log';
 import { useGetQuiz } from '@api/quizzes/useQuizzes';
 import '@pagestyles/register/user_quiz_registration.scss';
+import { ReactComponent as CrossIcon } from '@icons/cross.svg';
 
 const UserQuizRegistration = ({
   quizID,
   mutateRegisterParticipant,
+  setShowModal,
 }) => {
   // quiz data getter query
   const {
@@ -25,6 +27,7 @@ const UserQuizRegistration = ({
   const [email, setEmail] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [orgName, setOrgName] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [detail1, setDetail1] = useState({});
   const [detail2, setDetail2] = useState({});
   const [detail3, setDetail3] = useState({});
@@ -32,21 +35,24 @@ const UserQuizRegistration = ({
   const [detail2Value, setDetail2Value] = useState('');
   const [detail3Value, setDetail3Value] = useState('');
 
+  const [areDetailsFilled, setAreDetailsFilled] = useState(false);
+
   // Old data
   const userEmail = useSelector((state) => state.auth.user?.email);
   const userFirstName = useSelector((state) => state.auth.user?.firstName);
   const userLastName = useSelector((state) => state.auth.user?.lastName);
   const userPhoneNumber = useSelector((state) => state.auth.user?.phoneNumber);
+  const regexContact=REGEX.contact;
 
   const handleRegisterParticipant = () => {
     const body = {
       quizID,
-      accessCode: 'SDSLabs', // TODO: remove hardcoding after test
       firstName,
       lastName,
       email,
       contactNo,
       orgName,
+      accessCode,
       detail1: {
         key: detail1?.key,
         value: detail1Value,
@@ -72,9 +78,9 @@ const UserQuizRegistration = ({
     if (quizDataSuccess) {
       log({ quiz: quizData?.quiz });
       log({ detail1: quizData?.quiz?.detail1 });
-      setDetail1(quizData?.quiz?.detail1);
-      setDetail2(quizData?.quiz?.detail2);
-      setDetail3(quizData?.quiz?.detail3);
+      setDetail1(quizData?.quiz?.detail1 || false);
+      setDetail2(quizData?.quiz?.detail2 || false);
+      setDetail3(quizData?.quiz?.detail3 || false);
     }
   }, [quizDataSuccess, quizData]);
 
@@ -85,13 +91,61 @@ const UserQuizRegistration = ({
     setContactNo(userPhoneNumber || '');
   }, [userEmail, userFirstName, userLastName, userPhoneNumber]);
 
+  useEffect(() => {
+    log('truthy', {
+      firstName: !!firstName,
+      lastName: !!lastName,
+      email: !!email,
+      contactNo: !!contactNo,
+      orgName: !!orgName,
+      detail1: !!(detail1.key ? !!detail1Value : true),
+      detail2: !!(detail2.key ? !!detail2Value : true),
+      detail3: !!(detail3.key ? !!detail3Value : true),
+      regexTest: regexContact.test(contactNo),
+      accessCode: (!!accessCode ||  !quizData?.quiz?.accessCode),
+    });
+
+    setAreDetailsFilled(
+      !!firstName
+        && !!lastName
+        && !!email
+        && !!contactNo
+        && !!orgName
+        && (!!accessCode || !quizData?.quiz?.accessCode)
+        && !!(detail1.key && detail1.isRequired ? !!detail1Value : true)
+        && !!(detail2.key && detail2.isRequired ? !!detail2Value : true)
+        && !!(detail3.key && detail3.isRequired ? !!detail3Value : true)
+        && regexContact.test(contactNo)
+    );
+  }, [
+    firstName,
+    lastName,
+    email,
+    contactNo,
+    orgName,
+    accessCode,
+    detail1Value,
+    detail2Value,
+    detail3Value,
+  ]);
+
   return (
       <div className="user-quiz-registration">
           {isFetchingQuizData ? (
               <div>Fetching Quiz Details...</div>
       ) : (
           <>
-              <div className="user-quiz-registration-title">Registration Form</div>
+              <div className="flex justify-between items-center mb-6">
+                  <div className="user-quiz-registration-title">
+                      Registration Form
+                  </div>
+                  <CrossIcon
+                    className="cursor-pointer"
+                    onClick={() => {
+                setShowModal(false);
+              }}
+                  />
+              </div>
               <div className="user-quiz-registration-basic-details">
                   <div className="user-quiz-registration-name">
                       <div
@@ -166,10 +220,24 @@ const UserQuizRegistration = ({
                         setVal={setOrgName}
                       />
                   </div>
+                  { quizData.quiz.accessCode && (
+                  <div className="user-quiz-registration-access-code">
+                      <TextField
+                        id="Access Code"
+                        placeholder="Enter access code"
+                        label="Access Code"
+                        error=""
+                        val={accessCode}
+                        setVal={setAccessCode}
+                      />
+                  </div>
+              )}
               </div>
+              {detail1.key && (
               <div className="user-quiz-registration-additional-details-title">
                   Additional Details
               </div>
+              )}
               {detail1.key && (
               <div
                 className={`user-quiz-registration-field-input ${
@@ -220,7 +288,11 @@ const UserQuizRegistration = ({
           )}
               <div className="user-quiz-registration-register-container">
                   <div>
-                      <PrimaryCTA text="Register" onClick={handleRegisterParticipant} />
+                      <PrimaryCTA
+                        text="Register"
+                        onClick={handleRegisterParticipant}
+                        disabled={!areDetailsFilled}
+                      />
                   </div>
               </div>
           </>
@@ -231,5 +303,6 @@ const UserQuizRegistration = ({
 UserQuizRegistration.propTypes = {
   quizID: PropTypes.string.isRequired,
   mutateRegisterParticipant: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 export default UserQuizRegistration;

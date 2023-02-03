@@ -19,6 +19,15 @@ export const getAllQuizzes = async () => {
 	}
 };
 
+export const getAllPublishedQuizzes = async () => {
+	try {
+		const res = await axiosInstance.get('/quizzes/published');
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
 export const getQuizByID = async ({ queryKey }) => {
 	try {
 		log('fetching Quiz', { quizID: queryKey[1] });
@@ -47,6 +56,15 @@ export const submitQuizByID = async ({ quizID }) => {
 	}
 };
 
+export const checkIfQuizIsSubmitted = async ({ queryKey }) => {
+	try {
+		const res = await axiosInstance.get(`/submit/${queryKey[1]}`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};
+
 export const deleteQuizByID = async ({ quizID }) => {
 	try {
 		const res = await axiosInstance.delete(`/quizzes/${quizID}`);
@@ -65,4 +83,13 @@ export const getQuizzesCreatedByUser = async () => {
 	}
 };
 
-export const getQuizRankList = ({ queryKey }) => axiosInstance.post(`/quizzes/${queryKey[1]}/ranklist`);
+export const getQuizRankList = ({ queryKey }) => axiosInstance.get(`/quizzes/${queryKey[1]}/getRanklist`);
+
+export const generateRanklist = async ({ quizID }) => {
+	try {
+		const res = await axiosInstance.post(`/quizzes/${quizID}/ranklist`);
+		return res.data;
+	} catch (e) {
+		return e.response.data;
+	}
+};

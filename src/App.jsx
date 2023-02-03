@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -8,7 +8,7 @@ import Dashboard from '@pages/Dashboard';
 import EditQuiz from '@pages/EditQuiz';
 import GiveQuiz from '@pages/GiveQuiz';
 import CheckQuiz from '@pages/CheckQuiz';
-import Components from '@pages/Components';
+// import Components from '@pages/Components';
 import Page404 from '@pages/404';
 import LoadingPage from '@pages/Loading';
 
@@ -16,10 +16,12 @@ import { setUser } from '@actions/auth';
 import { checkAuth, loginWithJwtToken } from '@api/auth/authFetcher';
 import log from '@utils/log';
 import './index.css';
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const user = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -55,26 +57,33 @@ const App = () => {
   }, []);
 
   return (
-      <>
-          {loading ? (
-              <LoadingPage />
+    <>
+      <ToastContainer />
+      {loading ? (
+        <LoadingPage />
       ) : (
-          <Switch>
-              {/* Dashboard page */}
-              <Route exact path="/" component={isLoggedIn ? Dashboard : JoinUs} />
-              {/* Create or edit a quiz */}
-              <Route path="/quiz/edit/:quizID" component={EditQuiz} />
-              {/* Check a quiz */}
-              <Route path="/quiz/check/:quizID" component={CheckQuiz} />
-              {/* Attempt a quiz */}
-              <Route path="/quiz/attempt/:quizID" component={GiveQuiz} />
-              {/* Demo page for components */}
-              <Route exact path="/components" component={Components} />
-              {/* 404 Page */}
-              <Route path="" component={Page404} />
-          </Switch>
+        <Switch>
+          {/* Dashboard page */}
+          <Route exact path='/' component={isLoggedIn ? Dashboard : JoinUs} />
+          {/* Create or edit a quiz */}
+          <Route
+            path='/quiz/edit/:quizID'
+            component={user.role === 'superadmin' ? EditQuiz : Page404}
+          />
+          {/* Check a quiz */}
+          <Route
+            path='/quiz/check/:quizID'
+            component={user.role === 'superadmin' ? CheckQuiz : Page404}
+          />
+          {/* Attempt a quiz */}
+          <Route path='/quiz/attempt/:quizID' component={GiveQuiz} />
+          {/* Demo page for components */}
+          {/* <Route exact path="/components" component={Components} /> */}
+          {/* 404 Page */}
+          <Route path='' component={Page404} />
+        </Switch>
       )}
-      </>
-  );
+    </>
+  )
 };
 export default App;

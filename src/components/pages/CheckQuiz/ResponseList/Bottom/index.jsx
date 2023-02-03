@@ -8,7 +8,7 @@ import CheckingTable from '@components/pages/CheckQuiz/ResponseList/Bottom/Check
 import ModalWrapper from '@components/Modals/ModalWrapper';
 import AutoCheckModal from '@components/Modals/AutoCheck';
 import PublishResultsModal from '@components/Modals/PublishResults';
-import { useGetRankList } from '@api/quizzes/useQuizzes';
+import { useGetRankList, useGenerateRanks } from '@api/quizzes/useQuizzes';
 import log from '@utils/log';
 
 const SORT_TYPES = {
@@ -26,18 +26,28 @@ const Bottom = () => {
   const [showPublishQuizModal, setShowPublishQuizModal] = useState(false);
 
   const {
+    mutate: mutateGenerateRanklist,
+    isSuccess: isGenerateSuccess,
+  } = useGenerateRanks();
+
+  const handleRefresh = () => {
+    mutateGenerateRanklist({ quizID });
+  };
+
+  const {
     data: registrantsData,
+    refetch,
     isLoading: isRegistrantsLoading,
     isSuccess: isRegistrantsSuccess,
-  } = useGetRankList(quizID);
+} = useGetRankList(quizID, { cacheTime: 0, staleTime: 0, refetchInterval: 0 });
 
   useEffect(() => {
     if (isRegistrantsSuccess) {
       log({ registrantsData });
       setTableData(
-        registrantsData.data.data.rankList.rankList
+        registrantsData.data.data.rankList
           .map((val, index) => ({
-            sr_num: index + 1,
+            srNum: index + 1,
             name: val.name,
             rank: index + 1,
             marks: val.quizScore,
@@ -45,10 +55,16 @@ const Bottom = () => {
             registrantID: val.registrantID,
           }))
           .sort((val1, val2) => val1.progress - val2.progress)
-          .map((val, index) => ({ ...val, sr_num: index + 1 })),
-      );
+          .map((val, index) => ({ ...val, srNum: index + 1 })),
+      )
     }
-  }, [isRegistrantsSuccess]);
+  }, [isRegistrantsLoading, registrantsData, isRegistrantsSuccess]);
+
+  useEffect(() => {
+    if (isGenerateSuccess) {
+      refetch(quizID);
+    }
+  }, [isGenerateSuccess]);
 
   const sortTableData = (sortByval) => {
     switch (sortByval) {
@@ -56,36 +72,36 @@ const Bottom = () => {
         setTableData(
           tableData
             .sort((val1, val2) => val1.progress - val2.progress)
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.CHECKED_DES:
         setTableData(
           tableData
             .sort((val1, val2) => val2.progress - val1.progress)
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.ALPHA_ASC:
         setTableData(
           tableData
             .sort((val1, val2) => val1.name.localeCompare(val2.name))
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.ALPHA_DES:
         setTableData(
           tableData
             .sort((val1, val2) => -val1.name.localeCompare(val2.name))
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.RANKLIST:
         setTableData(
           tableData
             .sort((val1, val2) => val1.rank - val2.rank)
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       default:
       // do nothing
@@ -131,6 +147,9 @@ const Bottom = () => {
                     additionalClassName="quiz-check-button"
                     onClick={handlePublish}
                   />
+              </div>
+              <div className="refresh">
+                  <PrimaryCTA text="Refresh" onClick={handleRefresh} />
               </div>
           </div>
           <CheckingTable data={tableData} quizID={quizID} />

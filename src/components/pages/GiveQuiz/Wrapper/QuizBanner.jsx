@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TimerIcon from '@icons/timerIcon.svg';
 import QuestionBubble from '@components/Visual/QuestionBubble';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import Countdown from '@components/Misc/Countdown';
+import { useGetCurrentServerTime } from '@api/misc/useTime';
+import dayjs from 'dayjs';
 
 const QuizBanner = () => {
+  const [timeOffset, setTimeOffset] = useState(0);
+
   const {
     quiz,
     answeredQuestions,
@@ -12,6 +16,11 @@ const QuizBanner = () => {
     markedAnsweredQuestions,
     totalQuestions,
   } = useGiveQuizStore();
+
+  const {
+    data: serverTimeData,
+    isSuccess: isServerTimeSuccess,
+  } = useGetCurrentServerTime();
 
   const QuestionBubbles = [
     {
@@ -40,6 +49,11 @@ const QuizBanner = () => {
     },
   ];
 
+  useEffect(() => {
+    if (isServerTimeSuccess) {
+      setTimeOffset(dayjs() - dayjs(serverTimeData?.data?.data?.serverTime));
+    }
+  }, [isServerTimeSuccess]);
   return (
       <div className="border-b border-grey-N4 pl-10 flex items-stretch">
           <div className="flex flex-wrap flex-grow justify-center disable-hover">
@@ -53,7 +67,7 @@ const QuizBanner = () => {
           <div className="py-4 px-8 bg-purple-V1 flex items-center">
               <img src={TimerIcon} alt="" className="mr-2" />
               <p className="text-purple-V6 whitespace-nowrap">
-                  <Countdown time={quiz?.endTime} />
+                  <Countdown time={quiz?.endTime} offset={timeOffset} />
               </p>
           </div>
       </div>

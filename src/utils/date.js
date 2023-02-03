@@ -1,5 +1,5 @@
 function convertToAMPM(hours, minutes) {
-	return `${hours % 12 || 12}:${minutes === 0 ? '00' : minutes} ${(hours < 12 || hours === 24) ? 'AM' : 'PM'}`;
+	return `${hours % 12 || 12}:${minutes === 0 ? '00' : minutes.toString().padStart(2, '0')} ${(hours < 12 || hours === 24) ? 'AM' : 'PM'}`;
 }
 
 export const getDateTime = (timestamp) => {

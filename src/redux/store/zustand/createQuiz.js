@@ -10,86 +10,134 @@ const defaultSection = {
 };
 
 const useCreateQuizStore = create((set) => ({
+  /* Quiz ID */
+  currentID: '',
+  /* Quiz creation stage */
+  currentStage: 'Quiz Details',
+  /* Total sections in a quiz */
+  sections: [],
+  /* Total Questions */
+  questions: [],
+  /* Active Section index */
+  activeSectionIndex: 0,
+  /* Active Question index */
+  activeQuestion: 0,
+  /* Activate Question Form */
+  showQuestion: false,
+  /* Quiz Data Current */
+  currentQuizData: null,
+  currentQuestionData: null,
 
-    /* Quiz ID */
-    currentID: '',
-    /* Quiz creation stage */
-    currentStage: 'Quiz Details',
-    /* Total sections in a quiz */
-    sections: [],
-    /* Total Questions */
-    questions: [],
-    /* Active Section index */
-    activeSectionIndex: 0,
-    /* Active Question index */
-    activeQuestion: 0,
-    /* Activate Question Form */
-    showQuestion: false,
-
-    /* Set Current Quiz ID */
-    setCurrentID: (id) => set(() => ({ currentID: id })),
-    /* Toggle side nav option */
-    setCurrentStage: (stage) => set(() => ({ currentStage: stage })),
-    /* Toggle active section */
-    setActiveSection: (index) => set(() => ({ activeSectionIndex: index })),
-    /* Add new section using ID */
-    addSection: (sectionID) => set((state) => {
-        const newSection = {
-            ...defaultSection,
-            id: sectionID,
-            title: `Section ${state.sections.length + 1}`,
-        };
-        if (!state.sections.find((section) => section.id === sectionID)) {
-            return {
-                sections: [...state.sections, newSection],
-            };
+  /* Set Current Quiz ID */
+  setCurrentID: (id) => set(() => ({ currentID: id })),
+  /* Toggle side nav option */
+  setCurrentStage: (stage) => set(() => ({ currentStage: stage })),
+  /* Toggle active section */
+  setActiveSection: (index) => set(() => ({ activeSectionIndex: index })),
+  /* Add new section using ID */
+  addSection: (sectionID) =>
+    set((state) => {
+      const newSection = {
+        ...defaultSection,
+        id: sectionID,
+        title: `Section ${state.sections.length + 1}`,
+      }
+      if (!state.sections.find((section) => section.id === sectionID)) {
+        return {
+          sections: [...state.sections, newSection],
         }
-        return {
-            sections: [...state.sections],
-        };
+      }
+      return {
+        sections: [...state.sections],
+      }
     }),
-    /* Update section details for current section */
-    updateSection: (update, id) => set((state) => {
-        const sectionIDx = id ? _.findIndex(state.sections, { id }) : state.activeSectionIndex;
-        const staleSection = state.sections[sectionIDx];
-        const updatedSection = { ...staleSection, ...update };
+  /* Update section details for current section */
+  updateSection: (update, id) =>
+    set((state) => {
+      const sectionIDx = id ? _.findIndex(state.sections, { id }) : state.activeSectionIndex
+      const staleSection = state.sections[sectionIDx]
+      const updatedSection = { ...staleSection, ...update }
 
-        return {
-            sections: [
-                ...state.sections.slice(0, sectionIDx),
-                updatedSection,
-                ...state.sections.slice(sectionIDx + 1),
-            ],
-        };
+      return {
+        sections: [
+          ...state.sections.slice(0, sectionIDx),
+          updatedSection,
+          ...state.sections.slice(sectionIDx + 1),
+        ],
+      }
     }),
-    /* Add new question ID to section */
-    addQuestionToSection: (questionID) => set((state) => {
-        const activeSection = state.sections[state.activeSectionIndex];
-        return {
-            sections: [
-                ...state.sections.slice(0, state.activeSectionIndex),
-                {
-                    ...activeSection,
-                    questions: [...activeSection.questions, questionID],
-                },
-                ...state.sections.slice(state.activeSectionIndex + 1),
-            ],
-        };
+  /* Add new question ID to section */
+  addQuestionToSection: (questionID) =>
+    set((state) => {
+      const activeSection = state.sections[state.activeSectionIndex]
+      return {
+        sections: [
+          ...state.sections.slice(0, state.activeSectionIndex),
+          {
+            ...activeSection,
+            questions: [...activeSection.questions, questionID],
+          },
+          ...state.sections.slice(state.activeSectionIndex + 1),
+        ],
+      }
     }),
-    /* Add question with details */
-    addQuestion: (question) => set((state) => ({ questions: [...state.questions, question] })),
+  /* Add question with details */
+  addQuestion: (question) => set((state) => ({ questions: [...state.questions, question] })),
 
-    updateQuestion: (question) => set((state) => {
-        const oldQuestionID = state.questions.findIndex((oldQuestion) => oldQuestion.quizioID === question.quizioID);
-        const stateCopy = [...state.questions];
-        stateCopy[oldQuestionID] = question;
-        return stateCopy;
+  updateQuestion: (question) =>
+    set((state) => {
+      const oldQuestionID = state.questions.findIndex(
+        (oldQuestion) => oldQuestion.quizioID === question.quizioID,
+      )
+      const stateCopy = [...state.questions]
+      stateCopy[oldQuestionID] = question
+      return stateCopy
     }),
-    /* Toggle active question */
-    setActiveQuestion: (index) => set(() => ({ activeQuestion: index })),
-    /* Toggle activate question form */
-    toggleQuestionForm: (flag) => set(() => ({ showQuestion: flag })),
-}));
+
+  /* Remove section from quiz */
+  removeSection: (idx) => {
+    set((state) => ({
+        sections: [
+          ...state.sections.slice(0, idx),
+          ...state.sections.slice(idx + 1),
+        ],
+        currentStage: 'Quiz Details',
+      }
+    ))
+  },
+
+  /* Remove question from section */
+  deleteQuestion: () => {
+    set((state) => {
+      const activeSection = state.sections[state.activeSectionIndex]
+      const questionIdx = state.activeQuestion
+      return {
+        sections: [
+          ...state.sections.slice(0, state.activeSectionIndex),
+          {
+            ...activeSection,
+            questions: [
+              ...activeSection.questions.slice(0, questionIdx),
+              ...activeSection.questions.slice(questionIdx + 1),
+            ],
+          },
+          ...state.sections.slice(state.activeSectionIndex + 1),
+        ], 
+        activeQuestion: questionIdx > 0 ? questionIdx - 1 : questionIdx,
+        currentStage: questionIdx > 0 ? state.currentStage : 'Quiz Details',
+      }
+    })
+  },
+
+  /* Toggle active question */
+  setActiveQuestion: (index) => set(() => ({ activeQuestion: index })),
+  /* Toggle activate question form */
+  toggleQuestionForm: (flag) => set(() => ({ showQuestion: flag })),
+  setQuizData: (data) => set(() => ({ currentQuizData: data })),
+  resetQuizData: () => set(() => ({ currentQuizData: null })),
+  setQuestionData: (data) => set(() => ({ currentQuestionData: data })),
+  resetQuestionData: () => set(() => ({ currentQuestionData: null })),
+}))
 
 mountStoreDevtool('createQuizStore', useCreateQuizStore);
 export default useCreateQuizStore;

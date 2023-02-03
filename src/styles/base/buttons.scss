@@ -1,5 +1,8 @@
 .primary-cta-button {
   @apply bg-purple-V6 text-white font-normal text-sm rounded px-6 py-3 w-full h-full flex items-center justify-center;
+  &:disabled {
+    @apply bg-grey;
+  }
 }
 
 .secondary-cta-button {
@@ -7,7 +10,14 @@
 }
 
 .o-auth-button-div {
-  @apply flex justify-between m-7 text-black-1 text-base font-normal rounded p-8 hover:bg-purple-V1 border border-purple border-opacity-0 hover:border-opacity-100 shadow;
+  @apply flex items-center justify-between m-7 text-black-1;
+  @apply text-base font-normal rounded p-8;
+  @apply hover:bg-purple-V1 border border-purple;
+  @apply border-opacity-0 hover:border-opacity-100 shadow;
+
+  .o-auth-button {
+    @apply pl-8;
+  }
 }
 
 .radio-button {
@@ -28,5 +38,5 @@
 }
 
 .radio-button-text {
-  @apply hover:bg-purple-V1 focus:bg-white border-opacity-0
+  @apply hover:bg-purple-V1 focus:bg-white border-opacity-0;
 }
