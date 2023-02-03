@@ -47,7 +47,7 @@ const Bottom = () => {
       setTableData(
         registrantsData.data.data.rankList
           .map((val, index) => ({
-            sr_num: index + 1,
+            srNum: index + 1,
             name: val.name,
             rank: index + 1,
             marks: val.quizScore,
@@ -55,8 +55,8 @@ const Bottom = () => {
             registrantID: val.registrantID,
           }))
           .sort((val1, val2) => val1.progress - val2.progress)
-          .map((val, index) => ({ ...val, sr_num: index + 1 })),
-      );
+          .map((val, index) => ({ ...val, srNum: index + 1 })),
+      )
     }
   }, [isRegistrantsLoading, registrantsData, isRegistrantsSuccess]);
 
@@ -72,36 +72,36 @@ const Bottom = () => {
         setTableData(
           tableData
             .sort((val1, val2) => val1.progress - val2.progress)
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.CHECKED_DES:
         setTableData(
           tableData
             .sort((val1, val2) => val2.progress - val1.progress)
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.ALPHA_ASC:
         setTableData(
           tableData
             .sort((val1, val2) => val1.name.localeCompare(val2.name))
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.ALPHA_DES:
         setTableData(
           tableData
             .sort((val1, val2) => -val1.name.localeCompare(val2.name))
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       case SORT_TYPES.RANKLIST:
         setTableData(
           tableData
             .sort((val1, val2) => val1.rank - val2.rank)
-            .map((val, index) => ({ ...val, sr_num: index + 1 })),
-        );
+            .map((val, index) => ({ ...val, srNum: index + 1 })),
+        )
         break;
       default:
       // do nothing

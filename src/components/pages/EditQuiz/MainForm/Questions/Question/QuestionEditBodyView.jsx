@@ -8,7 +8,6 @@ import { toast } from 'react-toastify'
 import QuestionInputArea from './QuestionInputArea'
 import useSaveQuestion from './utils/useSaveQuestion'
 import { useHistory } from 'react-router-dom'
-import log from '@utils/log';
 
 const QuestionEditBodyView = () => {
   const question = useCreateQuizStore((state) => state.currentQuestionData)
@@ -18,11 +17,7 @@ const QuestionEditBodyView = () => {
   const [marks, setMarks] = useState(0)
   const [notes, setNotes] = useState('')
 
-  const {
-    mutate: mutateDeleteQuestion,
-    isLoading: isQuestionDeleting,
-    isSuccess: isQuestionDeleted,
-  } = useDeleteQuestion()
+  const { mutate: mutateDeleteQuestion, isSuccess: isQuestionDeleted } = useDeleteQuestion()
 
   useEffect(() => {
     if (question) {
