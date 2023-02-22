@@ -68,6 +68,7 @@ const UserQuizRegistration = ({
     };
     log({ body });
     mutateRegisterParticipant({ body });
+    window.location.reload();
   };
 
   useEffect(() => {
