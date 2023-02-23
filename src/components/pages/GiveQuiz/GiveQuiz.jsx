@@ -9,17 +9,17 @@ import QuizLanding from '@components/pages/GiveQuiz/Landing/QuizLanding';
 import { useCheckIfQuizIsSubmitted } from '@api/quizzes/useQuizzes';
 import SectionLanding from '@pages/GiveQuiz/Landing/SectionLanding';
 import { useUpdateLogs } from '@api/quizzes/useLogs';
-import log from '@utils/log';
+// import log from '@utils/log';
 import 'react-toastify/dist/ReactToastify.css';
 import { useGetResponseStatus } from '@api/quizzes/useResponse';
 import useGiveQuizStore from '@redux/store/zustand/giveQuiz';
 import { useSelector } from 'react-redux';
-import publicIp from 'react-public-ip';
+// import publicIp from 'react-public-ip';
 import Wrapper from './Wrapper';
-import MediaAccess from './MediaAccess';
+// import MediaAccess from './MediaAccess';
 import WindowFocus from './WindowFocus';
 import useKeyLogging from './useKeyLogging';
-import useLocationAccess from './useLocationAccess';
+// import useLocationAccess from './useLocationAccess';
 
 const GiveQuiz = () => {
   const handle = useFullScreenHandle();
@@ -28,17 +28,17 @@ const GiveQuiz = () => {
 
   const userID = useSelector((state) => state.auth.user.userID);
   const [isOnFS, setIsOnFS] = useState(false);
-  const [isMediaPermission, setIsMediaPermission] = useState(false);
+  // const [isMediaPermission, setIsMediaPermission] = useState(false);
 
   // Update logs mutation
   const { mutate: updateLogs } = useUpdateLogs();
 
   // location access
-  const [hasLocationAccess] = useLocationAccess({
-    updateLogs,
-    quizID,
-    toast,
-  });
+  // const [hasLocationAccess] = useLocationAccess({
+  //   updateLogs,
+  //   quizID,
+  //   toast,
+  // });
 
   // Key logging
   useKeyLogging({
@@ -135,55 +135,55 @@ const GiveQuiz = () => {
     }
   }, [isSubmittedCheckSuccess]);
 
-  useEffect(async () => {
-    log({ quizID });
-    const publicIP = await publicIp.v4();
-    updateLogs({ body: { quizID, logType: 'IP', logData: publicIP } });
-  }, [quizID]);
+  // useEffect(async () => {
+  //   log({ quizID });
+  //   const publicIP = await publicIp.v4();
+  //   updateLogs({ body: { quizID, logType: 'IP', logData: publicIP } });
+  // }, [quizID]);
 
-  useEffect(() => {
-    if (!isMediaPermission) {
-      toast.error(
-        'Please allow microphone and camera access for the quiz to start',
-        {
-          position: 'top-right',
-          autoClose: false,
-          hideProgressBar: true,
-          closeOnClick: false,
-          closeButton: false,
-          progress: undefined,
-          toastId: 'mediaToast',
-        },
-      );
-    } else {
-      toast.dismiss('mediaToast');
-      toast.info('Microphone and Camera access detected!', {
-        position: 'top-right',
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: false,
-        closeButton: false,
-        progress: undefined,
-      });
-    }
-  }, [isMediaPermission]);
+  // useEffect(() => {
+  //   if (!isMediaPermission) {
+  //     toast.error(
+  //       'Please allow microphone and camera access for the quiz to start',
+  //       {
+  //         position: 'top-right',
+  //         autoClose: false,
+  //         hideProgressBar: true,
+  //         closeOnClick: false,
+  //         closeButton: false,
+  //         progress: undefined,
+  //         toastId: 'mediaToast',
+  //       },
+  //     );
+  //   } else {
+  //     toast.dismiss('mediaToast');
+  //     toast.info('Microphone and Camera access detected!', {
+  //       position: 'top-right',
+  //       autoClose: false,
+  //       hideProgressBar: false,
+  //       closeOnClick: false,
+  //       closeButton: false,
+  //       progress: undefined,
+  //     });
+  //   }
+  // }, [isMediaPermission]);
 
-  useEffect(() => {
-    log({ hasLocationAccess });
-    if (hasLocationAccess) {
-      toast.info(
-        'Location access detected!',
-        {
-          position: 'top-left',
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: false,
-          closeButton: false,
-          progress: undefined,
-        },
-      );
-    }
-  }, [hasLocationAccess]);
+  // useEffect(() => {
+  //   log({ hasLocationAccess });
+  //   if (hasLocationAccess) {
+  //     toast.info(
+  //       'Location access detected!',
+  //       {
+  //         position: 'top-left',
+  //         autoClose: false,
+  //         hideProgressBar: false,
+  //         closeOnClick: false,
+  //         closeButton: false,
+  //         progress: undefined,
+  //       },
+  //     );
+  //   }
+  // }, [hasLocationAccess]);
 
   if (isSubmittedLoading) return <LoadingPage />;
 
@@ -191,44 +191,44 @@ const GiveQuiz = () => {
     return (
         <>
             <ToastContainer />
-            <MediaAccess
+            {/* <MediaAccess
               setIsMediaPermission={setIsMediaPermission}
               hidden={false}
-            />
+            /> */} 
             <FullScreen handle={handle} onChange={reportChange} />
         </>
     );
   }
 
-  if (!isMediaPermission) {
-    return (
-        <>
-            <ToastContainer />
-            <MediaAccess
-              setIsMediaPermission={setIsMediaPermission}
-              hidden={false}
-            />
-        </>
-    );
-  }
+  // if (!isMediaPermission) {
+  //   return (
+  //       <>
+  //           <ToastContainer />
+  //           <MediaAccess
+  //             setIsMediaPermission={setIsMediaPermission}
+  //             hidden={false}
+  //           />
+  //       </>
+  //   );
+  // }
 
-  if (!hasLocationAccess) {
-    return (
-        <>
-            <ToastContainer />
-            <MediaAccess
-              setIsMediaPermission={setIsMediaPermission}
-              hidden={false}
-            />
-        </>
-    );
-  }
+  // if (!hasLocationAccess) {
+  //   return (
+  //       <>
+  //           <ToastContainer />
+  //           <MediaAccess
+  //             setIsMediaPermission={setIsMediaPermission}
+  //             hidden={false}
+  //           />
+  //       </>
+  //   );
+  // }
 
   return (
       <>
           {/* I dont know why, but adding this toast container here is important */}
           <ToastContainer />
-          <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden />
+          {/* <MediaAccess setIsMediaPermission={setIsMediaPermission} hidden /> */}
           <FullScreen handle={handle} onChange={reportChange} className="bg-white">
               <Switch>
                   <Route
