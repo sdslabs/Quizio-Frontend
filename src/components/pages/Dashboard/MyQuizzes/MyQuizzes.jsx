@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import CreatedQuizzes from './CreatedQuizzes';
 import Quizzes from './Quizzes';
 import '@pagestyles/dashboard/bottom.scss';
-
+import { useSelector } from 'react-redux';
 const index = () => {
-  const [showCreated, setShowCreated] = useState(false);
+  const [showCreated, setShowCreated] = useState(false)
+  const user = useSelector((state) => state.auth.user);
 
   const handleShowCreated = () => {
     setShowCreated(true);
@@ -24,19 +25,21 @@ const index = () => {
               >
                   Quizzes
               </button>
-              <button
+              {user.role!="public"&&<button
                 type="button"
                 onClick={handleShowCreated}
                 className={`created-quizzes ${showCreated && 'active'}`}
               >
                   Created Quizzes
-              </button>
+              </button>}
               <div className="pagination-border" />
           </div>
           <div className="main">
-              {showCreated ? <CreatedQuizzes /> : <Quizzes />}
+              {user.role!="public"? (showCreated ? <CreatedQuizzes /> : <Quizzes/>) : <Quizzes/>}
           </div>
       </div>
   );
 };
 export default index;
+
+

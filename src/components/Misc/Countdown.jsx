@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; 
 import dayjs from 'dayjs';
+import log  from '@utils/log';
+import { useHistory, useParams } from 'react-router-dom';
+import { useSubmitQuiz } from '@api/quizzes/useQuizzes';
 
 // Make sure time - now < 24hrs
 const Countdown = ({ time, offset }) => {
   const period = useRef();
+  const { quizID } = useParams();
 
-  const [countHours, setCountHours] = useState('00');
-  const [countMinutes, setCountMinutes] = useState('00');
-  const [countSeconds, setCountSecounds] = useState('00');
+  const history = useHistory();
+  const [countHours, setCountHours] = useState('99');
+  const [countMinutes, setCountMinutes] = useState('99');
+  const [countSeconds, setCountSecounds] = useState('99');
+  const { mutate: submitQuiz, isSuccess: submitSucess } = useSubmitQuiz();
 
   const startCountdownTimer = () => {
     const endTime = dayjs(time);
@@ -35,6 +41,21 @@ const Countdown = ({ time, offset }) => {
     return () => clearInterval(period.current);
   });
 
+  useEffect(() => {
+    log('Countdown', { countHours, countMinutes, countSeconds })
+    if(countHours == '0' && countMinutes == '0' && countSeconds == '1'){
+      log('Submit Quiz!', { quizID });
+      submitQuiz({ quizID });
+    }
+  }, [countHours, countMinutes, countSeconds]);
+
+  useEffect(() => {
+    if (submitSucess) {
+      log('Quiz submitted!');
+      history.push(`/?submitted=${quizID}`);
+    }
+  }, [submitSucess]);
+
   return (
       <span>
           {`${countHours
@@ -56,3 +77,4 @@ Countdown.defaultProps = {
 };
 
 export default Countdown;
+

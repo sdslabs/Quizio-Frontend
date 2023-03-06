@@ -107,7 +107,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
         // Last question
         setCurrentQuestion(null);
         setCurrentQuestionIndex(0);
-        history.push(`/quiz/attempt/${quizID}?submit=true`);
+        history.push(`/quiz/attempt/${quizID}/${sections[0].quizioID}`);
       } else {
         history.push(
           `/quiz/attempt/${quizID}/${
@@ -135,7 +135,7 @@ const SaveAndNext = ({ questionData, answer, choice }) => {
   return (
       <span className="w-100">
           <PrimaryCTA
-            text={isLastQuestion ? 'Save and Submit Quiz' : 'Save and next'}
+            text={isLastQuestion ? 'Save' : 'Save and next'}
             onClick={saveAndNext}
           />
       </span>
