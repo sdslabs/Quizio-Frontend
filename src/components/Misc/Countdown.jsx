@@ -56,6 +56,9 @@ const Countdown = ({ time, offset }) => {
     }
   }, [submitSucess]);
 
+  if(countHours == '99' && countMinutes == '99' && countMinutes == '99'){
+    return <span>Loading...</span>
+  }
   return (
       <span>
           {`${countHours
